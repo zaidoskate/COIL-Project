@@ -4,10 +4,17 @@
  */
 package logic.domain;
 
-/**
- *
- * @author zaido
- */
-public class Coordinator {
+public class Coordinator extends User{
+    private int idCoordinator;
+
+    public int getIdCoordinator() {
+        return idCoordinator;
+    }
+
+    public void setIdCoordinator(int idCoordinator) {
+        this.idCoordinator = idCoordinator;
+    }
+    
+    
     
 }
