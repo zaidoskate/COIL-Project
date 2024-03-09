@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 public class DatabaseConnection {
     private Connection databaseConnection;
-    private final String DATABASE_URL = "jdbc:mysql://127.0.0.1/coil";
+    private final String DATABASE_URL = "jdbc:mysql://127.0.0.1/coilProject";
     private final String DATABASE_USER = "user1";
     private final String DATABASE_PASSWORD = "ZAMATL";
     
