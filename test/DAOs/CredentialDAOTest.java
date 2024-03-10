@@ -30,7 +30,7 @@ public class CredentialDAOTest {
         DatabaseConnection databaseConnection = new DatabaseConnection();
         CredentialDAO credentialDAO = new CredentialDAO(databaseConnection);
         Credential credential = new Credential();
-        credential.setUser("Usuario1");
+        credential.setUser("Usuario12");
         credential.setPassword("pswd1234");
         
         int currentResult = credentialDAO.getIdUserByCredential(credential);

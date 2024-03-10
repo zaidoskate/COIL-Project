@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 
 public class CredentialDAO implements CredentialManagerInterface {
-    private DatabaseConnection databaseConnection;
+    private final DatabaseConnection databaseConnection;
     
     public CredentialDAO(DatabaseConnection databaseConnection){
         this.databaseConnection = databaseConnection;
@@ -41,7 +41,7 @@ public class CredentialDAO implements CredentialManagerInterface {
         Connection connection;
         PreparedStatement statement;
         ResultSet result;
-        int idResult = 0;
+        int idResult = -1;
         try{
             connection = this.databaseConnection.getConnection();
             statement = connection.prepareStatement(query);

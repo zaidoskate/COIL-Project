@@ -55,6 +55,28 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
-
+    
+    @Override
+    public boolean equals(Object object) {
+        User userToCompare = (User) object;
+        if (this.idUser != userToCompare.getIdUser()) {
+            return false;
+        }
+        if (! this.name.equals(userToCompare.getName())) {
+            return false;
+        }
+        if (! this.lastName.equals(userToCompare.getLastName())) {
+            return false;
+        }
+        if (! this.surname.equals(userToCompare.getSurname())) {
+            return false;
+        }
+        if (! this.email.equals(userToCompare.getEmail())) {
+            return false;
+        }
+        if (! this.language.equals(userToCompare.getLanguage())) {
+            return false;
+        }
+        return true;
+    }
 }
