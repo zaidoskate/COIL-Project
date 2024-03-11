@@ -1,16 +1,16 @@
 package logic.domain;
 
 public class University {
-    private String universityId; 
+    private int universityId; 
     private String representative; 
     private String name; 
     private String country; 
 
-    public String getUniversityId() {
+    public int getUniversityId() {
         return universityId;
     }
 
-    public void setUniversityId(String universityId) {
+    public void setUniversityId(int universityId) {
         this.universityId = universityId;
     }
 

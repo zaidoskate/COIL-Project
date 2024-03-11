@@ -2,7 +2,8 @@ package logic.domain;
 
 public class Student extends User{
     private String registrationNumber; 
-    private String region; 
+    private String region;
+    private int idUniversity;
 
     public String getRegistrationNumber() {
         return registrationNumber;
@@ -18,6 +19,14 @@ public class Student extends User{
 
     public void setRegion(String region) {
         this.region = region;
+    }
+    
+    public int getIdUniversity() {
+        return this.idUniversity;
+    }
+    
+    public void setIdUniversity(int idUniversity) {
+        this.idUniversity = idUniversity;
     }
     
 }

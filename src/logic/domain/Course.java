@@ -2,17 +2,17 @@
 package logic.domain;
 
 public class Course {
-    private String courseId; 
+    private int courseId; 
     private String courseName; 
     private String beginningDate;
     private String endingDate; 
     private String modality;  
 
-    public String getCourseId() {
+    public int getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(String courseId) {
+    public void setCourseId(int courseId) {
         this.courseId = courseId;
     }
 
