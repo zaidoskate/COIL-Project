@@ -6,7 +6,7 @@ public class ColaborationOffer {
     private String applicationDate;
     private String correspondenceDate;
     private String revisionDate;
-    private String state;
+    private String status;
 
     public int getIdOffer() {
         return idOffer;
@@ -48,12 +48,12 @@ public class ColaborationOffer {
         this.revisionDate = revisionDate;
     }
 
-    public String getState() {
-        return state;
+    public String getStatus() {
+        return status;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     
