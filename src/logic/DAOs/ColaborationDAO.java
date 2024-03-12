@@ -1,13 +1,37 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package logic.DAOs;
 
-/**
- *
- * @author chuch
- */
-public class ColaborationDAO {
+import dataaccess.DatabaseConnection;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import logic.domain.Colaboration;
+import logic.interfaces.ColaborationManagerInterface;
+
+public class ColaborationDAO implements ColaborationManagerInterface {
+    private final DatabaseConnection databaseConnection;
+    public ColaborationDAO(){
+        this.databaseConnection = new DatabaseConnection();
+    }
     
+    @Override
+    public int insertColaboration(Colaboration colaboration) {
+        
+    }
+    
+    @Override
+    public Colaboration getColaborationById(int id) {
+        
+    }
+    
+    @Override
+    public Colaboration getColaborationByIdOffer(int idOffer) {
+        
+    }
+    
+    @Override
+    public ArrayList<Colaboration> getColaborationsByArea(int id) {
+        
+    }
 }

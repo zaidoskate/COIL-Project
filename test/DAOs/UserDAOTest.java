@@ -4,7 +4,6 @@
  */
 package DAOs;
 
-import dataaccess.DatabaseConnection;
 import logic.DAOs.UserDAO;
 import logic.domain.User;
 import org.junit.Test;
