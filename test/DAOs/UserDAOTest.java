@@ -4,7 +4,6 @@
  */
 package DAOs;
 
-import dataaccess.DatabaseConnection;
 import logic.DAOs.UserDAO;
 import logic.domain.User;
 import org.junit.Test;
@@ -21,8 +20,7 @@ public class UserDAOTest {
     
     @Test
     public void testInsertUserSuccess() {
-        DatabaseConnection databaseConnection = new DatabaseConnection();
-        UserDAO userDAO = new UserDAO(databaseConnection);
+        UserDAO userDAO = new UserDAO();
         User user = new User();
         user.setIdUser(12345);
         user.setName("Zaid");
@@ -38,8 +36,7 @@ public class UserDAOTest {
     
     @Test
     public void testGetUserByIdSuccess() {
-        DatabaseConnection databaseConnection = new DatabaseConnection();
-        UserDAO userDAO = new UserDAO(databaseConnection);
+        UserDAO userDAO = new UserDAO();
         User expectedUser = new User();
         expectedUser.setIdUser(12345);
         expectedUser.setName("Zaid");
@@ -54,8 +51,7 @@ public class UserDAOTest {
     
     @Test
     public void testGetUserByNameSuccess() {
-        DatabaseConnection databaseConnection = new DatabaseConnection();
-        UserDAO userDAO = new UserDAO(databaseConnection);
+        UserDAO userDAO = new UserDAO();
         User expectedUser = new User();
         expectedUser.setIdUser(12345);
         expectedUser.setName("Zaid");

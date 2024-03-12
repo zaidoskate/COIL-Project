@@ -11,13 +11,13 @@ import java.sql.ResultSet;
 public class UserDAO implements UserManagerInterface {
     private final DatabaseConnection databaseConnection;
     
-    public UserDAO(DatabaseConnection databaseConnection){
-        this.databaseConnection = databaseConnection;
+    public UserDAO(){
+        this.databaseConnection = new DatabaseConnection();
     }
     
     @Override
     public int InsertUser(User user) {
-        int result = 0;
+        int result = user.getIdUser();
         String query = "INSERT INTO Usuario VALUES (?, ?, ?, ?, ?, ?)";
         Connection connection;
         PreparedStatement statement;
@@ -30,7 +30,8 @@ public class UserDAO implements UserManagerInterface {
             statement.setString(4, user.getSurname());
             statement.setString(5, user.getLanguage());
             statement.setString(6, user.getEmail());
-            result = statement.executeUpdate();
+            statement.executeUpdate();
+            
         } catch(SQLException sqlException) {
             result = -1;
         } finally {
@@ -41,7 +42,7 @@ public class UserDAO implements UserManagerInterface {
     
     @Override
     public User getUserById(int id) {
-        String query = "SELECT * FROM Usuario WHERE idUsuario = ?";
+        String query = "SELECT * FROM Usuario WHERE Usuario_idUsuario = ?";
         Connection connection;
         PreparedStatement statement;
         ResultSet result;
