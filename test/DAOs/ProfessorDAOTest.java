@@ -40,9 +40,4 @@ public class ProfessorDAOTest {
         assertNotEquals(0, result);
     }
     
-    /*@Test
-    public void testGetProfessorByAcademicArea() {
-        ArrayList<Professor> arrayExpected = new ArrayList<>();
-        
-    }*/
 }

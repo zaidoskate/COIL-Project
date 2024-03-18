@@ -56,7 +56,7 @@ public class UvProfessorDAOTest {
     public void testGetUvProfessorByIdUserSuccess() {
         UvProfessor uvProfessorExpected = new UvProfessor();
         uvProfessorExpected.setAcademicArea("Informatica");
-        uvProfessorExpected.setPersonalNumber("7770138");
+        uvProfessorExpected.setPersonalNumber("8889991");
         uvProfessorExpected.setIdUser(4);
 
         UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
