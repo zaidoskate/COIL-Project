@@ -25,8 +25,7 @@ public class UvProfessorDAOTest {
         User user = new User();
         user.setIdUser(3);
         user.setName("Juan Carlos");
-        user.setLastName("Perez");
-        user.setSurname("Arriaga");
+        user.setLastName("Perez Arriaga");
         user.setLanguage("Spanish");
         user.setEmail("elrevo@gmail.com");
         

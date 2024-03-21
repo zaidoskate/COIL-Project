@@ -27,9 +27,8 @@ public class UserDAO implements UserManagerInterface {
             statement.setInt(1, user.getIdUser());
             statement.setString(2, user.getName());
             statement.setString(3, user.getLastName());
-            statement.setString(4, user.getSurname());
-            statement.setString(5, user.getLanguage());
-            statement.setString(6, user.getEmail());
+            statement.setString(4, user.getLanguage());
+            statement.setString(5, user.getEmail());
             statement.executeUpdate();
             
         } catch(SQLException sqlException) {
@@ -55,8 +54,7 @@ public class UserDAO implements UserManagerInterface {
             while(result.next()) {
                 userResult.setIdUser(result.getInt("idUsuario"));
                 userResult.setName(result.getString("nombre"));
-                userResult.setLastName(result.getString("apellidoPaterno"));
-                userResult.setSurname(result.getString("apellidoMaterno"));
+                userResult.setLastName(result.getString("apellido"));
                 userResult.setLanguage(result.getString("idioma"));
                 userResult.setEmail(result.getString("correo"));
             }
@@ -83,8 +81,7 @@ public class UserDAO implements UserManagerInterface {
             while(result.next()) {
                 userResult.setIdUser(result.getInt("idUsuario"));
                 userResult.setName(result.getString("nombre"));
-                userResult.setLastName(result.getString("apellidoPaterno"));
-                userResult.setSurname(result.getString("apellidoMaterno"));
+                userResult.setLastName(result.getString("apellido"));
                 userResult.setLanguage(result.getString("idioma"));
                 userResult.setEmail(result.getString("correo"));
             }

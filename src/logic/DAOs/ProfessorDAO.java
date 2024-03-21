@@ -59,8 +59,7 @@ public class ProfessorDAO implements ProfessorManagerInterface{
                 professor.setAcademicArea(resultSet.getString("areaAcademica"));
                 professor.setIdUser(resultSet.getInt("idUsuario"));
                 professor.setName(resultSet.getString("nombre"));
-                professor.setLastName(resultSet.getString("apellidoPaterno"));
-                professor.setSurname(resultSet.getString("apellidoMaterno"));
+                professor.setLastName(resultSet.getString("apellido"));
                 professor.setLanguage(resultSet.getString("idioma"));
                 professor.setEmail(resultSet.getString("correo"));
                 professors.add(professor);

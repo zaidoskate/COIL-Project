@@ -4,7 +4,6 @@
  */
 package DAOs;
 
-import java.util.ArrayList;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import logic.domain.Professor;
@@ -23,7 +22,6 @@ public class ProfessorDAOTest {
         user.setIdUser(5);
         user.setName("James");
         user.setLastName("Smith");
-        user.setSurname("Johnson");
         user.setLanguage("English");
         user.setEmail("james@gmail.com");
 

@@ -24,8 +24,7 @@ public class UserDAOTest {
         User user = new User();
         user.setIdUser(12345);
         user.setName("Zaid");
-        user.setLastName("Vazquez");
-        user.setSurname("Ramirez");
+        user.setLastName("Vazquez Ramirez");
         user.setLanguage("English");
         user.setEmail("zaid@gmail.com");
         
@@ -40,8 +39,7 @@ public class UserDAOTest {
         User expectedUser = new User();
         expectedUser.setIdUser(12345);
         expectedUser.setName("Zaid");
-        expectedUser.setLastName("Vazquez");
-        expectedUser.setSurname("Ramirez");
+        expectedUser.setLastName("Vazquez Ramirez");
         expectedUser.setLanguage("English");
         expectedUser.setEmail("zaid@gmail.com");
         
@@ -55,8 +53,7 @@ public class UserDAOTest {
         User expectedUser = new User();
         expectedUser.setIdUser(12345);
         expectedUser.setName("Zaid");
-        expectedUser.setLastName("Vazquez");
-        expectedUser.setSurname("Ramirez");
+        expectedUser.setLastName("Vazquez Ramirez");
         expectedUser.setLanguage("English");
         expectedUser.setEmail("zaid@gmail.com");
         

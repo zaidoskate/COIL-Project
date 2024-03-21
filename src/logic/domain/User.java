@@ -4,7 +4,6 @@ public class User {
     private int idUser;
     private String name;
     private String lastName;
-    private String surname;
     private String language;
     private String email;
 
@@ -30,14 +29,6 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
     }
 
     public String getLanguage() {
@@ -66,9 +57,6 @@ public class User {
             return false;
         }
         if (! this.lastName.equals(userToCompare.getLastName())) {
-            return false;
-        }
-        if (! this.surname.equals(userToCompare.getSurname())) {
             return false;
         }
         if (! this.email.equals(userToCompare.getEmail())) {
