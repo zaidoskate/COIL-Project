@@ -1,10 +1,9 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Click nbfs://nbhost/SystemStringSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemStringSystem/Templates/Classes/Class.java to edit this template
  */
 package logic.domain;
 
-import java.io.File;
 
 /**
  *
@@ -12,48 +11,48 @@ import java.io.File;
  */
 public class FinalDocumentation {
     private int idColaboration;
-    private File feedbackProfessor;
-    private File feedbackMirrorProfessor;
-    private File feedbackStudents;
-    private File feedbackMirrorStudents;
+    private String professorFeedback;
+    private String mirrorProfessorFeedback;
+    private String studentsFeedback;
+    private String mirrorStudentsFeedback;
 
     public void setIdColaboration(int idColaboration) {
         this.idColaboration = idColaboration;
     }
 
-    public void setFeedbackProfessor(File feedbackProfessor) {
-        this.feedbackProfessor = feedbackProfessor;
+    public void setProfessorFeedback(String professorFeedback) {
+        this.professorFeedback = professorFeedback;
     }
 
-    public void setFeedbackMirrorProfessor(File feedbackMirrorProfessor) {
-        this.feedbackMirrorProfessor = feedbackMirrorProfessor;
+    public void setMirrorProfessorFeedback(String mirrorProfessorFeedback) {
+        this.mirrorProfessorFeedback = mirrorProfessorFeedback;
     }
 
-    public void setFeedbackStudents(File feedbackStudents) {
-        this.feedbackStudents = feedbackStudents;
+    public void setStudentsFeedback(String studentsFeedback) {
+        this.studentsFeedback = studentsFeedback;
     }
 
-    public void setFeedbackMirrorStudents(File feedbackMirrorStudents) {
-        this.feedbackMirrorStudents = feedbackMirrorStudents;
+    public void setMirrorStudentsFeedback(String mirrorStudentsFeedback) {
+        this.mirrorStudentsFeedback = mirrorStudentsFeedback;
     }
 
     public int getIdColaboration() {
         return idColaboration;
     }
 
-    public File getFeedbackProfessor() {
-        return feedbackProfessor;
+    public String getProfessorFeedback() {
+        return professorFeedback;
     }
 
-    public File getFeedbackMirrorProfessor() {
-        return feedbackMirrorProfessor;
+    public String getMirrorProfessorFeedback() {
+        return mirrorProfessorFeedback;
     }
 
-    public File getFeedbackStudents() {
-        return feedbackStudents;
+    public String getStudentsFeedback() {
+        return studentsFeedback;
     }
 
-    public File getFeedbackMirrorStudents() {
-        return feedbackMirrorStudents;
+    public String getMirrorStudentsFeedback() {
+        return mirrorStudentsFeedback;
     }
 }
