@@ -1,14 +1,14 @@
 package logic.domain;
 
 public class ExternalProfessor extends Professor{
-    private String identificationCode; 
+    private int idUniversity; 
 
-    public String getIdentificationCode() {
-        return identificationCode;
+    public int getIdUniversity() {
+        return idUniversity;
     }
 
-    public void setIdentificationCode(String identificationCode) {
-        this.identificationCode = identificationCode;
+    public void setIdUniversity(int idUniversity) {
+        this.idUniversity = idUniversity;
     }
     
 }
