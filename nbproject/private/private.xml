@@ -2,6 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group>
             <file>file:/C:/Users/zaido/Desktop/UV/4TO/PRCONSTRUCCION/Proyecto/COILPROJECT/COILPROJECT/test/DAOs/UvAccountRequestDAOTest.java</file>
             <file>file:/C:/Users/zaido/Desktop/UV/4TO/PRCONSTRUCCION/Proyecto/COILPROJECT/COILPROJECT/test/DAOs/ProfessorDAOTest.java</file>
@@ -10,5 +11,8 @@
             <file>file:/C:/Users/zaido/Desktop/UV/4TO/PRCONSTRUCCION/Proyecto/COILPROJECT/COILPROJECT/test/DAOs/ExternalAccountRequestDAOTest.java</file>
             <file>file:/C:/Users/zaido/Desktop/UV/4TO/PRCONSTRUCCION/Proyecto/COILPROJECT/COILPROJECT/test/DAOs/FinalDocumentationDAOTest.java</file>
         </group>
+=======
+        <group/>
+>>>>>>> ad131184167258299fb6b7e8a116a2f0213bee66
     </open-files>
 </project-private>

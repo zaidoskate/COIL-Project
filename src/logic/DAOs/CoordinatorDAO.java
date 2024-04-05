@@ -26,7 +26,7 @@ public class CoordinatorDAO implements CoordinatorManagerInterface {
     @Override
     public int insertCoordinator(Coordinator coordinator){
         int result = 0;
-        String query = "INSERT INTO coordinador VALUES (?, ?)";
+        String query = "INSERT INTO coordinador (idcoordinador, usuario_idusuario) VALUES (?, ?)";
         try{
             Connection connection = databaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
@@ -34,7 +34,9 @@ public class CoordinatorDAO implements CoordinatorManagerInterface {
             statement.setInt(2, coordinator.getIdUser());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
             return result;
+            
         } finally {
             databaseConnection.closeConnection();
         }

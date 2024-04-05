@@ -25,7 +25,7 @@ public class ExternalProfessorDAO implements ExternalProfessorManagerInterface {
     @Override
     public int insertExternalProfessor(ExternalProfessor externalProfessor) {
         int result = 0;
-        String query = "INSERT INTO profesorexterno VALUES (?, ?)";
+        String query = "INSERT INTO profesorexterno (profesor_usuario_idusuario, universidad_iduniversidad) VALUES (?, ?)";
         Connection connection;
         PreparedStatement statement;
         try{
@@ -35,6 +35,7 @@ public class ExternalProfessorDAO implements ExternalProfessorManagerInterface {
             statement.setInt(2, externalProfessor.getIdUniversity());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
             return result;
         } finally {
             databaseConnection.closeConnection();
