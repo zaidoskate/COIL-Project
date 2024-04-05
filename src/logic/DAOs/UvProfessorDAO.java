@@ -23,16 +23,13 @@ public class UvProfessorDAO implements UvProfessorManagerInterface{
     public int insertUvProfessor(UvProfessor uvProfessor) {
         int result = 0;
         String query = "INSERT INTO Profesoruv VALUES (?, ?)";
-        Connection connection;
-        PreparedStatement statement;
         try{
-            connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement(query);
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, uvProfessor.getPersonalNumber());
             statement.setInt(2, uvProfessor.getIdUser());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
             return result;
         } finally {
             databaseConnection.closeConnection();
