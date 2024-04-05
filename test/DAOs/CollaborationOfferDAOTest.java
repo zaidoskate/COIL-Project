@@ -21,9 +21,14 @@ public class CollaborationOfferDAOTest {
     @Test
     public void testInsertCollaborationOfferSuccess() {
         CollaborationOffer collaborationOffer = new CollaborationOffer();
-        collaborationOffer.setIdCollaboration(12345);
-        collaborationOffer.setOfferStatus("Abierta");
-        collaborationOffer.setIdUser(54321);
+        collaborationOffer.setIdCollaboration(101010);
+        collaborationOffer.setObjective("Aprendizaje");
+        collaborationOffer.setTopicsOfInterest("Mecánica");
+        collaborationOffer.setNumberOfStudents(30);
+        collaborationOffer.setProfile("Mecánica");
+        collaborationOffer.setLanguage("Español");
+        collaborationOffer.setPeriod("FEBRERO-JULIO 2024");
+        collaborationOffer.setAditionalInfo("Nada");
 
         CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
         int result = collaborationOfferDAO.insertColaborationOffer(collaborationOffer);

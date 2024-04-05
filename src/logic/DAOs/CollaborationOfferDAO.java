@@ -24,15 +24,20 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
    @Override
     public int insertColaborationOffer(CollaborationOffer colaborationOffer) {
         int result = 0;
-        String query = "INSERT INTO OfertaColaboracion VALUES (?, ?, ?)";
+        String query = "INSERT INTO OfertaColaboracion (idofertacolaboracion, objetivo, temasInteres, cantidadEstudiantes, perfil, idioma, periodo, informacionAdcional) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         Connection connection;
         PreparedStatement statement;
         try{
             connection = this.databaseConnection.getConnection();
             statement = connection.prepareStatement(query);
             statement.setInt(1, colaborationOffer.getIdCollaboration());
-            statement.setString(2, colaborationOffer.getOfferStatus());
-            statement.setInt(3, colaborationOffer.getIdUser());
+            statement.setString(2, colaborationOffer.getObjective());
+            statement.setString(3, colaborationOffer.getTopicsOfInterest());
+            statement.setInt(4, colaborationOffer.getNumberOfStudents());
+            statement.setString(5, colaborationOffer.getProfile());
+            statement.setString(6, colaborationOffer.getLanguage());
+            statement.setString(7, colaborationOffer.getPeriod());
+            statement.setString(8, colaborationOffer.getAditionalInfo());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
             return result;

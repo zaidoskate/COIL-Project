@@ -25,7 +25,7 @@ public class EvidenceFolderDAO implements EvidenceFolderManagerInterface {
     @Override
     public int insertEvidenceFolder(EvidenceFolder evidenceFolder){
         int result = 0;
-        String query = "INSERT INTO folderevidencia VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO folderevidencia (colaboracion_idcolaboracion, idfolderevidencia, nombre, descripcion, fechacreacion) VALUES (?, ?, ?, ?, ?)";
         try{
             Connection connection = databaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);

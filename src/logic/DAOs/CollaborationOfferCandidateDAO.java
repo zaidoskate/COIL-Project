@@ -25,8 +25,8 @@ public class CollaborationOfferCandidateDAO implements CollaborationOfferCandida
     
     @Override
     public int InsertCollaborationOfferCandidate(CollaborationOfferCandidate collaborationOfferCandidate) {
-        int result = 1;
-        String query = "INSERT INTO candidatosofertacolaboracion VALUES (?, ?)";
+        int result = 0;
+        String query = "INSERT INTO candidatosofertacolaboracion (idofertacolaboracion, profesor_usuario_idusuario) VALUES (?, ?)";
         Connection connection;
         PreparedStatement statement;
         try{
@@ -34,7 +34,7 @@ public class CollaborationOfferCandidateDAO implements CollaborationOfferCandida
             statement = connection.prepareStatement(query);
             statement.setInt(1, collaborationOfferCandidate.getIdCollaboration());
             statement.setInt(2, collaborationOfferCandidate.getIdUser());
-            statement.executeUpdate();
+            result = statement.executeUpdate();
             
         } catch(SQLException sqlException) {
             sqlException.printStackTrace();
