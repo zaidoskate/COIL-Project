@@ -22,7 +22,7 @@ public class UvProfessorDAO implements UvProfessorManagerInterface{
     @Override
     public int insertUvProfessor(UvProfessor uvProfessor) {
         int result = 0;
-        String query = "INSERT INTO Profesoruv VALUES (?, ?)";
+        String query = "INSERT INTO Profesoruv (numeroPersonal, region, Profesor_Usuario_idUsuario) VALUES (?, ?)";
         try{
             Connection connection = this.databaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);

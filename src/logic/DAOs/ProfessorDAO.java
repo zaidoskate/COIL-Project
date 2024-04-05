@@ -27,7 +27,7 @@ public class ProfessorDAO implements ProfessorManagerInterface{
     @Override
     public int insertProfessor(Professor professor){
         int result = 0;
-        String query = "INSERT INTO Profesor VALUES (?, ?)";
+        String query = "INSERT INTO Profesor (areaAcademica, Usuario_idUsuario) VALUES (?, ?)";
         try{
             Connection connection = databaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
