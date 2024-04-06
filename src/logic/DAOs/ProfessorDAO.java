@@ -35,7 +35,7 @@ public class ProfessorDAO implements ProfessorManagerInterface{
             statement.setInt(2, professor.getIdUser());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
-            return result;
+            result = -1;
         } finally {
             databaseConnection.closeConnection();
         }
@@ -67,7 +67,7 @@ public class ProfessorDAO implements ProfessorManagerInterface{
             resultSet.close();
             statement.close();
         } catch (SQLException e) {
-            return null;
+            professors = null;
         }
         return professors;
     }

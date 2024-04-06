@@ -6,7 +6,7 @@ package DAOs;
 
 import logic.DAOs.UvAccountRequestDAO;
 import logic.domain.UvAccountRequest;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
@@ -25,7 +25,7 @@ public class UvAccountRequestDAOTest {
         
         UvAccountRequestDAO uvAccountRequestDAO = new UvAccountRequestDAO();
         int result = uvAccountRequestDAO.insertUvAccountRequest(uvAccountRequest);
-        assertNotEquals(0, result);
+        assertEquals(1, result);
     }
     
     @Test
@@ -38,6 +38,6 @@ public class UvAccountRequestDAOTest {
         
         UvAccountRequestDAO uvAccountRequestDAO = new UvAccountRequestDAO();
         int result = uvAccountRequestDAO.deleteUvAccountRequest(uvAccountRequest.getPersonalNumber());
-        assertNotEquals(0, result);
+        assertEquals(1, result);
     }
 }

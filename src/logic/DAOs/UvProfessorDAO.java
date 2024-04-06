@@ -30,7 +30,7 @@ public class UvProfessorDAO implements UvProfessorManagerInterface{
             statement.setInt(2, uvProfessor.getIdUser());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
-            return result;
+            result = -1;
         } finally {
             databaseConnection.closeConnection();
         }
