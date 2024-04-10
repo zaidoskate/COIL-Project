@@ -1,11 +1,10 @@
 package logic.interfaces;
 
-import logic.domain.Colaboration;
+import logic.domain.Collaboration;
 import java.util.ArrayList;
 
 public interface ColaborationManagerInterface {
-    int insertColaboration(Colaboration colaboration);
-    Colaboration getColaborationById(int id);
-    Colaboration getColaborationByIdOffer(int idOffer);
-    ArrayList<Colaboration> getColaborationsByArea(int id);
+    int addColaboration(Collaboration colaboration);
+    Collaboration getColaborationById(int id);
+    ArrayList<Collaboration> getColaborationsByArea(String area);
 }

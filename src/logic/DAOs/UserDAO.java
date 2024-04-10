@@ -11,14 +11,14 @@ import java.sql.ResultSet;
 public class UserDAO implements UserManagerInterface {
     private final DatabaseConnection databaseConnection;
     
-    public UserDAO(){
-        this.databaseConnection = new DatabaseConnection();
+    public UserDAO(DatabaseConnection databaseConnection){
+        this.databaseConnection = databaseConnection;
     }
     
     @Override
-    public int InsertUser(User user) {
+    public int addUser(User user) {
         int result = user.getIdUser();
-        String query = "INSERT INTO Usuario VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Usuario VALUES (?, ?, ?, ?)";
         Connection connection;
         PreparedStatement statement;
         try{
@@ -27,8 +27,7 @@ public class UserDAO implements UserManagerInterface {
             statement.setInt(1, user.getIdUser());
             statement.setString(2, user.getName());
             statement.setString(3, user.getLastName());
-            statement.setString(4, user.getLanguage());
-            statement.setString(5, user.getEmail());
+            statement.setString(4, user.getEmail());
             statement.executeUpdate();
             
         } catch(SQLException sqlException) {
@@ -41,7 +40,7 @@ public class UserDAO implements UserManagerInterface {
     
     @Override
     public User getUserById(int id) {
-        String query = "SELECT * FROM Usuario WHERE Usuario_idUsuario = ?";
+        String query = "SELECT * FROM Usuario WHERE idUsuario = ?";
         Connection connection;
         PreparedStatement statement;
         ResultSet result;
@@ -55,7 +54,6 @@ public class UserDAO implements UserManagerInterface {
                 userResult.setIdUser(result.getInt("idUsuario"));
                 userResult.setName(result.getString("nombre"));
                 userResult.setLastName(result.getString("apellido"));
-                userResult.setLanguage(result.getString("idioma"));
                 userResult.setEmail(result.getString("correo"));
             }
         } catch(SQLException sqlException) {
@@ -82,7 +80,6 @@ public class UserDAO implements UserManagerInterface {
                 userResult.setIdUser(result.getInt("idUsuario"));
                 userResult.setName(result.getString("nombre"));
                 userResult.setLastName(result.getString("apellido"));
-                userResult.setLanguage(result.getString("idioma"));
                 userResult.setEmail(result.getString("correo"));
             }
         } catch(SQLException sqlException) {

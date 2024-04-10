@@ -1,7 +1,8 @@
 package logic.domain;
 
-public class Belongs {
+public class ProfessorBelongsToCollaboration {
     private int idUser;
+    private int idUserMirrorClass;
     private int idColaboration;
     private String colaborationStatus;
 
@@ -11,6 +12,14 @@ public class Belongs {
 
     public void setIdUser(int idUser) {
         this.idUser = idUser;
+    }
+
+    public int getIdUserMirrorClass() {
+        return idUserMirrorClass;
+    }
+
+    public void setIdUserMirrorClass(int idUserMirrorClass) {
+        this.idUserMirrorClass = idUserMirrorClass;
     }
 
     public int getIdColaboration() {
@@ -28,4 +37,5 @@ public class Belongs {
     public void setColaborationStatus(String colaborationStatus) {
         this.colaborationStatus = colaborationStatus;
     }
+
 }

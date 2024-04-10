@@ -37,7 +37,7 @@ public class AccountRequestDAO implements AccountRequestManagerInterface{
     }
     
     @Override
-    public int deleteAccountRequestById(String id) {
+    public int deleteAccountRequestById(int id) {
         int result = 0;
         String query = "DELETE FROM numerosolicitudcuenta WHERE idSolicitudCuenta = ?";
         Connection connection;
@@ -45,7 +45,7 @@ public class AccountRequestDAO implements AccountRequestManagerInterface{
         try{
             connection = this.databaseConnection.getConnection();
             statement = connection.prepareStatement(query);
-            statement.setString(1, id);
+            statement.setInt(1, id);
             result = statement.executeUpdate();
         } catch(SQLException sqlException) {
             result = -1;
@@ -56,7 +56,7 @@ public class AccountRequestDAO implements AccountRequestManagerInterface{
     }
     
     @Override
-    public AccountRequest getAccountRequestById(String id) {
+    public AccountRequest getAccountRequestById(int id) {
         String query = "SELECT * FROM numerosolicitudcuenta WHERE idSolicitudCuenta = ?";
         Connection connection;
         PreparedStatement statement;
@@ -65,7 +65,7 @@ public class AccountRequestDAO implements AccountRequestManagerInterface{
         try{
             connection = this.databaseConnection.getConnection();
             statement = connection.prepareStatement(query);
-            statement.setString(1, id);
+            statement.setInt(1, id);
             result = statement.executeQuery();
             while(result.next()) {
                 accountRequest.setIdAccountRequest(result.getInt("idSolicitudCuenta"));

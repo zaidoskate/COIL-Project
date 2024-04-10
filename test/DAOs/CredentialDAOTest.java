@@ -16,7 +16,7 @@ public class CredentialDAOTest {
         DatabaseConnection databaseConnection = new DatabaseConnection();
         CredentialDAO credentialDAO = new CredentialDAO(databaseConnection);
         Credential credential = new Credential();
-        credential.setIdUser(1234);
+        credential.setIdUser(13);
         credential.setUser("Usuario1");
         credential.setPassword("pswd1234");
         
@@ -34,7 +34,7 @@ public class CredentialDAOTest {
         credential.setPassword("pswd1234");
         
         int currentResult = credentialDAO.getIdUserByCredential(credential);
-        int expectedResult = 1234;
+        int expectedResult = 13;
         assertEquals(expectedResult, currentResult);
     }
 }

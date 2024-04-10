@@ -1,9 +1,7 @@
 package logic.domain;
 
-public class Colaboration {
+public class Collaboration {
     private int idColaboration;
-    private int numStudents;
-    private int idColaborationOffer;
     private String area;
     private String colaborationName;
     private String endDate;
@@ -16,22 +14,6 @@ public class Colaboration {
 
     public void setIdColaboration(int idColaboration) {
         this.idColaboration = idColaboration;
-    }
-
-    public int getNumStudents() {
-        return numStudents;
-    }
-
-    public void setNumStudents(int numStudents) {
-        this.numStudents = numStudents;
-    }
-
-    public int getIdColaborationOffer() {
-        return idColaborationOffer;
-    }
-
-    public void setIdColaborationOffer(int idColaborationOffer) {
-        this.idColaborationOffer = idColaborationOffer;
     }
 
     public String getArea() {

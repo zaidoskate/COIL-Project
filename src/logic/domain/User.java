@@ -4,7 +4,6 @@ public class User {
     private int idUser;
     private String name;
     private String lastName;
-    private String language;
     private String email;
 
     public int getIdUser() {
@@ -30,15 +29,7 @@ public class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
+    
     public String getEmail() {
         return email;
     }
@@ -60,9 +51,6 @@ public class User {
             return false;
         }
         if (! this.email.equals(userToCompare.getEmail())) {
-            return false;
-        }
-        if (! this.language.equals(userToCompare.getLanguage())) {
             return false;
         }
         return true;

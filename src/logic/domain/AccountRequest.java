@@ -47,5 +47,24 @@ public class AccountRequest {
         this.email = email;
     }
     
-    
+    @Override
+    public boolean equals(Object obj) {
+        AccountRequest accountRequestToCompare = (AccountRequest) obj;
+        if(!this.getAcademicArea().equals(accountRequestToCompare.getAcademicArea())) {
+            return false;
+        }
+        if(!this.getName().equals(accountRequestToCompare.getName())) {
+            return false;
+        }
+        if(!this.getEmail().equals(accountRequestToCompare.getEmail())) {
+            return false;
+        }
+        if(!this.getLastname().equals(accountRequestToCompare.getLastname())) {
+            return false;
+        }
+        if(this.getIdAccountRequest() != accountRequestToCompare.getIdAccountRequest()) {
+            return false;
+        }
+        return true;
+    }
 }

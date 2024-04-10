@@ -4,6 +4,7 @@
  */
 package DAOs;
 
+import dataaccess.DatabaseConnection;
 import logic.DAOs.UserDAO;
 import logic.domain.User;
 import org.junit.Test;
@@ -19,28 +20,28 @@ public class UserDAOTest {
     }
     
     @Test
-    public void testInsertUserSuccess() {
-        UserDAO userDAO = new UserDAO();
+    public void testAddUserSuccess() {
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        UserDAO userDAO = new UserDAO(databaseConnection);
         User user = new User();
-        user.setIdUser(12345);
+        user.setIdUser(11);
         user.setName("Zaid");
         user.setLastName("Vazquez Ramirez");
-        user.setLanguage("English");
         user.setEmail("zaid@gmail.com");
         
-        int currentResult = userDAO.InsertUser(user);
-        int expectedResult = 1;
+        int currentResult = userDAO.addUser(user);
+        int expectedResult = 11;
         assertEquals(expectedResult, currentResult);
     }
     
     @Test
     public void testGetUserByIdSuccess() {
-        UserDAO userDAO = new UserDAO();
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        UserDAO userDAO = new UserDAO(databaseConnection);
         User expectedUser = new User();
         expectedUser.setIdUser(12345);
         expectedUser.setName("Zaid");
         expectedUser.setLastName("Vazquez Ramirez");
-        expectedUser.setLanguage("English");
         expectedUser.setEmail("zaid@gmail.com");
         
         User currentUser = userDAO.getUserById(12345);
@@ -49,12 +50,12 @@ public class UserDAOTest {
     
     @Test
     public void testGetUserByNameSuccess() {
-        UserDAO userDAO = new UserDAO();
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        UserDAO userDAO = new UserDAO(databaseConnection);
         User expectedUser = new User();
         expectedUser.setIdUser(12345);
         expectedUser.setName("Zaid");
         expectedUser.setLastName("Vazquez Ramirez");
-        expectedUser.setLanguage("English");
         expectedUser.setEmail("zaid@gmail.com");
         
         User currentUser = userDAO.getUserByName("Zaid");
