@@ -45,7 +45,7 @@ public class ProfessorDAO implements ProfessorManagerInterface{
     @Override
     public ArrayList<Professor> getProfessorByAcademicArea(String academicArea) {
         ArrayList<Professor> professors = new ArrayList<>();
-        String query = "SELECT p.areaAcademica, u.idUsuario, u.nombre, u.apellidoPaterno, u.apellidoMaterno, u.idioma, u.correo " +
+        String query = "SELECT p.areaAcademica, u.idUsuario, u.nombre, u.apellido, u.correo " +
                        "FROM coilProject.Profesor p " +
                        "INNER JOIN coilProject.Usuario u ON p.Usuario_idUsuario = u.idUsuario " +
                        "WHERE p.areaAcademica = ?";
@@ -60,7 +60,6 @@ public class ProfessorDAO implements ProfessorManagerInterface{
                 professor.setIdUser(resultSet.getInt("idUsuario"));
                 professor.setName(resultSet.getString("nombre"));
                 professor.setLastName(resultSet.getString("apellido"));
-                professor.setLanguage(resultSet.getString("idioma"));
                 professor.setEmail(resultSet.getString("correo"));
                 professors.add(professor);
             }

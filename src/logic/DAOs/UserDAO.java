@@ -11,8 +11,8 @@ import java.sql.ResultSet;
 public class UserDAO implements UserManagerInterface {
     private final DatabaseConnection databaseConnection;
     
-    public UserDAO(DatabaseConnection databaseConnection){
-        this.databaseConnection = databaseConnection;
+    public UserDAO(){
+        this.databaseConnection = new DatabaseConnection();
     }
     
     @Override

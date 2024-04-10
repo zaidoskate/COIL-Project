@@ -10,6 +10,7 @@ import logic.domain.FinalDocumentation;
  * @author zaido
  */
 public interface FinalDocumentationManagerInterface {
+    
     public int uploadProfessorFeedback(FinalDocumentation finalDocumentation);
     public int uploadMirrorProfessorFeedback(FinalDocumentation finalDocumentation);
     public int uploadStudentsFeedback(FinalDocumentation finalDocumentation);
@@ -19,4 +20,5 @@ public interface FinalDocumentationManagerInterface {
     public int obtainMirrorProfessorFeedback(FinalDocumentation finalDocumentation, String outputPath);
     public int obtainStudentsFeedback(FinalDocumentation finalDocumentation, String outputPath);
     public int obtainMirrorStudentsFeedback(FinalDocumentation finalDocumentation, String outputPath);
+    
 }

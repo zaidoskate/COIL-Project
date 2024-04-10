@@ -8,5 +8,5 @@ import logic.domain.UvProfessor;
 
 public interface UvProfessorManagerInterface {
     int insertUvProfessor(UvProfessor uvProfessor);
-    UvProfessor getUvProfessorByIdUser(int id);
+    UvProfessor getUvProfessorByIdUser(int idUser);
 }

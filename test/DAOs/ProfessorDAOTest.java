@@ -22,11 +22,10 @@ public class ProfessorDAOTest {
         user.setIdUser(5);
         user.setName("James");
         user.setLastName("Smith");
-        user.setLanguage("English");
         user.setEmail("james@gmail.com");
 
         UserDAO userDAO = new UserDAO();
-        int idUser = userDAO.InsertUser(user);
+        int idUser = userDAO.addUser(user);
 
         Professor professor = new Professor();
         professor.setAcademicArea("Informatica");

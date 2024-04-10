@@ -18,6 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Blob;
+import logic.FileDownloader;
 
 /**
  *
@@ -29,7 +30,7 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
     public FinalDocumentationDAO() {
         this.databaseConnection = new DatabaseConnection();
     }
-
+    
     @Override
     public int uploadProfessorFeedback(FinalDocumentation finalDocumentation) {
         Connection connection;
@@ -57,7 +58,7 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
     @Override
     public int uploadMirrorProfessorFeedback(FinalDocumentation finalDocumentation) {
         Connection connection;
-        int result = -1;
+        int result = 0;
         String query = "UPDATE DocumentacionFinal SET feedbackProfesorEspejo = ? WHERE Colaboracion_idColaboracion = ?";
         try {
             connection = this.databaseConnection.getConnection();
@@ -125,7 +126,7 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
         }
         return result;
     }
-
+    
     @Override
     public int obtainProfessorFeedback(FinalDocumentation finalDocumentation, String outputPath) {
         Connection connection;
@@ -139,14 +140,7 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 Blob blob = rs.getBlob("feedbackProfesor");
-                InputStream inputStream = blob.getBinaryStream();
-                File outputFile = new File(outputPath);
-                fileOutputStream = new FileOutputStream(outputFile);
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    fileOutputStream.write(buffer, 0, bytesRead);
-                }
+                FileDownloader.transformBlobToFile(outputPath, blob);
                 result = 1;
             }
         } catch (SQLException sqlException) {
@@ -174,14 +168,7 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 Blob blob = rs.getBlob("feedbackProfesorEspejo");
-                InputStream inputStream = blob.getBinaryStream();
-                File outputFile = new File(outputPath);
-                fileOutputStream = new FileOutputStream(outputFile);
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    fileOutputStream.write(buffer, 0, bytesRead);
-                }
+                FileDownloader.transformBlobToFile(outputPath, blob);
                 result = 1;
             }
         } catch (SQLException sqlException) {
@@ -209,14 +196,7 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 Blob blob = rs.getBlob("feedbackEstudiantado");
-                InputStream inputStream = blob.getBinaryStream();
-                File outputFile = new File(outputPath);
-                fileOutputStream = new FileOutputStream(outputFile);
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    fileOutputStream.write(buffer, 0, bytesRead);
-                }
+                FileDownloader.transformBlobToFile(outputPath, blob);
                 result = 1;
             }
         } catch (SQLException sqlException) {
@@ -244,14 +224,7 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 Blob blob = rs.getBlob("feedbackEstudiantadoEspejo");
-                InputStream inputStream = blob.getBinaryStream();
-                File outputFile = new File(outputPath);
-                fileOutputStream = new FileOutputStream(outputFile);
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    fileOutputStream.write(buffer, 0, bytesRead);
-                }
+                FileDownloader.transformBlobToFile(outputPath, blob);
                 result = 1;
             }
         } catch (SQLException sqlException) {

@@ -45,7 +45,7 @@ public class UvAccountRequestDAO implements UvAccountRequestManagerInterface{
     @Override
     public int deleteUvAccountRequest(int personalNumber) {
         int result = 0;
-        String query = "DELETE FROM SolicitudCuentaExterno WHERE numeroPersonal = ?";
+        String query = "DELETE FROM SolicitudCuentaUv WHERE numeroPersonal = ?";
         try {
             Connection connection = databaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);

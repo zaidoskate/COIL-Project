@@ -26,11 +26,10 @@ public class UvProfessorDAOTest {
         user.setIdUser(3);
         user.setName("Juan Carlos");
         user.setLastName("Perez Arriaga");
-        user.setLanguage("Spanish");
         user.setEmail("elrevo@gmail.com");
         
         UserDAO userDAO = new UserDAO();
-        int idUser = userDAO.InsertUser(user);
+        int idUser = userDAO.addUser(user);
         
         Professor professor = new Professor();
         professor.setAcademicArea("Informatica");
@@ -42,6 +41,7 @@ public class UvProfessorDAOTest {
         UvProfessor uvProfessor = new UvProfessor();
         uvProfessor.setAcademicArea("Informatica");
         uvProfessor.setPersonalNumber("7770138");
+        uvProfessor.setRegion("Xalapa");
         uvProfessor.setIdUser(idUser);
         
         UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
@@ -56,10 +56,12 @@ public class UvProfessorDAOTest {
         UvProfessor uvProfessorExpected = new UvProfessor();
         uvProfessorExpected.setAcademicArea("Informatica");
         uvProfessorExpected.setPersonalNumber("8889991");
+        uvProfessorExpected.setRegion("Xalapa");
         uvProfessorExpected.setIdUser(4);
 
         UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
         UvProfessor uvProfessorResult = uvProfessorDAO.getUvProfessorByIdUser(4);
+        System.out.println("academicArea: " + uvProfessorResult.getAcademicArea() + "idUser:" + uvProfessorResult.getIdUser() + "Personal number : " + uvProfessorResult.getPersonalNumber());
 
         assertEquals(uvProfessorExpected, uvProfessorResult);
     }
