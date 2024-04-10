@@ -33,7 +33,7 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
     @Override
     public int uploadProfessorFeedback(FinalDocumentation finalDocumentation) {
         Connection connection;
-        int result = -1;
+        int result = 0;
         String query = "UPDATE DocumentacionFinal SET feedbackProfesor = ? WHERE Colaboracion_idColaboracion = ?";
         try {
             connection = this.databaseConnection.getConnection();
@@ -45,11 +45,9 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
             result = statement.executeUpdate();
             statement.close();
         } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            return result;
+            result = -1;
         } catch (FileNotFoundException fileNotFoundException) {
-            fileNotFoundException.printStackTrace();
-            return result;
+            result = -2;
         } finally {
             databaseConnection.closeConnection();
         }
@@ -71,11 +69,9 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
             result = statement.executeUpdate();
             statement.close();
         } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            return result;
+            result = -1;
         } catch (FileNotFoundException fileNotFoundException) {
-            fileNotFoundException.printStackTrace();
-            return result;
+            result = -2;
         } finally {
             databaseConnection.closeConnection();
         }
@@ -97,11 +93,9 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
             result = statement.executeUpdate();
             statement.close();
         } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            return result;
+            result = -1;
         } catch (FileNotFoundException fileNotFoundException) {
-            fileNotFoundException.printStackTrace();
-            return result;
+            result = -2;
         } finally {
             databaseConnection.closeConnection();
         }
@@ -123,11 +117,9 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
             result = statement.executeUpdate();
             statement.close();
         } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            return result;
+            result = -1;
         } catch (FileNotFoundException fileNotFoundException) {
-            fileNotFoundException.printStackTrace();
-            return result;
+            result = -2;
         } finally {
             databaseConnection.closeConnection();
         }
@@ -139,6 +131,7 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
         Connection connection;
         PreparedStatement statement = null;
         FileOutputStream fileOutputStream = null;
+        int result = 0;
         try {
             connection = this.databaseConnection.getConnection();
             statement = connection.prepareStatement("SELECT feedbackProfesor FROM DocumentacionFinal WHERE Colaboracion_idColaboracion = ?");
@@ -154,21 +147,18 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
                 while ((bytesRead = inputStream.read(buffer)) != -1) {
                     fileOutputStream.write(buffer, 0, bytesRead);
                 }
-                return 1;
+                result = 1;
             }
         } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            return -1;
+            result = -1;
         } catch (FileNotFoundException fileNotFoundException) {
-            fileNotFoundException.printStackTrace();
-            return -1;
+            result = -2;
         } catch (IOException ioException){
-            ioException.printStackTrace();
-            return -1;
+            result = -3;
         } finally {
             databaseConnection.closeConnection();
         }
-        return -1;
+        return result;
     }
 
     @Override
@@ -176,6 +166,7 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
         Connection connection;
         PreparedStatement statement = null;
         FileOutputStream fileOutputStream = null;
+        int result = 0;
         try {
             connection = this.databaseConnection.getConnection();
             statement = connection.prepareStatement("SELECT feedbackProfesorEspejo FROM DocumentacionFinal WHERE Colaboracion_idColaboracion = ?");
@@ -191,18 +182,18 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
                 while ((bytesRead = inputStream.read(buffer)) != -1) {
                     fileOutputStream.write(buffer, 0, bytesRead);
                 }
-                return 1;
+                result = 1;
             }
         } catch (SQLException sqlException) {
-            return -1;
+            result = -1;
         } catch (FileNotFoundException fileNotFoundException) {
-            return -1;
+            result = -2;
         } catch (IOException ioException){
-            return -1;
+            result = -3;
         } finally {
             databaseConnection.closeConnection();
         }
-        return -1;
+        return result;
     }
 
     @Override
@@ -210,6 +201,7 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
         Connection connection;
         PreparedStatement statement = null;
         FileOutputStream fileOutputStream = null;
+        int result = 0;
         try {
             connection = this.databaseConnection.getConnection();
             statement = connection.prepareStatement("SELECT feedbackEstudiantado FROM DocumentacionFinal WHERE Colaboracion_idColaboracion = ?");
@@ -225,18 +217,18 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
                 while ((bytesRead = inputStream.read(buffer)) != -1) {
                     fileOutputStream.write(buffer, 0, bytesRead);
                 }
-                return 1;
+                result = 1;
             }
         } catch (SQLException sqlException) {
-            return -1;
+            result = -1;
         } catch (FileNotFoundException fileNotFoundException) {
-            return -1;
+            result = -2;
         } catch (IOException ioException){
-            return -1;
+            result = -3;
         } finally {
             databaseConnection.closeConnection();
         }
-        return -1;
+        return result;
     }
 
     @Override
@@ -244,6 +236,7 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
         Connection connection;
         PreparedStatement statement = null;
         FileOutputStream fileOutputStream = null;
+        int result = 0;
         try {
             connection = this.databaseConnection.getConnection();
             statement = connection.prepareStatement("SELECT feedbackEstudiantadoEspejo FROM DocumentacionFinal WHERE Colaboracion_idColaboracion = ?");
@@ -259,17 +252,17 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
                 while ((bytesRead = inputStream.read(buffer)) != -1) {
                     fileOutputStream.write(buffer, 0, bytesRead);
                 }
-                return 1;
+                result = 1;
             }
         } catch (SQLException sqlException) {
-            return -1;
+            result = -1;
         } catch (FileNotFoundException fileNotFoundException) {
-            return -1;
+            result = -2;
         } catch (IOException ioException){
-            return -1;
+            result = -3;
         } finally {
             databaseConnection.closeConnection();
         }
-        return -1;
+        return result;
     }
 }

@@ -47,7 +47,7 @@ public class UvProfessorDAOTest {
         UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
         int result = uvProfessorDAO.insertUvProfessor(uvProfessor);
         
-        assertNotEquals(0, result);
+        assertEquals(1, result);
         
     }
     

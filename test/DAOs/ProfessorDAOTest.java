@@ -35,7 +35,6 @@ public class ProfessorDAOTest {
         ProfessorDAO professorDAO = new ProfessorDAO();
         int result = professorDAO.insertProfessor(professor);
         
-        assertNotEquals(0, result);
+        assertEquals(1, result);
     }
-    
 }

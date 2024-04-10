@@ -35,8 +35,7 @@ public class UvAccountRequestDAO implements UvAccountRequestManagerInterface{
             statement.setInt(4, uvAccountRequest.getPersonalNumber());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            return result;
+            result = -1;
         } finally {
             databaseConnection.closeConnection();
         }
@@ -53,7 +52,7 @@ public class UvAccountRequestDAO implements UvAccountRequestManagerInterface{
             statement.setInt(1, personalNumber);
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
-            return result;
+            result = -1;
         } finally {
             databaseConnection.closeConnection();
         }

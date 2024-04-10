@@ -34,7 +34,7 @@ public class ExternalAccountRequestDAO implements ExternalAccountRequestManagerI
             statement.setInt(4, externalAccountRequest.getIdUniversity());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
-            return result;
+            result = -1;
         } finally {
             databaseConnection.closeConnection();
         }
@@ -51,7 +51,7 @@ public class ExternalAccountRequestDAO implements ExternalAccountRequestManagerI
             statement.setString(1, mail);
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
-            return result;
+            result = -1;
         } finally {
             databaseConnection.closeConnection();
         }

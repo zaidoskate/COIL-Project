@@ -27,7 +27,7 @@ public class ProfessorDAO implements ProfessorManagerInterface{
     @Override
     public int insertProfessor(Professor professor){
         int result = 0;
-        String query = "INSERT INTO Profesor VALUES (?, ?)";
+        String query = "INSERT INTO Profesor (areaAcademica, Usuario_idUsuario) VALUES (?, ?)";
         try{
             Connection connection = databaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
@@ -35,7 +35,7 @@ public class ProfessorDAO implements ProfessorManagerInterface{
             statement.setInt(2, professor.getIdUser());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
-            return result;
+            result = -1;
         } finally {
             databaseConnection.closeConnection();
         }
@@ -67,7 +67,7 @@ public class ProfessorDAO implements ProfessorManagerInterface{
             resultSet.close();
             statement.close();
         } catch (SQLException e) {
-            return null;
+            professors = null;
         }
         return professors;
     }

@@ -22,7 +22,7 @@ public class UvProfessorDAO implements UvProfessorManagerInterface{
     @Override
     public int insertUvProfessor(UvProfessor uvProfessor) {
         int result = 0;
-        String query = "INSERT INTO Profesoruv VALUES (?, ?)";
+        String query = "INSERT INTO Profesoruv (numeroPersonal, region, Profesor_Usuario_idUsuario) VALUES (?, ?)";
         try{
             Connection connection = this.databaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
@@ -30,7 +30,7 @@ public class UvProfessorDAO implements UvProfessorManagerInterface{
             statement.setInt(2, uvProfessor.getIdUser());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
-            return result;
+            result = -1;
         } finally {
             databaseConnection.closeConnection();
         }

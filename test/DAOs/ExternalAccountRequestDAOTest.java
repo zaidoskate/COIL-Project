@@ -26,7 +26,7 @@ public class ExternalAccountRequestDAOTest {
         
         ExternalAccountRequestDAO externalAccountRequestDAO = new ExternalAccountRequestDAO();
         int result = externalAccountRequestDAO.insertExternalAccountRequest(externalAccountRequest);
-        assertNotEquals(0, result);
+        assertEquals(1, result);
     }
     
     @Test
@@ -39,6 +39,6 @@ public class ExternalAccountRequestDAOTest {
         
         ExternalAccountRequestDAO externalAccountRequestDAO = new ExternalAccountRequestDAO();
         int result = externalAccountRequestDAO.deleteExternalAccountRequest(externalAccountRequest.getEmail());
-        assertNotEquals(0, result);
+        assertEquals(1, result);
     }
 }
