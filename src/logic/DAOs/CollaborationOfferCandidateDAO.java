@@ -37,8 +37,7 @@ public class CollaborationOfferCandidateDAO implements CollaborationOfferCandida
             result = statement.executeUpdate();
             
         } catch(SQLException sqlException) {
-            sqlException.printStackTrace();
-            return result;
+            result = -1;
         } finally {
             databaseConnection.closeConnection();
         }

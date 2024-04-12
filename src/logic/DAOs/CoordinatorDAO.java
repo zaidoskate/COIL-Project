@@ -34,9 +34,7 @@ public class CoordinatorDAO implements CoordinatorManagerInterface {
             statement.setInt(2, coordinator.getIdUser());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            return result;
-            
+            result = -1;
         } finally {
             databaseConnection.closeConnection();
         }

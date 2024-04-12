@@ -36,7 +36,7 @@ public class EvidenceFolderDAO implements EvidenceFolderManagerInterface {
             statement.setString(5, evidenceFolder.getCreationDate());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
-            return result;
+            result = -1;
         } finally {
             databaseConnection.closeConnection();
         }

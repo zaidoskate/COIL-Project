@@ -35,8 +35,7 @@ public class ExternalProfessorDAO implements ExternalProfessorManagerInterface {
             statement.setInt(2, externalProfessor.getIdUniversity());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            return result;
+            result = -1;
         } finally {
             databaseConnection.closeConnection();
         }

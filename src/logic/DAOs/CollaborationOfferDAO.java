@@ -40,7 +40,7 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
             statement.setString(8, colaborationOffer.getAditionalInfo());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
-            return result;
+            result = -1;
         } finally {
             databaseConnection.closeConnection();
         }
