@@ -32,7 +32,7 @@ public class EvidenceDAO implements EvidenceManagerInterface {
     @Override
     public int uploadEvidence(Evidence evidence) {
         Connection connection;
-        int result = -1;
+        int result = 1;
         String query = "INSERT INTO evidencia (FolderEvidencia_idFolderEvidencia, nombre, autor, fechacreacion, archivo) VALUES (?, ?, ?, ?, ?)";
         try {
             connection = this.databaseConnection.getConnection();

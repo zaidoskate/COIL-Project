@@ -5,6 +5,7 @@
 package DAOs;
 
 import org.junit.Test;
+import dataaccess.DatabaseConnection;
 import static org.junit.Assert.*;
 import static org.junit.Assert.*;
 import logic.domain.CollaborationOfferCandidate;
@@ -31,4 +32,15 @@ public class CollaborationOfferCandidateDAOTest {
         assertEquals(expectedResult, currentResult);
     }
     
+    @Test
+    public void testGetCollaborationOfferCandidateByIdCollaborationOfferSuccess() {
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        CollaborationOfferCandidateDAO collaborationOfferCandidateDAO = new CollaborationOfferCandidateDAO();
+        CollaborationOfferCandidate expectedCollaborationOfferCandidate = new CollaborationOfferCandidate();
+        expectedCollaborationOfferCandidate.setIdCollaboration(12345);
+        expectedCollaborationOfferCandidate.setIdUser(54321);
+        
+        CollaborationOfferCandidate currentCollaborationOfferCandidate = collaborationOfferCandidateDAO.GetCollaborationOfferCandidateByIdCollaborationOffer(12345);
+        assertEquals(expectedCollaborationOfferCandidate, currentCollaborationOfferCandidate);
+    }
 }

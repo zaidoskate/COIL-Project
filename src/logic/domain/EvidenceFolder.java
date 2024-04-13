@@ -55,4 +55,25 @@ public class EvidenceFolder {
         this.creationDate = creationDate;
     }
     
-}
+    @Override 
+    public boolean equals (Object object) {
+        EvidenceFolder evidenceFolderToCompare = (EvidenceFolder) object;
+        if (this.idCollaboration != evidenceFolderToCompare.getIdCollaboration()) {
+            return false;
+        }
+        if (this.idEvidenceFolder != evidenceFolderToCompare.getIdEvidenceFolder()) {
+            return false;
+        }
+        if (! this.name.equals(evidenceFolderToCompare.getName())) {
+            return false;
+        }
+        if (! this.description.equals(evidenceFolderToCompare.getDescription())) {
+            return false;
+        }
+        if (! this.creationDate.equals(evidenceFolderToCompare.getCreationDate())) {
+            return false;
+        }
+        return true;
+    }
+    
+    }

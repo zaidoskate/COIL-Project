@@ -8,6 +8,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import logic.domain.ExternalProfessor;
 import logic.DAOs.ExternalProfessorDAO;
+import dataaccess.DatabaseConnection;
+
 
 /**
  *
@@ -28,6 +30,18 @@ public class ExternalProfessorDAOTest {
         int result = externalProfessorDAO.insertExternalProfessor(externalProfessor);
         
         assertNotEquals(0, result);
+    }
+    
+    @Test
+    public void testGetExternalProfessorByIdUniversity() {
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        ExternalProfessorDAO externalProfessorDAO = new ExternalProfessorDAO();
+        ExternalProfessor expectedExternalProfessor = new ExternalProfessor();
+        expectedExternalProfessor.setIdUniversity(67890);
+
+        
+        ExternalProfessor currentExternalProfessor = externalProfessorDAO.getExternalProfessorByIdUniversity(67890);
+        assertEquals(expectedExternalProfessor, currentExternalProfessor);
     }
     
 }
