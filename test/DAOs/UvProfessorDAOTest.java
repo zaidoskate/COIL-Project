@@ -31,6 +31,17 @@ public class UvProfessorDAOTest {
     }
     
     @Test
+    public void testInsertUvProfessorFail() {
+        UvProfessor uvProfessor = new UvProfessor();
+        uvProfessor.setIdUser(3);
+        uvProfessor.setIdDepartment("FEIX");
+        
+        UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
+        int result = uvProfessorDAO.insertUvProfessor(uvProfessor);
+        assertEquals(-1, result);
+    }
+    
+    @Test
     public void testGetUvProfessorByIdUserSuccess() {
         UvProfessor uvProfessorExpected = new UvProfessor();
         uvProfessorExpected.setPersonalNumber("8889991");
@@ -41,5 +52,18 @@ public class UvProfessorDAOTest {
         UvProfessor uvProfessorResult = uvProfessorDAO.getUvProfessorByIdUser(4);
 
         assertEquals(uvProfessorExpected, uvProfessorResult);
+    }
+    
+    @Test
+    public void testGetUvProfessorByIdUserFail() {
+        UvProfessor uvProfessorWrong = new UvProfessor();
+        uvProfessorWrong.setPersonalNumber("10109090");
+        uvProfessorWrong.setIdUser(4);
+        uvProfessorWrong.setIdDepartment("FEIX");
+
+        UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
+        UvProfessor uvProfessorResult = uvProfessorDAO.getUvProfessorByIdUser(4);
+
+        assertNotEquals(uvProfessorWrong, uvProfessorResult);
     }
 }

@@ -24,4 +24,14 @@ public class ProfessorDAOTest {
         
         assertEquals(1, result);
     }
+    
+    @Test
+    public void testInsertProfessorFail() {
+        Professor professor = new Professor();
+
+        ProfessorDAO professorDAO = new ProfessorDAO();
+        int result = professorDAO.insertProfessor(professor);
+        
+        assertEquals(-1, result);
+    }
 }

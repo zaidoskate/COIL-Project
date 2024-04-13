@@ -30,4 +30,16 @@ public class UniversityDAOTest {
         
         assertNotEquals(-1, result);
     }
+    
+    @Test
+    public void testInsertUniversityFail() {
+        University university = new University();
+        university.setUniversityId(2);
+        university.setCountry("Mexico");
+        
+        UniversityDAO universityDAO = new UniversityDAO();
+        int result = universityDAO.insertUniversity(university);
+        
+        assertEquals(-1, result);
+    }
 }
