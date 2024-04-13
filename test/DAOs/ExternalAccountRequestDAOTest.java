@@ -38,7 +38,7 @@ public class ExternalAccountRequestDAOTest {
         externalAccountRequest.setIdUniversity(1);
         
         ExternalAccountRequestDAO externalAccountRequestDAO = new ExternalAccountRequestDAO();
-        int result = externalAccountRequestDAO.deleteExternalAccountRequest(externalAccountRequest.getEmail());
+        int result = externalAccountRequestDAO.deleteExternalAccountRequest(externalAccountRequest);
         assertEquals(1, result);
     }
 }

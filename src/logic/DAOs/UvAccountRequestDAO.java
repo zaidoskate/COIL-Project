@@ -25,14 +25,16 @@ public class UvAccountRequestDAO implements UvAccountRequestManagerInterface{
     @Override
     public int insertUvAccountRequest(UvAccountRequest uvAccountRequest) {
         int result = 0;
-        String query = "INSERT INTO SolicitudCuentaUv (nombre, apellido, correo, numeropersonal) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO SolicitudCuentaUv (idSolicitud, nombre, apellido, correo, numeropersonal, idFacultad) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             Connection connection = databaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, uvAccountRequest.getName());
-            statement.setString(2, uvAccountRequest.getLastName());
-            statement.setString(3, uvAccountRequest.getEmail());
-            statement.setInt(4, uvAccountRequest.getPersonalNumber());
+            statement.setInt(1, uvAccountRequest.getIdRequest());
+            statement.setString(2, uvAccountRequest.getName());
+            statement.setString(3, uvAccountRequest.getLastName());
+            statement.setString(4, uvAccountRequest.getEmail());
+            statement.setInt(5, uvAccountRequest.getPersonalNumber());
+            statement.setString(6, uvAccountRequest.getIdDepartment());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
             result = -1;
@@ -43,13 +45,13 @@ public class UvAccountRequestDAO implements UvAccountRequestManagerInterface{
     }
 
     @Override
-    public int deleteUvAccountRequest(int personalNumber) {
+    public int deleteUvAccountRequest(UvAccountRequest uvAccountRequest) {
         int result = 0;
-        String query = "DELETE FROM SolicitudCuentaUv WHERE numeroPersonal = ?";
+        String query = "DELETE FROM SolicitudCuentaUv WHERE idSolicitud = ?";
         try {
             Connection connection = databaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, personalNumber);
+            statement.setInt(1, uvAccountRequest.getIdRequest());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
             result = -1;

@@ -21,7 +21,7 @@ public class UniversityDAO implements UniversityManagerInterface {
     @Override
     public int insertUniversity(University university) {
         int result = university.getUniversityId();
-        String query = "INSERT INTO Universidad (idUniversidad, nombre, pais, nombreRepresentante, apellidoRepresentante, correoRepresentante, telefonoRepresentante) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Universidad (idUniversidad, nombre, pais) VALUES (?, ?, ?)";
         Connection connection;
         PreparedStatement statement;
         try{
@@ -30,10 +30,6 @@ public class UniversityDAO implements UniversityManagerInterface {
             statement.setInt(1, university.getUniversityId());
             statement.setString(2, university.getName());
             statement.setString(3, university.getCountry());
-            statement.setString(4, university.getRepresentativeName());
-            statement.setString(5, university.getRepresentativeLastName());
-            statement.setString(6, university.getRepresentativeEmail());
-            statement.setString(7, university.getRepresentativePhone());
             statement.executeUpdate();
         } catch (SQLException sqlException) {
             result = -1;

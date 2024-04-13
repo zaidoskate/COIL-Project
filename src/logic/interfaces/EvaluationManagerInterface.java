@@ -4,13 +4,13 @@
  */
 package logic.interfaces;
 
-import logic.domain.UvAccountRequest;
-
+import logic.domain.Evaluation;
 /**
  *
  * @author zaido
  */
-public interface UvAccountRequestManagerInterface {
-    public int insertUvAccountRequest(UvAccountRequest uvAccountRequest);
-    public int deleteUvAccountRequest(UvAccountRequest uvAccountRequest);
+public interface EvaluationManagerInterface {
+    public int insertEvaluation(Evaluation evaluation);
+    public Evaluation getEvaluationByIdOfferCollaboration(int idOfferCollaboration);
+    
 }

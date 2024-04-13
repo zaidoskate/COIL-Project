@@ -9,11 +9,29 @@ package logic.domain;
  * @author zaido
  */
 public class UvAccountRequest {
+    private int idRequest;
     private String name;
     private String lastName;
     private String email;
     private int personalNumber;
+    private String idDepartment;
 
+    public int getIdRequest() {
+        return idRequest;
+    }
+
+    public void setIdRequest(int idRequest) {
+        this.idRequest = idRequest;
+    }
+
+    public String getIdDepartment() {
+        return idDepartment;
+    }
+
+    public void setIdDepartment(String idDepartment) {
+        this.idDepartment = idDepartment;
+    }
+    
     public void setName(String name) {
         this.name = name;
     }

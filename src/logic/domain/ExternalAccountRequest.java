@@ -9,11 +9,21 @@ package logic.domain;
  * @author zaido
  */
 public class ExternalAccountRequest {
+
+    private int idRequest;
     private String name;
     private String lastName;
     private String email;
     private int idUniversity;
 
+    public int getIdRequest() {
+        return idRequest;
+    }
+
+    public void setIdRequest(int idRequest) {
+        this.idRequest = idRequest;
+    }
+    
     public void setName(String name) {
         this.name = name;
     }

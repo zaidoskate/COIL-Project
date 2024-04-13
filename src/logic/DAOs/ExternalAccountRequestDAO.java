@@ -24,14 +24,15 @@ public class ExternalAccountRequestDAO implements ExternalAccountRequestManagerI
     @Override
     public int insertExternalAccountRequest(ExternalAccountRequest externalAccountRequest) {
         int result = 0;
-        String query = "INSERT INTO SolicitudCuentaExterno (nombre, apellido, correo, Universidad_idUniversidad) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO SolicitudCuentaExterno (idSolicitud, nombre, apellido, correo, idUniversidad) VALUES (?, ?, ?, ?, ?)";
         try {
             Connection connection =  databaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, externalAccountRequest.getName());
-            statement.setString(2, externalAccountRequest.getLastName());
-            statement.setString(3, externalAccountRequest.getEmail());
-            statement.setInt(4, externalAccountRequest.getIdUniversity());
+            statement.setInt(1, externalAccountRequest.getIdRequest());
+            statement.setString(2, externalAccountRequest.getName());
+            statement.setString(3, externalAccountRequest.getLastName());
+            statement.setString(4, externalAccountRequest.getEmail());
+            statement.setInt(5, externalAccountRequest.getIdUniversity());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
             result = -1;
@@ -42,13 +43,13 @@ public class ExternalAccountRequestDAO implements ExternalAccountRequestManagerI
     }
 
     @Override
-    public int deleteExternalAccountRequest(String mail) {
+    public int deleteExternalAccountRequest(ExternalAccountRequest externalAccountRequest) {
         int result = 0;
-        String query = "DELETE FROM SolicitudCuentaExterno WHERE correo = ?";
+        String query = "DELETE FROM SolicitudCuentaExterno WHERE idSolicitud = ?";
         try {
             Connection connection = databaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, mail);
+            statement.setInt(1, externalAccountRequest.getIdRequest());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
             result = -1;
