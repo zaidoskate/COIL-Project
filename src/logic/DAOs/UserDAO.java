@@ -64,29 +64,5 @@ public class UserDAO implements UserManagerInterface {
         return userResult;
     }
     
-    @Override
-    public User getUserByName(String name) {
-        String query = "SELECT * FROM Usuario WHERE nombre = ?";
-        Connection connection;
-        PreparedStatement statement;
-        ResultSet result;
-        User userResult = new User();
-        try{
-            connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement(query);
-            statement.setString(1, name);
-            result = statement.executeQuery();
-            while(result.next()) {
-                userResult.setIdUser(result.getInt("idUsuario"));
-                userResult.setName(result.getString("nombre"));
-                userResult.setLastName(result.getString("apellido"));
-                userResult.setEmail(result.getString("correo"));
-            }
-        } catch(SQLException sqlException) {
-            userResult = null;
-        } finally {
-            databaseConnection.closeConnection();
-        }
-        return userResult;
-    }
+    
 }

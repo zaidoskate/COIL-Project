@@ -4,7 +4,7 @@ public class ConcludedCollaboration {
     private int idColaboration;
     private int idUser;
     private int numberStudents;
-    private double rating;
+    private int rating;
     private String visibility;
     private String certificatesPath;
 
@@ -32,11 +32,11 @@ public class ConcludedCollaboration {
         this.numberStudents = numberStudents;
     }
 
-    public double getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 

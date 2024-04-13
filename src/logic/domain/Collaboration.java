@@ -2,7 +2,7 @@ package logic.domain;
 
 public class Collaboration {
     private int idColaboration;
-    private String area;
+    private String interestTopic;
     private String colaborationName;
     private String endDate;
     private String startDate;
@@ -16,12 +16,12 @@ public class Collaboration {
         this.idColaboration = idColaboration;
     }
 
-    public String getArea() {
-        return area;
+    public String getInterestTopic() {
+        return interestTopic;
     }
 
-    public void setArea(String area) {
-        this.area = area;
+    public void setInterestTopic(String interestTopic) {
+        this.interestTopic = interestTopic;
     }
 
     public String getColaborationName() {
@@ -56,5 +56,18 @@ public class Collaboration {
         this.language = language;
     }
 
-    
+    @Override
+    public boolean equals(Object object) {
+        Collaboration collaborationToCompare = (Collaboration) object;
+        if (collaborationToCompare.getIdColaboration() != this.getIdColaboration()) {
+            return false;
+        }
+        if (!collaborationToCompare.getColaborationName().equals(this.getColaborationName())) {
+            return false;
+        }
+        if (!collaborationToCompare.getStartDate().equals(this.getStartDate())) {
+            return false;
+        }
+        return true;
+    }
 }

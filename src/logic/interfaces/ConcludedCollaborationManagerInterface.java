@@ -9,4 +9,5 @@ public interface ConcludedCollaborationManagerInterface {
     public int updateRating(ConcludedCollaboration concludedCollaboration);
     public int uploadCertificates(ConcludedCollaboration concludedCollaboration);
     public int obtainCertificates(ConcludedCollaboration concludedCollaboration, String outputPath);
+    public ArrayList<ConcludedCollaboration> getConcludedCollaborations();
 }

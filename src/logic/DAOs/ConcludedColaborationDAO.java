@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import logic.domain.ConcludedCollaboration;
 import logic.interfaces.ConcludedCollaborationManagerInterface;
 
@@ -140,5 +141,33 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
             databaseConnection.closeConnection();
         }
         return result;
+    }
+
+    @Override
+    public ArrayList<ConcludedCollaboration> getConcludedCollaborations() {
+        String query = "SELECT * FROM ColaboracionConcluida";
+        Connection connection;
+        PreparedStatement statement;
+        ResultSet result;
+        ArrayList <ConcludedCollaboration> concludedCollaborationsResult = new ArrayList();
+        try{
+            connection = this.databaseConnection.getConnection();
+            statement = connection.prepareStatement(query);
+            result = statement.executeQuery();
+            while(result.next()) {
+                ConcludedCollaboration concludedCollaboration = new ConcludedCollaboration();
+                concludedCollaboration.setIdUser(result.getInt("temaInteres"));
+                concludedCollaboration.setIdColaboration(result.getInt("idColaboracion"));
+                concludedCollaboration.setNumberStudents(result.getInt("numeroEstudiantes"));
+                concludedCollaboration.setRating(result.getInt("calificacion"));
+                concludedCollaboration.setVisibility(result.getString("visibilidad"));
+                concludedCollaborationsResult.add(concludedCollaboration);
+            }
+        } catch(SQLException sqlException) {
+            concludedCollaborationsResult = null;
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return concludedCollaborationsResult;
     }
 }

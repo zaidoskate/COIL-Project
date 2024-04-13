@@ -2,7 +2,6 @@ package DAOs;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
-import dataaccess.DatabaseConnection;
 import logic.DAOs.CredentialDAO;
 import logic.domain.Credential;
 
@@ -13,11 +12,10 @@ public class CredentialDAOTest {
     
     @Test
     public void TestInsertCredentialSuccess(){
-        DatabaseConnection databaseConnection = new DatabaseConnection();
-        CredentialDAO credentialDAO = new CredentialDAO(databaseConnection);
+        CredentialDAO credentialDAO = new CredentialDAO();
         Credential credential = new Credential();
-        credential.setIdUser(13);
-        credential.setUser("Usuario1");
+        credential.setIdUser(12);
+        credential.setUser("Usuario12");
         credential.setPassword("pswd1234");
         
         int currentResult = credentialDAO.insertCredential(credential);
@@ -27,10 +25,9 @@ public class CredentialDAOTest {
     
     @Test
     public void TestgetIdUserByCredentialSuccess(){
-        DatabaseConnection databaseConnection = new DatabaseConnection();
-        CredentialDAO credentialDAO = new CredentialDAO(databaseConnection);
+        CredentialDAO credentialDAO = new CredentialDAO();
         Credential credential = new Credential();
-        credential.setUser("Usuario12");
+        credential.setUser("Usuario1");
         credential.setPassword("pswd1234");
         
         int currentResult = credentialDAO.getIdUserByCredential(credential);

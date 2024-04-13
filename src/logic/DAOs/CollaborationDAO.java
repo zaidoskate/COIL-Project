@@ -25,11 +25,11 @@ public class CollaborationDAO implements ColaborationManagerInterface {
             connection = this.databaseConnection.getConnection();
             statement = connection.prepareStatement(query);
             statement.setInt(1, colaboration.getIdColaboration());
-            statement.setString(2, colaboration.getArea());
-            statement.setString(3, colaboration.getColaborationName());
-            statement.setString(4, colaboration.getEndDate());
-            statement.setString(5, colaboration.getStartDate());
-            statement.setString(6, colaboration.getLanguage());
+            statement.setString(2, colaboration.getColaborationName());
+            statement.setString(3, colaboration.getEndDate());
+            statement.setString(4, colaboration.getStartDate());
+            statement.setString(5, colaboration.getLanguage());
+            statement.setString(6, colaboration.getInterestTopic());
             result = statement.executeUpdate();
         } catch(SQLException sqlException) {
             result = -1;
@@ -52,7 +52,7 @@ public class CollaborationDAO implements ColaborationManagerInterface {
             statement.setInt(1, id);
             result = statement.executeQuery();
             while(result.next()) {
-                colaboration.setArea(result.getString("area"));
+                colaboration.setInterestTopic(result.getString("temaInteres"));
                 colaboration.setColaborationName(result.getString("nombreColaboracion"));
                 colaboration.setEndDate(result.getString("fechaCierre"));
                 colaboration.setIdColaboration(result.getInt("idColaboracion"));
@@ -68,8 +68,8 @@ public class CollaborationDAO implements ColaborationManagerInterface {
     }
     
     @Override
-    public ArrayList<Collaboration> getColaborationsByArea(String area) {
-        String query = "SELECT * FROM Colaboracion WHERE idColaboracion = ?";
+    public ArrayList<Collaboration> getAllCollaborations() {
+        String query = "SELECT * FROM Colaboracion";
         Connection connection;
         PreparedStatement statement;
         ResultSet result;
@@ -77,11 +77,10 @@ public class CollaborationDAO implements ColaborationManagerInterface {
         try{
             connection = this.databaseConnection.getConnection();
             statement = connection.prepareStatement(query);
-            statement.setString(1, area);
             result = statement.executeQuery();
             while(result.next()) {
                 Collaboration colaboration = new Collaboration();
-                colaboration.setArea(result.getString("area"));
+                colaboration.setInterestTopic(result.getString("temaInteres"));
                 colaboration.setColaborationName(result.getString("nombreColaboracion"));
                 colaboration.setEndDate(result.getString("fechaCierre"));
                 colaboration.setIdColaboration(result.getInt("idColaboracion"));
@@ -95,5 +94,54 @@ public class CollaborationDAO implements ColaborationManagerInterface {
             databaseConnection.closeConnection();
         }
         return collaborationsResult;
+    }
+    
+    @Override
+    public ArrayList<Collaboration> getActiveCollaborations() {
+        String query = "SELECT * FROM Colaboracion WHERE  fechaCierre = Null";
+        Connection connection;
+        PreparedStatement statement;
+        ResultSet result;
+        ArrayList <Collaboration> collaborationsResult = new ArrayList();
+        try{
+            connection = this.databaseConnection.getConnection();
+            statement = connection.prepareStatement(query);
+            result = statement.executeQuery();
+            while(result.next()) {
+                Collaboration colaboration = new Collaboration();
+                colaboration.setInterestTopic(result.getString("temaInteres"));
+                colaboration.setColaborationName(result.getString("nombreColaboracion"));
+                colaboration.setEndDate(result.getString("fechaCierre"));
+                colaboration.setIdColaboration(result.getInt("idColaboracion"));
+                colaboration.setLanguage(result.getString("idioma"));
+                colaboration.setStartDate(result.getString("fechaInicio"));
+                collaborationsResult.add(colaboration);
+            }
+        } catch(SQLException sqlException) {
+            collaborationsResult = null;
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return collaborationsResult;
+    }
+    
+    @Override
+    public int updateEndDateByIdCollaboration(int idCollaboration, String date) {
+        int result = 0;
+        String query = "UPDATE Colaboracion SET fechaCierre = ? WHERE idColaboracion = ?";
+        Connection connection;
+        PreparedStatement statement;
+        try{
+            connection = this.databaseConnection.getConnection();
+            statement = connection.prepareStatement(query);
+            statement.setString(1, date);
+            statement.setInt(2, idCollaboration);
+            result = statement.executeUpdate();
+        } catch(SQLException sqlException) {
+            result = -1;
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return result;
     }
 }

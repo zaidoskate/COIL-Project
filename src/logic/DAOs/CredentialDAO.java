@@ -11,8 +11,8 @@ import java.sql.ResultSet;
 public class CredentialDAO implements CredentialManagerInterface {
     private final DatabaseConnection databaseConnection;
     
-    public CredentialDAO(DatabaseConnection databaseConnection){
-        this.databaseConnection = databaseConnection;
+    public CredentialDAO(){
+        this.databaseConnection = new DatabaseConnection();
     }
     @Override
     public int insertCredential(Credential credential) {

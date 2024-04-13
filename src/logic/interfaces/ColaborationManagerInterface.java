@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 public interface ColaborationManagerInterface {
     int addColaboration(Collaboration colaboration);
+    int updateEndDateByIdCollaboration(int idCollaboration, String date);
     Collaboration getColaborationById(int id);
-    ArrayList<Collaboration> getColaborationsByArea(String area);
+    ArrayList<Collaboration> getAllCollaborations();
+    ArrayList<Collaboration> getActiveCollaborations();
 }
