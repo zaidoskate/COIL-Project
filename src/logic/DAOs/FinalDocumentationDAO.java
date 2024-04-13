@@ -12,7 +12,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -130,12 +129,10 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
     @Override
     public int obtainProfessorFeedback(FinalDocumentation finalDocumentation, String outputPath) {
         Connection connection;
-        PreparedStatement statement = null;
-        FileOutputStream fileOutputStream = null;
         int result = 0;
         try {
             connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement("SELECT feedbackProfesor FROM DocumentacionFinal WHERE Colaboracion_idColaboracion = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT feedbackProfesor FROM DocumentacionFinal WHERE Colaboracion_idColaboracion = ?");
             statement.setInt(1, finalDocumentation.getIdColaboration());
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
@@ -158,12 +155,10 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
     @Override
     public int obtainMirrorProfessorFeedback(FinalDocumentation finalDocumentation, String outputPath) {
         Connection connection;
-        PreparedStatement statement = null;
-        FileOutputStream fileOutputStream = null;
         int result = 0;
         try {
             connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement("SELECT feedbackProfesorEspejo FROM DocumentacionFinal WHERE Colaboracion_idColaboracion = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT feedbackProfesorEspejo FROM DocumentacionFinal WHERE Colaboracion_idColaboracion = ?");
             statement.setInt(1, finalDocumentation.getIdColaboration());
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
@@ -186,12 +181,10 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
     @Override
     public int obtainStudentsFeedback(FinalDocumentation finalDocumentation, String outputPath) {
         Connection connection;
-        PreparedStatement statement = null;
-        FileOutputStream fileOutputStream = null;
         int result = 0;
         try {
             connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement("SELECT feedbackEstudiantado FROM DocumentacionFinal WHERE Colaboracion_idColaboracion = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT feedbackEstudiantado FROM DocumentacionFinal WHERE Colaboracion_idColaboracion = ?");
             statement.setInt(1, finalDocumentation.getIdColaboration());
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
@@ -214,12 +207,10 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
     @Override
     public int obtainMirrorStudentsFeedback(FinalDocumentation finalDocumentation, String outputPath) {
         Connection connection;
-        PreparedStatement statement = null;
-        FileOutputStream fileOutputStream = null;
         int result = 0;
         try {
             connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement("SELECT feedbackEstudiantadoEspejo FROM DocumentacionFinal WHERE Colaboracion_idColaboracion = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT feedbackEstudiantadoEspejo FROM DocumentacionFinal WHERE Colaboracion_idColaboracion = ?");
             statement.setInt(1, finalDocumentation.getIdColaboration());
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {

@@ -22,16 +22,15 @@ public class UvProfessorDAO implements UvProfessorManagerInterface{
     @Override
     public int insertUvProfessor(UvProfessor uvProfessor) {
         int result = 0;
-        String query = "INSERT INTO Profesoruv (numeroPersonal, region, Profesor_Usuario_idUsuario) VALUES (?, ?, ?)";
+        String query = "INSERT INTO Profesoruv (numeroPersonal, Profesor_Usuario_idUsuario, idFacultad) VALUES (?, ?, ?)";
         try{
             Connection connection = this.databaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, uvProfessor.getPersonalNumber());
-            statement.setString(2, uvProfessor.getRegion());
-            statement.setInt(3, uvProfessor.getIdUser());
+            statement.setInt(2, uvProfessor.getIdUser());
+            statement.setString(3, uvProfessor.getIdDepartment());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
             result = -1;
         } finally {
             databaseConnection.closeConnection();
@@ -41,7 +40,7 @@ public class UvProfessorDAO implements UvProfessorManagerInterface{
 
     @Override
     public UvProfessor getUvProfessorByIdUser(int idUser) {
-        String query = "SELECT numeroPersonal, region, Profesor_Usuario_idUsuario FROM ProfesorUv WHERE Profesor_Usuario_idUsuario = ?";
+        String query = "SELECT numeroPersonal, Profesor_Usuario_idUsuario, idFacultad FROM ProfesorUv WHERE Profesor_Usuario_idUsuario = ?";
         Connection connection;
         PreparedStatement statement;
         ResultSet result;
@@ -53,8 +52,8 @@ public class UvProfessorDAO implements UvProfessorManagerInterface{
             result = statement.executeQuery();
             while(result.next()) {
                 uvProfessorResult.setPersonalNumber(result.getString("numeroPersonal"));
-                uvProfessorResult.setRegion(result.getString("region"));
                 uvProfessorResult.setIdUser(result.getInt("Profesor_Usuario_idUsuario"));
+                uvProfessorResult.setIdDepartment(result.getString("idFacultad"));
             }
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();

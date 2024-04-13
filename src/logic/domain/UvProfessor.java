@@ -1,8 +1,9 @@
 package logic.domain;
 
 public class UvProfessor extends Professor {
+
     private String personalNumber;
-    private String region;
+    private String idDepartment;
 
     public String getPersonalNumber() {
         return personalNumber;
@@ -12,12 +13,12 @@ public class UvProfessor extends Professor {
         this.personalNumber = personalNumber;
     }
     
-    public String getRegion() {
-        return region;
+    public String getIdDepartment() {
+        return idDepartment;
     }
-    
-    public void setRegion(String region) {
-        this.region =  region;
+
+    public void setIdDepartment(String idDepartment) {
+        this.idDepartment = idDepartment;
     }
     
     @Override
@@ -26,7 +27,7 @@ public class UvProfessor extends Professor {
         if(! this.personalNumber.equals(uvProfessorToCompare.getPersonalNumber())) {
             return false;
         }
-        if(! this.region.equals(uvProfessorToCompare.getRegion())) {
+        if(! this.idDepartment.equals(uvProfessorToCompare.getIdDepartment())) {
             return false;
         }
         return true;

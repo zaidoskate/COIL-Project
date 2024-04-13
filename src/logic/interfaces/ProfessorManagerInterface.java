@@ -9,5 +9,4 @@ import logic.domain.Professor;
 
 public interface ProfessorManagerInterface {
     int insertProfessor(Professor professor);
-    ArrayList<Professor> getProfessorByAcademicArea(String academicArea);
 }

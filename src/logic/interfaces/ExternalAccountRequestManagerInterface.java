@@ -11,5 +11,5 @@ import logic.domain.ExternalAccountRequest;
  */
 public interface ExternalAccountRequestManagerInterface {
     public int insertExternalAccountRequest(ExternalAccountRequest externalAccountRequest);
-    public int deleteExternalAccountRequest(String mail);
+    public int deleteExternalAccountRequest(ExternalAccountRequest externalAccountRequest);
 }

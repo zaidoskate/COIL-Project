@@ -18,7 +18,7 @@ public class DataValidationTest {
 
     @Test
     public void testValidateWordSuccess() {
-        String input = "Palabra de prueba";
+        String input = "El motivo de mi oferta es hacer colaborar a mis 24 estudiantes";
         boolean expectedResult = true;
         boolean result = DataValidation.validateWord(input);
         assertEquals(expectedResult, result);
@@ -48,9 +48,17 @@ public class DataValidationTest {
         assertEquals(expectedResult, result);
     }
     
+    @Test 
+    public void testValidateNotBlanksSuccess() {
+        String text = "Hola como estas";
+        boolean expectedResult = true;
+        boolean result = DataValidation.validateNotBlanks(text);
+        assertEquals(expectedResult, result);
+    }
+    
     @Test
     public void testValidateWordFail() {
-        String input = "H0L4 3570 35 un test";
+        String input = "El motivo de mi oferta es colaborar?";
         boolean expectedResult = false;
         boolean result = DataValidation.validateWord(input);
         assertEquals(expectedResult, result);
@@ -80,4 +88,11 @@ public class DataValidationTest {
         assertEquals(expectedResult, result);
     }
     
+    @Test
+    public void testValidateNotBlanksFail() {
+        String text = "      ";
+        boolean expectedResult = false;
+        boolean result = DataValidation.validateNotBlanks(text);
+        assertEquals(expectedResult, result);
+    }
 }

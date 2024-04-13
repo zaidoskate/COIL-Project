@@ -13,7 +13,7 @@ import java.util.regex.*;
 public class DataValidation {
     
     public static boolean validateWord(String input) {
-        String validWordForm = "^[a-zA-ZáéíóúÁÉÍÓüÜ ]+$";
+        String validWordForm = "^[a-zA-Z0-9. ]*$";
         return input.matches(validWordForm);
     }
     
@@ -33,8 +33,11 @@ public class DataValidation {
         return date.matches(validDateForm);
     }
     
-    public static boolean validateNumber(String number) {
-        String validNumberForm = "";
-        return number.matches(validNumberForm);
+    public static boolean validateNotBlanks(String text) {
+        if(text.isBlank()) {
+            return false;
+        }
+        return true;
     }
+    
 }

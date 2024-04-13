@@ -24,14 +24,22 @@ public class UniversityDAOTest {
         university.setUniversityId(2);
         university.setName("Universidad Autonoma de Mexico");
         university.setCountry("Mexico");
-        university.setRepresentativeName("Enrique");
-        university.setRepresentativeLastName("Graue Wiechers");
-        university.setRepresentativeEmail("enriqueGraue@hotmail.com");
-        university.setRepresentativePhone("5501992424");
         
         UniversityDAO universityDAO = new UniversityDAO();
         int result = universityDAO.insertUniversity(university);
         
         assertNotEquals(-1, result);
+    }
+    
+    @Test
+    public void testInsertUniversityFail() {
+        University university = new University();
+        university.setUniversityId(2);
+        university.setCountry("Mexico");
+        
+        UniversityDAO universityDAO = new UniversityDAO();
+        int result = universityDAO.insertUniversity(university);
+        
+        assertEquals(-1, result);
     }
 }
