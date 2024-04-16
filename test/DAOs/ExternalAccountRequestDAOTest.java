@@ -5,6 +5,7 @@
 package DAOs;
 
 import logic.DAOs.ExternalAccountRequestDAO;
+import logic.LogicException;
 import logic.domain.ExternalAccountRequest;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -25,8 +26,24 @@ public class ExternalAccountRequestDAOTest {
         externalAccountRequest.setIdUniversity(1);
         
         ExternalAccountRequestDAO externalAccountRequestDAO = new ExternalAccountRequestDAO();
+        try{
+            int result = externalAccountRequestDAO.insertExternalAccountRequest(externalAccountRequest);
+            assertEquals(1, result);
+        } catch(LogicException logicException) {
+            fail("No se ha dado de alta la universidad" + logicException.getMessage());
+        }
+    }
+    
+    @Test(expected = LogicException.class)
+    public void testInsertExternalAccountRequestFailed() throws LogicException {
+        ExternalAccountRequest externalAccountRequest = new ExternalAccountRequest();
+        externalAccountRequest.setName("Luis");
+        externalAccountRequest.setLastName("Vargas");
+        externalAccountRequest.setEmail("luis33@gmail.com");
+        
+        ExternalAccountRequestDAO externalAccountRequestDAO = new ExternalAccountRequestDAO();
         int result = externalAccountRequestDAO.insertExternalAccountRequest(externalAccountRequest);
-        assertEquals(1, result);
+        assertEquals(0, result);
     }
     
     @Test
@@ -38,7 +55,11 @@ public class ExternalAccountRequestDAOTest {
         externalAccountRequest.setIdUniversity(1);
         
         ExternalAccountRequestDAO externalAccountRequestDAO = new ExternalAccountRequestDAO();
-        int result = externalAccountRequestDAO.deleteExternalAccountRequest(externalAccountRequest);
-        assertEquals(1, result);
+        try{
+            int result = externalAccountRequestDAO.deleteExternalAccountRequest(externalAccountRequest);
+            assertEquals(1, result);
+        } catch(LogicException logicException) {
+            fail("No se ha eliminado la universidad" + logicException.getMessage());
+        }
     }
 }

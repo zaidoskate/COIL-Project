@@ -4,9 +4,10 @@
  */
 package logic.interfaces;
 
+import logic.LogicException;
 import logic.domain.UvProfessor;
 
 public interface UvProfessorManagerInterface {
-    int insertUvProfessor(UvProfessor uvProfessor);
-    UvProfessor getUvProfessorByIdUser(int idUser);
+    int insertUvProfessor(UvProfessor uvProfessor) throws LogicException;
+    UvProfessor getUvProfessorByIdUser(int idUser) throws LogicException;
 }

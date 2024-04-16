@@ -4,6 +4,7 @@
  */
 package DAOs;
 
+import logic.LogicException;
 import logic.DAOs.UvAccountRequestDAO;
 import logic.domain.UvAccountRequest;
 import static org.junit.Assert.*;
@@ -26,12 +27,15 @@ public class UvAccountRequestDAOTest {
         uvAccountRequest.setIdDepartment("FEIX");
         
         UvAccountRequestDAO uvAccountRequestDAO = new UvAccountRequestDAO();
-        int result = uvAccountRequestDAO.insertUvAccountRequest(uvAccountRequest);
-        assertEquals(1, result);
+        try {
+            uvAccountRequestDAO.insertUvAccountRequest(uvAccountRequest);
+        } catch (LogicException logicException) {
+            fail("No se ha creado la solicitud de cuenta UV" + logicException.getMessage());
+        }
     }
     
-    @Test
-    public void testInsertUvAccountRequestFail() {
+    @Test(expected = LogicException.class)
+    public void testInsertUvAccountRequestFailed() throws LogicException {
         UvAccountRequest uvAccountRequest = new UvAccountRequest();
         uvAccountRequest.setIdRequest(1);
         uvAccountRequest.setName("Juan Carlos");
@@ -40,8 +44,7 @@ public class UvAccountRequestDAOTest {
         uvAccountRequest.setPersonalNumber(23);
         
         UvAccountRequestDAO uvAccountRequestDAO = new UvAccountRequestDAO();
-        int result = uvAccountRequestDAO.insertUvAccountRequest(uvAccountRequest);
-        assertEquals(-1, result);
+        uvAccountRequestDAO.insertUvAccountRequest(uvAccountRequest);
     }
     
     @Test
@@ -55,12 +58,16 @@ public class UvAccountRequestDAOTest {
         uvAccountRequest.setIdDepartment("FEIX");
         
         UvAccountRequestDAO uvAccountRequestDAO = new UvAccountRequestDAO();
-        int result = uvAccountRequestDAO.deleteUvAccountRequest(uvAccountRequest);
-        assertEquals(1, result);
+        try {
+            int result = uvAccountRequestDAO.deleteUvAccountRequest(uvAccountRequest);
+            assertEquals(1, result);
+        } catch (LogicException logicException) {
+            fail("No se ha podido eliminar la solicitud de cuenta UV" + logicException.getMessage());
+        }
     }
     
     @Test
-    public void testDeleteUvAccountRequestFail() {
+    public void testDeleteUvAccountRequestFailed() throws LogicException {
         UvAccountRequest uvAccountRequest = new UvAccountRequest();
         uvAccountRequest.setName("Juan Carlos");
         uvAccountRequest.setLastName("Perez Arriaga");

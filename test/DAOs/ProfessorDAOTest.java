@@ -4,6 +4,7 @@
  */
 package DAOs;
 
+import logic.LogicException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import logic.domain.Professor;
@@ -20,18 +21,44 @@ public class ProfessorDAOTest {
         professor.setIdUser(5);
 
         ProfessorDAO professorDAO = new ProfessorDAO();
-        int result = professorDAO.insertProfessor(professor);
+        try{
+            int result = professorDAO.insertProfessor(professor);
+            assertEquals(1, result);
+        } catch(LogicException sqlException) {
+            fail("Error al insertar al profesor" + sqlException.getMessage());
+        }
         
-        assertEquals(1, result);
     }
     
-    @Test
-    public void testInsertProfessorFail() {
+    @Test(expected = LogicException.class)
+    public void testInsertProfessorFail() throws LogicException{
         Professor professor = new Professor();
 
         ProfessorDAO professorDAO = new ProfessorDAO();
         int result = professorDAO.insertProfessor(professor);
         
         assertEquals(-1, result);
+    }
+    
+    @Test
+    public void testGetUniversityFromAProfessorSuccess() {
+        ProfessorDAO professorDAO = new ProfessorDAO();
+        try {
+            String university = professorDAO.getUniversityFromAProfessor(30);
+            assertEquals("Universidad de Bogota", university);
+        } catch(LogicException logicException) {
+            fail("Error al obtener la universidad del profesor: " + logicException.getMessage());
+        }
+    }
+    
+    @Test
+    public void testGetUniversityFromANonProfessor() {
+        ProfessorDAO professorDAO = new ProfessorDAO();
+        try {
+            String university = professorDAO.getUniversityFromAProfessor(8);
+            assertNull(university);
+        } catch(LogicException logicException) {
+            fail("Error al obtener la universidad del profesor: " + logicException.getMessage());
+        }
     }
 }

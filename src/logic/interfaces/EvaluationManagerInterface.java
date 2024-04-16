@@ -4,13 +4,17 @@
  */
 package logic.interfaces;
 
+import java.util.ArrayList;
 import logic.domain.Evaluation;
+import java.sql.SQLException;
+import logic.LogicException;
 /**
  *
  * @author zaido
  */
 public interface EvaluationManagerInterface {
-    public int insertEvaluation(Evaluation evaluation);
-    public Evaluation getEvaluationByIdOfferCollaboration(int idOfferCollaboration);
+    public int insertEvaluation(Evaluation evaluation) throws LogicException;
+    public Evaluation getEvaluationByIdOfferCollaboration(int idOfferCollaboration) throws LogicException;
+    public ArrayList<Evaluation> getEvaluationByIdCoordinator(int idCoordinator) throws LogicException;
     
 }

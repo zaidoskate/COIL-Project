@@ -10,6 +10,7 @@ import logic.interfaces.ExternalAccountRequestManagerInterface;
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import logic.LogicException;
 /**
  *
  * @author zaido
@@ -22,7 +23,7 @@ public class ExternalAccountRequestDAO implements ExternalAccountRequestManagerI
     }
     
     @Override
-    public int insertExternalAccountRequest(ExternalAccountRequest externalAccountRequest) {
+    public int insertExternalAccountRequest(ExternalAccountRequest externalAccountRequest) throws LogicException {
         int result = 0;
         String query = "INSERT INTO SolicitudCuentaExterno (idSolicitud, nombre, apellido, correo, idUniversidad) VALUES (?, ?, ?, ?, ?)";
         try {
@@ -35,7 +36,7 @@ public class ExternalAccountRequestDAO implements ExternalAccountRequestManagerI
             statement.setInt(5, externalAccountRequest.getIdUniversity());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
-            result = -1;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();
         }
@@ -43,7 +44,7 @@ public class ExternalAccountRequestDAO implements ExternalAccountRequestManagerI
     }
 
     @Override
-    public int deleteExternalAccountRequest(ExternalAccountRequest externalAccountRequest) {
+    public int deleteExternalAccountRequest(ExternalAccountRequest externalAccountRequest) throws LogicException {
         int result = 0;
         String query = "DELETE FROM SolicitudCuentaExterno WHERE idSolicitud = ?";
         try {
@@ -52,7 +53,7 @@ public class ExternalAccountRequestDAO implements ExternalAccountRequestManagerI
             statement.setInt(1, externalAccountRequest.getIdRequest());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
-            result = -1;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();
         }

@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import logic.LogicException;
 
 public class UvProfessorDAO implements UvProfessorManagerInterface{
     private final DatabaseConnection databaseConnection;
@@ -20,7 +21,7 @@ public class UvProfessorDAO implements UvProfessorManagerInterface{
     }
 
     @Override
-    public int insertUvProfessor(UvProfessor uvProfessor) {
+    public int insertUvProfessor(UvProfessor uvProfessor) throws LogicException{
         int result = 0;
         String query = "INSERT INTO Profesoruv (numeroPersonal, Profesor_Usuario_idUsuario, idFacultad) VALUES (?, ?, ?)";
         try{
@@ -31,7 +32,7 @@ public class UvProfessorDAO implements UvProfessorManagerInterface{
             statement.setString(3, uvProfessor.getIdDepartment());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
-            result = -1;
+            throw new LogicException("Error al insertar el profesor UV", sqlException);
         } finally {
             databaseConnection.closeConnection();
         }
@@ -39,28 +40,26 @@ public class UvProfessorDAO implements UvProfessorManagerInterface{
     }
 
     @Override
-    public UvProfessor getUvProfessorByIdUser(int idUser) {
+    public UvProfessor getUvProfessorByIdUser(int idUser) throws LogicException{
         String query = "SELECT numeroPersonal, Profesor_Usuario_idUsuario, idFacultad FROM ProfesorUv WHERE Profesor_Usuario_idUsuario = ?";
-        Connection connection;
-        PreparedStatement statement;
-        ResultSet result;
         UvProfessor uvProfessorResult = new UvProfessor();
         try{
-            connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement(query);
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idUser);
-            result = statement.executeQuery();
+            ResultSet result = statement.executeQuery();
             while(result.next()) {
                 uvProfessorResult.setPersonalNumber(result.getString("numeroPersonal"));
                 uvProfessorResult.setIdUser(result.getInt("Profesor_Usuario_idUsuario"));
                 uvProfessorResult.setIdDepartment(result.getString("idFacultad"));
             }
         } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            uvProfessorResult = null;
+            throw new LogicException("Error al obtener el profesor: ", sqlException);
         } finally {
             databaseConnection.closeConnection();
         }
         return uvProfessorResult;
     }
+    
+    //GetUvProfesorbynumeropersonal
 }

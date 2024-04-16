@@ -4,6 +4,7 @@
  */
 package logic.interfaces;
 
+import logic.LogicException;
 import logic.domain.FinalDocumentation;
 /**
  *
@@ -11,14 +12,14 @@ import logic.domain.FinalDocumentation;
  */
 public interface FinalDocumentationManagerInterface {
     
-    public int uploadProfessorFeedback(FinalDocumentation finalDocumentation);
-    public int uploadMirrorProfessorFeedback(FinalDocumentation finalDocumentation);
-    public int uploadStudentsFeedback(FinalDocumentation finalDocumentation);
-    public int uploadMirrorStudentsFeedback(FinalDocumentation finalDocumentation);
+    public int uploadProfessorFeedback(FinalDocumentation finalDocumentation) throws LogicException;
+    public int uploadMirrorProfessorFeedback(FinalDocumentation finalDocumentation) throws LogicException;
+    public int uploadStudentsFeedback(FinalDocumentation finalDocumentation) throws LogicException;
+    public int uploadMirrorStudentsFeedback(FinalDocumentation finalDocumentation) throws LogicException;
     
-    public int obtainProfessorFeedback(FinalDocumentation finalDocumentation, String outputPath);
-    public int obtainMirrorProfessorFeedback(FinalDocumentation finalDocumentation, String outputPath);
-    public int obtainStudentsFeedback(FinalDocumentation finalDocumentation, String outputPath);
-    public int obtainMirrorStudentsFeedback(FinalDocumentation finalDocumentation, String outputPath);
+    public int obtainProfessorFeedback(FinalDocumentation finalDocumentation, String outputPath) throws LogicException;
+    public int obtainMirrorProfessorFeedback(FinalDocumentation finalDocumentation, String outputPath) throws LogicException;
+    public int obtainStudentsFeedback(FinalDocumentation finalDocumentation, String outputPath) throws LogicException;
+    public int obtainMirrorStudentsFeedback(FinalDocumentation finalDocumentation, String outputPath) throws LogicException;
     
 }

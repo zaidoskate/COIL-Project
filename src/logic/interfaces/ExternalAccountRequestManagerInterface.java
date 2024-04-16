@@ -4,12 +4,13 @@
  */
 package logic.interfaces;
 
+import logic.LogicException;
 import logic.domain.ExternalAccountRequest;
 /**
  *
  * @author zaido
  */
 public interface ExternalAccountRequestManagerInterface {
-    public int insertExternalAccountRequest(ExternalAccountRequest externalAccountRequest);
-    public int deleteExternalAccountRequest(ExternalAccountRequest externalAccountRequest);
+    public int insertExternalAccountRequest(ExternalAccountRequest externalAccountRequest) throws LogicException;
+    public int deleteExternalAccountRequest(ExternalAccountRequest externalAccountRequest) throws LogicException;
 }

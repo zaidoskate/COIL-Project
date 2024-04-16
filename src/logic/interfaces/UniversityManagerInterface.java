@@ -4,8 +4,9 @@
  */
 package logic.interfaces;
 
+import logic.LogicException;
 import logic.domain.University;
 
 public interface UniversityManagerInterface {
-    int insertUniversity(University university);
+    int insertUniversity(University university) throws LogicException;
 }

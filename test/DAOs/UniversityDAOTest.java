@@ -4,6 +4,7 @@
  */
 package DAOs;
 
+import logic.LogicException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import logic.domain.University;
@@ -26,13 +27,17 @@ public class UniversityDAOTest {
         university.setCountry("Mexico");
         
         UniversityDAO universityDAO = new UniversityDAO();
-        int result = universityDAO.insertUniversity(university);
+        try {
+            int result = universityDAO.insertUniversity(university);
+            assertEquals(1, result);
+        } catch (LogicException logicException) {
+            fail("No se ha podido insertar la universidad" + logicException.getMessage());
+        }
         
-        assertNotEquals(-1, result);
     }
     
-    @Test
-    public void testInsertUniversityFail() {
+    @Test(expected = LogicException.class)
+    public void testInsertUniversityFailed() throws LogicException {
         University university = new University();
         university.setUniversityId(2);
         university.setCountry("Mexico");
@@ -40,6 +45,6 @@ public class UniversityDAOTest {
         UniversityDAO universityDAO = new UniversityDAO();
         int result = universityDAO.insertUniversity(university);
         
-        assertEquals(-1, result);
+        assertEquals(0, result);
     }
 }

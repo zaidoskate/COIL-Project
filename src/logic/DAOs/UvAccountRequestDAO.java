@@ -10,6 +10,7 @@ import logic.interfaces.UvAccountRequestManagerInterface;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import logic.LogicException;
 
 /**
  *
@@ -23,8 +24,7 @@ public class UvAccountRequestDAO implements UvAccountRequestManagerInterface{
    }
 
     @Override
-    public int insertUvAccountRequest(UvAccountRequest uvAccountRequest) {
-        int result = 0;
+    public void insertUvAccountRequest(UvAccountRequest uvAccountRequest) throws LogicException{
         String query = "INSERT INTO SolicitudCuentaUv (idSolicitud, nombre, apellido, correo, numeropersonal, idFacultad) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             Connection connection = databaseConnection.getConnection();
@@ -35,17 +35,16 @@ public class UvAccountRequestDAO implements UvAccountRequestManagerInterface{
             statement.setString(4, uvAccountRequest.getEmail());
             statement.setInt(5, uvAccountRequest.getPersonalNumber());
             statement.setString(6, uvAccountRequest.getIdDepartment());
-            result = statement.executeUpdate();
+            statement.executeUpdate();
         } catch (SQLException sqlException) {
-            result = -1;
+            throw new LogicException("Error al crear la cuenta", sqlException);
         } finally {
             databaseConnection.closeConnection();
         }
-        return result;
     }
 
     @Override
-    public int deleteUvAccountRequest(UvAccountRequest uvAccountRequest) {
+    public int deleteUvAccountRequest(UvAccountRequest uvAccountRequest) throws LogicException{
         int result = 0;
         String query = "DELETE FROM SolicitudCuentaUv WHERE idSolicitud = ?";
         try {
@@ -54,7 +53,7 @@ public class UvAccountRequestDAO implements UvAccountRequestManagerInterface{
             statement.setInt(1, uvAccountRequest.getIdRequest());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
-            result = -1;
+            throw new LogicException("Error al eliminar la cuenta de profesor UV", sqlException);
         } finally {
             databaseConnection.closeConnection();
         }

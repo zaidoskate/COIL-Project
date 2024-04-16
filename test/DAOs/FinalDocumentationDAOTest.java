@@ -7,6 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import logic.domain.FinalDocumentation;
 import logic.DAOs.FinalDocumentationDAO;
+import logic.LogicException;
 
 /**
  *
@@ -23,8 +24,12 @@ public class FinalDocumentationDAOTest {
         FinalDocumentation finalDocumentation = new FinalDocumentation();
         finalDocumentation.setIdColaboration(1);
         finalDocumentation.setProfessorFeedback(filePath);
-        int result = finalDocumentationDAO.uploadProfessorFeedback(finalDocumentation);
-        assertEquals(1, result);
+        try {
+            int result = finalDocumentationDAO.uploadProfessorFeedback(finalDocumentation);
+            assertEquals(1, result);
+        } catch(LogicException logicException) {
+            fail("No se ha cargado el feedback del profesor " + logicException.getMessage());
+        }
     }
     
     @Test
@@ -34,8 +39,12 @@ public class FinalDocumentationDAOTest {
         FinalDocumentation finalDocumentation = new FinalDocumentation();
         finalDocumentation.setIdColaboration(1);
         finalDocumentation.setMirrorProfessorFeedback(filePath);
-        int result = finalDocumentationDAO.uploadMirrorProfessorFeedback(finalDocumentation);
-        assertEquals(1, result);
+        try {
+            int result = finalDocumentationDAO.uploadMirrorProfessorFeedback(finalDocumentation);
+            assertEquals(1, result);
+        } catch(LogicException logicException) {
+            fail("No se ha cargado el feedback del profesor espejo " + logicException.getMessage());
+        }
     }
     
     @Test
@@ -45,8 +54,12 @@ public class FinalDocumentationDAOTest {
         FinalDocumentation finalDocumentation = new FinalDocumentation();
         finalDocumentation.setIdColaboration(1);
         finalDocumentation.setStudentsFeedback(filePath);
-        int result = finalDocumentationDAO.uploadStudentsFeedback(finalDocumentation);
-        assertEquals(1, result);
+        try{
+            int result = finalDocumentationDAO.uploadStudentsFeedback(finalDocumentation);
+            assertEquals(1, result);
+        } catch(LogicException logicException) {
+            fail("No se ha cargado el feedback de los estudiantes " +logicException.getMessage());
+        }
     }
     
     @Test
@@ -56,11 +69,13 @@ public class FinalDocumentationDAOTest {
         FinalDocumentation finalDocumentation = new FinalDocumentation();
         finalDocumentation.setIdColaboration(1);
         finalDocumentation.setMirrorStudentsFeedback(filePath);
-        int result = finalDocumentationDAO.uploadMirrorStudentsFeedback(finalDocumentation);
-        assertEquals(1, result);
+        try{
+            int result = finalDocumentationDAO.uploadMirrorStudentsFeedback(finalDocumentation);
+            assertEquals(1, result);
+        } catch(LogicException logicException) {
+            fail("No se ha cargado el feedback de los estudiantes espejo " +logicException.getMessage());
+        }
     }
-    
-    /* OBTAIN */
     
     @Test
     public void testObtainProfessorFeedbackSuccess() {
@@ -68,8 +83,12 @@ public class FinalDocumentationDAOTest {
         FinalDocumentationDAO finalDocumentationDAO = new FinalDocumentationDAO();
         FinalDocumentation finalDocumentation = new FinalDocumentation();
         finalDocumentation.setIdColaboration(1);
-        int result = finalDocumentationDAO.obtainProfessorFeedback(finalDocumentation, outputPath);
-        assertEquals(1, result);
+        try{
+            int result = finalDocumentationDAO.obtainProfessorFeedback(finalDocumentation, outputPath);
+            assertEquals(1, result);
+        } catch(LogicException logicException) {
+            fail("No se ha descargado el feedback del profesor " + logicException.getMessage());
+        }
     }
     
     @Test
@@ -78,8 +97,12 @@ public class FinalDocumentationDAOTest {
         FinalDocumentationDAO finalDocumentationDAO = new FinalDocumentationDAO();
         FinalDocumentation finalDocumentation = new FinalDocumentation();
         finalDocumentation.setIdColaboration(1);
-        int result = finalDocumentationDAO.obtainMirrorProfessorFeedback(finalDocumentation, outputPath);
-        assertEquals(1, result);
+        try {
+            int result = finalDocumentationDAO.obtainMirrorProfessorFeedback(finalDocumentation, outputPath);
+            assertEquals(1, result);
+        } catch(LogicException logicException) {
+            fail("No se ha descargado feedback del profesor espejo " + logicException.getMessage());
+        }
     }
     
     @Test
@@ -88,8 +111,12 @@ public class FinalDocumentationDAOTest {
         FinalDocumentationDAO finalDocumentationDAO = new FinalDocumentationDAO();
         FinalDocumentation finalDocumentation = new FinalDocumentation();
         finalDocumentation.setIdColaboration(1);
-        int result = finalDocumentationDAO.obtainStudentsFeedback(finalDocumentation, outputPath);
-        assertEquals(1, result);
+        try {
+            int result = finalDocumentationDAO.obtainStudentsFeedback(finalDocumentation, outputPath);
+            assertEquals(1, result);
+        } catch(LogicException logicException) {
+            fail("No se ha descargado el feedback de los estudiantes " + logicException.getMessage());
+        }
     }
     
     @Test
@@ -98,8 +125,12 @@ public class FinalDocumentationDAOTest {
         FinalDocumentationDAO finalDocumentationDAO = new FinalDocumentationDAO();
         FinalDocumentation finalDocumentation = new FinalDocumentation();
         finalDocumentation.setIdColaboration(1);
-        int result = finalDocumentationDAO.obtainMirrorStudentsFeedback(finalDocumentation, outputPath);
-        assertEquals(1, result);
+        try {
+            int result = finalDocumentationDAO.obtainMirrorStudentsFeedback(finalDocumentation, outputPath);
+            assertEquals(1, result);
+        } catch(LogicException logicException) {
+            fail("No se ha descargado el feedback de los estudiantes espejo " + logicException.getMessage());
+        }
     }
 
 }

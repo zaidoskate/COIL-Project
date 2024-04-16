@@ -10,6 +10,7 @@ import logic.interfaces.UniversityManagerInterface;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import logic.LogicException;
 
 public class UniversityDAO implements UniversityManagerInterface {
     private final DatabaseConnection databaseConnection;
@@ -19,8 +20,8 @@ public class UniversityDAO implements UniversityManagerInterface {
     }
 
     @Override
-    public int insertUniversity(University university) {
-        int result = university.getUniversityId();
+    public int insertUniversity(University university) throws LogicException {
+        int result = 0;
         String query = "INSERT INTO Universidad (idUniversidad, nombre, pais) VALUES (?, ?, ?)";
         Connection connection;
         PreparedStatement statement;
@@ -30,9 +31,9 @@ public class UniversityDAO implements UniversityManagerInterface {
             statement.setInt(1, university.getUniversityId());
             statement.setString(2, university.getName());
             statement.setString(3, university.getCountry());
-            statement.executeUpdate();
+            result = statement.executeUpdate();
         } catch (SQLException sqlException) {
-            result = -1;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde",sqlException);
         } finally {
             databaseConnection.closeConnection();
         }

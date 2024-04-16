@@ -5,8 +5,10 @@
 package logic.interfaces;
 
 import java.util.ArrayList;
+import logic.LogicException;
 import logic.domain.Professor;
 
 public interface ProfessorManagerInterface {
-    int insertProfessor(Professor professor);
+    int insertProfessor(Professor professor) throws LogicException;
+    String getUniversityFromAProfessor(int idUser) throws LogicException;
 }
