@@ -1,14 +1,13 @@
 package logic.interfaces;
 
 import logic.domain.ProfessorBelongsToCollaboration;
-import logic.domain.Professor;
 import logic.domain.Collaboration;
 import java.util.ArrayList;
+import logic.domain.Professor;
         
 public interface ProfessorBelongsToCollaborationManagerInterface {
-    int addBelongs(ProfessorBelongsToCollaboration belongs);
-    ArrayList<Collaboration> getColaborationsByProfessor(Professor professor);
-    Professor getProfessorByIdCollaboration(String idCollaboration);
-    Professor getMirrorProfessorByIdCollaboration(String idCollaboration);
-    
+    int addProfessorBelongsToCollaboration(ProfessorBelongsToCollaboration belongs);
+    int deleteProfessorBelongsToCollaborationByIdCollaboration(int idCollaboration);
+    Professor getMirrorProfessorByIdCollaboration(int idCollaboration);
+    ArrayList<Collaboration> getCollaborationsByStatus(String statusCollaboration);
 }

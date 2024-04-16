@@ -10,5 +10,9 @@ import logic.domain.CollaborationOffer;
  * @author chima
  */
 public interface CollaborationOfferManagerInterface {
-    int insertColaborationOffer(CollaborationOffer colaborationOffer); 
+    int insertColaborationOffer(CollaborationOffer colaborationOffer);
+    //eliminar
+    //actualizar estatus de colaboración 
+    //obtener colaboraciones pendientes: regresar arraylist de collaborationoffer buscar por estatus
+    //obtener oferta colaboracion: regresa collaboration offer buscar con id
 }

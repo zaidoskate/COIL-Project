@@ -37,11 +37,34 @@ public class CollaborationOfferCandidateDAO implements CollaborationOfferCandida
             result = statement.executeUpdate();
             
         } catch(SQLException sqlException) {
-            sqlException.printStackTrace();
-            return result;
+            result = -1;
         } finally {
             databaseConnection.closeConnection();
         }
         return result;
+    }
+    
+    
+    public CollaborationOfferCandidate GetCollaborationOfferCandidateByIdCollaborationOffer(int idCollaboration) {
+        String query = "SELECT * FROM candidatosofertacolaboracion WHERE idOfertaColaboracion = ?";
+        Connection connection;
+        PreparedStatement statement;
+        ResultSet result;
+        CollaborationOfferCandidate CollaborationOfferCandidateResult = new CollaborationOfferCandidate();
+        try{
+            connection = this.databaseConnection.getConnection();
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, idCollaboration);
+            result = statement.executeQuery();
+            while(result.next()) {
+                CollaborationOfferCandidateResult.setIdCollaboration(result.getInt("idColaboracion"));
+                CollaborationOfferCandidateResult.setIdUser(result.getInt("idUsuario"));
+            }
+        } catch(SQLException sqlException) {
+            CollaborationOfferCandidateResult = null;
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return CollaborationOfferCandidateResult;
     }
 }

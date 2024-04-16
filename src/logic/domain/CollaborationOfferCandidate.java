@@ -28,4 +28,16 @@ public class CollaborationOfferCandidate {
         this.idUser = idUser;
     }
     
+    @Override 
+    public boolean equals (Object object) {
+        CollaborationOfferCandidate collaborationOfferCandidatesToCompare = (CollaborationOfferCandidate) object;
+        if (this.idCollaboration != collaborationOfferCandidatesToCompare.getIdCollaboration()) {
+            return false;
+        }
+        if (this.idUser != collaborationOfferCandidatesToCompare.getIdUser()) {
+            return false;
+        }
+        return true;
+    }
+    
 }

@@ -11,4 +11,12 @@ public class ExternalProfessor extends Professor{
         this.idUniversity = idUniversity;
     }
     
+    @Override 
+    public boolean equals (Object object) {
+        ExternalProfessor externalProfessorToCompare = (ExternalProfessor) object;
+        if (this.idUniversity != externalProfessorToCompare.getIdUniversity()) {
+            return false;
+        }
+        return true;
+    }
 }

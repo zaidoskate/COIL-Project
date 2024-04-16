@@ -10,6 +10,7 @@ import logic.interfaces.EvidenceFolderManagerInterface;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.ResultSet;
 
 /**
  *
@@ -36,11 +37,37 @@ public class EvidenceFolderDAO implements EvidenceFolderManagerInterface {
             statement.setString(5, evidenceFolder.getCreationDate());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
-            return result;
+            result = -1;
         } finally {
             databaseConnection.closeConnection();
         }
         return result;
+    }
+    
+    public EvidenceFolder getEvidenceFolderByIdCollaboration(int idCollaboration) {
+        String query = "SELECT * FROM folderevidencia WHERE colaboracion_idcolaboracion = ?";
+        Connection connection;
+        PreparedStatement statement;
+        ResultSet result;
+        EvidenceFolder evidenceFolderResult = new EvidenceFolder();
+        try{
+            connection = this.databaseConnection.getConnection();
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, idCollaboration);
+            result = statement.executeQuery();
+            while(result.next()) {
+                evidenceFolderResult.setIdCollaboration(result.getInt("Colaboracion_idColaboracion"));
+                evidenceFolderResult.setIdEvidenceFolder(result.getInt("idFolderEvidencia"));
+                evidenceFolderResult.setName(result.getString("nombre"));
+                evidenceFolderResult.setDescription(result.getString("descripcion"));
+                evidenceFolderResult.setCreationDate(result.getString("fechaCreacion"));
+            }
+        } catch(SQLException sqlException) {
+            evidenceFolderResult = null;
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return evidenceFolderResult;
     }
     
 }

@@ -19,17 +19,18 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
     }
     
     @Override
-    public int addBelongs(ProfessorBelongsToCollaboration belongs) {
+    public int addProfessorBelongsToCollaboration(ProfessorBelongsToCollaboration professorBelongsToCollaboration) {
         int result = 0;
-        String query = "INSERT INTO Pertenece VALUES (?, ?, ?)";
+        String query = "INSERT INTO profesorpertenececolaboracion VALUES (?, ?, ?, ?)";
         Connection connection;
         PreparedStatement statement;
         try{
             connection = this.databaseConnection.getConnection();
             statement = connection.prepareStatement(query);
-            statement.setInt(1, belongs.getIdUser());
-            statement.setInt(2, belongs.getIdColaboration());
-            statement.setString(3, belongs.getColaborationStatus());
+            statement.setInt(1, professorBelongsToCollaboration.getIdColaboration());
+            statement.setInt(2, professorBelongsToCollaboration.getIdUser());
+            statement.setInt(3, professorBelongsToCollaboration.getIdUserMirrorClass());
+            statement.setString(4, professorBelongsToCollaboration.getColaborationStatus());
             result = statement.executeUpdate();
             
         } catch(SQLException sqlException) {
@@ -41,40 +42,7 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
     }
     
     @Override
-    public ArrayList<Collaboration> getColaborationsByProfessor(Professor professor) {
-        String query = "SELECT * FROM Pertenece INNER JOIN Colaboracion ON "
-                     + "Pertenece.Colaboracion_idColaboracion = Colaboracion.idColaboracion "
-                     + "WHERE Pertenece.Professor_Usuario_idUsuario = ?";
-        Connection connection;
-        PreparedStatement statement;
-        ResultSet result;
-        ArrayList<Collaboration> colaborationsResult = new ArrayList();
-        try{
-            connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement(query);
-            statement.setInt(1, professor.getIdUser());
-            result = statement.executeQuery();
-            Collaboration colaboration;
-            while(result.next()) {
-                colaboration = new Collaboration();
-                colaboration.setArea(result.getString("area"));
-                colaboration.setColaborationName(result.getString("nombreColaboracion"));
-                colaboration.setEndDate(result.getString("fechaCierre"));
-                colaboration.setIdColaboration(result.getInt("idColaboracion"));
-                colaboration.setLanguage(result.getString("idioma"));
-                colaboration.setStartDate(result.getString("fechaInicio"));
-                colaborationsResult.add(colaboration);
-            }
-        } catch(SQLException sqlException) {
-            colaborationsResult = new ArrayList();
-        } finally {
-            databaseConnection.closeConnection();
-        }
-        return colaborationsResult;
-    }
-    
-    @Override
-    public Professor getProfessorByIdCollaboration(String idCollaboration) {
+    public ArrayList<Collaboration> getCollaborationsByStatus(String statusCollaboration) {
         String query = "SELECT * FROM Profesor INNER JOIN Pertenece ON "
                      + "Pertenece.Profesor_idUsuario = Profesor.Usuario_idUsuario "
                      + "INNER JOIN Usuario ON Profesor.Usuario_idUsuario = Usuario.idUsuario "
@@ -104,7 +72,7 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
     }
     
     @Override
-    public Professor getMirrorProfessorByIdCollaboration(String idCollaboration) {
+    public Professor getMirrorProfessorByIdCollaboration(int idCollaboration) {
         String query = "SELECT * FROM Profesor INNER JOIN Pertenece ON "
                      + "Pertenece.Profesor_idUsuarioEspejo = Profesor.Usuario_idUsuario "
                      + "INNER JOIN Usuario ON Profesor.Usuario_idUsuario = Usuario.idUsuario "
@@ -131,5 +99,25 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
             databaseConnection.closeConnection();
         }
         return professor;
+    }
+
+    @Override
+    public int deleteProfessorBelongsToCollaborationByIdCollaboration(int idCollaboration) {
+        int result = 0;
+        String query = "DELETE FROM profesorpertenececolaboracion WHERE Colaboracion_idColaboracion = ?";
+        Connection connection;
+        PreparedStatement statement;
+        try{
+            connection = this.databaseConnection.getConnection();
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, idCollaboration);
+            result = statement.executeUpdate();
+            
+        } catch(SQLException sqlException) {
+            result = -1;
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return result;
     }
 }

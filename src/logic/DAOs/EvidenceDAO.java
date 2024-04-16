@@ -32,7 +32,7 @@ public class EvidenceDAO implements EvidenceManagerInterface {
     @Override
     public int uploadEvidence(Evidence evidence) {
         Connection connection;
-        int result = -1;
+        int result = 1;
         String query = "INSERT INTO evidencia (FolderEvidencia_idFolderEvidencia, nombre, autor, fechacreacion, archivo) VALUES (?, ?, ?, ?, ?)";
         try {
             connection = this.databaseConnection.getConnection();
@@ -47,11 +47,9 @@ public class EvidenceDAO implements EvidenceManagerInterface {
             result = statement.executeUpdate();
             statement.close();
         } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            return result;
+            result = -1;
         } catch (FileNotFoundException fileNotFoundException) {
-            fileNotFoundException.printStackTrace();
-            return result;
+            result = -2;
         } finally {
             databaseConnection.closeConnection();
         }
@@ -67,9 +65,9 @@ public class EvidenceDAO implements EvidenceManagerInterface {
             connection = this.databaseConnection.getConnection();
             statement = connection.prepareStatement("SELECT archivo FROM evidencia WHERE folderevidencia_idfolderevidencia = ?");
             statement.setInt(1, evidence.getIdFolderEvidence());
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                Blob blob = rs.getBlob("archivo");
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Blob blob = resultSet.getBlob("archivo");
                 InputStream inputStream = blob.getBinaryStream();
                 File outputFile = new File(outputPath);
                 fileOutputStream = new FileOutputStream(outputFile);
@@ -81,18 +79,15 @@ public class EvidenceDAO implements EvidenceManagerInterface {
                 return 1;
             }
         } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
             return -1;
         } catch (FileNotFoundException fileNotFoundException) {
-            fileNotFoundException.printStackTrace();
-            return -1;
+            return -2;
         } catch (IOException ioException){
-            ioException.printStackTrace();
-            return -1;
+            return -3;
         } finally {
             databaseConnection.closeConnection();
         }
-        return -1;
+        return -4;
     }
     
 }
