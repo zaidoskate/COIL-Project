@@ -56,5 +56,15 @@ public class ConcludedCollaboration {
         this.certificatesPath = certificatesPath;
     }
     
-    
+    @Override
+    public boolean equals(Object object) {
+        ConcludedCollaboration concludedCollaborationToCompare = (ConcludedCollaboration) object;
+        if(this.getIdColaboration() != concludedCollaborationToCompare.getIdColaboration()) {
+            return false;
+        }
+        if(this.getIdUser() != concludedCollaborationToCompare.getIdUser()) {
+            return false;
+        }
+        return true;
+    }
 }

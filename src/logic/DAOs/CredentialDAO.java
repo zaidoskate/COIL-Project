@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import logic.LogicException;
 
 public class CredentialDAO implements CredentialManagerInterface {
     private final DatabaseConnection databaseConnection;
@@ -15,7 +16,7 @@ public class CredentialDAO implements CredentialManagerInterface {
         this.databaseConnection = new DatabaseConnection();
     }
     @Override
-    public int insertCredential(Credential credential) {
+    public int insertCredential(Credential credential)  throws LogicException {
         int result = 0;
         String query = "INSERT INTO Credencial VALUES (?, ?, ?)";
         Connection connection;
@@ -28,7 +29,7 @@ public class CredentialDAO implements CredentialManagerInterface {
             statement.setInt(3, credential.getIdUser());
             result = statement.executeUpdate();
         } catch(SQLException sqlException) {
-            result = -1;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();
         }
@@ -36,26 +37,27 @@ public class CredentialDAO implements CredentialManagerInterface {
     }
     
     @Override
-    public int getIdUserByCredential(Credential credential) {
-        String query = "SELECT Usuario_idUsuario FROM Credencial WHERE usuario = ? and clave = ?";
+    public Credential getCredentialByUser(String user)  throws LogicException {
+        String query = "SELECT * FROM Credencial WHERE usuario = ?";
         Connection connection;
         PreparedStatement statement;
         ResultSet result;
-        int idResult = -1;
+        Credential credential = new Credential();
         try{
             connection = this.databaseConnection.getConnection();
             statement = connection.prepareStatement(query);
             statement.setString(1, credential.getUser());
-            statement.setString(2, credential.getPassword());
             result = statement.executeQuery();
             while(result.next()) {
-                idResult = result.getInt("Usuario_idUsuario");
+                credential.setIdUser(result.getInt("Usuario_idUsuario"));
+                credential.setUser(user);
+                credential.setPassword(result.getString("clave"));
             }
         } catch(SQLException sqlException) {
-            idResult = -1;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();
         }
-        return idResult;
+        return credential;
     }
 }

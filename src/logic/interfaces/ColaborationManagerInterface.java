@@ -1,12 +1,13 @@
 package logic.interfaces;
 
 import logic.domain.Collaboration;
+import logic.LogicException;
 import java.util.ArrayList;
 
 public interface ColaborationManagerInterface {
-    int addColaboration(Collaboration colaboration);
-    int updateEndDateByIdCollaboration(int idCollaboration, String date);
-    Collaboration getColaborationById(int id);
-    ArrayList<Collaboration> getAllCollaborations();
-    ArrayList<Collaboration> getActiveCollaborations();
+    int addColaboration(Collaboration colaboration) throws LogicException;
+    int updateEndDateByIdCollaboration(int idCollaboration, String date) throws LogicException;
+    Collaboration getColaborationById(int id) throws LogicException;
+    ArrayList<Collaboration> getAllCollaborations() throws LogicException;
+    ArrayList<Collaboration> getActiveCollaborations() throws LogicException;
 }

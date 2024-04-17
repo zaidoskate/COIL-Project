@@ -1,6 +1,7 @@
 package DAOs;
 
 import logic.DAOs.ProfessorBelongsToCollaborationDAO;
+import logic.LogicException;
 import logic.domain.ProfessorBelongsToCollaboration;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -11,10 +12,10 @@ public class ProfessorBelongsToCollaborationTest {
     }
     
     @Test
-    public void testAddProfessorBelongsToCollaborationSuccess() {
+    public void testAddProfessorBelongsToCollaborationSuccess()  throws LogicException {
         ProfessorBelongsToCollaborationDAO professorBelongsToCollaborationDAO = new ProfessorBelongsToCollaborationDAO();
         ProfessorBelongsToCollaboration professorBelongsToCollaboration = new ProfessorBelongsToCollaboration();
-        professorBelongsToCollaboration.setIdColaboration(124);
+        professorBelongsToCollaboration.setIdColaboration(133);
         professorBelongsToCollaboration.setIdUser(13);
         professorBelongsToCollaboration.setIdUserMirrorClass(11);
         professorBelongsToCollaboration.setColaborationStatus("Terminada");
@@ -26,7 +27,7 @@ public class ProfessorBelongsToCollaborationTest {
     }
     
     @Test
-    public void testDeleteProfessorBelongsToCollaborationSuccess() {
+    public void testDeleteProfessorBelongsToCollaborationSuccess()  throws LogicException {
         ProfessorBelongsToCollaborationDAO professorBelongsToCollaborationDAO = new ProfessorBelongsToCollaborationDAO();
         
         int expectedResult = 1;

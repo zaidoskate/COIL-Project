@@ -10,12 +10,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import logic.FileDownloader;
+import logic.LogicException;
 import logic.domain.StartupDocumentation;
 import logic.interfaces.StartupDocumentationManagerInterface;
 
@@ -26,12 +27,12 @@ import logic.interfaces.StartupDocumentationManagerInterface;
 public class StartupDocumentationDAO implements StartupDocumentationManagerInterface {
     private final DatabaseConnection databaseConnection;
     
-    public StartupDocumentationDAO(DatabaseConnection databaseConnection){
-        this.databaseConnection = databaseConnection;
+    public StartupDocumentationDAO(){
+        this.databaseConnection = new DatabaseConnection();
     }
     
     @Override
-    public int addStartupDocumentation(StartupDocumentation startupDocumentation) {
+    public int addStartupDocumentation(StartupDocumentation startupDocumentation) throws LogicException{
         int result = 0;
         String query = "INSERT INTO documentacioninicio(Colaboracion_idColaboracion) VALUES (?)";
         Connection connection;
@@ -42,7 +43,7 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
             statement.setInt(1, startupDocumentation.getIdColaboration());
             result = statement.executeUpdate();
         } catch(SQLException sqlException) {
-            result = -1;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();
         }
@@ -50,7 +51,7 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
     }
 
     @Override
-    public int uploadSyllabus(StartupDocumentation startupDocumentation) {
+    public int uploadSyllabus(StartupDocumentation startupDocumentation) throws LogicException {
         Connection connection;
         int result = 0;
         String query = "UPDATE DocumentacionInicio SET Syllabus = ? WHERE Colaboracion_idColaboracion = ?";
@@ -64,9 +65,9 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
             result = statement.executeUpdate();
             statement.close();
         } catch (SQLException sqlException) {
-            result = -1;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } catch (FileNotFoundException fileNotFoundException) {
-            result = -2;
+            throw new LogicException("No existe tal archivo en la ruta especificada", fileNotFoundException);
         } finally {
             databaseConnection.closeConnection();
         }
@@ -74,7 +75,7 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
     }
 
     @Override
-    public int uploadStudentsList(StartupDocumentation startupDocumentation) {
+    public int uploadStudentsList(StartupDocumentation startupDocumentation) throws LogicException {
         Connection connection;
         int result = 0;
         String query = "UPDATE DocumentacionInicio SET listaEstudiantado = ? WHERE Colaboracion_idColaboracion = ?";
@@ -88,9 +89,9 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
             result = statement.executeUpdate();
             statement.close();
         } catch (SQLException sqlException) {
-            result = -1;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } catch (FileNotFoundException fileNotFoundException) {
-            result = -2;
+            throw new LogicException("No existe tal archivo en la ruta especificada", fileNotFoundException);
         } finally {
             databaseConnection.closeConnection();
         }
@@ -98,7 +99,7 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
     }
 
     @Override
-    public int uploadMirrorStudentsList(StartupDocumentation startupDocumentation) {
+    public int uploadMirrorStudentsList(StartupDocumentation startupDocumentation) throws LogicException {
         Connection connection;
         int result = 0;
         String query = "UPDATE DocumentacionInicio SET listaEstudiantadoEspejo = ? WHERE Colaboracion_idColaboracion = ?";
@@ -112,9 +113,9 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
             result = statement.executeUpdate();
             statement.close();
         } catch (SQLException sqlException) {
-            result = -1;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } catch (FileNotFoundException fileNotFoundException) {
-            result = -2;
+            throw new LogicException("No existe tal archivo en la ruta especificada", fileNotFoundException);
         } finally {
             databaseConnection.closeConnection();
         }
@@ -122,34 +123,28 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
     }
 
     @Override
-    public int obtainSyllabus(StartupDocumentation startupDocumentation, String outputPath) {
+    public int obtainSyllabus(StartupDocumentation startupDocumentation, String outputPath) throws LogicException {
         Connection connection;
         PreparedStatement statement = null;
         FileOutputStream fileOutputStream = null;
         int result =0;
         try {
             connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement("SELECT sylabbus FROM DocumentacionInicio WHERE Colaboracion_idColaboracion = ?");
+            statement = connection.prepareStatement("SELECT syllabus FROM DocumentacionInicio WHERE Colaboracion_idColaboracion = ?");
             statement.setInt(1, startupDocumentation.getIdColaboration());
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 Blob blob = rs.getBlob("syllabus");
-                InputStream inputStream = blob.getBinaryStream();
-                File outputFile = new File(outputPath);
-                fileOutputStream = new FileOutputStream(outputFile);
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    fileOutputStream.write(buffer, 0, bytesRead);
-                }
+                FileDownloader.transformBlobToFile(outputPath, blob);
                 result = 1;
             }
         } catch (SQLException sqlException) {
-            result = -1;
+            sqlException.printStackTrace();
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } catch (FileNotFoundException fileNotFoundException) {
-            result = -2;
+            throw new LogicException("No existe tal archivo en la ruta especificada", fileNotFoundException);
         } catch (IOException ioException){
-            result = -3;
+            throw new LogicException("Error de entrada y salida de archivos", ioException);
         } finally {
             databaseConnection.closeConnection();
         }
@@ -157,7 +152,7 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
     }
 
     @Override
-    public int obtainStudentsList(StartupDocumentation startupDocumentation, String outputPath) {
+    public int obtainStudentsList(StartupDocumentation startupDocumentation, String outputPath) throws LogicException {
         Connection connection;
         PreparedStatement statement = null;
         FileOutputStream fileOutputStream = null;
@@ -169,22 +164,15 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 Blob blob = rs.getBlob("listaEstudiantado");
-                InputStream inputStream = blob.getBinaryStream();
-                File outputFile = new File(outputPath);
-                fileOutputStream = new FileOutputStream(outputFile);
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    fileOutputStream.write(buffer, 0, bytesRead);
-                }
+                FileDownloader.transformBlobToFile(outputPath, blob);
                 result = 1;
             }
         } catch (SQLException sqlException) {
-            result = -1;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } catch (FileNotFoundException fileNotFoundException) {
-            result = -2;
+            throw new LogicException("No existe tal archivo en la ruta especificada", fileNotFoundException);
         } catch (IOException ioException){
-            result = -3;
+            throw new LogicException("Error de entrada y salida de archivos", ioException);
         } finally {
             databaseConnection.closeConnection();
         }
@@ -192,7 +180,7 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
     }
 
     @Override
-    public int obtainMirrorStudentsList(StartupDocumentation startupDocumentation, String outputPath) {
+    public int obtainMirrorStudentsList(StartupDocumentation startupDocumentation, String outputPath) throws LogicException {
         Connection connection;
         PreparedStatement statement = null;
         FileOutputStream fileOutputStream = null;
@@ -204,22 +192,15 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 Blob blob = rs.getBlob("listaEstudiantadoEspejo");
-                InputStream inputStream = blob.getBinaryStream();
-                File outputFile = new File(outputPath);
-                fileOutputStream = new FileOutputStream(outputFile);
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    fileOutputStream.write(buffer, 0, bytesRead);
-                }
+                FileDownloader.transformBlobToFile(outputPath, blob);
                 result = 1;
             }
         } catch (SQLException sqlException) {
-            result = -1;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } catch (FileNotFoundException fileNotFoundException) {
-            result = -2;
+            throw new LogicException("No existe tal archivo en la ruta especificada", fileNotFoundException);
         } catch (IOException ioException){
-            result = -3;
+            throw new LogicException("Error de entrada y salida de archivos", ioException);
         } finally {
             databaseConnection.closeConnection();
         }

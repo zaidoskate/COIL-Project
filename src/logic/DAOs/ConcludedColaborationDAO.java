@@ -6,25 +6,26 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import logic.FileDownloader;
+import logic.LogicException;
 import logic.domain.ConcludedCollaboration;
 import logic.interfaces.ConcludedCollaborationManagerInterface;
 
 public class ConcludedColaborationDAO implements ConcludedCollaborationManagerInterface {
     private final DatabaseConnection databaseConnection;
     
-    public ConcludedColaborationDAO(DatabaseConnection databaseConnection){
-        this.databaseConnection = databaseConnection;
+    public ConcludedColaborationDAO(){
+        this.databaseConnection = new DatabaseConnection();
     }
     
     @Override
-    public int addConcludedCollaboration(ConcludedCollaboration concludedCollaboration) {
+    public int addConcludedCollaboration(ConcludedCollaboration concludedCollaboration) throws LogicException{
         int result = 0;
         String query = "INSERT INTO colaboracionconcluida(Colaboracion_idColaboracion, Usuario_idUsuario, numeroEstudiantes) VALUES (?, ?, ?)";
         Connection connection;
@@ -37,7 +38,7 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
             statement.setInt(3, concludedCollaboration.getNumberStudents());
             result = statement.executeUpdate();
         } catch(SQLException sqlException) {
-            result = -1;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();
         }
@@ -45,7 +46,7 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
     }
     
     @Override
-    public int updateVisibility(ConcludedCollaboration concludedCollaboration) {
+    public int updateVisibility(ConcludedCollaboration concludedCollaboration) throws LogicException{
         int result = 0;
         String query = "UPDATE colaboracionconcluida SET visibilidad = ? WHERE Colaboracion_idColaboracion = ?";
         Connection connection;
@@ -57,7 +58,7 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
             statement.setInt(2, concludedCollaboration.getIdColaboration());
             result = statement.executeUpdate();
         } catch(SQLException sqlException) {
-            result = -1;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();
         }
@@ -65,19 +66,19 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
     }
     
     @Override
-    public int updateRating(ConcludedCollaboration concludedCollaboration) {
+    public int updateRating(ConcludedCollaboration concludedCollaboration) throws LogicException{
         int result = 0;
-        String query = "UPDATE colaboracionconcluida SET reting = ? WHERE Colaboracion_idColaboracion = ?";
+        String query = "UPDATE colaboracionconcluida SET calificacion = ? WHERE Colaboracion_idColaboracion = ?";
         Connection connection;
         PreparedStatement statement;
         try{
             connection = this.databaseConnection.getConnection();
             statement = connection.prepareStatement(query);
-            statement.setDouble(1, concludedCollaboration.getRating());
+            statement.setInt(1, concludedCollaboration.getRating());
             statement.setInt(2, concludedCollaboration.getIdColaboration());
             result = statement.executeUpdate();
         } catch(SQLException sqlException) {
-            result = -1;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();
         }
@@ -85,7 +86,7 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
     }
     
     @Override
-    public int uploadCertificates(ConcludedCollaboration concludedCollaboration) {
+    public int uploadCertificates(ConcludedCollaboration concludedCollaboration) throws LogicException{
         Connection connection;
         int result = 0;
         String query = "UPDATE colaboracionconcluida SET constancias = ? WHERE Colaboracion_idColaboracion = ?";
@@ -99,9 +100,9 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
             result = statement.executeUpdate();
             statement.close();
         } catch (SQLException sqlException) {
-            result = -1;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } catch (FileNotFoundException fileNotFoundException) {
-            result = -2;
+            throw new LogicException("No existe tal archivo en la ruta especificada", fileNotFoundException);
         } finally {
             databaseConnection.closeConnection();
         }
@@ -109,7 +110,7 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
     }
 
     @Override
-    public int obtainCertificates(ConcludedCollaboration concludedCollaboration, String outputPath) {
+    public int obtainCertificates(ConcludedCollaboration concludedCollaboration, String outputPath) throws LogicException{
         Connection connection;
         PreparedStatement statement = null;
         FileOutputStream fileOutputStream = null;
@@ -118,25 +119,18 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
             connection = this.databaseConnection.getConnection();
             statement = connection.prepareStatement("SELECT constancias FROM colaboracionconcluida WHERE Colaboracion_idColaboracion = ?");
             statement.setInt(1, concludedCollaboration.getIdColaboration());
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                Blob blob = rs.getBlob("constancias");
-                InputStream inputStream = blob.getBinaryStream();
-                File outputFile = new File(outputPath);
-                fileOutputStream = new FileOutputStream(outputFile);
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    fileOutputStream.write(buffer, 0, bytesRead);
-                }
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Blob blob = resultSet.getBlob("constancias");
+                FileDownloader.transformBlobToFile(outputPath, blob);
                 result = 1;
             }
         } catch (SQLException sqlException) {
-            result = -1;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } catch (FileNotFoundException fileNotFoundException) {
-            result = -2;
+            throw new LogicException("No existe tal archivo en la ruta especificada", fileNotFoundException);
         } catch (IOException ioException){
-            result = -3;
+            throw new LogicException("Error de entrada y salida de archivos", ioException);
         } finally {
             databaseConnection.closeConnection();
         }
@@ -144,8 +138,8 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
     }
 
     @Override
-    public ArrayList<ConcludedCollaboration> getConcludedCollaborations() {
-        String query = "SELECT * FROM ColaboracionConcluida";
+    public ArrayList<ConcludedCollaboration> getConcludedCollaborations() throws LogicException{
+        String query = "select Colaboracion_idColaboracion, Usuario_idUsuario from colaboracionconcluida";
         Connection connection;
         PreparedStatement statement;
         ResultSet result;
@@ -156,15 +150,12 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
             result = statement.executeQuery();
             while(result.next()) {
                 ConcludedCollaboration concludedCollaboration = new ConcludedCollaboration();
-                concludedCollaboration.setIdUser(result.getInt("temaInteres"));
-                concludedCollaboration.setIdColaboration(result.getInt("idColaboracion"));
-                concludedCollaboration.setNumberStudents(result.getInt("numeroEstudiantes"));
-                concludedCollaboration.setRating(result.getInt("calificacion"));
-                concludedCollaboration.setVisibility(result.getString("visibilidad"));
+                concludedCollaboration.setIdColaboration(result.getInt("Colaboracion_idColaboracion"));
+                concludedCollaboration.setIdUser(result.getInt("Usuario_idUsuario"));
                 concludedCollaborationsResult.add(concludedCollaboration);
             }
         } catch(SQLException sqlException) {
-            concludedCollaborationsResult = null;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();
         }

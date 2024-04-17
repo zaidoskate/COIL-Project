@@ -2,6 +2,7 @@ package DAOs;
 
 import java.util.ArrayList;
 import logic.DAOs.CollaborationDAO;
+import logic.LogicException;
 import logic.domain.Collaboration;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -12,7 +13,7 @@ public class CollaborationDAOTest {
     }
     
     @Test
-    public void testAddCollaborationSuccess() {
+    public void testAddCollaborationSuccess() throws LogicException{
         CollaborationDAO collaborationDAO = new CollaborationDAO();
         Collaboration collaboration = new Collaboration();
         collaboration.setColaborationName("Colaboracion4");
@@ -26,7 +27,7 @@ public class CollaborationDAOTest {
     }
     
     @Test
-    public void testGetCollaborationById() {
+    public void testGetCollaborationById() throws LogicException{
         CollaborationDAO collaborationDAO = new CollaborationDAO();
         Collaboration currentResultCollaboration = collaborationDAO.getColaborationById(124);
         
@@ -39,7 +40,7 @@ public class CollaborationDAOTest {
     }
     
     @Test
-    public void testUpdateEndDateByIdCollaboration() {
+    public void testUpdateEndDateByIdCollaboration() throws LogicException{
         CollaborationDAO collaborationDAO = new CollaborationDAO();
         
         int currentResult = collaborationDAO.updateEndDateByIdCollaboration(124, "2025-01-01");
@@ -49,7 +50,7 @@ public class CollaborationDAOTest {
     }
     
     @Test
-    public void testGetAllCollaborations() {
+    public void testGetAllCollaborations() throws LogicException{
         CollaborationDAO collaborationDAO = new CollaborationDAO();
         ArrayList<Collaboration> collaborationsResult = collaborationDAO.getAllCollaborations();
         
@@ -83,7 +84,7 @@ public class CollaborationDAOTest {
     }
     
     @Test
-    public void testGetActiveCollaborations() {
+    public void testGetActiveCollaborations() throws LogicException{
         CollaborationDAO collaborationDAO = new CollaborationDAO();
         ArrayList<Collaboration> collaborationsResult = collaborationDAO.getAllCollaborations();
         

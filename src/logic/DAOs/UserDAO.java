@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import logic.LogicException;
 
 public class UserDAO implements UserManagerInterface {
     private final DatabaseConnection databaseConnection;
@@ -16,7 +17,7 @@ public class UserDAO implements UserManagerInterface {
     }
     
     @Override
-    public int addUser(User user) {
+    public int addUser(User user)  throws LogicException {
         int result = user.getIdUser();
         String query = "INSERT INTO Usuario VALUES (?, ?, ?, ?)";
         Connection connection;
@@ -31,7 +32,7 @@ public class UserDAO implements UserManagerInterface {
             statement.executeUpdate();
             
         } catch(SQLException sqlException) {
-            result = -1;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();
         }
@@ -39,7 +40,7 @@ public class UserDAO implements UserManagerInterface {
     }
     
     @Override
-    public User getUserById(int id) {
+    public User getUserById(int id) throws LogicException  {
         String query = "SELECT * FROM Usuario WHERE idUsuario = ?";
         Connection connection;
         PreparedStatement statement;
@@ -57,7 +58,7 @@ public class UserDAO implements UserManagerInterface {
                 userResult.setEmail(result.getString("correo"));
             }
         } catch(SQLException sqlException) {
-            userResult = null;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();
         }

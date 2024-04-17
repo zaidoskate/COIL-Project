@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import logic.LogicException;
 import logic.domain.Collaboration;
 import logic.interfaces.ColaborationManagerInterface;
 
@@ -16,7 +17,7 @@ public class CollaborationDAO implements ColaborationManagerInterface {
     }
     
     @Override
-    public int addColaboration(Collaboration colaboration) {
+    public int addColaboration(Collaboration colaboration) throws LogicException{
         int result = 0;
         String query = "INSERT INTO Colaboracion VALUES (?, ?, ?, ?, ?, ?)";
         Connection connection;
@@ -32,7 +33,7 @@ public class CollaborationDAO implements ColaborationManagerInterface {
             statement.setString(6, colaboration.getInterestTopic());
             result = statement.executeUpdate();
         } catch(SQLException sqlException) {
-            result = -1;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();
         }
@@ -40,7 +41,7 @@ public class CollaborationDAO implements ColaborationManagerInterface {
     }
     
     @Override
-    public Collaboration getColaborationById(int id) {
+    public Collaboration getColaborationById(int id) throws LogicException{
         String query = "SELECT * FROM Colaboracion WHERE idColaboracion = ?";
         Connection connection;
         PreparedStatement statement;
@@ -60,7 +61,7 @@ public class CollaborationDAO implements ColaborationManagerInterface {
                 colaboration.setStartDate(result.getString("fechaInicio"));
             }
         } catch(SQLException sqlException) {
-            colaboration = null;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();
         }
@@ -68,7 +69,7 @@ public class CollaborationDAO implements ColaborationManagerInterface {
     }
     
     @Override
-    public ArrayList<Collaboration> getAllCollaborations() {
+    public ArrayList<Collaboration> getAllCollaborations() throws LogicException{
         String query = "SELECT * FROM Colaboracion";
         Connection connection;
         PreparedStatement statement;
@@ -89,7 +90,7 @@ public class CollaborationDAO implements ColaborationManagerInterface {
                 collaborationsResult.add(colaboration);
             }
         } catch(SQLException sqlException) {
-            collaborationsResult = null;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();
         }
@@ -97,7 +98,7 @@ public class CollaborationDAO implements ColaborationManagerInterface {
     }
     
     @Override
-    public ArrayList<Collaboration> getActiveCollaborations() {
+    public ArrayList<Collaboration> getActiveCollaborations() throws LogicException{
         String query = "SELECT * FROM Colaboracion WHERE  fechaCierre = Null";
         Connection connection;
         PreparedStatement statement;
@@ -118,7 +119,7 @@ public class CollaborationDAO implements ColaborationManagerInterface {
                 collaborationsResult.add(colaboration);
             }
         } catch(SQLException sqlException) {
-            collaborationsResult = null;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();
         }
@@ -126,7 +127,7 @@ public class CollaborationDAO implements ColaborationManagerInterface {
     }
     
     @Override
-    public int updateEndDateByIdCollaboration(int idCollaboration, String date) {
+    public int updateEndDateByIdCollaboration(int idCollaboration, String date) throws LogicException{
         int result = 0;
         String query = "UPDATE Colaboracion SET fechaCierre = ? WHERE idColaboracion = ?";
         Connection connection;
@@ -138,7 +139,7 @@ public class CollaborationDAO implements ColaborationManagerInterface {
             statement.setInt(2, idCollaboration);
             result = statement.executeUpdate();
         } catch(SQLException sqlException) {
-            result = -1;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();
         }
