@@ -22,15 +22,14 @@ public class UniversityDAO implements UniversityManagerInterface {
     @Override
     public int insertUniversity(University university) throws LogicException {
         int result = 0;
-        String query = "INSERT INTO Universidad (idUniversidad, nombre, pais) VALUES (?, ?, ?)";
+        String query = "INSERT INTO Universidad (nombre, pais) VALUES (?, ?)";
         Connection connection;
         PreparedStatement statement;
         try{
             connection = this.databaseConnection.getConnection();
             statement = connection.prepareStatement(query);
-            statement.setInt(1, university.getUniversityId());
-            statement.setString(2, university.getName());
-            statement.setString(3, university.getCountry());
+            statement.setString(1, university.getName());
+            statement.setString(2, university.getCountry());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde",sqlException);

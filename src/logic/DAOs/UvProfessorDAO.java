@@ -41,7 +41,7 @@ public class UvProfessorDAO implements UvProfessorManagerInterface{
 
     @Override
     public UvProfessor getUvProfessorByIdUser(int idUser) throws LogicException{
-        String query = "SELECT numeroPersonal, Profesor_Usuario_idUsuario, idFacultad FROM ProfesorUv WHERE Profesor_Usuario_idUsuario = ?";
+        String query = "SELECT * FROM ProfesorUv WHERE Profesor_Usuario_idUsuario = ?";
         UvProfessor uvProfessorResult = new UvProfessor();
         try{
             Connection connection = this.databaseConnection.getConnection();

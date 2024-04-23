@@ -25,15 +25,14 @@ public class ExternalAccountRequestDAO implements ExternalAccountRequestManagerI
     @Override
     public int insertExternalAccountRequest(ExternalAccountRequest externalAccountRequest) throws LogicException {
         int result = 0;
-        String query = "INSERT INTO SolicitudCuentaExterno (idSolicitud, nombre, apellido, correo, idUniversidad) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO SolicitudCuentaExterno (nombre, apellido, correo, idUniversidad) VALUES (?, ?, ?, ?)";
         try {
             Connection connection =  databaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, externalAccountRequest.getIdRequest());
-            statement.setString(2, externalAccountRequest.getName());
-            statement.setString(3, externalAccountRequest.getLastName());
-            statement.setString(4, externalAccountRequest.getEmail());
-            statement.setInt(5, externalAccountRequest.getIdUniversity());
+            statement.setString(1, externalAccountRequest.getName());
+            statement.setString(2, externalAccountRequest.getLastName());
+            statement.setString(3, externalAccountRequest.getEmail());
+            statement.setInt(4, externalAccountRequest.getIdUniversity());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);

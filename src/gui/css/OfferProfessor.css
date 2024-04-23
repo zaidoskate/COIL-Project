@@ -1,0 +1,58 @@
+.label {
+    -fx-alignment: CENTER;
+}
+
+.menu-bar {
+    -fx-background-color:  rgba(254,60,87,0.8);
+    -fx-alignment: CENTER;
+    -fx-background-radiux: 20;
+}
+
+.menu:hover {
+    -fx-background-color: rgba(254,60,87,1);
+}
+
+.table-view {
+    -fx-background-color:   rgba(79, 79, 79, 0.3);
+    -fx-background-radius: 8;
+}
+
+.table-column{
+    -fx-background-color:   rgba(79, 79, 79, 0.3);
+}
+
+.table-view .table-cell {
+    -fx-text-color: black;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: rgba(79, 79, 79, 0.7);
+}
+
+.button {
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.button:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.button-accion {
+    -fx-background-color: #0095FF;
+    -fx-border-color: #004474;
+    -fx-text-fill: white;   
+}
+
+.button-regresar {
+    -fx-background-color: gray; 
+    -fx-border-color: #ffffff; 
+    -fx-text-fill: white;
+}
+
+.shadowed {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 5, 5);
+}

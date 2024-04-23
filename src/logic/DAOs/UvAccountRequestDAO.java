@@ -24,23 +24,24 @@ public class UvAccountRequestDAO implements UvAccountRequestManagerInterface{
    }
 
     @Override
-    public void insertUvAccountRequest(UvAccountRequest uvAccountRequest) throws LogicException{
-        String query = "INSERT INTO SolicitudCuentaUv (idSolicitud, nombre, apellido, correo, numeropersonal, idFacultad) VALUES (?, ?, ?, ?, ?, ?)";
+    public int insertUvAccountRequest(UvAccountRequest uvAccountRequest) throws LogicException{
+        int result = 0;
+        String query = "INSERT INTO SolicitudCuentaUv (nombre, apellido, correo, numeropersonal, idFacultad) VALUES (?, ?, ?, ?, ?)";
         try {
             Connection connection = databaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, uvAccountRequest.getIdRequest());
-            statement.setString(2, uvAccountRequest.getName());
-            statement.setString(3, uvAccountRequest.getLastName());
-            statement.setString(4, uvAccountRequest.getEmail());
-            statement.setInt(5, uvAccountRequest.getPersonalNumber());
-            statement.setString(6, uvAccountRequest.getIdDepartment());
-            statement.executeUpdate();
+            statement.setString(1, uvAccountRequest.getName());
+            statement.setString(2, uvAccountRequest.getLastName());
+            statement.setString(3, uvAccountRequest.getEmail());
+            statement.setInt(4, uvAccountRequest.getPersonalNumber());
+            statement.setString(5, uvAccountRequest.getIdDepartment());
+            result = statement.executeUpdate();
         } catch (SQLException sqlException) {
             throw new LogicException("Error al crear la cuenta", sqlException);
         } finally {
             databaseConnection.closeConnection();
         }
+        return result;
     }
 
     @Override

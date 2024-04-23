@@ -4,10 +4,12 @@
  */
 package DAOs;
 
+import java.util.ArrayList;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import logic.domain.CollaborationOffer;
 import logic.DAOs.CollaborationOfferDAO;
+import logic.LogicException;
 
 /**
  *
@@ -36,4 +38,40 @@ public class CollaborationOfferDAOTest {
         assertNotEquals(0, result);
     }
     
+    @Test
+    public void testGetApprovedCollaborationOffer() {
+        CollaborationOffer offerExpected = new CollaborationOffer();
+        offerExpected.setIdCollaboration(1);
+        offerExpected.setIdUser(1);
+        offerExpected.setObjective("Promover las ciencias de la computacion");
+        offerExpected.setTopicsOfInterest("informatica");
+        offerExpected.setNumberOfStudents(28);
+        offerExpected.setProfile("Informatica");
+        offerExpected.setLanguage("English");
+        offerExpected.setPeriod("Agosto-Enero 2025");
+        offerExpected.setAditionalInfo("Parte del curso UV-GER");
+        
+        CollaborationOffer offerExpected2 = new CollaborationOffer();
+        offerExpected2.setIdCollaboration(3);
+        offerExpected2.setIdUser(2);
+        offerExpected2.setObjective("Share knowledge");
+        offerExpected2.setTopicsOfInterest("Linux");
+        offerExpected2.setNumberOfStudents(150);
+        offerExpected2.setProfile("Computer Science");
+        offerExpected2.setLanguage("English");
+        offerExpected2.setPeriod("Febrero - Julio 2024");
+        
+        ArrayList<CollaborationOffer> offersExpected = new ArrayList<>();
+        offersExpected.add(offerExpected);
+        offersExpected.add(offerExpected2);
+        
+        CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
+        try {
+            ArrayList<CollaborationOffer> offersObtained = collaborationOfferDAO.getApprovedCollaborationOffer();
+            assertEquals(offersExpected, offersObtained);
+        } catch(LogicException logicException) {
+            fail("No se ha podido obtener las ofertas vigentes");
+        }
+        
+    }
 }

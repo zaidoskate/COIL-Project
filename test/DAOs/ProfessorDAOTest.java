@@ -18,7 +18,7 @@ public class ProfessorDAOTest {
     @Test
     public void testInsertProfessorSuccess(){
         Professor professor = new Professor();
-        professor.setIdUser(5);
+        professor.setIdUser(2);
 
         ProfessorDAO professorDAO = new ProfessorDAO();
         try{
@@ -44,8 +44,8 @@ public class ProfessorDAOTest {
     public void testGetUniversityFromAProfessorSuccess() {
         ProfessorDAO professorDAO = new ProfessorDAO();
         try {
-            String university = professorDAO.getUniversityFromAProfessor(30);
-            assertEquals("Universidad de Bogota", university);
+            String university = professorDAO.getUniversityFromAProfessor(1);
+            assertEquals("Universidad Veracruzana", university);
         } catch(LogicException logicException) {
             fail("Error al obtener la universidad del profesor: " + logicException.getMessage());
         }

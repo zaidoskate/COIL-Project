@@ -12,6 +12,6 @@ import logic.domain.UvAccountRequest;
  * @author zaido
  */
 public interface UvAccountRequestManagerInterface {
-    public void insertUvAccountRequest(UvAccountRequest uvAccountRequest) throws LogicException;
+    public int insertUvAccountRequest(UvAccountRequest uvAccountRequest) throws LogicException;
     public int deleteUvAccountRequest(UvAccountRequest uvAccountRequest) throws LogicException;
 }

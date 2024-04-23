@@ -22,7 +22,7 @@ public class UvProfessorDAOTest {
     public void testInsertUvProfessorSuccess() {
         UvProfessor uvProfessor = new UvProfessor();
         uvProfessor.setPersonalNumber("7770138");
-        uvProfessor.setIdUser(3);
+        uvProfessor.setIdUser(1);
         uvProfessor.setIdDepartment("FEIX");
         
         UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
@@ -48,15 +48,15 @@ public class UvProfessorDAOTest {
     }
     
     @Test
-    public void testGetUvProfessorByIdUserSuccess() throws SQLException{
+    public void testGetUvProfessorByIdUserSuccess() {
         UvProfessor uvProfessorExpected = new UvProfessor();
-        uvProfessorExpected.setPersonalNumber("8889991");
-        uvProfessorExpected.setIdUser(4);
+        uvProfessorExpected.setPersonalNumber("7770138");
+        uvProfessorExpected.setIdUser(1);
         uvProfessorExpected.setIdDepartment("FEIX");
 
         UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
         try {
-            UvProfessor uvProfessorResult = uvProfessorDAO.getUvProfessorByIdUser(4);
+            UvProfessor uvProfessorResult = uvProfessorDAO.getUvProfessorByIdUser(1);
             assertEquals(uvProfessorExpected, uvProfessorResult);
         } catch (LogicException logicException) {
             fail("Error al obtener el profesor UV: " + logicException.getMessage());

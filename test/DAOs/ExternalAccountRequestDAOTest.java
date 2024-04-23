@@ -23,14 +23,14 @@ public class ExternalAccountRequestDAOTest {
         externalAccountRequest.setName("Luis");
         externalAccountRequest.setLastName("Vargas");
         externalAccountRequest.setEmail("luis33@gmail.com");
-        externalAccountRequest.setIdUniversity(1);
+        externalAccountRequest.setIdUniversity(2);
         
         ExternalAccountRequestDAO externalAccountRequestDAO = new ExternalAccountRequestDAO();
         try{
             int result = externalAccountRequestDAO.insertExternalAccountRequest(externalAccountRequest);
             assertEquals(1, result);
         } catch(LogicException logicException) {
-            fail("No se ha dado de alta la universidad" + logicException.getMessage());
+            fail("No se ha dado de alta la solicitud de cuenta del profesor externo" + logicException.getMessage());
         }
     }
     
@@ -49,17 +49,18 @@ public class ExternalAccountRequestDAOTest {
     @Test
     public void testDeleteExternalAccountRequestSuccess() {
         ExternalAccountRequest externalAccountRequest = new ExternalAccountRequest();
+        externalAccountRequest.setIdRequest(4);
         externalAccountRequest.setName("Luis");
         externalAccountRequest.setLastName("Vargas");
         externalAccountRequest.setEmail("luis33@gmail.com");
-        externalAccountRequest.setIdUniversity(1);
+        externalAccountRequest.setIdUniversity(2);
         
         ExternalAccountRequestDAO externalAccountRequestDAO = new ExternalAccountRequestDAO();
         try{
             int result = externalAccountRequestDAO.deleteExternalAccountRequest(externalAccountRequest);
             assertEquals(1, result);
         } catch(LogicException logicException) {
-            fail("No se ha eliminado la universidad" + logicException.getMessage());
+            fail("No se ha eliminado la solicitud de cuenta del profesor externo" + logicException.getMessage());
         }
     }
 }

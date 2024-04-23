@@ -5,12 +5,15 @@
 package logic.interfaces;
 
 import logic.domain.CollaborationOffer;
+import java.util.ArrayList;
+import logic.LogicException;
 /**
  *
  * @author chima
  */
 public interface CollaborationOfferManagerInterface {
     int insertColaborationOffer(CollaborationOffer colaborationOffer);
+    ArrayList<CollaborationOffer> getApprovedCollaborationOffer() throws LogicException;
     //eliminar
     //actualizar estatus de colaboración 
     //obtener colaboraciones pendientes: regresar arraylist de collaborationoffer buscar por estatus

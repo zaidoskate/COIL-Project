@@ -22,7 +22,6 @@ public class UniversityDAOTest {
     @Test
     public void testInsertUniversitySuccess() {
         University university = new University();
-        university.setUniversityId(2);
         university.setName("Universidad Autonoma de Mexico");
         university.setCountry("Mexico");
         

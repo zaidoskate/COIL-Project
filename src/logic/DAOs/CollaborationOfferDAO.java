@@ -9,6 +9,9 @@ import logic.domain.CollaborationOffer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import logic.LogicException;
 import logic.interfaces.CollaborationOfferManagerInterface;
 /**
  *
@@ -47,4 +50,31 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
         return result;
     }
     
+    @Override
+    public ArrayList<CollaborationOffer> getApprovedCollaborationOffer() throws LogicException {
+        ArrayList<CollaborationOffer> approvedOffers = new ArrayList<>();
+        String query = "SELECT * FROM OfertaColaboracion WHERE estadoOferta = ?";
+        try {
+            Connection connection = databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, "Aprobada");
+            ResultSet offersObtained = statement.executeQuery();
+            while(offersObtained.next()) {
+                CollaborationOffer offer = new CollaborationOffer();
+                offer.setIdCollaboration(offersObtained.getInt("idOfertaColaboracion"));
+                offer.setIdUser(offersObtained.getInt("Profesor_Usuario_idUsuario"));
+                offer.setObjective(offersObtained.getString("objetivo"));
+                offer.setTopicsOfInterest(offersObtained.getString("temasInteres"));
+                offer.setNumberOfStudents(offersObtained.getInt("cantidadEstudiantes"));
+                offer.setProfile(offersObtained.getString("perfil"));
+                offer.setLanguage(offersObtained.getString("idioma"));
+                offer.setPeriod(offersObtained.getString("periodo"));
+                offer.setAditionalInfo(offersObtained.getString("informacionAdcional"));
+                approvedOffers.add(offer);
+            }
+        } catch(SQLException sqlException) {
+            throw new LogicException("Error al obtener las ofertas aprobadas", sqlException);
+        }
+        return approvedOffers;
+    }
 }

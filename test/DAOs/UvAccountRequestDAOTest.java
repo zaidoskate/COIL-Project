@@ -19,7 +19,6 @@ public class UvAccountRequestDAOTest {
     @Test
     public void testInsertUvAccountRequestSuccess() {
         UvAccountRequest uvAccountRequest = new UvAccountRequest();
-        uvAccountRequest.setIdRequest(1);
         uvAccountRequest.setName("Juan Carlos");
         uvAccountRequest.setLastName("Perez Arriaga");
         uvAccountRequest.setEmail("elrevo@gmail.com");
@@ -28,7 +27,8 @@ public class UvAccountRequestDAOTest {
         
         UvAccountRequestDAO uvAccountRequestDAO = new UvAccountRequestDAO();
         try {
-            uvAccountRequestDAO.insertUvAccountRequest(uvAccountRequest);
+            int result = uvAccountRequestDAO.insertUvAccountRequest(uvAccountRequest);
+            assertEquals(1, result);
         } catch (LogicException logicException) {
             fail("No se ha creado la solicitud de cuenta UV" + logicException.getMessage());
         }

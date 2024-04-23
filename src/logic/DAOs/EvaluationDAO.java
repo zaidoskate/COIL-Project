@@ -54,6 +54,7 @@ public class EvaluationDAO implements EvaluationManagerInterface {
             statement.setString(4, evaluation.getReason());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } catch (ParseException parseException) {
             throw new LogicException("Campos incorrectos", parseException);

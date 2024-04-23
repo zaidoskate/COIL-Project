@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.OfferProfessorController">
+   <children>
+      <MenuBar prefHeight="26.0" prefWidth="600.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Mis Ofertas" />
+        </menus>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </MenuBar>
+      <AnchorPane layoutY="27.0" prefHeight="375.0" prefWidth="600.0">
+         <children>
+            <AnchorPane layoutX="7.0" layoutY="14.0" prefHeight="200.0" prefWidth="585.0">
+               <children>
+                  <TableView fx:id="tableView" fixedCellSize="20.0" prefHeight="200.0" prefWidth="585.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                      <TableColumn fx:id="professorColumn" prefWidth="146.4" resizable="false" text="Profesor" />
+                      <TableColumn fx:id="emailColumn" prefWidth="146.4" resizable="false" text="Correo" />
+                      <TableColumn fx:id="periodColumn" prefWidth="146.4" resizable="false" text="Periodo preferido" />
+                      <TableColumn fx:id="languageColumn" prefWidth="146.4" resizable="false" text="Idioma preferido" />
+                    </columns>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </TableView>
+               </children>
+            </AnchorPane>
+            <Button layoutX="515.0" layoutY="334.0" mnemonicParsing="false" onAction="#previousMenu" prefHeight="26.0" prefWidth="70.0" styleClass="button-regresar" text="Regresar">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button layoutX="14.0" layoutY="334.0" mnemonicParsing="false" onMouseClicked="#showPostOffer" prefWidth="70.0" styleClass="button-accion" text="Publicar">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <ImageView accessibleText="logo-coil" blendMode="MULTIPLY" fitHeight="110.0" fitWidth="110.0" layoutX="245.0" layoutY="215.0" opacity="0.06" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/CoilLogo.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="detail" layoutX="264.0" layoutY="334.0" mnemonicParsing="false" onAction="#showDetail" prefHeight="25.0" prefWidth="70.0" styleClass="button-accion" text="Detalle">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
