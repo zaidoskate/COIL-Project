@@ -13,7 +13,7 @@ public class UvAccountRequest {
     private String name;
     private String lastName;
     private String email;
-    private int personalNumber;
+    private String personalNumber;
     private String idDepartment;
 
     public int getIdRequest() {
@@ -44,7 +44,7 @@ public class UvAccountRequest {
         this.email = email;
     }
 
-    public void setPersonalNumber(int personalNumber) {
+    public void setPersonalNumber(String personalNumber) {
         this.personalNumber = personalNumber;
     }
 
@@ -60,7 +60,7 @@ public class UvAccountRequest {
         return email;
     }
 
-    public int getPersonalNumber() {
+    public String getPersonalNumber() {
         return personalNumber;
     }
 }
