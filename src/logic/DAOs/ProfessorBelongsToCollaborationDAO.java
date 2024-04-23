@@ -31,6 +31,7 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
             result = statement.executeUpdate();
             
         } catch(SQLException sqlException) {
+            sqlException.printStackTrace();
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();

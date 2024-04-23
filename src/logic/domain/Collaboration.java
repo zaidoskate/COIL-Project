@@ -56,16 +56,21 @@ public class Collaboration {
         this.language = language;
     }
 
+    /**
+     *
+     * @param object
+     * @return
+     */
     @Override
     public boolean equals(Object object) {
         Collaboration collaborationToCompare = (Collaboration) object;
         if (collaborationToCompare.getIdColaboration() != this.getIdColaboration()) {
             return false;
         }
-        if (!collaborationToCompare.getColaborationName().equals(this.getColaborationName())) {
+        else if (!collaborationToCompare.getColaborationName().equals(this.getColaborationName())) {
             return false;
         }
-        if (!collaborationToCompare.getStartDate().equals(this.getStartDate())) {
+        else if (!collaborationToCompare.getStartDate().equals(this.getStartDate())) {
             return false;
         }
         return true;

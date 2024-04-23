@@ -4,6 +4,9 @@
  */
 package gui;
 
+import logic.DAOs.UvProfessorDAO;
+import logic.LogicException;
+
 
 /**
  *
@@ -37,6 +40,19 @@ public class DataValidation {
             return false;
         }
         return true;
+    }
+
+    public static boolean validatePersonalNumber(String personalNumber) {
+        //FORMATO DE PERSONAL NUMBER
+        UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
+        try {
+            if(uvProfessorDAO.countUvProfessorByPersonalNumber(personalNumber) == 0) {
+                return true;
+            }
+        } catch(LogicException logicException) {
+            return false;
+        }
+        return false;
     }
     
 }

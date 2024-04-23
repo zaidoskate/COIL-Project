@@ -18,18 +18,17 @@ public class UserDAO implements UserManagerInterface {
     
     @Override
     public int addUser(User user)  throws LogicException {
-        int result = user.getIdUser();
-        String query = "INSERT INTO Usuario VALUES (?, ?, ?, ?)";
+        int result;
+        String query = "INSERT INTO Usuario(nombre, apellido,correo) VALUES (?, ?, ?)";
         Connection connection;
         PreparedStatement statement;
         try{
             connection = this.databaseConnection.getConnection();
             statement = connection.prepareStatement(query);
-            statement.setInt(1, user.getIdUser());
-            statement.setString(2, user.getName());
-            statement.setString(3, user.getLastName());
-            statement.setString(4, user.getEmail());
-            statement.executeUpdate();
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getLastName());
+            statement.setString(3, user.getEmail());
+            result = statement.executeUpdate();
             
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
@@ -63,6 +62,31 @@ public class UserDAO implements UserManagerInterface {
             databaseConnection.closeConnection();
         }
         return userResult;
+    }
+
+    @Override
+    public String getUserTypeById(int id) throws LogicException {
+        String query = "CALL encontrarTipoUsuario( ? )";
+        Connection connection;
+        PreparedStatement statement;
+        ResultSet result;
+        String typeUser = null;
+        try{
+            connection = this.databaseConnection.getConnection();
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+            result = statement.executeQuery();
+            while(result.next()) {
+                typeUser = result.getString("tipo");
+            }
+        } catch(SQLException sqlException) {
+            sqlException.printStackTrace();
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return typeUser;
+        
     }
     
     

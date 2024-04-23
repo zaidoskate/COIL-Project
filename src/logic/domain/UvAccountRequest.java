@@ -8,22 +8,14 @@ package logic.domain;
  *
  * @author zaido
  */
-public class UvAccountRequest {
+public class UvAccountRequest extends AccountRequest{
     private int idRequest;
     private String name;
     private String lastName;
     private String email;
     private String personalNumber;
     private String idDepartment;
-
-    public int getIdRequest() {
-        return idRequest;
-    }
-
-    public void setIdRequest(int idRequest) {
-        this.idRequest = idRequest;
-    }
-
+    
     public String getIdDepartment() {
         return idDepartment;
     }
@@ -47,7 +39,6 @@ public class UvAccountRequest {
     public void setPersonalNumber(String personalNumber) {
         this.personalNumber = personalNumber;
     }
-
     public String getName() {
         return name;
     }
@@ -59,7 +50,7 @@ public class UvAccountRequest {
     public String getEmail() {
         return email;
     }
-
+    
     public String getPersonalNumber() {
         return personalNumber;
     }

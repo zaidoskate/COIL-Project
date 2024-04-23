@@ -15,9 +15,9 @@ public class ProfessorBelongsToCollaborationTest {
     public void testAddProfessorBelongsToCollaborationSuccess()  throws LogicException {
         ProfessorBelongsToCollaborationDAO professorBelongsToCollaborationDAO = new ProfessorBelongsToCollaborationDAO();
         ProfessorBelongsToCollaboration professorBelongsToCollaboration = new ProfessorBelongsToCollaboration();
-        professorBelongsToCollaboration.setIdColaboration(133);
-        professorBelongsToCollaboration.setIdUser(13);
-        professorBelongsToCollaboration.setIdUserMirrorClass(11);
+        professorBelongsToCollaboration.setIdColaboration(1);
+        professorBelongsToCollaboration.setIdUser(1);
+        professorBelongsToCollaboration.setIdUserMirrorClass(2);
         professorBelongsToCollaboration.setColaborationStatus("Terminada");
         
         int expectedResult = 1;
