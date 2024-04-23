@@ -5,7 +5,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import logic.DAOs.CredentialDAO;
 import logic.LogicException;
-import logic.PasswordEncrypter;
 import logic.domain.Credential;
 
 public class CredentialDAOTest {
@@ -17,9 +16,9 @@ public class CredentialDAOTest {
     public void TestInsertCredentialSuccess()  throws LogicException, NoSuchAlgorithmException{
         CredentialDAO credentialDAO = new CredentialDAO();
         Credential credential = new Credential();
-        credential.setIdUser(13);
-        credential.setUser("Usuario13");
-        credential.setPassword(PasswordEncrypter.hashAPassword("password123"));
+        credential.setIdUser(1);
+        credential.setUser("Usuario1");
+        credential.setPassword("password123");
         
         int currentResult = credentialDAO.insertCredential(credential);
         int expectedResult = 1;
@@ -29,13 +28,13 @@ public class CredentialDAOTest {
     @Test
     public void TestgetIdUserByCredentialSuccess()  throws LogicException, NoSuchAlgorithmException {
         CredentialDAO credentialDAO = new CredentialDAO();
-        Credential expectedCredential = new Credential();
-        expectedCredential.setIdUser(13);
-        expectedCredential.setUser("Usuario13");
-        expectedCredential.setPassword(PasswordEncrypter.hashAPassword("password123"));
+        Credential credential = new Credential();
+        credential.setUser("Usuario13");
+        credential.setPassword("password123");
         
-        Credential currentResult = credentialDAO.getCredentialByUser("Usuario13");
+        int currentResult = credentialDAO.getIdUserByCredential(credential);
+        int expectedResult = 1;
         
-        assertEquals(expectedCredential, currentResult);
+        assertEquals(expectedResult, currentResult);
     }
 }

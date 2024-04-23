@@ -1,4 +1,4 @@
-package logic.DAOs;
+    package logic.DAOs;
 
 import dataaccess.DatabaseConnection;
 import java.sql.Connection;
@@ -19,20 +19,20 @@ public class CollaborationDAO implements ColaborationManagerInterface {
     @Override
     public int addColaboration(Collaboration colaboration) throws LogicException{
         int result = 0;
-        String query = "INSERT INTO Colaboracion VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Colaboracion(nombrecolaboracion, fechaCierre,fechainicio,idioma,temainteres) VALUES (?, ?, ?, ?, ?)";
         Connection connection;
         PreparedStatement statement;
         try{
             connection = this.databaseConnection.getConnection();
             statement = connection.prepareStatement(query);
-            statement.setInt(1, colaboration.getIdColaboration());
-            statement.setString(2, colaboration.getColaborationName());
-            statement.setString(3, colaboration.getEndDate());
-            statement.setString(4, colaboration.getStartDate());
-            statement.setString(5, colaboration.getLanguage());
-            statement.setString(6, colaboration.getInterestTopic());
+            statement.setString(1, colaboration.getColaborationName());
+            statement.setString(2, colaboration.getEndDate());
+            statement.setString(3, colaboration.getStartDate());
+            statement.setString(4, colaboration.getLanguage());
+            statement.setString(5, colaboration.getInterestTopic());
             result = statement.executeUpdate();
         } catch(SQLException sqlException) {
+            sqlException.printStackTrace();
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();

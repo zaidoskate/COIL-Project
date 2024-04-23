@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 public class DatabaseConnection {
     private Connection databaseConnection;
@@ -32,7 +32,7 @@ public class DatabaseConnection {
                     databaseConnection.close();
                 }
             } catch (SQLException exception) {
-                Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE,null, exception);
+                
             }
         }
     }

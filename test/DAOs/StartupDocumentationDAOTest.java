@@ -14,7 +14,7 @@ public class StartupDocumentationDAOTest {
     @Test
     public void testAddStartupDocumentationSuccess() throws LogicException {
         StartupDocumentation startupDocumentation = new StartupDocumentation();
-        startupDocumentation.setIdColaboration(133);
+        startupDocumentation.setIdColaboration(1);
         StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO();
         
         int currentResult = startupDocumentationDAO.addStartupDocumentation(startupDocumentation);
@@ -26,7 +26,7 @@ public class StartupDocumentationDAOTest {
     @Test
     public void testUploadSyllabusSuccess() throws LogicException {
         StartupDocumentation startupDocumentation = new StartupDocumentation();
-        startupDocumentation.setIdColaboration(133);
+        startupDocumentation.setIdColaboration(1);
         startupDocumentation.setSyllabusPath("C:\\Users\\chuch\\Downloads\\Practica2.pdf");
         
         StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO(); 
@@ -52,7 +52,7 @@ public class StartupDocumentationDAOTest {
     @Test
     public void testUploadMirrorStudentsListSuccess() throws LogicException {
         StartupDocumentation startupDocumentation = new StartupDocumentation();
-        startupDocumentation.setIdColaboration(133);
+        startupDocumentation.setIdColaboration(1);
         startupDocumentation.setMirrorClassStudentsListPath("C:\\Users\\chuch\\Downloads\\Practica2.pdf");
         
         StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO(); 
@@ -65,7 +65,7 @@ public class StartupDocumentationDAOTest {
     @Test
     public void testObtainSyllabusSuccess()  throws LogicException{
         StartupDocumentation startupDocumentation = new StartupDocumentation();
-        startupDocumentation.setIdColaboration(133);
+        startupDocumentation.setIdColaboration(1);
         String outputPath = "C:\\Users\\chuch\\OneDrive\\Desktop\\PruebaJava1.pdf";
         
         StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO(); 
@@ -78,7 +78,7 @@ public class StartupDocumentationDAOTest {
     @Test
     public void testObtainStudentsListSuccess() throws LogicException {
         StartupDocumentation startupDocumentation = new StartupDocumentation();
-        startupDocumentation.setIdColaboration(133);
+        startupDocumentation.setIdColaboration(1);
         String outputPath = "C:\\Users\\chuch\\OneDrive\\Desktop\\PruebaJava2.pdf";
         
         StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO(); 
@@ -91,7 +91,7 @@ public class StartupDocumentationDAOTest {
     @Test
     public void testObtainMirrorStudentsListSuccess() throws LogicException {
         StartupDocumentation startupDocumentation = new StartupDocumentation();
-        startupDocumentation.setIdColaboration(133);
+        startupDocumentation.setIdColaboration(1);
         String outputPath = "C:\\Users\\chuch\\OneDrive\\Desktop\\PruebaJava3.pdf";
         
         StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO(); 

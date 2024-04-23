@@ -1,0 +1,39 @@
+.cancel-button{
+    -fx-background-color: gray;
+    -fx-border-color: #575757;
+}
+.accept-button{
+    -fx-background-color: #0095FF;
+    -fx-border-color: #004474;
+}
+.accept-button:hover, .cancel-button:hover {
+    -fx-cursor: hand;
+     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0), 10, 0, 0, 0);
+    
+}
+.text-field-accountRequest{
+    -fx-border-color: #FE3C57;
+    -fx-border-radius: 5;
+    -fx-background-color: #fff;
+}
+.red-and-white{
+    -fx-background-color: #FE3C57;
+    -fx-color-fill: white;
+}
+.background-gray{
+    -fx-background-color: #BDBDBD;
+    
+}
+.button-menu{
+    -fx-text-fill: #000;
+    -fx-background-color: #fff;
+    -fx-border-width: 2px;
+    -fx-border-color: rgb(254,60,87);
+    -fx-border-radius: 3;
+}
+.button-menu:hover{
+    -fx-cursor: hand;
+    -fx-background-color: #FE3C57;
+    -fx-text-fill: #fff;
+     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0), 10, 0, 0, 0);
+}

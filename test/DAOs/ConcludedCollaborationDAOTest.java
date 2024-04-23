@@ -16,8 +16,8 @@ public class ConcludedCollaborationDAOTest {
     @Test
     public void testAddConcludedCollaborationSuccess() throws LogicException{
         ConcludedCollaboration concludedCollaboration = new ConcludedCollaboration();
-        concludedCollaboration.setIdColaboration(154);
-        concludedCollaboration.setIdUser(15);
+        concludedCollaboration.setIdColaboration(1);
+        concludedCollaboration.setIdUser(1);
         
         ConcludedColaborationDAO concludedColaborationDAO = new ConcludedColaborationDAO();
         int currentResult = concludedColaborationDAO.addConcludedCollaboration(concludedCollaboration);
@@ -28,7 +28,7 @@ public class ConcludedCollaborationDAOTest {
     @Test
     public void testUpdateVisibilitySuccess() throws LogicException {
         ConcludedCollaboration concludedCollaboration = new ConcludedCollaboration();
-        concludedCollaboration.setIdColaboration(124);
+        concludedCollaboration.setIdColaboration(1);
         concludedCollaboration.setVisibility("Destacable");
         
         ConcludedColaborationDAO concludedColaborationDAO = new ConcludedColaborationDAO();
@@ -40,7 +40,7 @@ public class ConcludedCollaborationDAOTest {
     @Test
     public void testUpdateRatingSuccess() throws LogicException {
         ConcludedCollaboration concludedCollaboration = new ConcludedCollaboration();
-        concludedCollaboration.setIdColaboration(124);
+        concludedCollaboration.setIdColaboration(1);
         concludedCollaboration.setRating(9);
         
         ConcludedColaborationDAO concludedColaborationDAO = new ConcludedColaborationDAO();
@@ -52,7 +52,7 @@ public class ConcludedCollaborationDAOTest {
     @Test
     public void testUpdateCertificatesSuccess() throws LogicException {
         ConcludedCollaboration concludedCollaboration = new ConcludedCollaboration();
-        concludedCollaboration.setIdColaboration(124);
+        concludedCollaboration.setIdColaboration(1);
         concludedCollaboration.setCertificatesPath("C:\\Users\\chuch\\Downloads\\Practica2.pdf");
         
         ConcludedColaborationDAO concludedColaborationDAO = new ConcludedColaborationDAO();
@@ -64,7 +64,7 @@ public class ConcludedCollaborationDAOTest {
     @Test
     public void testObtainCertificatesSuccess() throws LogicException {
         ConcludedCollaboration concludedCollaboration = new ConcludedCollaboration();
-        concludedCollaboration.setIdColaboration(124);
+        concludedCollaboration.setIdColaboration(1);
         String outputPath = "C:\\Users\\chuch\\OneDrive\\Desktop\\PruebaJava.pdf";
         
         ConcludedColaborationDAO concludedColaborationDAO = new ConcludedColaborationDAO();
@@ -82,19 +82,10 @@ public class ConcludedCollaborationDAOTest {
         ArrayList<ConcludedCollaboration> concludedCollaborationsExpected = new ArrayList();
         
         ConcludedCollaboration collaborationExpected = new ConcludedCollaboration();
-        collaborationExpected.setIdColaboration(124);
-        collaborationExpected.setIdUser(11);
+        collaborationExpected.setIdColaboration(1);
+        collaborationExpected.setIdUser(1);
         concludedCollaborationsExpected.add(collaborationExpected);
         
-        collaborationExpected = new ConcludedCollaboration();
-        collaborationExpected.setIdColaboration(133);
-        collaborationExpected.setIdUser(13);
-        concludedCollaborationsExpected.add(collaborationExpected);
-        
-        collaborationExpected = new ConcludedCollaboration();
-        collaborationExpected.setIdColaboration(154);
-        collaborationExpected.setIdUser(15);
-        concludedCollaborationsExpected.add(collaborationExpected);
         
         assertEquals(concludedCollaborationsExpected, concludedCollaborationsResult);
     }

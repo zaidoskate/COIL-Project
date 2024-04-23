@@ -1,22 +1,30 @@
-
 package gui;
 
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class COILVICApplication extends Application{
-    public static void main() {
-        launch();
+
+public class COILVICApplication extends Application {
+    
+    @Override
+    public void start(Stage stage) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("fxml/login.fxml"));
+        Scene scene = new Scene(root);
+        stage.setTitle("Inicio de Sesion");
+        stage.setScene(scene);  
+        stage.show();    
     }
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(COILVICApplication.class.getResource("fxml/login"));
-        Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Sistema COIL-VIC");
-        stage.setScene(scene);
-        stage.show();
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        launch(args);
     }
+    
 }

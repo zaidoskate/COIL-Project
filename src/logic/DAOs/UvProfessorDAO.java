@@ -61,5 +61,26 @@ public class UvProfessorDAO implements UvProfessorManagerInterface{
         return uvProfessorResult;
     }
     
+    @Override
+    public int countUvProfessorByPersonalNumber(String personalNumber) throws LogicException {
+        String query = "SELECT count(*) as count from ProfesorUv WHERE numeroPersonal = ?";
+        
+        int count = 0;
+        try{
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, personalNumber);
+            ResultSet result = statement.executeQuery();
+            while(result.next()) {
+                count = result.getInt("count");
+            }
+        } catch (SQLException sqlException) {
+            throw new LogicException("Error al obtener el profesor: ", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return count;
+    }
+    
     //GetUvProfesorbynumeropersonal
 }
