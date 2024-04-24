@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="700.0"  xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.UniversitiesController">
+   <children>
+      <TableView fx:id="tableView" layoutX="70.0" layoutY="85.0" prefHeight="298.0" prefWidth="559.0" stylesheets="@../css/styles.css">
+        <columns>
+          <TableColumn editable="false" prefWidth="64.00000762939453" text="Índice">
+        </TableColumn>
+            <TableColumn editable="false" minWidth="0.0" prefWidth="309.5999755859375" text="Universidad" />
+            <TableColumn editable="false" prefWidth="183.99996948242188" text="País de origen" />
+        </columns>
+      </TableView>
+      <HBox alignment="CENTER" prefHeight="65.0" prefWidth="700.0">
+         <children>
+            <AnchorPane prefHeight="200.0" prefWidth="700.0" styleClass="red-and-white" stylesheets="@../css/styles.css">
+               <children>
+                  <ImageView fitHeight="72.0" fitWidth="81.0" layoutX="612.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/coilLogoRojo.jpg" />
+                     </image>
+                  </ImageView>
+                  <Text fill="WHITE" layoutX="69.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UNIVERSIDADES" wrappingWidth="280.49725341796875">
+                     <font>
+                        <Font name="Century Gothic Bold" size="28.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+      <ImageView fitHeight="72.0" fitWidth="114.0" layoutX="314.0" layoutY="394.0" opacity="0.15" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/CoilLogo.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="70.0" layoutY="417.0" mnemonicParsing="false" styleClass="accept-button" stylesheets="@../css/styles.css" text="Nueva Universidad" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button layoutX="566.0" layoutY="417.0" mnemonicParsing="false" styleClass="cancel-button" stylesheets="@../css/styles.css" text="Regresar" textAlignment="CENTER" />
+   </children>
+</AnchorPane>

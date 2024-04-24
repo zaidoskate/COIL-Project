@@ -47,7 +47,7 @@
                   <Font name="Century Gothic Bold" size="18.0" />
                </font>
             </Button>
-            <Button layoutX="266.0" layoutY="234.0" mnemonicParsing="false" prefHeight="92.0" prefWidth="180.0" styleClass="button-menu" stylesheets="@../css/styles.css" text="Universidades">
+            <Button onAction="#displayUniversities"   layoutX="266.0" layoutY="234.0" mnemonicParsing="false" prefHeight="92.0" prefWidth="180.0" styleClass="button-menu" stylesheets="@../css/styles.css" text="Universidades">
                <font>
                   <Font name="Century Gothic Bold" size="18.0" />
                </font>

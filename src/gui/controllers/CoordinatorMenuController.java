@@ -5,11 +5,13 @@
 package gui.controllers;
 
 import gui.SessionManager;
+import gui.stages.UniversitiesStage;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.text.Text;
 
 /**
@@ -27,4 +29,16 @@ public class CoordinatorMenuController implements Initializable {
         textName.setText(SessionManager.getInstance().getUserData().getName());
     }   
 
+    @FXML
+    private void displayUniversities() {
+        try {
+            UniversitiesStage universitiesStage = new UniversitiesStage();
+        } catch(IOException ioException) {
+            System.out.print(ioException.getMessage());
+            System.out.print(ioException.getCause());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("ERROR, intentalo mas tarde.");
+            alert.showAndWait();
+        }
+    }
 }

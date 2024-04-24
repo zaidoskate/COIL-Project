@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
-import org.apache.log4j.Logger;
 
 public class DatabaseConnection {
     private Connection databaseConnection;
