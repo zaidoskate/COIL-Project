@@ -64,4 +64,27 @@ public class CredentialDAO implements CredentialManagerInterface {
         return idUser;
     }
     
+    public int countCredentialsByUser(String user) throws LogicException {
+        String query = "SELECT count(*) as count from credencial where usuario = ?";
+        Connection connection;
+        PreparedStatement statement;
+        int count = 0;
+        try{
+            connection = this.databaseConnection.getConnection();
+            statement = connection.prepareStatement(query);
+            statement.setString(1, user);
+            ResultSet result;
+            result = statement.executeQuery();
+            while(result.next()) {
+                count = result.getInt("count");
+            }
+        } catch(SQLException sqlException) {
+            log.error(sqlException);
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return count;
+    }
+    
 }
