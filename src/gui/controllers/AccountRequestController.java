@@ -29,7 +29,6 @@ import logic.domain.UvAccountRequest;
 public class AccountRequestController implements Initializable {
     private ArrayList<University> universities;
     private ArrayList<Department> departments;
-
     @FXML
     private ComboBox<String> comboBoxUniversities;
     @FXML
@@ -210,7 +209,11 @@ public class AccountRequestController implements Initializable {
                 result = false;
                 alert.setContentText("Selecciona region y facultad.");
             }
-            if(!DataValidation.validatePersonalNumber(personalNumber)) {
+            if(!DataValidation.validatePersonalNumberFormat(personalNumber)) {
+                result = false;
+                alert.setContentText("Formato de numero de personal invalido");
+            }
+            if(!DataValidation.validatePersonalNumberExists(personalNumber)) {
                 result = false;
                 alert.setContentText("Numero de personal existente");
             }

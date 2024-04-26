@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -31,14 +32,17 @@ public class CoordinatorMenuController implements Initializable {
 
     @FXML
     private void displayUniversities() {
+        UniversitiesStage universitiesStage = null;
         try {
-            UniversitiesStage universitiesStage = new UniversitiesStage();
+            universitiesStage = new UniversitiesStage();
         } catch(IOException ioException) {
-            System.out.print(ioException.getMessage());
-            System.out.print(ioException.getCause());
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("ERROR, intentalo mas tarde.");
             alert.showAndWait();
+        }
+        if (universitiesStage != null) {
+            Stage stage = (Stage) textName.getScene().getWindow();
+            stage.close();
         }
     }
 }

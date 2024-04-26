@@ -42,8 +42,7 @@ public class DataValidation {
         return true;
     }
 
-    public static boolean validatePersonalNumber(String personalNumber) {
-        //FORMATO DE PERSONAL NUMBER
+    public static boolean validatePersonalNumberExists(String personalNumber) {
         UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
         try {
             if(uvProfessorDAO.countUvProfessorByPersonalNumber(personalNumber) == 0) {
@@ -53,6 +52,10 @@ public class DataValidation {
             return false;
         }
         return false;
+    } 
+    public static boolean validatePersonalNumberFormat(String personalNumber) {
+        String validNameForm = "^\\d{5}$";
+        return personalNumber.matches(validNameForm);
     }
     
 }

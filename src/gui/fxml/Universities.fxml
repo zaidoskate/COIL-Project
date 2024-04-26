@@ -9,15 +9,27 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="700.0"  xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.UniversitiesController">
    <children>
       <TableView fx:id="tableView" layoutX="70.0" layoutY="85.0" prefHeight="298.0" prefWidth="559.0" stylesheets="@../css/styles.css">
         <columns>
           <TableColumn editable="false" prefWidth="64.00000762939453" text="Índice">
-        </TableColumn>
-            <TableColumn editable="false" minWidth="0.0" prefWidth="309.5999755859375" text="Universidad" />
-            <TableColumn editable="false" prefWidth="183.99996948242188" text="País de origen" />
+              <cellValueFactory>
+                    <PropertyValueFactory property="universityId" />
+                </cellValueFactory>
+          </TableColumn>
+            <TableColumn editable="false" minWidth="0.0" prefWidth="309.5999755859375" text="Universidad" >
+              <cellValueFactory>
+                    <PropertyValueFactory property="name" />
+                </cellValueFactory>
+          </TableColumn>
+            <TableColumn editable="false" prefWidth="183.99996948242188" text="País de origen" >
+              <cellValueFactory>
+                    <PropertyValueFactory property="country" />
+                </cellValueFactory>
+          </TableColumn>
         </columns>
       </TableView>
       <HBox alignment="CENTER" prefHeight="65.0" prefWidth="700.0">
@@ -43,11 +55,11 @@
             <Image url="@../images/CoilLogo.png" />
          </image>
       </ImageView>
-      <Button layoutX="70.0" layoutY="417.0" mnemonicParsing="false" styleClass="accept-button" stylesheets="@../css/styles.css" text="Nueva Universidad" textAlignment="CENTER">
+      <Button onAction="#newUniversity"  layoutX="70.0" layoutY="417.0" mnemonicParsing="false" styleClass="accept-button" stylesheets="@../css/styles.css" text="Nueva Universidad" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button layoutX="566.0" layoutY="417.0" mnemonicParsing="false" styleClass="cancel-button" stylesheets="@../css/styles.css" text="Regresar" textAlignment="CENTER" />
+      <Button onAction="#previusMenu"  layoutX="566.0" layoutY="417.0" mnemonicParsing="false" styleClass="cancel-button" stylesheets="@../css/styles.css" text="Regresar" textAlignment="CENTER" />
    </children>
 </AnchorPane>
