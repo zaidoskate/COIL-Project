@@ -6,6 +6,7 @@ package DAOs;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.sql.SQLException;
+import logic.DAOs.ProfessorDAO;
 import logic.LogicException;
 import logic.domain.UvProfessor;
 import logic.DAOs.UvProfessorDAO;
@@ -74,5 +75,17 @@ public class UvProfessorDAOTest {
         UvProfessor uvProfessorResult = uvProfessorDAO.getUvProfessorByIdUser(4);
 
         assertNotEquals(uvProfessorWrong, uvProfessorResult);
+    }
+    
+    @Test
+    public void testGetDepartmentNameBelonging() {
+        UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
+        String departmentNameExpected = "Facultad de Estadistica e Informatica";
+        try {
+            String departmentNameObtained = uvProfessorDAO.getDepartmentNameBelonging(1);
+            assertEquals(departmentNameExpected, departmentNameObtained);
+        } catch (LogicException logicException) {
+            fail("Error al obtener el nombre del departamento");
+        }
     }
 }

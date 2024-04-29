@@ -25,15 +25,13 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
     }
     
    @Override
-    public int insertColaborationOffer(CollaborationOffer colaborationOffer) {
+    public int insertColaborationOffer(CollaborationOffer colaborationOffer) throws LogicException{
         int result = 0;
-        String query = "INSERT INTO OfertaColaboracion (idofertacolaboracion, objetivo, temasInteres, cantidadEstudiantes, perfil, idioma, periodo, informacionAdcional) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        Connection connection;
-        PreparedStatement statement;
+        String query = "INSERT INTO OfertaColaboracion (Profesor_Usuario_idUsuario, objetivo, temasInteres, cantidadEstudiantes, perfil, idioma, periodo, informacionAdcional, estadoOferta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try{
-            connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement(query);
-            statement.setInt(1, colaborationOffer.getIdCollaboration());
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, colaborationOffer.getIdUser());
             statement.setString(2, colaborationOffer.getObjective());
             statement.setString(3, colaborationOffer.getTopicsOfInterest());
             statement.setInt(4, colaborationOffer.getNumberOfStudents());
@@ -41,9 +39,10 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
             statement.setString(6, colaborationOffer.getLanguage());
             statement.setString(7, colaborationOffer.getPeriod());
             statement.setString(8, colaborationOffer.getAditionalInfo());
+            statement.setString(9, "Pendiente");
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
-            result = -1;
+            throw new LogicException("No hay conexion, intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();
         }
@@ -73,8 +72,54 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
                 approvedOffers.add(offer);
             }
         } catch(SQLException sqlException) {
-            throw new LogicException("Error al obtener las ofertas aprobadas", sqlException);
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         }
         return approvedOffers;
     }
+
+    @Override
+    public CollaborationOffer getProfessorApprovedOffer(int idUser) throws LogicException {
+        CollaborationOffer offer = new CollaborationOffer();
+        String query = "SELECT * FROM OfertaColaboracion WHERE Profesor_Usuario_idUsuario = ? AND estadoOferta = 'Aprobada'";
+        try {
+            Connection connection = databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, String.valueOf(idUser));
+            ResultSet offerObtained = statement.executeQuery();
+            while(offerObtained.next()) {
+                offer.setIdCollaboration(offerObtained.getInt("idOfertaColaboracion"));
+                offer.setIdUser(offerObtained.getInt("Profesor_Usuario_idUsuario"));
+                offer.setObjective(offerObtained.getString("objetivo"));
+                offer.setTopicsOfInterest(offerObtained.getString("temasInteres"));
+                offer.setNumberOfStudents(offerObtained.getInt("cantidadEstudiantes"));
+                offer.setProfile(offerObtained.getString("perfil"));
+                offer.setLanguage(offerObtained.getString("idioma"));
+                offer.setPeriod(offerObtained.getString("periodo"));
+                offer.setAditionalInfo(offerObtained.getString("informacionAdcional"));
+            }
+            
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        }
+        return offer;
+    }
+
+    @Override
+    public int deleteCollaborationOffer(int idOfferCollaboration) throws LogicException {
+        int result = 0;
+        String query = "DELETE FROM OfertaColaboracion WHERE idOfertaColaboracion = ?";
+        try {
+            Connection connection = databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idOfferCollaboration);
+            result = statement.executeUpdate();
+        } catch (SQLException sqlException) {
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return result;
+    }
+    
+    
 }

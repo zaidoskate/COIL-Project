@@ -23,19 +23,22 @@ public class CollaborationOfferDAOTest {
     @Test
     public void testInsertCollaborationOfferSuccess() {
         CollaborationOffer collaborationOffer = new CollaborationOffer();
-        collaborationOffer.setIdCollaboration(101010);
+        collaborationOffer.setIdUser(4);
         collaborationOffer.setObjective("Aprendizaje");
         collaborationOffer.setTopicsOfInterest("Mecánica");
         collaborationOffer.setNumberOfStudents(30);
         collaborationOffer.setProfile("Mecánica");
         collaborationOffer.setLanguage("Español");
         collaborationOffer.setPeriod("FEBRERO-JULIO 2024");
-        collaborationOffer.setAditionalInfo("Nada");
 
         CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
-        int result = collaborationOfferDAO.insertColaborationOffer(collaborationOffer);
+        try {
+            int result = collaborationOfferDAO.insertColaborationOffer(collaborationOffer);
+            assertEquals(1, result);
+        } catch(LogicException logicException) {
+            fail("No se ha insertado la oferta de colaboracion");
+        }
         
-        assertNotEquals(0, result);
     }
     
     @Test
@@ -72,6 +75,38 @@ public class CollaborationOfferDAOTest {
         } catch(LogicException logicException) {
             fail("No se ha podido obtener las ofertas vigentes");
         }
+    }
+    
+    @Test
+    public void testGetProfessorApprovedOffer() {
+        CollaborationOffer offerExpected = new CollaborationOffer();
+        offerExpected.setIdCollaboration(1);
+        offerExpected.setIdUser(1);
+        offerExpected.setObjective("Promover las ciencias de la computacion");
+        offerExpected.setTopicsOfInterest("informatica");
+        offerExpected.setNumberOfStudents(28);
+        offerExpected.setProfile("Informatica");
+        offerExpected.setLanguage("English");
+        offerExpected.setPeriod("Agosto-Enero 2025");
+        offerExpected.setAditionalInfo("Parte del curso UV-GER");
         
+        CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
+        try {
+            CollaborationOffer offerObtained = collaborationOfferDAO.getProfessorApprovedOffer(1);
+            assertEquals(offerExpected, offerObtained);
+        } catch(LogicException logicException) {
+            fail("No se ha podido obtener la oferta del profesor");
+        }
+    }
+    
+    @Test
+    public void testDeleteCollaborationOffer() {
+        CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
+        try {
+            int result = collaborationOfferDAO.deleteCollaborationOffer(3);
+            assertEquals(1, result);
+        } catch(LogicException logicException) {
+            fail("No se ha podido eliminar la oferta de colaboracion");
+        }
     }
 }

@@ -6,6 +6,9 @@ package gui.controllers;
 
 import logic.model.OfferInformation;
 import gui.stages.DetailOfferProfessorStage;
+import gui.stages.MyOffersStage;
+import gui.stages.PostCollaborationOfferStage;
+import gui.stages.ProfesorMenuStage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -20,7 +23,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import logic.DAOs.CollaborationOfferDAO;
 import logic.DAOs.UserDAO;
@@ -118,7 +120,20 @@ public class OfferProfessorController implements Initializable {
             alert.showAndWait();
         }
     }
-
+    
+    private void setSelectedOffer() {
+        selectedOffer.setProfessorName(tableView.getSelectionModel().getSelectedItem().getProfessorName());
+        selectedOffer.setProfessorEmail(tableView.getSelectionModel().getSelectedItem().getProfessorEmail());
+        selectedOffer.setObjective(tableView.getSelectionModel().getSelectedItem().getObjective());
+        selectedOffer.setTopicsInterest(tableView.getSelectionModel().getSelectedItem().getTopicsInterest());
+        selectedOffer.setOfferPeriod(tableView.getSelectionModel().getSelectedItem().getOfferPeriod());
+        selectedOffer.setOfferLanguage(tableView.getSelectionModel().getSelectedItem().getOfferLanguage());
+        selectedOffer.setAditionalInformation(tableView.getSelectionModel().getSelectedItem().getAditionalInformation());
+        selectedOffer.setIdOfferCollaboration(tableView.getSelectionModel().getSelectedItem().getIdOfferCollaboration());
+        selectedOffer.setIdUser(tableView.getSelectionModel().getSelectedItem().getIdUser());
+        selectedOffer.setNumberStudents(tableView.getSelectionModel().getSelectedItem().getNumberStudents());
+    }
+    
     @FXML
     public void showDetail(ActionEvent event) {
         if(tableView.getSelectionModel().getSelectedItem() != null) {
@@ -140,27 +155,33 @@ public class OfferProfessorController implements Initializable {
         }
     }
     
-    private void setSelectedOffer() {
-        selectedOffer.setProfessorName(tableView.getSelectionModel().getSelectedItem().getProfessorName());
-        selectedOffer.setProfessorEmail(tableView.getSelectionModel().getSelectedItem().getProfessorEmail());
-        selectedOffer.setObjective(tableView.getSelectionModel().getSelectedItem().getObjective());
-        selectedOffer.setTopicsInterest(tableView.getSelectionModel().getSelectedItem().getTopicsInterest());
-        selectedOffer.setOfferPeriod(tableView.getSelectionModel().getSelectedItem().getOfferPeriod());
-        selectedOffer.setOfferLanguage(tableView.getSelectionModel().getSelectedItem().getOfferLanguage());
-        selectedOffer.setAditionalInformation(tableView.getSelectionModel().getSelectedItem().getAditionalInformation());
-        selectedOffer.setIdOfferCollaboration(tableView.getSelectionModel().getSelectedItem().getIdOfferCollaboration());
-        selectedOffer.setIdUser(tableView.getSelectionModel().getSelectedItem().getIdUser());
-        selectedOffer.setNumberStudents(tableView.getSelectionModel().getSelectedItem().getNumberStudents());
+    @FXML
+    public void showPostOffer(ActionEvent event) {
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        stage.close();
+        try {
+            PostCollaborationOfferStage postStage = new PostCollaborationOfferStage();
+        } catch(IOException ioException) {
+            
+        }
     }
     
     @FXML
-    public void showPostOffer() {
-        
-    }
-    
-    @FXML
-    public void previousMenu() {
+    public void previousMenu() throws IOException {
         Stage stage = (Stage) tableView.getScene().getWindow();
         stage.close();
+        ProfesorMenuStage menuStage = new ProfesorMenuStage();
+    }
+    
+    @FXML
+    public void showMyOffers() {
+        Stage stage = (Stage) this.tableView.getScene().getWindow();
+        stage.close();
+        try {
+            MyOffersStage myOffersStage = new MyOffersStage();
+        } catch(IOException ioException) {
+            ioException.printStackTrace();
+        }
     }
 }

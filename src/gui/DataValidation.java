@@ -15,7 +15,7 @@ import logic.LogicException;
 public class DataValidation {
     
     public static boolean validateWord(String input) {
-        String validWordForm = "^[a-zA-Z0-9. ]*$";
+        String validWordForm = "^[a-zA-Z0-9. ,\\-ÑñáéíóúÁÉÍÓÚ]*$";
         return input.matches(validWordForm);
     }
     

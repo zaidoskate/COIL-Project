@@ -12,8 +12,10 @@ import logic.LogicException;
  * @author chima
  */
 public interface CollaborationOfferManagerInterface {
-    int insertColaborationOffer(CollaborationOffer colaborationOffer);
+    int insertColaborationOffer(CollaborationOffer colaborationOffer) throws LogicException;
     ArrayList<CollaborationOffer> getApprovedCollaborationOffer() throws LogicException;
+    CollaborationOffer getProfessorApprovedOffer(int idUser) throws LogicException;
+    int deleteCollaborationOffer(int idOfferCollaboration) throws LogicException;
     //eliminar
     //actualizar estatus de colaboración 
     //obtener colaboraciones pendientes: regresar arraylist de collaborationoffer buscar por estatus

@@ -82,5 +82,23 @@ public class UvProfessorDAO implements UvProfessorManagerInterface{
         return count;
     }
     
-    //GetUvProfesorbynumeropersonal
+    @Override
+    public String getDepartmentNameBelonging(int idUser) throws LogicException {
+        String departmentName = null;
+        String query = "SELECT f.nombre FROM profesoruv pu JOIN facultad f ON pu.idFacultad = f.idFacultad WHERE pu.Profesor_Usuario_idUsuario = ?";
+        try {
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idUser);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                departmentName = result.getString("nombre");
+            }
+        } catch (SQLException sqlException) {
+            throw new LogicException("Error al obtener el nombre del departamento: ", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return departmentName; 
+    }
 }

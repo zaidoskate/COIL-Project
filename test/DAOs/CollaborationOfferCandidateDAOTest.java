@@ -6,10 +6,12 @@ package DAOs;
 
 import org.junit.Test;
 import dataaccess.DatabaseConnection;
+import java.util.ArrayList;
 import static org.junit.Assert.*;
 import static org.junit.Assert.*;
 import logic.domain.CollaborationOfferCandidate;
 import logic.DAOs.CollaborationOfferCandidateDAO;
+import logic.LogicException;
 
 /**
  *
@@ -27,20 +29,41 @@ public class CollaborationOfferCandidateDAOTest {
         collaborationOfferCandidate.setIdCollaboration(12345);
         collaborationOfferCandidate.setIdUser(54321);
         
-        int currentResult = collaborationOfferCandidateDAO.InsertCollaborationOfferCandidate(collaborationOfferCandidate);
-        int expectedResult = 1;
-        assertEquals(expectedResult, currentResult);
+        try {
+            int currentResult = collaborationOfferCandidateDAO.InsertCollaborationOfferCandidate(collaborationOfferCandidate);
+            int expectedResult = 1;
+            assertEquals(expectedResult, currentResult);
+        } catch(LogicException logicException) {
+            fail("Error al insertar el candidato");
+        }
+    }
+    
+    @Test
+    public void testProfessorHasAppliedForOfferSuccess() {
+        CollaborationOfferCandidateDAO collaborationOfferCandidateDAO = new CollaborationOfferCandidateDAO();
+        try {
+            boolean result = collaborationOfferCandidateDAO.professorHasAppliedForOffer(2, 3);
+            assertTrue(result);
+        } catch (LogicException logicException) {
+            fail("Error al saber si un profesor ya se postulo a esa oferta");
+        }
     }
     
     @Test
     public void testGetCollaborationOfferCandidateByIdCollaborationOfferSuccess() {
-        DatabaseConnection databaseConnection = new DatabaseConnection();
-        CollaborationOfferCandidateDAO collaborationOfferCandidateDAO = new CollaborationOfferCandidateDAO();
         CollaborationOfferCandidate expectedCollaborationOfferCandidate = new CollaborationOfferCandidate();
-        expectedCollaborationOfferCandidate.setIdCollaboration(12345);
-        expectedCollaborationOfferCandidate.setIdUser(54321);
+        expectedCollaborationOfferCandidate.setIdCollaboration(3);
+        expectedCollaborationOfferCandidate.setIdUser(1);
+        ArrayList<CollaborationOfferCandidate> candidatesExpected = new ArrayList<>();
+        candidatesExpected.add(expectedCollaborationOfferCandidate);
         
-        CollaborationOfferCandidate currentCollaborationOfferCandidate = collaborationOfferCandidateDAO.GetCollaborationOfferCandidateByIdCollaborationOffer(12345);
-        assertEquals(expectedCollaborationOfferCandidate, currentCollaborationOfferCandidate);
+        CollaborationOfferCandidateDAO collaborationOfferCandidateDAO = new CollaborationOfferCandidateDAO();
+        try {
+            ArrayList<CollaborationOfferCandidate> candidatesObtained = collaborationOfferCandidateDAO.GetCollaborationOfferCandidateByIdCollaborationOffer(3);
+            assertEquals(candidatesExpected, candidatesObtained);
+        } catch(LogicException logicException) {
+            fail("Error al recuperar los candidatos de la oferta");
+        }
+        
     }
 }

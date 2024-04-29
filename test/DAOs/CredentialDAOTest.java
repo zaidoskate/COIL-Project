@@ -16,8 +16,8 @@ public class CredentialDAOTest {
     public void TestInsertCredentialSuccess()  throws LogicException, NoSuchAlgorithmException{
         CredentialDAO credentialDAO = new CredentialDAO();
         Credential credential = new Credential();
-        credential.setIdUser(1);
-        credential.setUser("Usuario1");
+        credential.setIdUser(2);
+        credential.setUser("usuario2");
         credential.setPassword("password123");
         
         int currentResult = credentialDAO.insertCredential(credential);

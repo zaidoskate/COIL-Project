@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.PostCollaborationOfferController">
+   <children>
+      <AnchorPane prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(from 0% 0% to 0% 100%, white, rgb(254, 60, 87));">
+         <children>
+            <Label layoutY="366.0" prefHeight="27.0" prefWidth="200.0" text="Oferta de colaboración">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="25.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/CoilLogo.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="btnCancelar" layoutX="25.0" layoutY="560.0" mnemonicParsing="false" onAction="#cancelPost" prefWidth="150.0" styleClass="button-regresar" text="Cancelar">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="btnPublicar" layoutX="25.0" layoutY="519.0" mnemonicParsing="false" onAction="#postCollaborationOffer" prefWidth="150.0" styleClass="button-accion" text="Publicar">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="200.0" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: rgba(79, 79, 79, 0.1);">
+         <children>
+            <Label layoutX="1.0" layoutY="74.0" prefHeight="27.0" prefWidth="600.0" text="Detalle de la oferta">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutX="16.0" layoutY="102.0" prefHeight="290.0" prefWidth="570.0" styleClass="shadowed">
+               <children>
+                  <Label layoutX="15.0" layoutY="20.0" prefHeight="25.0" prefWidth="153.0" text="Objetivo">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextArea fx:id="txtAreaObjective" layoutX="178.0" layoutY="14.0" prefHeight="40.0" prefWidth="390.0" promptText="¿Cuál es el objetivo de tu oferta?" />
+                  <Label layoutX="15.0" layoutY="75.0" prefHeight="25.0" prefWidth="153.0" text="Tema de interés">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="15.0" layoutY="130.0" prefHeight="25.0" prefWidth="153.0" text="Periodo preferido">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="15.0" layoutY="185.0" prefHeight="25.0" prefWidth="153.0" text="Idioma preferido">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="15.0" layoutY="240.0" text="Información adicional">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextArea fx:id="txtAreaTopicsOfInterest" layoutX="178.0" layoutY="68.0" prefHeight="40.0" prefWidth="390.0" promptText="Algunos temas que te gustaría tocar" />
+                  <TextField fx:id="txtFieldPeriod" layoutX="178.0" layoutY="123.0" prefHeight="40.0" prefWidth="390.0" promptText="¿En qué periodo?" />
+                  <TextArea fx:id="txtAreaLanguage" layoutX="178.0" layoutY="178.0" prefHeight="40.0" prefWidth="390.0" promptText="¿Qué idioma puedes manejar en la colaboración?" />
+                  <TextArea fx:id="txtAreaAditionalInformation" layoutX="178.0" layoutY="233.0" prefHeight="40.0" prefWidth="390.0" />
+               </children>
+            </AnchorPane>
+            <Label layoutX="1.0" layoutY="412.0" prefHeight="26.0" prefWidth="600.0" text="Información de los estudiantes">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutX="12.0" layoutY="439.0" prefHeight="140.0" prefWidth="578.0" styleClass="shadowed">
+               <children>
+                  <Label layoutX="-1.0" layoutY="14.0" prefHeight="26.0" prefWidth="578.0" text="Cantidad de estudiantes">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="-2.0" layoutY="66.0" prefHeight="26.0" prefWidth="578.0" text="Perfil del estudiante">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtFieldProfile" alignment="CENTER" layoutX="50.0" layoutY="97.0" prefHeight="26.0" prefWidth="475.0" promptText="¿Qué perfil buscas en los estudiantes espejo?" />
+                  <TextField fx:id="txtFieldNumberStudents" layoutX="199.0" layoutY="40.0" prefHeight="26.0" prefWidth="180.0" promptText="¿Cuál es el tamaño de tu clase?" />
+               </children>
+            </AnchorPane>
+            <Label layoutY="14.0" prefHeight="27.0" prefWidth="602.0" text="Publicar oferta de colaboración">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

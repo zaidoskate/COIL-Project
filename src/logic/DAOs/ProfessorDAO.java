@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 /**
  *
@@ -42,10 +43,10 @@ public class ProfessorDAO implements ProfessorManagerInterface {
     }
     
     @Override
-    public String getUniversityFromAProfessor(int idUser) throws LogicException {
-        String university = null;
+    public ArrayList<String> getUniversityFromAProfessor(int idUser) throws LogicException {
+        ArrayList<String> universityInformation = new ArrayList<>();
         String queryUv = "SELECT COUNT(*) FROM profesorUv WHERE Profesor_Usuario_idUsuario = ?";
-        String queryExternal = "SELECT Universidad.nombre FROM profesorExterno "
+        String queryExternal = "SELECT Universidad.nombre, Universidad.pais FROM profesorExterno "
                 + "JOIN universidad ON profesorExterno.Universidad_idUniversidad"
                 + "= universidad.idUniversidad WHERE profesorExterno.Profesor_Usuario_idUsuario = ?";
         try {
@@ -54,13 +55,16 @@ public class ProfessorDAO implements ProfessorManagerInterface {
             statementUv.setInt(1, idUser);
             ResultSet resultUv = statementUv.executeQuery();
             if (resultUv.next() && resultUv.getInt(1) > 0) {
-                university = "Universidad Veracruzana";
+                universityInformation.add("Universidad Veracruzana");
+                UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
+                universityInformation.add(uvProfessorDAO.getDepartmentNameBelonging(idUser));
             } else {
                 PreparedStatement statementExternal = connection.prepareStatement(queryExternal);
                 statementExternal.setInt(1, idUser);
                 ResultSet resultExternal = statementExternal.executeQuery();
                 if (resultExternal.next()) {
-                    university = resultExternal.getString("nombre");
+                    universityInformation.add(resultExternal.getString("nombre"));
+                    universityInformation.add(resultExternal.getString("pais"));
                 }
             }
         } catch (SQLException sqlException) {
@@ -68,7 +72,7 @@ public class ProfessorDAO implements ProfessorManagerInterface {
         } finally {
             databaseConnection.closeConnection();
         }
-        return university;
+        return universityInformation;
     }
 
 }

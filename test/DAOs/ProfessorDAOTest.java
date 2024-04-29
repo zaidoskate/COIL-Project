@@ -4,6 +4,7 @@
  */
 package DAOs;
 
+import java.util.ArrayList;
 import logic.LogicException;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -43,20 +44,23 @@ public class ProfessorDAOTest {
     @Test
     public void testGetUniversityFromAProfessorSuccess() {
         ProfessorDAO professorDAO = new ProfessorDAO();
-        try {
-            String university = professorDAO.getUniversityFromAProfessor(1);
-            assertEquals("Universidad Veracruzana", university);
-        } catch(LogicException logicException) {
-            fail("Error al obtener la universidad del profesor: " + logicException.getMessage());
-        }
+            try {
+                ArrayList<String> universityObtained = professorDAO.getUniversityFromAProfessor(1);
+                ArrayList<String> expectedUniversity = new ArrayList<>();
+                expectedUniversity.add("Universidad Veracruzana");
+                expectedUniversity.add("Facultad de Estadistica e Informatica");
+                assertEquals(expectedUniversity, universityObtained);
+            } catch(LogicException logicException) {
+                fail("Error al obtener la universidad del profesor: " + logicException.getMessage());
+            }
     }
     
     @Test
     public void testGetUniversityFromANonProfessor() {
         ProfessorDAO professorDAO = new ProfessorDAO();
         try {
-            String university = professorDAO.getUniversityFromAProfessor(8);
-            assertNull(university);
+            ArrayList<String> universityObtained = professorDAO.getUniversityFromAProfessor(3);
+            assertTrue(universityObtained.isEmpty());
         } catch(LogicException logicException) {
             fail("Error al obtener la universidad del profesor: " + logicException.getMessage());
         }

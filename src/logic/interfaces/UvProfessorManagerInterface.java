@@ -11,4 +11,5 @@ public interface UvProfessorManagerInterface {
     int insertUvProfessor(UvProfessor uvProfessor) throws LogicException;
     int countUvProfessorByPersonalNumber(String personalNumber) throws LogicException;
     UvProfessor getUvProfessorByIdUser(int idUser) throws LogicException;
+    String getDepartmentNameBelonging(int idUser) throws LogicException;
 }

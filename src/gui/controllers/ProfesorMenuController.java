@@ -5,12 +5,15 @@
 package gui.controllers;
 
 import gui.SessionManager;
+import gui.stages.OfferProfessorStage;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -25,6 +28,13 @@ public class ProfesorMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         textName.setText(SessionManager.getInstance().getUserData().getName());
-    }   
+    }
+    
+    @FXML
+    public void displayOfferProfessor() throws IOException {
+        Stage menuStage = (Stage) textName.getScene().getWindow();
+        menuStage.close();
+        OfferProfessorStage offerProfessorStage = new OfferProfessorStage();
+    }
 
 }

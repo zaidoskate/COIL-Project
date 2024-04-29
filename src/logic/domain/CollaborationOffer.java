@@ -11,6 +11,7 @@ public class CollaborationOffer {
     private String aditionalInfo;
     private String offerStatus; 
     private int idUser;
+    private static CollaborationOffer offer;
 
     public int getIdCollaboration() {
         return idCollaboration;
@@ -90,6 +91,10 @@ public class CollaborationOffer {
 
     public void setIdUser(int idUser) {
         this.idUser = idUser;
+    }
+    
+    public static CollaborationOffer getOffer() {
+        return offer;
     }
     
     @Override
