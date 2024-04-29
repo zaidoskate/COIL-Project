@@ -1,10 +1,12 @@
 .cancel-button{
     -fx-background-color: gray;
     -fx-border-color: #575757;
+    -fx-text-fill: #fff;
 }
 .accept-button{
     -fx-background-color: #0095FF;
     -fx-border-color: #004474;
+    -fx-text-fill: #fff;
 }
 .accept-button:hover, .cancel-button:hover {
     -fx-cursor: hand;
@@ -37,3 +39,16 @@
     -fx-text-fill: #fff;
      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0), 10, 0, 0, 0);
 }
+.table-view {
+    -fx-background-color:   rgba(79, 79, 79, 0.3);
+    -fx-background-radius: 8;
+}
+
+.table-column{
+    -fx-background-color:   rgba(79, 79, 79, 0.3);
+}
+
+.table-view .table-cell {
+    -fx-text-color: black;
+}
+

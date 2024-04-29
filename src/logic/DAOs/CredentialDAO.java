@@ -8,9 +8,11 @@ import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import logic.LogicException;
+import org.apache.log4j.Logger;
 
 public class CredentialDAO implements CredentialManagerInterface {
     private final DatabaseConnection databaseConnection;
+    private static final Logger log = Logger.getLogger(DatabaseConnection.class);
     
     public CredentialDAO(){
         this.databaseConnection = new DatabaseConnection();
@@ -54,11 +56,35 @@ public class CredentialDAO implements CredentialManagerInterface {
                 idUser = result.getInt("Usuario_idUsuario");
             }
         } catch(SQLException sqlException) {
+            log.error(sqlException);
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();
         }
         return idUser;
+    }
+    
+    public int countCredentialsByUser(String user) throws LogicException {
+        String query = "SELECT count(*) as count from credencial where usuario = ?";
+        Connection connection;
+        PreparedStatement statement;
+        int count = 0;
+        try{
+            connection = this.databaseConnection.getConnection();
+            statement = connection.prepareStatement(query);
+            statement.setString(1, user);
+            ResultSet result;
+            result = statement.executeQuery();
+            while(result.next()) {
+                count = result.getInt("count");
+            }
+        } catch(SQLException sqlException) {
+            log.error(sqlException);
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return count;
     }
     
 }

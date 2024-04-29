@@ -110,13 +110,13 @@
                         </VBox>
                         <HBox alignment="CENTER" prefHeight="158.0" prefWidth="347.0">
                            <children>
-                              <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelAccountRequest" prefHeight="26.0" prefWidth="93.0" styleClass="cancel-button" stylesheets="@../css/styles.css" text="Cancelar" textFill="WHITE">
-                                 <font>
-                                    <Font name="Berlin Sans FB Demi Bold" size="14.0" />
-                                 </font>
+                              <Button mnemonicParsing="false" onMouseClicked="#saveAccountRequest" prefHeight="26.0" prefWidth="93.0" styleClass="accept-button" stylesheets="@../css/styles.css" text="Enviar" textFill="WHITE">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
-                                 </cursor></Button>
+                                 </cursor>
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+                                 </font></Button>
                            </children>
                         </HBox>
                      </children>
@@ -173,13 +173,13 @@
                         </VBox>
                         <HBox alignment="CENTER" prefHeight="110.0" prefWidth="325.0">
                            <children>
-                              <Button mnemonicParsing="false" onMouseClicked="#saveAccountRequest" prefHeight="26.0" prefWidth="93.0" styleClass="accept-button" stylesheets="@../css/styles.css" text="Enviar" textFill="WHITE">
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
+                              <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelAccountRequest" prefHeight="26.0" prefWidth="93.0" styleClass="cancel-button" stylesheets="@../css/styles.css" text="Cancelar" textFill="WHITE">
                                  <font>
                                     <Font name="Berlin Sans FB Demi Bold" size="14.0" />
-                                 </font></Button>
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></Button>
                            </children>
                         </HBox>
                      </children>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="668.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.UniversityRegistrationController">
+   <children>
+      <VBox layoutX="-3.0" layoutY="-2.0" prefHeight="475.0" prefWidth="671.0" style="-fx-background-color: #f3f3f3;">
+         <children>
+            <HBox alignment="CENTER" prefHeight="64.0" prefWidth="699.0" style="-fx-background-color: #FE3C57;">
+               <children>
+                  <VBox alignment="CENTER_LEFT" prefHeight="64.0" prefWidth="515.0">
+                     <children>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Sistema COIL-VIC" textAlignment="CENTER" wrappingWidth="307.8367156982422">
+                           <font>
+                              <Font name="Century Gothic Bold" size="22.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER_RIGHT" prefHeight="64.0" prefWidth="248.0">
+                     <children>
+                        <ImageView fitHeight="64.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/coilLogoRojo.jpg" />
+                           </image>
+                           <VBox.margin>
+                              <Insets right="19.0" />
+                           </VBox.margin>
+                        </ImageView>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="53.0" prefWidth="606.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="REGISTRO DE UNIVERSIDAD" textAlignment="CENTER" wrappingWidth="252.3398895263672">
+                     <font>
+                        <Font name="Berlin Sans FB" size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </HBox>
+            <AnchorPane prefHeight="361.0" prefWidth="671.0">
+               <children>
+                  <Button onAction="#saveUniversity"  layoutX="198.0" layoutY="301.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="75.0" styleClass="accept-button" stylesheets="@../css/styles.css" text="Registrar">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button onAction="#previusMenu"  layoutX="397.0" layoutY="301.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="75.0" styleClass="cancel-button" stylesheets="@../css/styles.css" text="Cancelar">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <TextField fx:id="txtFieldName" layoutX="198.0" layoutY="67.0" prefHeight="26.0" prefWidth="275.0" styleClass="text-field-accountRequest" stylesheets="@../css/styles.css" />
+                  <TextField fx:id="txtFieldCountry" layoutX="198.0" layoutY="167.0" prefHeight="26.0" prefWidth="275.0" styleClass="text-field-accountRequest" stylesheets="@../css/styles.css" />
+                  <Label layoutX="198.0" layoutY="43.0" text="Nombre de la Universidad:">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="198.0" layoutY="143.0" text="País de origen:">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
