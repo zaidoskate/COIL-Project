@@ -1,3 +1,6 @@
 /build/
 /dist/
 /logs/
+/nbproject/project.xml
+/nbproject/private/private.xml
+nbproject/private/private.properties
