@@ -16,12 +16,13 @@ import javafx.stage.Stage;
  *
  * @author chuch
  */
-public class AccountRequestStage extends Stage {
-    public AccountRequestStage() throws IOException {
-        Parent root = FXMLLoader.load(COILVICApplication.class.getResource("fxml/AccountRequest.fxml"));
+public class SendEmailStage extends Stage{
+    public SendEmailStage() throws IOException {
+        Parent root = FXMLLoader.load(COILVICApplication.class.getResource("fxml/SendEmail.fxml"));
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(COILVICApplication.class.getResource("css/styles.css").toExternalForm());
         this.initModality(Modality.APPLICATION_MODAL);
-        this.setTitle("Solicitud de cuenta");
+        this.setTitle("Envio de correo electronico");
         this.setScene(scene);  
         this.showAndWait(); 
     }

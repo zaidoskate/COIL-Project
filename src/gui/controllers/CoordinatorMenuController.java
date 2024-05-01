@@ -4,7 +4,9 @@
  */
 package gui.controllers;
 
+import gui.COILVICApplication;
 import gui.SessionManager;
+import gui.stages.AccountRequestMenuStage;
 import gui.stages.UniversitiesStage;
 import java.io.IOException;
 import java.net.URL;
@@ -43,6 +45,35 @@ public class CoordinatorMenuController implements Initializable {
         if (universitiesStage != null) {
             Stage stage = (Stage) textName.getScene().getWindow();
             stage.close();
+        }
+    }
+    
+    @FXML
+    private void displayAccountRequestMenu() {
+        Stage stage = (Stage) textName.getScene().getWindow();
+        stage.close();
+        try {
+            AccountRequestMenuStage accoountRequestMenuStage = new AccountRequestMenuStage();
+        } catch(IOException ioException) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("ERROR, intentalo mas tarde.");
+            alert.showAndWait();
+        }
+    }
+    
+    @FXML
+    private void logout() {
+        Stage stage = (Stage) textName.getScene().getWindow();
+        stage.close();
+        SessionManager.getInstance().logout();
+        try {
+            COILVICApplication application = new COILVICApplication();
+            Stage loginStage = new Stage();
+            application.start(loginStage);
+        } catch(IOException ioException) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("ERROR, intentalo mas tarde.");
+            alert.showAndWait();
         }
     }
 }

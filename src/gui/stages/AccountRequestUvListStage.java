@@ -16,13 +16,13 @@ import javafx.stage.Stage;
  *
  * @author chuch
  */
-public class AccountRequestStage extends Stage {
-    public AccountRequestStage() throws IOException {
-        Parent root = FXMLLoader.load(COILVICApplication.class.getResource("fxml/AccountRequest.fxml"));
+public class AccountRequestUvListStage extends Stage {
+    public AccountRequestUvListStage() throws IOException {
+        Parent root = FXMLLoader.load(COILVICApplication.class.getResource("fxml/AccountRequestUvList.fxml"));
         Scene scene = new Scene(root);
         this.initModality(Modality.APPLICATION_MODAL);
-        this.setTitle("Solicitud de cuenta");
+        this.setTitle("Solicitudes de cuenta");
         this.setScene(scene);  
-        this.showAndWait(); 
+        this.showAndWait();
     }
 }

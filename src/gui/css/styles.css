@@ -8,7 +8,16 @@
     -fx-border-color: #004474;
     -fx-text-fill: #fff;
 }
-.accept-button:hover, .cancel-button:hover {
+.delete-button{
+    -fx-background-color: #FCB115;
+    -fx-border-color: #F6891E;
+    -fx-text-fill: #fff;
+}
+.logout-button{
+    -fx-background-color: #FE3C57;
+    -fx-border-radius: 5;
+}
+.accept-button:hover, .cancel-button:hover, .delete-button:hover, .logout-button:hover{
     -fx-cursor: hand;
      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0), 10, 0, 0, 0);
     
@@ -51,4 +60,3 @@
 .table-view .table-cell {
     -fx-text-color: black;
 }
-
