@@ -8,10 +8,14 @@ import logic.domain.UvAccountRequest;
 import logic.domain.ExternalAccountRequest;
 import logic.DAOs.UvAccountRequestDAO;
 import logic.DAOs.CredentialDAO;
+import logic.DAOs.ExternalAccountRequestDAO;
+import logic.DAOs.ExternalProfessorDAO;
 import logic.DAOs.UserDAO;
 import logic.DAOs.ProfessorDAO;
 import logic.DAOs.UvProfessorDAO;
+import logic.domain.AccountRequest;
 import logic.domain.Credential;
+import logic.domain.ExternalProfessor;
 import logic.domain.Professor;
 import logic.domain.User;
 import logic.domain.UvProfessor;
@@ -26,9 +30,23 @@ public class AccountCreator {
         if(sendCredential(username, password, uvaccountRequest.getEmail())) {
             int idUser = registerUser(uvaccountRequest);
             registerCredential(username, password , idUser);
-            registerProfessor(uvaccountRequest, idUser);
+            registerProfessor(idUser);
             registerUvProfessor(uvaccountRequest, idUser);
             deleteAccountRequestUv(uvaccountRequest);
+        } else {
+            return false;
+        }
+        return true;
+    }
+    public static boolean createExternalAccount(ExternalAccountRequest externalAccountRequest) throws LogicException {
+        String username = CredentialGenerator.generateUser(externalAccountRequest.getName(), externalAccountRequest.getLastName());
+        String password = CredentialGenerator.generatePassword();
+        if(sendCredential(username, password, externalAccountRequest.getEmail())) {
+            int idUser = registerUser(externalAccountRequest);
+            registerCredential(username, password , idUser);
+            registerProfessor(idUser);
+            registerExternalProfessor(externalAccountRequest, idUser);
+            deleteAccountRequestExternal(externalAccountRequest);
         } else {
             return false;
         }
@@ -47,11 +65,11 @@ public class AccountCreator {
         return result;
     }
 
-    private static int registerUser(UvAccountRequest uvaccountRequest) throws LogicException {
+    private static int registerUser(AccountRequest accountRequest) throws LogicException {
         User user = new User();
-        user.setName(uvaccountRequest.getName());
-        user.setLastName(uvaccountRequest.getLastName());
-        user.setEmail(uvaccountRequest.getEmail());
+        user.setName(accountRequest.getName());
+        user.setLastName(accountRequest.getLastName());
+        user.setEmail(accountRequest.getEmail());
         
         UserDAO userDAO = new UserDAO();
         
@@ -69,7 +87,7 @@ public class AccountCreator {
         credentialDAO.insertCredential(credential);
     }
 
-    private static void registerProfessor(UvAccountRequest uvaccountRequest, int idUser) throws LogicException {
+    private static void registerProfessor(int idUser) throws LogicException {
         Professor professor = new Professor();
         professor.setIdUser(idUser);
         ProfessorDAO professorDAO = new ProfessorDAO();
@@ -85,10 +103,23 @@ public class AccountCreator {
         UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
         uvProfessorDAO.insertUvProfessor(uvProfessor);
     }
+    
+    private static void registerExternalProfessor(ExternalAccountRequest externalAccountRequest, int idUser) throws LogicException {
+        ExternalProfessor externalProfessor = new ExternalProfessor();
+        externalProfessor.setIdUser(idUser);
+        externalProfessor.setIdUniversity(externalAccountRequest.getIdUniversity());
+        
+        ExternalProfessorDAO externalProfessorDAO = new ExternalProfessorDAO();
+        externalProfessorDAO.insertExternalProfessor(externalProfessor);
+    }
 
     private static void deleteAccountRequestUv(UvAccountRequest uvaccountRequest) throws LogicException{
         UvAccountRequestDAO uvAccountRequestDAO = new UvAccountRequestDAO();
         uvAccountRequestDAO.deleteUvAccountRequest(uvaccountRequest);
+    }
+    private static void deleteAccountRequestExternal(ExternalAccountRequest externalAccountRequest) throws LogicException{
+        ExternalAccountRequestDAO externalAccountRequestDAO = new ExternalAccountRequestDAO();
+        externalAccountRequestDAO.deleteExternalAccountRequest(externalAccountRequest);
     }
     
 }

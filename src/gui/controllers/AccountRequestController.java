@@ -78,7 +78,7 @@ public class AccountRequestController implements Initializable {
         comboBoxUniversities.getItems().addAll(universitiesNames);
     }
     
-    public void loadRegions() {
+    private void loadRegions() {
         ArrayList<String> regions = new ArrayList<>();
         DepartmentDAO departmentDAO = new DepartmentDAO();
         try{
@@ -89,7 +89,7 @@ public class AccountRequestController implements Initializable {
         comboBoxRegions.getItems().addAll(regions);
     }
     
-    public void loadDepartments(String region) {
+    private void loadDepartments(String region) {
         ArrayList<String> departmentsNames = new ArrayList<>();
         departments = new ArrayList<>();
         DepartmentDAO departmentDAO = new DepartmentDAO();
@@ -102,6 +102,59 @@ public class AccountRequestController implements Initializable {
             departmentsNames.add(department.getName());
         }
         comboBoxDepartments.getItems().addAll(departmentsNames);
+    }
+    
+    private boolean makeValidations() {
+        String name = txtFieldName.getText();
+        String lastName = txtFieldLastName.getText();
+        String email = txtFieldEmail.getText(); 
+        String personalNumber = txtFieldPersonalNumber.getText(); 
+        boolean result = true;
+        
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        
+        if(!DataValidation.validateName(name) || !DataValidation.validateName(lastName)) {
+            result = false;
+            alert.setContentText("Nombre(s) o Apellido(s) invalido.");
+        }
+        if(!DataValidation.validateEmail(email)) {
+            result = false;
+            alert.setContentText("Formato de correo invalido.");
+        }
+        if(comboBoxUniversities.getSelectionModel().getSelectedIndex() == -1) {
+            result = false;
+            alert.setContentText("Universidad no seleccionada.");
+        }
+        if(comboBoxUniversities.getSelectionModel().getSelectedIndex() == 0) {
+            if(comboBoxDepartments.getSelectionModel().getSelectedIndex() == -1 || comboBoxDepartments.getSelectionModel().getSelectedIndex() == -1) {
+                result = false;
+                alert.setContentText("Selecciona region y facultad.");
+            }
+            if(!DataValidation.validatePersonalNumberFormat(personalNumber)) {
+                result = false;
+                alert.setContentText("Formato de numero de personal invalido");
+            }
+            if(!DataValidation.validatePersonalNumberExists(personalNumber)) {
+                result = false;
+                alert.setContentText("Numero de personal existente");
+            }
+        }
+        
+        if(!result) {
+            alert.showAndWait();
+        }
+        
+        return result;
+    }
+    
+    private void clearFields() {
+        txtFieldName.setText("");
+        txtFieldLastName.setText("");
+        txtFieldEmail.setText("");
+        txtFieldPersonalNumber.setText("");
+        comboBoxUniversities.getSelectionModel().clearSelection();
+        comboBoxDepartments.getSelectionModel().clearSelection();
+        comboBoxRegions.getSelectionModel().clearSelection();
     }
     
     @FXML
@@ -173,7 +226,7 @@ public class AccountRequestController implements Initializable {
                 alert.showAndWait();
             }
         }
-        if(result==1) {
+        if(result == 1) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Se ha registrado exitosamente su solicitud. Debe esperar un correo con sus datos de acceso.");
             alert.showAndWait();
@@ -182,60 +235,6 @@ public class AccountRequestController implements Initializable {
         }
         clearFields();
     }
-    
-    private boolean makeValidations() {
-        String name = txtFieldName.getText();
-        String lastName = txtFieldLastName.getText();
-        String email = txtFieldEmail.getText(); 
-        String personalNumber = txtFieldPersonalNumber.getText(); 
-        boolean result = true;
-        
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        
-        if(!DataValidation.validateName(name) || !DataValidation.validateName(lastName)) {
-            result = false;
-            alert.setContentText("Nombre(s) o Apellido(s) invalido.");
-        }
-        if(!DataValidation.validateEmail(email)) {
-            result = false;
-            alert.setContentText("Formato de correo invalido.");
-        }
-        if(comboBoxUniversities.getSelectionModel().getSelectedIndex() == -1) {
-            result = false;
-            alert.setContentText("Universidad no seleccionada.");
-        }
-        if(comboBoxUniversities.getSelectionModel().getSelectedIndex() == 0) {
-            if(comboBoxDepartments.getSelectionModel().getSelectedIndex() == -1 || comboBoxDepartments.getSelectionModel().getSelectedIndex() == -1) {
-                result = false;
-                alert.setContentText("Selecciona region y facultad.");
-            }
-            if(!DataValidation.validatePersonalNumberFormat(personalNumber)) {
-                result = false;
-                alert.setContentText("Formato de numero de personal invalido");
-            }
-            if(!DataValidation.validatePersonalNumberExists(personalNumber)) {
-                result = false;
-                alert.setContentText("Numero de personal existente");
-            }
-        }
-        
-        if(!result) {
-            alert.showAndWait();
-        }
-        
-        return result;
-    }
-    
-    private void clearFields() {
-        txtFieldName.setText("");
-        txtFieldLastName.setText("");
-        txtFieldEmail.setText("");
-        txtFieldPersonalNumber.setText("");
-        comboBoxUniversities.getSelectionModel().clearSelection();
-        comboBoxDepartments.getSelectionModel().clearSelection();
-        comboBoxRegions.getSelectionModel().clearSelection();
-    }
-    
     @FXML
     private void cancelAccountRequest() {
         Alert alert = new Alert(Alert.AlertType.WARNING);

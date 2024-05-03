@@ -1,5 +1,6 @@
 package gui.controllers;
 
+import gui.stages.AccountRequestExternalListStage;
 import gui.stages.AccountRequestUvListStage;
 import gui.stages.CoordinatorMenuStage;
 import java.io.IOException;
@@ -21,14 +22,19 @@ public class AccountRequestMenuController implements Initializable {
     }
     @FXML
     public void displayExternalAccountRequestList() {
-        
+        try{
+            AccountRequestExternalListStage accountRequestExternalListStage = new AccountRequestExternalListStage();
+        } catch(IOException ioException) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("ERROR, intentalo mas tarde.");
+            alert.showAndWait();
+        }
     }
     @FXML
     public void displayUvAccountRequestList() {
         try{
             AccountRequestUvListStage accountRequestUvListStage = new AccountRequestUvListStage();
         } catch(IOException ioException) {
-            ioException.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("ERROR, intentalo mas tarde.");
             alert.showAndWait();

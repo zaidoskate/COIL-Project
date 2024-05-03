@@ -4,6 +4,7 @@
  */
 package logic.interfaces;
 
+import logic.LogicException;
 import logic.domain.ExternalProfessor;
 
 /**
@@ -11,5 +12,6 @@ import logic.domain.ExternalProfessor;
  * @author chima
  */
 public interface ExternalProfessorManagerInterface {
-    int insertExternalProfessor(ExternalProfessor externalProfessor);
+    int insertExternalProfessor(ExternalProfessor externalProfessor) throws LogicException;
+    ExternalProfessor getExternalProfessorByIdUniversity(int idUniversity);
 }

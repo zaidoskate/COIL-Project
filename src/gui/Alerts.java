@@ -34,4 +34,18 @@ public class Alerts {
         alert.setContentText("Ha ocurrido un error favor de intentarlo mas tarde.");
         alert.showAndWait();
     }
+    public static void displayAccountSent() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Exito");
+        alert.setTitle("Correo enviado");
+        alert.setContentText("El correo se ha enviado a su destino con la clave de acceso");
+        alert.showAndWait();
+    }
+    public static void displayAccountNoSent() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText("Error");
+        alert.setTitle("Usuario no creado");
+        alert.setContentText("No se ha podido registrar ni enviar el correo a su destino, intentelo mas tarde.");
+        alert.showAndWait();
+    }
 }

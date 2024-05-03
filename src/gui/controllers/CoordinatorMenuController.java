@@ -7,6 +7,7 @@ package gui.controllers;
 import gui.COILVICApplication;
 import gui.SessionManager;
 import gui.stages.AccountRequestMenuStage;
+import gui.stages.ExternalAccountCreateStage;
 import gui.stages.UniversitiesStage;
 import java.io.IOException;
 import java.net.URL;
@@ -55,6 +56,18 @@ public class CoordinatorMenuController implements Initializable {
         try {
             AccountRequestMenuStage accoountRequestMenuStage = new AccountRequestMenuStage();
         } catch(IOException ioException) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("ERROR, intentalo mas tarde.");
+            alert.showAndWait();
+        }
+    }
+    
+    @FXML
+    private void displayExternalAccountCreate() {
+        try {
+            ExternalAccountCreateStage externalAccountCreateStage = new ExternalAccountCreateStage();
+        } catch(IOException ioException) {
+            ioException.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("ERROR, intentalo mas tarde.");
             alert.showAndWait();
