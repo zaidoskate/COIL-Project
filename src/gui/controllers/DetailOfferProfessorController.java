@@ -108,13 +108,13 @@ public class DetailOfferProfessorController implements Initializable {
     @FXML
     public void applyOffer() {
         if (selectedOffer.getIdUser() == currentSession.getUserData().getIdUser()) {
-            showWarningAlert("No puedes postularte a tu propia oferta");
+            showWarningAlert("No puede postularse a su propia oferta");
             return;
         }
 
         try {
             if (candidateDAO.professorHasAppliedForOffer(currentSession.getUserData().getIdUser(), selectedOffer.getIdOfferCollaboration())) {
-                showWarningAlert("Ya te has postulado a esta oferta");
+                showWarningAlert("Ya se ha postulado a esta oferta");
             } else {
                 applyForOffer();
             }

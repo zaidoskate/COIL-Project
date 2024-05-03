@@ -120,7 +120,7 @@ public class RegistrateCollaborationController implements Initializable {
                 }
                 showErrorAlert("Ha ocurrido un problema al aceptar al candidato");
             } else {
-                showWarningAlert("Proporciona un nombre valido para la colaboracion");
+                showWarningAlert("Proporcione un nombre válido para la colaboración");
             }
         } catch (LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);

@@ -77,7 +77,7 @@ public class StartCollaborationController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("Mensaje");
         alert.setTitle("Mensaje");
-        alert.setContentText("El archivo para " + fileType + " ha sido cargado con exito!");
+        alert.setContentText("El archivo para " + fileType + " ha sido cargado con éxito!");
         alert.showAndWait();
     }
     
@@ -263,14 +263,14 @@ public class StartCollaborationController implements Initializable {
                     }
                 }
             } catch(LogicException logicException) {
-
+                Alerts.displayAlertLogicException(logicException);
             }
             previousMenu();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setHeaderText("Cuidado");
             alert.setTitle("Cuidado");
-            alert.setContentText("Tienes que cargar un documento para cada archivo solicitado antes de iniciar");
+            alert.setContentText("Tiene que cargar un documento para cada archivo solicitado antes de iniciar");
             alert.showAndWait();
         }
     }
