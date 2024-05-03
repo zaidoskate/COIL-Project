@@ -4,6 +4,7 @@
  */
 package gui.controllers;
 
+import gui.COILVICApplication;
 import gui.SessionManager;
 import gui.stages.CollaborationStage;
 import gui.stages.OfferProfessorStage;
@@ -13,6 +14,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -39,6 +41,21 @@ public class ProfesorMenuController implements Initializable {
             OfferProfessorStage offerProfessorStage = new OfferProfessorStage();
         } catch(IOException ioException) {
             
+        }
+    }
+    @FXML
+    private void logout() {
+        Stage stage = (Stage) textName.getScene().getWindow();
+        stage.close();
+        SessionManager.getInstance().logout();
+        try {
+            COILVICApplication application = new COILVICApplication();
+            Stage loginStage = new Stage();
+            application.start(loginStage);
+        } catch(IOException ioException) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("ERROR, intentalo mas tarde.");
+            alert.showAndWait();
         }
     }
 

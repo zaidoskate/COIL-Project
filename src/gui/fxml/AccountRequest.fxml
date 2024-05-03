@@ -85,7 +85,7 @@
                         <VBox prefHeight="81.0" prefWidth="347.0">
                            <children>
                               <Label text="Correo Institucional:" />
-                              <TextField fx:id="txtFieldEmail" prefHeight="30.0" style="-fx-border-color: #FE3C57; -fx-border-radius: 5;">
+                              <TextField fx:id="txtFieldEmail" prefHeight="30.0" promptText="Outlook o Hotmail" style="-fx-border-color: #FE3C57; -fx-border-radius: 5;">
                                  <VBox.margin>
                                     <Insets top="10.0" />
                                  </VBox.margin>

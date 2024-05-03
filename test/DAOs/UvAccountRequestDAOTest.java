@@ -22,7 +22,7 @@ public class UvAccountRequestDAOTest {
         uvAccountRequest.setName("Juan Carlos");
         uvAccountRequest.setLastName("Perez Arriaga");
         uvAccountRequest.setEmail("elrevo@gmail.com");
-        uvAccountRequest.setPersonalNumber(23);
+        uvAccountRequest.setPersonalNumber("12335");
         uvAccountRequest.setIdDepartment("FEIX");
         
         UvAccountRequestDAO uvAccountRequestDAO = new UvAccountRequestDAO();
@@ -41,7 +41,7 @@ public class UvAccountRequestDAOTest {
         uvAccountRequest.setName("Juan Carlos");
         uvAccountRequest.setLastName("Perez Arriaga");
         uvAccountRequest.setEmail("elrevo@gmail.com");
-        uvAccountRequest.setPersonalNumber(23);
+        uvAccountRequest.setPersonalNumber("");
         
         UvAccountRequestDAO uvAccountRequestDAO = new UvAccountRequestDAO();
         uvAccountRequestDAO.insertUvAccountRequest(uvAccountRequest);
@@ -54,7 +54,7 @@ public class UvAccountRequestDAOTest {
         uvAccountRequest.setName("Juan Carlos");
         uvAccountRequest.setLastName("Perez Arriaga");
         uvAccountRequest.setEmail("elrevo@gmail.com");
-        uvAccountRequest.setPersonalNumber(23);
+        uvAccountRequest.setPersonalNumber("12345");
         uvAccountRequest.setIdDepartment("FEIX");
         
         UvAccountRequestDAO uvAccountRequestDAO = new UvAccountRequestDAO();
@@ -72,7 +72,7 @@ public class UvAccountRequestDAOTest {
         uvAccountRequest.setName("Juan Carlos");
         uvAccountRequest.setLastName("Perez Arriaga");
         uvAccountRequest.setEmail("elrevo@gmail.com");
-        uvAccountRequest.setPersonalNumber(23);
+        uvAccountRequest.setPersonalNumber("12");
         uvAccountRequest.setIdDepartment("FEIX");
         
         UvAccountRequestDAO uvAccountRequestDAO = new UvAccountRequestDAO();

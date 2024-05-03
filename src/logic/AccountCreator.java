@@ -1,0 +1,94 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package logic;
+
+import logic.domain.UvAccountRequest;
+import logic.domain.ExternalAccountRequest;
+import logic.DAOs.UvAccountRequestDAO;
+import logic.DAOs.CredentialDAO;
+import logic.DAOs.UserDAO;
+import logic.DAOs.ProfessorDAO;
+import logic.DAOs.UvProfessorDAO;
+import logic.domain.Credential;
+import logic.domain.Professor;
+import logic.domain.User;
+import logic.domain.UvProfessor;
+/**
+ *
+ * @author chuch
+ */
+public class AccountCreator {
+    public static boolean createUVAccount(UvAccountRequest uvaccountRequest) throws LogicException {
+        String username = CredentialGenerator.generateUser(uvaccountRequest.getName(), uvaccountRequest.getLastName());
+        String password = CredentialGenerator.generatePassword();
+        if(sendCredential(username, password, uvaccountRequest.getEmail())) {
+            int idUser = registerUser(uvaccountRequest);
+            registerCredential(username, password , idUser);
+            registerProfessor(uvaccountRequest, idUser);
+            registerUvProfessor(uvaccountRequest, idUser);
+            deleteAccountRequestUv(uvaccountRequest);
+        } else {
+            return false;
+        }
+        return true;
+    }
+    
+    private static boolean sendCredential(String username, String password, String email) throws LogicException {
+        String body;
+        body = "Te damos la bienvenida al Sistema COIL-VIC de la Universidad Veracruzana."
+                + "\nTus datos de acceso son los siguientes:"
+                + "\nUsuario: "+username
+                + "\nContrasena: "+password;
+        
+        boolean result = MailSender.sendEmail(body, email);
+    
+        return result;
+    }
+
+    private static int registerUser(UvAccountRequest uvaccountRequest) throws LogicException {
+        User user = new User();
+        user.setName(uvaccountRequest.getName());
+        user.setLastName(uvaccountRequest.getLastName());
+        user.setEmail(uvaccountRequest.getEmail());
+        
+        UserDAO userDAO = new UserDAO();
+        
+        int idUser = userDAO.addUser(user);
+        return idUser;
+    }
+
+    private static void registerCredential(String username, String password, int idUser) throws LogicException {
+        Credential credential = new Credential();
+        credential.setIdUser(idUser);
+        credential.setUser(username);
+        credential.setPassword(password);
+        
+        CredentialDAO credentialDAO = new CredentialDAO();
+        credentialDAO.insertCredential(credential);
+    }
+
+    private static void registerProfessor(UvAccountRequest uvaccountRequest, int idUser) throws LogicException {
+        Professor professor = new Professor();
+        professor.setIdUser(idUser);
+        ProfessorDAO professorDAO = new ProfessorDAO();
+        professorDAO.insertProfessor(professor);
+    }
+
+    private static void registerUvProfessor(UvAccountRequest uvaccountRequest, int idUser) throws LogicException {
+        UvProfessor uvProfessor = new UvProfessor();
+        uvProfessor.setIdUser(idUser);
+        uvProfessor.setIdDepartment(uvaccountRequest.getIdDepartment());
+        uvProfessor.setPersonalNumber(uvaccountRequest.getPersonalNumber());
+        
+        UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
+        uvProfessorDAO.insertUvProfessor(uvProfessor);
+    }
+
+    private static void deleteAccountRequestUv(UvAccountRequest uvaccountRequest) throws LogicException{
+        UvAccountRequestDAO uvAccountRequestDAO = new UvAccountRequestDAO();
+        uvAccountRequestDAO.deleteUvAccountRequest(uvaccountRequest);
+    }
+    
+}

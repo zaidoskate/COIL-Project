@@ -9,7 +9,9 @@ import logic.domain.UvAccountRequest;
 import logic.interfaces.UvAccountRequestManagerInterface;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import logic.LogicException;
 
 /**
@@ -60,5 +62,34 @@ public class UvAccountRequestDAO implements UvAccountRequestManagerInterface{
             databaseConnection.closeConnection();
         }
         return result;
+    }
+    
+    @Override
+    public ArrayList<UvAccountRequest> getUvAccountRequests() throws LogicException {
+        String query = "SELECT * FROM solicitudcuentauv";
+        Connection connection;
+        PreparedStatement statement;
+        ResultSet result;
+        ArrayList<UvAccountRequest> uvAccountRequestsResult = new ArrayList();
+        try{
+            connection = this.databaseConnection.getConnection();
+            statement = connection.prepareStatement(query);
+            result = statement.executeQuery();
+            while(result.next()) {
+                UvAccountRequest uvAccountRequest = new UvAccountRequest();
+                uvAccountRequest.setIdRequest(result.getInt("idSolicitud"));
+                uvAccountRequest.setName(result.getString("nombre"));
+                uvAccountRequest.setLastName(result.getString("apellido"));
+                uvAccountRequest.setEmail(result.getString("correo"));
+                uvAccountRequest.setIdDepartment(result.getString("idFacultad"));
+                uvAccountRequest.setPersonalNumber(result.getString("numeropersonal"));
+                uvAccountRequestsResult.add(uvAccountRequest);
+            }
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return uvAccountRequestsResult;
     }
 }

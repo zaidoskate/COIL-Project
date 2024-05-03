@@ -4,6 +4,7 @@
  */
 package logic.interfaces;
 
+import java.util.ArrayList;
 import logic.LogicException;
 import logic.domain.UvAccountRequest;
 
@@ -12,6 +13,7 @@ import logic.domain.UvAccountRequest;
  * @author zaido
  */
 public interface UvAccountRequestManagerInterface {
-    public int insertUvAccountRequest(UvAccountRequest uvAccountRequest) throws LogicException;
-    public int deleteUvAccountRequest(UvAccountRequest uvAccountRequest) throws LogicException;
+    int insertUvAccountRequest(UvAccountRequest uvAccountRequest) throws LogicException;
+    int deleteUvAccountRequest(UvAccountRequest uvAccountRequest) throws LogicException;
+    ArrayList<UvAccountRequest> getUvAccountRequests() throws LogicException;
 }

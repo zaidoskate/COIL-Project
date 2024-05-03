@@ -25,7 +25,7 @@ public class DataValidation {
     }
     
     public static boolean validateEmail(String email) {
-        String validEmailForm = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        String validEmailForm = "^[a-zA-Z0-9._%+-]+@(hotmail|outlook)\\.(com|es|mx|co|ar)$";
         return email.matches(validEmailForm);
     }
 

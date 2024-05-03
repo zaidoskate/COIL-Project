@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.AccountRequestUvListController">
+   <children>
+      <TableView fx:id="tableView" layoutX="33.0" layoutY="91.0" prefHeight="298.0" prefWidth="634.0" stylesheets="@../css/styles.css">
+        <columns>
+          <TableColumn editable="false" prefWidth="115.20001792907715" text="Numero personal">
+              <cellValueFactory>
+                    <PropertyValueFactory property="personalNumber" />
+                </cellValueFactory>
+          </TableColumn>
+            <TableColumn editable="false" minWidth="0.0" prefWidth="169.5999755859375" text="Nombre (s)">
+              <cellValueFactory>
+                    <PropertyValueFactory property="name" />
+                </cellValueFactory>
+          </TableColumn>
+          <TableColumn editable="false" prefWidth="174.4000244140625" text="Apellido (s)">
+              <cellValueFactory>
+                    <PropertyValueFactory property="lastName" />
+              </cellValueFactory>
+          </TableColumn>
+          <TableColumn prefWidth="175.20001831054685" text="Correo" >
+              <cellValueFactory>
+                    <PropertyValueFactory property="email" />
+              </cellValueFactory>
+          </TableColumn>
+        </columns>
+      </TableView>
+      <HBox alignment="CENTER" prefHeight="65.0" prefWidth="700.0">
+         <children>
+            <AnchorPane prefHeight="200.0" prefWidth="700.0" styleClass="red-and-white" stylesheets="@../css/styles.css">
+               <children>
+                  <ImageView fitHeight="72.0" fitWidth="81.0" layoutX="612.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/coilLogoRojo.jpg" />
+                     </image>
+                  </ImageView>
+                  <Text fill="WHITE" layoutX="64.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Solicitudes de acceso UV" wrappingWidth="391.69720458984375">
+                     <font>
+                        <Font name="Century Gothic Bold" size="28.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+      <ImageView fitHeight="72.0" fitWidth="114.0" layoutX="314.0" layoutY="394.0" opacity="0.15" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/CoilLogo.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="70.0" layoutY="403.0" mnemonicParsing="false" onAction="#acceptAccountRequest" prefHeight="27.0" prefWidth="90.0" styleClass="accept-button" stylesheets="@../css/styles.css" text="Aceptar" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button layoutX="538.0" layoutY="416.0" mnemonicParsing="false" onAction="#previusMenu" prefHeight="27.0" prefWidth="90.0" styleClass="cancel-button" stylesheets="@../css/styles.css" text="Regresar" textAlignment="CENTER" />
+      <Button layoutX="70.0" layoutY="444.0" mnemonicParsing="false" onAction="#declineAccountRequest" prefHeight="27.0" prefWidth="90.0" styleClass="delete-button" stylesheets="@../css/styles.css" text="Rechazar">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
