@@ -4,6 +4,7 @@
  */
 package gui.controllers;
 
+import gui.Alerts;
 import gui.SessionManager;
 import gui.stages.CandidatesStage;
 import gui.stages.RegistrateCollaborationStage;
@@ -12,14 +13,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import logic.DAOs.CollaborationDAO;
 import logic.DAOs.CollaborationOfferDAO;
 import logic.DAOs.ProfessorBelongsToCollaborationDAO;
-import logic.LogicException;
 import logic.model.CandidateInformation;
 import logic.model.OfferInformation;
 
@@ -70,33 +69,16 @@ public class ProfessorDetailController implements Initializable {
         try {
             CandidatesStage candidatesStage = new CandidatesStage();
         } catch(IOException ioException) {
-            
+            Alerts.displayAlertIOException();
         }
     }
     
     @FXML
     private void acceptCandidate() {
-        /*try {
-            //INSERTAR LA COLAB Y EL BELONGS
-            int deleted = collaborationOfferDAO.deleteCollaborationOffer(currentCandidate.getIdOfferCollaboration());
-            if(deleted == 1) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setHeaderText("Mensaje");
-                alert.setTitle("Mensaje");
-                alert.setContentText("Has aceptado esta colaboración ponte en contacto con el profesor");
-                alert.showAndWait();
-            }
-        } catch(LogicException logicException) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Error");
-            alert.setTitle("Error");
-            alert.setContentText(logicException.getMessage());
-            alert.showAndWait();
-        }*/
         try {
             RegistrateCollaborationStage registrateCollaborationStage = new RegistrateCollaborationStage();
         } catch(IOException ioException) {
-            
+            Alerts.displayAlertIOException();
         }
     }
     

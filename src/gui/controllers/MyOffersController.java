@@ -4,6 +4,7 @@
  */
 package gui.controllers;
 
+import gui.Alerts;
 import gui.SessionManager;
 import gui.stages.CandidatesStage;
 import gui.stages.OfferProfessorStage;
@@ -67,11 +68,7 @@ public class MyOffersController implements Initializable {
             professorOffer.setOfferLanguage(offer.getLanguage());
             professorOffer.setTopicsInterest(offer.getTopicsOfInterest());
         } catch(LogicException logicException) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Error");
-            alert.setTitle("Error");
-            alert.setContentText(logicException.getMessage());
-            alert.showAndWait();
+            Alerts.displayAlertLogicException(logicException);
         }
         
     }
@@ -93,7 +90,7 @@ public class MyOffersController implements Initializable {
         try {
             OfferProfessorStage offerStage = new OfferProfessorStage();
         } catch(IOException ioException) {
-            
+            Alerts.displayAlertIOException();
         }
     }
     
@@ -104,7 +101,7 @@ public class MyOffersController implements Initializable {
         try {
             CandidatesStage candidatesStage = new CandidatesStage();
         } catch(IOException ioException) {
-            
+            Alerts.displayAlertIOException();
         }
     }
 }

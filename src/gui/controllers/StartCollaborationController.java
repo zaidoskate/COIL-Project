@@ -4,6 +4,7 @@
  */
 package gui.controllers;
 
+import gui.Alerts;
 import gui.stages.MyCollaborationsStage;
 import java.io.File;
 import java.io.IOException;
@@ -58,7 +59,7 @@ public class StartCollaborationController implements Initializable {
                 createStartupDocumentation();
             }
         } catch(LogicException logicException) {
-            
+            Alerts.displayAlertLogicException(logicException);
         }
     }
     
@@ -123,9 +124,7 @@ public class StartCollaborationController implements Initializable {
                     break;
             }
         } catch(LogicException logicException) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(logicException.getMessage());
-            alert.showAndWait();
+            Alerts.displayAlertLogicException(logicException);
         }
     }
     
@@ -140,7 +139,7 @@ public class StartCollaborationController implements Initializable {
                 }
             }
         } catch(LogicException logicException) {
-            
+            Alerts.displayAlertLogicException(logicException);
         }
         return allFilesUploaded;
     }
@@ -204,9 +203,7 @@ public class StartCollaborationController implements Initializable {
                         break;
                 }
             } catch(LogicException logicException) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText(logicException.getMessage());
-                alert.showAndWait();
+                Alerts.displayAlertLogicException(logicException);
             }
         }
     }
@@ -236,9 +233,7 @@ public class StartCollaborationController implements Initializable {
                         break;
                 }
             } catch(LogicException logicException) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText(logicException.getMessage());
-                alert.showAndWait();
+                Alerts.displayAlertLogicException(logicException);
             }
         }
     }
@@ -250,7 +245,7 @@ public class StartCollaborationController implements Initializable {
         try {
             MyCollaborationsStage myCollaborationsStage = new MyCollaborationsStage();
         } catch(IOException ioException) {
-            
+            Alerts.displayAlertIOException();
         }
     }
     

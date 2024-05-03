@@ -4,6 +4,7 @@
  */
 package gui.controllers;
 
+import gui.Alerts;
 import gui.SessionManager;
 import gui.stages.CollaborationStage;
 import gui.stages.StartCollaborationStage;
@@ -72,7 +73,7 @@ public class MyCollaborationsController implements Initializable {
             currentCollaboration.setTopicsOfInterest(collaborationObtained.getInterestTopic());
             currentCollaboration.setLanguage(collaborationObtained.getLanguage());
         } catch(LogicException logicException) {
-            
+            Alerts.displayAlertLogicException(logicException);
         }
     }
     
@@ -96,7 +97,7 @@ public class MyCollaborationsController implements Initializable {
         try {
             CollaborationStage collaborationStage = new CollaborationStage();
         } catch(IOException ioException) {
-            
+            Alerts.displayAlertIOException();
         }
     }
     
@@ -107,7 +108,7 @@ public class MyCollaborationsController implements Initializable {
         try {
             StartCollaborationStage startCollaborationStage = new StartCollaborationStage();
         } catch(IOException ioException) {
-            
+            Alerts.displayAlertIOException();
         }
     }
     

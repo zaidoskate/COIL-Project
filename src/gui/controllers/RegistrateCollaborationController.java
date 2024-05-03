@@ -4,6 +4,7 @@
  */
 package gui.controllers;
 
+import gui.Alerts;
 import gui.SessionManager;
 import gui.DataValidation;
 import logic.LogicException;
@@ -70,6 +71,22 @@ public class RegistrateCollaborationController implements Initializable {
         return professorBelongsToCollaboration;
     }
     
+    private void showWarningAlert(String contentText) {
+        showAlert(Alert.AlertType.WARNING, "Advertencia", contentText);
+    }
+
+    private void showErrorAlert(String contentText) {
+        showAlert(Alert.AlertType.ERROR, "Error", contentText);
+    }
+    
+    private void showAlert(Alert.AlertType alertType, String headerText, String contentText) {
+        Alert alert = new Alert(alertType);
+        alert.setHeaderText(headerText);
+        alert.setTitle(headerText);
+        alert.setContentText(contentText);
+        alert.showAndWait();
+    }
+    
     @FXML
     public void previousMenu() {
         Stage stage = (Stage) this.btnAccept.getScene().getWindow();
@@ -101,24 +118,12 @@ public class RegistrateCollaborationController implements Initializable {
                         }
                     }
                 }
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText("ERROR");
-                alert.setTitle("ERROR");
-                alert.setContentText("Ha ocurrido un problema al aceptar al candidato");
-                alert.showAndWait();
+                showErrorAlert("Ha ocurrido un problema al aceptar al candidato");
             } else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Aviso");
-                alert.setTitle("Aviso");
-                alert.setContentText("Proporciona un nombre valido para la colaboracion");
-                alert.showAndWait();
+                showWarningAlert("Proporciona un nombre valido para la colaboracion");
             }
         } catch (LogicException logicException) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("ERROR");
-            alert.setTitle("ERROR");
-            alert.setContentText(logicException.getMessage());
-            alert.showAndWait();
+            Alerts.displayAlertLogicException(logicException);
         }
     }
 }

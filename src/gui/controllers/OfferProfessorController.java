@@ -4,6 +4,7 @@
  */
 package gui.controllers;
 
+import gui.Alerts;
 import gui.SessionManager;
 import logic.model.OfferInformation;
 import gui.stages.DetailOfferProfessorStage;
@@ -115,11 +116,7 @@ public class OfferProfessorController implements Initializable {
                 }
             }
         } catch(LogicException logicException) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Error");
-            alert.setTitle("Error");
-            alert.setContentText(logicException.getMessage());
-            alert.showAndWait();
+            Alerts.displayAlertLogicException(logicException);
         }
     }
     
@@ -147,7 +144,7 @@ public class OfferProfessorController implements Initializable {
             try {
                 DetailOfferProfessorStage detailStage = new DetailOfferProfessorStage();
             } catch(IOException ioException) {
-                
+                Alerts.displayAlertIOException();
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -174,25 +171,21 @@ public class OfferProfessorController implements Initializable {
                 alert.showAndWait();
             }
         } catch(LogicException logicException) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Error");
-            alert.setTitle("Error");
-            alert.setContentText(logicException.getMessage());
-            alert.showAndWait();
+            Alerts.displayAlertLogicException(logicException);
         } catch (IOException ioException) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Error");
-            alert.setTitle("Error");
-            alert.setContentText(ioException.getMessage());
-            alert.showAndWait();
+            Alerts.displayAlertIOException();
         }
     }
     
     @FXML
-    public void previousMenu() throws IOException {
+    public void previousMenu() {
         Stage stage = (Stage) tableView.getScene().getWindow();
         stage.close();
-        ProfesorMenuStage menuStage = new ProfesorMenuStage();
+        try {
+            ProfesorMenuStage menuStage = new ProfesorMenuStage();
+        } catch(IOException ioException) {
+            Alerts.displayAlertIOException();
+        }
     }
     
     @FXML
@@ -202,11 +195,7 @@ public class OfferProfessorController implements Initializable {
         try {
             MyOffersStage myOffersStage = new MyOffersStage();
         } catch(IOException ioException) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Error");
-            alert.setTitle("Error");
-            alert.setContentText(ioException.getMessage());
-            alert.showAndWait();
+            Alerts.displayAlertIOException();
         }
     }
 }

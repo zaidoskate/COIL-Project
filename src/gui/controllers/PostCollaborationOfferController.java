@@ -4,6 +4,7 @@
  */
 package gui.controllers;
 
+import gui.Alerts;
 import gui.DataValidation;
 import gui.SessionManager;
 import gui.stages.OfferProfessorStage;
@@ -137,7 +138,7 @@ public class PostCollaborationOfferController implements Initializable {
                     showInformationAlert("Hecho", "Su oferta será evaluada, espere un correo con el resultado");
                 }
             } catch(LogicException logicException) {
-                showErrorAlert(logicException.getMessage());
+                Alerts.displayAlertLogicException(logicException);
             }
         }
     }
@@ -150,7 +151,7 @@ public class PostCollaborationOfferController implements Initializable {
         try {
             OfferProfessorStage offerStage = new OfferProfessorStage();
         } catch (IOException ioException) {
-            
+            Alerts.displayAlertIOException();
         }
     }
     

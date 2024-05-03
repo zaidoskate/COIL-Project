@@ -4,6 +4,7 @@
  */
 package gui.controllers;
 
+import gui.Alerts;
 import gui.SessionManager;
 import gui.stages.MyOffersStage;
 import gui.stages.ProfessorDetailStage;
@@ -30,7 +31,6 @@ import logic.domain.CollaborationOfferCandidate;
 import logic.domain.User;
 import logic.model.CandidateInformation;
 import logic.model.OfferInformation;
-import org.apache.log4j.Logger;
 
 /**
  *
@@ -98,11 +98,7 @@ public class CandidatesController implements Initializable {
                 }
             }
         } catch(LogicException logicException) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Error");
-            alert.setTitle("Error");
-            alert.setContentText(logicException.getMessage());
-            alert.showAndWait();
+            Alerts.displayAlertLogicException(logicException);
         }
     }
     
@@ -127,7 +123,7 @@ public class CandidatesController implements Initializable {
         try {
             MyOffersStage myOffersStage = new MyOffersStage();
         } catch(IOException ioException) {
-            
+            Alerts.displayAlertIOException();
         }
     }
     
@@ -140,7 +136,7 @@ public class CandidatesController implements Initializable {
             try {
                 ProfessorDetailStage professorDetailStage = new ProfessorDetailStage();
             } catch(IOException ioException) {
-                ioException.printStackTrace();
+                Alerts.displayAlertIOException();
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);

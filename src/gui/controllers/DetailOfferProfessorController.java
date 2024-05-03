@@ -4,6 +4,7 @@
  */
 package gui.controllers;
 
+import gui.Alerts;
 import gui.SessionManager;
 import gui.stages.OfferProfessorStage;
 import java.io.IOException;
@@ -84,7 +85,7 @@ public class DetailOfferProfessorController implements Initializable {
             this.universityName.setText(universityInfo.get(0));
             this.universityCountry.setText(universityInfo.get(1));
         } catch(LogicException logicException) {
-            showErrorAlert(logicException.getMessage());
+            Alerts.displayAlertLogicException(logicException);
         }
     }
     
@@ -100,11 +101,7 @@ public class DetailOfferProfessorController implements Initializable {
         try{
             OfferProfessorStage offerStage = new OfferProfessorStage();
         } catch(IOException ioException) {
-            Alert alertError = new Alert(Alert.AlertType.ERROR);
-            alertError.setHeaderText("Error");
-            alertError.setTitle("Error");
-            alertError.setContentText("Error al regresar al menu ofertas, vuelve a intentarlo");
-            alertError.showAndWait();
+            Alerts.displayAlertIOException();
         }
     }
     
@@ -122,7 +119,7 @@ public class DetailOfferProfessorController implements Initializable {
                 applyForOffer();
             }
         } catch (LogicException logicException) {
-            showErrorAlert(logicException.getMessage());
+            Alerts.displayAlertLogicException(logicException);
         }
     }
 

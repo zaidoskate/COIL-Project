@@ -4,6 +4,7 @@
  */
 package gui.controllers;
 
+import gui.Alerts;
 import gui.stages.MyCollaborationsStage;
 import gui.stages.ProfesorMenuStage;
 import java.io.IOException;
@@ -35,7 +36,7 @@ public class CollaborationController implements Initializable {
         try {
             MyCollaborationsStage myCollaborationsStage = new MyCollaborationsStage();
         } catch(IOException ioException) {
-            
+            Alerts.displayAlertIOException();
         }
     }
     
@@ -46,7 +47,7 @@ public class CollaborationController implements Initializable {
         try {
             ProfesorMenuStage menuStage = new ProfesorMenuStage();
         } catch(IOException ioException) {
-            
+            Alerts.displayAlertIOException();
         }
     }
 }
