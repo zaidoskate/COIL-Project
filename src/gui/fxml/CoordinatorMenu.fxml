@@ -41,7 +41,7 @@
                   <Font name="Century Gothic Bold" size="18.0" />
                </font>
             </Button>
-            <Button layoutX="44.0" layoutY="360.0" mnemonicParsing="false" prefHeight="92.0" prefWidth="180.0" styleClass="button-menu" stylesheets="@../css/styles.css" text="Crear cuenta de Profesor" textAlignment="CENTER" wrapText="true">
+            <Button layoutX="44.0" layoutY="360.0" mnemonicParsing="false" onAction="#displayExternalAccountCreate" prefHeight="92.0" prefWidth="180.0" styleClass="button-menu" stylesheets="@../css/styles.css" text="Crear cuenta de Profesor" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Century Gothic Bold" size="18.0" />
                </font>

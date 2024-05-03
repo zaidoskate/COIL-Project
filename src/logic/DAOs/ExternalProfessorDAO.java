@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import logic.interfaces.ExternalProfessorManagerInterface;
 import java.sql.ResultSet;
+import logic.LogicException;
 
 /**
  *
@@ -24,7 +25,7 @@ public class ExternalProfessorDAO implements ExternalProfessorManagerInterface {
     }
     
     @Override
-    public int insertExternalProfessor(ExternalProfessor externalProfessor) {
+    public int insertExternalProfessor(ExternalProfessor externalProfessor) throws LogicException{
         int result = 0;
         String query = "INSERT INTO profesorexterno (profesor_usuario_idusuario, universidad_iduniversidad) VALUES (?, ?)";
         Connection connection;
@@ -36,13 +37,14 @@ public class ExternalProfessorDAO implements ExternalProfessorManagerInterface {
             statement.setInt(2, externalProfessor.getIdUniversity());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
-            result = -1;
+            throw new LogicException("Error al crear la cuenta", sqlException);
         } finally {
             databaseConnection.closeConnection();
         }
         return result;
     }
     
+    @Override
     public ExternalProfessor getExternalProfessorByIdUniversity(int idUniversity) {
         String query = "SELECT * FROM profesorexterno WHERE Universidad_universidad = ?";
         Connection connection;
