@@ -4,6 +4,7 @@
  */
 package gui.controllers;
 
+import gui.SessionManager;
 import logic.model.OfferInformation;
 import gui.stages.DetailOfferProfessorStage;
 import gui.stages.MyOffersStage;
@@ -58,6 +59,7 @@ public class OfferProfessorController implements Initializable {
     private ObservableList<OfferInformation> offers;
     
     OfferInformation selectedOffer = OfferInformation.getOffer();
+    SessionManager currentSession = SessionManager.getInstance();
     
     public OfferProfessorController() {
         collaborationOfferDAO = new CollaborationOfferDAO();
@@ -132,6 +134,7 @@ public class OfferProfessorController implements Initializable {
         selectedOffer.setIdOfferCollaboration(tableView.getSelectionModel().getSelectedItem().getIdOfferCollaboration());
         selectedOffer.setIdUser(tableView.getSelectionModel().getSelectedItem().getIdUser());
         selectedOffer.setNumberStudents(tableView.getSelectionModel().getSelectedItem().getNumberStudents());
+        selectedOffer.setStudentProfile(tableView.getSelectionModel().getSelectedItem().getStudentProfile());
     }
     
     @FXML
@@ -157,13 +160,31 @@ public class OfferProfessorController implements Initializable {
     
     @FXML
     public void showPostOffer(ActionEvent event) {
-        Node node = (Node) event.getSource();
-        Stage stage = (Stage) node.getScene().getWindow();
-        stage.close();
         try {
-            PostCollaborationOfferStage postStage = new PostCollaborationOfferStage();
-        } catch(IOException ioException) {
-            
+            if(!collaborationOfferDAO.professorHasOffer(currentSession.getUserData().getIdUser())) {
+                PostCollaborationOfferStage postStage = new PostCollaborationOfferStage();
+                Node node = (Node) event.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                stage.close();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText("Mensaje");
+                alert.setTitle("Mensaje");
+                alert.setContentText("Actualmente tiene una oferta publicada o en aprobacion");
+                alert.showAndWait();
+            }
+        } catch(LogicException logicException) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Error");
+            alert.setTitle("Error");
+            alert.setContentText(logicException.getMessage());
+            alert.showAndWait();
+        } catch (IOException ioException) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Error");
+            alert.setTitle("Error");
+            alert.setContentText(ioException.getMessage());
+            alert.showAndWait();
         }
     }
     
@@ -181,7 +202,11 @@ public class OfferProfessorController implements Initializable {
         try {
             MyOffersStage myOffersStage = new MyOffersStage();
         } catch(IOException ioException) {
-            ioException.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Error");
+            alert.setTitle("Error");
+            alert.setContentText(ioException.getMessage());
+            alert.showAndWait();
         }
     }
 }

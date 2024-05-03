@@ -114,6 +114,28 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
             statement.setInt(1, idOfferCollaboration);
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return result;
+    }
+
+    @Override
+    public boolean professorHasOffer(int idUser) throws LogicException {
+        boolean result = false;
+        String query = "SELECT COUNT(*) AS total FROM OfertaColaboracion WHERE Profesor_Usuario_idUsuario = ?";
+        try {
+            Connection connection = databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idUser);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                int count = resultSet.getInt("total");
+                result = count > 0;
+            }
+        } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();

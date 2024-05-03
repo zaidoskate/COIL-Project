@@ -38,4 +38,18 @@ public class ProfessorBelongsToCollaboration {
         this.colaborationStatus = colaborationStatus;
     }
 
+    @Override
+    public boolean equals(Object object) {
+        ProfessorBelongsToCollaboration professorBelongsToCollaboration = (ProfessorBelongsToCollaboration) object;
+        if(this.idColaboration != professorBelongsToCollaboration.getIdColaboration()) {
+            return false;
+        }
+        if(this.idUser != professorBelongsToCollaboration.getIdUser()) {
+            return false;
+        }
+        if(this.idUserMirrorClass != professorBelongsToCollaboration.getIdUserMirrorClass()) {
+            return false;
+        }
+        return true;
+    }
 }

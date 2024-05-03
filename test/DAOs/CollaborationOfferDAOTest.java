@@ -109,4 +109,17 @@ public class CollaborationOfferDAOTest {
             fail("No se ha podido eliminar la oferta de colaboracion");
         }
     }
+    
+    @Test
+    public void testProfessorHasOfferSuccess() {
+        boolean expectedResult = true;
+        
+        CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
+        try {
+            boolean obtainedResult = collaborationOfferDAO.professorHasOffer(1);
+            assertEquals(expectedResult, obtainedResult);
+        } catch(LogicException logicException) {
+            fail("No se ha podido verificar si el profesor tiene una oferta publicada");
+        }
+    }
 }

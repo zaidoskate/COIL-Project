@@ -100,4 +100,38 @@ public class StartupDocumentationDAOTest {
         
         assertEquals(expectedResult, currentResult);
     }
+    
+    @Test
+    public void testHasFileUploadedSucess() throws LogicException {
+        StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO();
+        try {
+            boolean result = startupDocumentationDAO.hasFileUploaded("listaEstudiantado", 11);
+            assertFalse(result);
+        } catch(LogicException logicException) {
+            fail("No se ha podido obtener si el tipo de archivo ya tiene un archivo cargado");
+        }
+    }
+    
+    @Test
+    public void testDeleteUploadedFile() {
+        int expectedResult = 1;
+        StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO();
+        try {
+            int result = startupDocumentationDAO.deleteUploadedFile("listaEstudiantado", 11);
+            assertEquals(expectedResult, result);
+        } catch(LogicException logicException) {
+            fail("No se ha podido eliminar el archivo cargado");
+        }
+    }
+    
+    @Test
+    public void testIsCollaborationRegistratedSuccess() {
+        StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO();
+        try {
+            boolean result = startupDocumentationDAO.isCollaborationRegistrated(11);
+            assertTrue(result);
+        } catch(LogicException logicException) {
+            fail("No se ha podido saber si la colaboracion ya esta registrada con su documentacion de inicio");
+        }
+    }
 }

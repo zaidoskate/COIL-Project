@@ -69,7 +69,7 @@ public class CollaborationOfferCandidateDAO implements CollaborationOfferCandida
     public ArrayList<CollaborationOfferCandidate> GetCollaborationOfferCandidateByIdCollaborationOffer(int idCollaboration) throws LogicException {
         String query = "SELECT * FROM candidatosofertacolaboracion WHERE idOfertaColaboracion = ?";
         ArrayList<CollaborationOfferCandidate> candidates = new ArrayList<>();
-        try{
+        try {
             Connection connection = this.databaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idCollaboration);
@@ -86,5 +86,22 @@ public class CollaborationOfferCandidateDAO implements CollaborationOfferCandida
             databaseConnection.closeConnection();
         }
         return candidates;
+    }
+
+    @Override
+    public int deleteCollaborationOffer(int idOfferCollaboration) throws LogicException {
+        int deletedRows = 0;
+        String query = "DELETE FROM candidatosOfertaColaboracion WHERE idOfertaColaboracion = ?";
+        try {
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idOfferCollaboration);
+            deletedRows = statement.executeUpdate();
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return deletedRows;
     }
 }

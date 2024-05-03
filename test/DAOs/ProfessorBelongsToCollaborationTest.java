@@ -35,4 +35,33 @@ public class ProfessorBelongsToCollaborationTest {
         
         assertEquals(expectedResult, currentResult);
     }
+    
+    @Test
+    public void testGetProfessorCollaborationIdSuccess() {
+        ProfessorBelongsToCollaboration professorBelongsToCollaboration = new ProfessorBelongsToCollaboration();
+        professorBelongsToCollaboration.setIdColaboration(11);
+        professorBelongsToCollaboration.setIdUser(2);
+        professorBelongsToCollaboration.setIdUserMirrorClass(1);
+        professorBelongsToCollaboration.setColaborationStatus("Pendiente");
+        
+        ProfessorBelongsToCollaborationDAO professorBelongsToCollaborationDAO = new ProfessorBelongsToCollaborationDAO();
+        try {
+            ProfessorBelongsToCollaboration professorBelongsCollaborationObtained = professorBelongsToCollaborationDAO.getProfessorPendingCollaboration(2);
+            assertEquals(professorBelongsToCollaboration, professorBelongsCollaborationObtained);
+        } catch (LogicException logicException) {
+            fail("No se ha podido obtener el id de la colaboracion a la que pertenece el profesor");
+        }
+    }
+    
+    @Test
+    public void testSetStartedStatusToCollaboration() {
+        int expectedResult = 1;
+        ProfessorBelongsToCollaborationDAO professorBelongsToCollaborationDAO = new ProfessorBelongsToCollaborationDAO();
+        try {
+            int result = professorBelongsToCollaborationDAO.setStartedStatusToCollaboration(11);
+            assertEquals(expectedResult, result);
+        } catch(LogicException logicException) {
+            fail("No se ha podido cambiar el status de la colaboracion");
+        }
+    }
 }

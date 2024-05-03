@@ -3,7 +3,7 @@
 }
 
 .menu-bar {
-    -fx-background-color:  rgba(254,60,87,0.8);
+    -fx-background-color:   linear-gradient(from 0% 0% to 0% 100%, rgb(254, 60, 87), rgb(201, 35, 58));
     -fx-alignment: CENTER;
     -fx-background-radiux: 20;
 }
@@ -44,6 +44,12 @@
     -fx-text-fill: white;   
 }
 
+.button-accion2 {
+    -fx-background-color: #EE2B2B;
+    -fx-border-color: #C12222;
+    -fx-text-fill: white;
+}
+
 .button-regresar {
     -fx-background-color: gray; 
     -fx-border-color: #ffffff; 
@@ -54,4 +60,30 @@
     -fx-background-color: white;
     -fx-background-radius: 20;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 5, 5);
+}
+
+.dashed-border-item {
+    -fx-border-color: rgba(110, 110, 110, 0.5);
+    -fx-border-width: 3px;
+    -fx-border-style: segments(10, 15, 15, 15) line-cap round;
+    -fx-background-color: rgba(110, 110, 110, 0.3);
+    -fx-background-radius: 10;
+}
+
+.combo-box {
+    -fx-background-color:  linear-gradient(from 0% 0% to 0% 80%, rgb(254, 60, 87), rgb(201, 35, 58));
+}
+
+.combo-box:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0), 10, 0, 0, 0);
+}
+
+.combo-box .list-cell {
+    -fx-background-color:  rgb(254, 60, 87);
+    -fx-text-fill: white;
+}
+
+.combo-box .list-cell:hover {
+    -fx-background-color: rgb(204, 46, 68);
+    -fx-cursor: hand;
 }

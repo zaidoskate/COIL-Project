@@ -6,6 +6,7 @@ package gui.controllers;
 
 import gui.SessionManager;
 import gui.stages.CandidatesStage;
+import gui.stages.RegistrateCollaborationStage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,6 +20,7 @@ import logic.DAOs.CollaborationDAO;
 import logic.DAOs.CollaborationOfferDAO;
 import logic.DAOs.ProfessorBelongsToCollaborationDAO;
 import logic.LogicException;
+import logic.model.CandidateInformation;
 import logic.model.OfferInformation;
 
 /**
@@ -46,7 +48,8 @@ public class ProfessorDetailController implements Initializable {
     private Button btnBack;
     
     SessionManager currentSession = SessionManager.getInstance();
-    OfferInformation currentCandidate = OfferInformation.getOffer();
+    OfferInformation currentOffer = OfferInformation.getOffer();
+    CandidateInformation currentCandidate = CandidateInformation.getCandidateInformation();
     
     CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
     CollaborationDAO collaborationDAO = new CollaborationDAO();//CREAR PRIMERO LA COLAB
@@ -73,7 +76,7 @@ public class ProfessorDetailController implements Initializable {
     
     @FXML
     private void acceptCandidate() {
-        try {
+        /*try {
             //INSERTAR LA COLAB Y EL BELONGS
             int deleted = collaborationOfferDAO.deleteCollaborationOffer(currentCandidate.getIdOfferCollaboration());
             if(deleted == 1) {
@@ -89,6 +92,11 @@ public class ProfessorDetailController implements Initializable {
             alert.setTitle("Error");
             alert.setContentText(logicException.getMessage());
             alert.showAndWait();
+        }*/
+        try {
+            RegistrateCollaborationStage registrateCollaborationStage = new RegistrateCollaborationStage();
+        } catch(IOException ioException) {
+            
         }
     }
     

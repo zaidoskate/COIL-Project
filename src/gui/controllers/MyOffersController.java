@@ -43,10 +43,10 @@ public class MyOffersController implements Initializable {
     @FXML
     private Label lblPeriod;
     
-    private CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
+    private final CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
     
-    private SessionManager currentSession = SessionManager.getInstance();
-    private OfferInformation professorOffer = OfferInformation.getOffer();
+    private final SessionManager currentSession = SessionManager.getInstance();
+    private final OfferInformation professorOffer = OfferInformation.getOffer();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -64,6 +64,8 @@ public class MyOffersController implements Initializable {
             professorOffer.setIdOfferCollaboration(offer.getIdCollaboration());
             professorOffer.setIdUser(offer.getIdUser());
             professorOffer.setOfferPeriod(offer.getPeriod());
+            professorOffer.setOfferLanguage(offer.getLanguage());
+            professorOffer.setTopicsInterest(offer.getTopicsOfInterest());
         } catch(LogicException logicException) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Error");
@@ -102,7 +104,7 @@ public class MyOffersController implements Initializable {
         try {
             CandidatesStage candidatesStage = new CandidatesStage();
         } catch(IOException ioException) {
-            ioException.printStackTrace();
+            
         }
     }
 }

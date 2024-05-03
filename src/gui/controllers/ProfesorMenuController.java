@@ -5,6 +5,7 @@
 package gui.controllers;
 
 import gui.SessionManager;
+import gui.stages.CollaborationStage;
 import gui.stages.OfferProfessorStage;
 import java.io.IOException;
 import java.net.URL;
@@ -31,10 +32,24 @@ public class ProfesorMenuController implements Initializable {
     }
     
     @FXML
-    public void displayOfferProfessor() throws IOException {
+    public void displayOfferProfessor() {
         Stage menuStage = (Stage) textName.getScene().getWindow();
         menuStage.close();
-        OfferProfessorStage offerProfessorStage = new OfferProfessorStage();
+        try {
+            OfferProfessorStage offerProfessorStage = new OfferProfessorStage();
+        } catch(IOException ioException) {
+            
+        }
     }
 
+    @FXML
+    public void displayCollaboration() {
+        Stage menuStage = (Stage) textName.getScene().getWindow();
+        menuStage.close();
+        try {
+            CollaborationStage collaborationStage = new CollaborationStage();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
 }

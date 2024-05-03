@@ -16,13 +16,25 @@ public class CollaborationDAOTest {
     public void testAddCollaborationSuccess() throws LogicException{
         CollaborationDAO collaborationDAO = new CollaborationDAO();
         Collaboration collaboration = new Collaboration();
-        collaboration.setColaborationName("Colaboracion5");
-        collaboration.setStartDate("2024-12-15");
+        collaboration.setColaborationName("Colaboracion LATAM");
+        collaboration.setLanguage("Español");
+        collaboration.setInterestTopic("SOLID Principles");
         
-        int expectedResult = 1;
+        int unexpectedResult = 0;
         int currentResult = collaborationDAO.addColaboration(collaboration);
         
-        assertEquals(expectedResult, currentResult);
+        assertNotEquals(unexpectedResult, currentResult);
+    }
+    
+    @Test
+    public void testStartCollaboration() {
+        CollaborationDAO collaborationDAO = new CollaborationDAO();
+        try {
+            int result = collaborationDAO.startCollaboration(1);
+            assertEquals(1, result);
+        } catch(LogicException logicException) {
+            fail("No se ha podido iniciar la colaboracion");
+        }
     }
     
     @Test

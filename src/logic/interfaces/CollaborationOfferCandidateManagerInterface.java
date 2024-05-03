@@ -16,4 +16,5 @@ public interface CollaborationOfferCandidateManagerInterface {
     int InsertCollaborationOfferCandidate(CollaborationOfferCandidate collaborationOfferCandidate) throws LogicException;
     boolean professorHasAppliedForOffer(int idUser, int idCollaborationOffer) throws LogicException;
     ArrayList<CollaborationOfferCandidate> GetCollaborationOfferCandidateByIdCollaborationOffer(int idCollaboration) throws LogicException;
+    int deleteCollaborationOffer(int idOfferCollaboration) throws LogicException;
 }

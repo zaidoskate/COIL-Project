@@ -206,4 +206,65 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
         }
         return result;
     }
+
+    @Override
+    public boolean hasFileUploaded(String fileType, int idCollaboration) throws LogicException {
+        boolean hasFileUploaded = false;
+        String query = "SELECT " + fileType + " AS file FROM documentacionInicio WHERE colaboracion_idColaboracion = ?";
+        try {
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idCollaboration);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                if(resultSet.getString("file") != null) {
+                    hasFileUploaded = true;
+                }
+            }
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return hasFileUploaded;
+    }
+
+    @Override
+    public int deleteUploadedFile(String fileType, int idCollaboration) throws LogicException {
+        int deleted = 0;
+        String query = "UPDATE documentacionInicio SET " + fileType + " = NULL WHERE colaboracion_idcolaboracion = ?";
+        try {
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idCollaboration);
+            deleted = statement.executeUpdate();
+        } catch(SQLException sqlException) {
+            sqlException.printStackTrace();
+            throw new LogicException("No hay conexión, inténtelo de nuevo más tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return deleted;
+    }
+
+    @Override
+    public boolean isCollaborationRegistrated(int idCollaboration) throws LogicException {
+        boolean registrated = false;
+        String query = "SELECT COUNT(*) AS count FROM documentacionInicio WHERE colaboracion_idcolaboracion = ?";
+        try {
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idCollaboration);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                int count = resultSet.getInt("count");
+                registrated = count > 0;
+            }
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexión, inténtelo de nuevo más tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return registrated;
+    }
 }

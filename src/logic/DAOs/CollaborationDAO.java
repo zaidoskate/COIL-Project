@@ -1,10 +1,13 @@
     package logic.DAOs;
 
 import dataaccess.DatabaseConnection;
+import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import logic.LogicException;
 import logic.domain.Collaboration;
@@ -19,20 +22,39 @@ public class CollaborationDAO implements ColaborationManagerInterface {
     @Override
     public int addColaboration(Collaboration colaboration) throws LogicException{
         int result = 0;
-        String query = "INSERT INTO Colaboracion(nombrecolaboracion, fechaCierre,fechainicio,idioma,temainteres) VALUES (?, ?, ?, ?, ?)";
-        Connection connection;
-        PreparedStatement statement;
+        String query = "INSERT INTO Colaboracion(nombrecolaboracion, idioma, temainteres) VALUES (?, ?, ?)";
         try{
-            connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement(query);
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, colaboration.getColaborationName());
-            statement.setString(2, colaboration.getEndDate());
-            statement.setString(3, colaboration.getStartDate());
-            statement.setString(4, colaboration.getLanguage());
-            statement.setString(5, colaboration.getInterestTopic());
-            result = statement.executeUpdate();
+            statement.setString(2, colaboration.getLanguage());
+            statement.setString(3, colaboration.getInterestTopic());
+            statement.executeUpdate();
+            ResultSet idCollaborationInserted = statement.getGeneratedKeys();
+            if(idCollaborationInserted.next()) {
+                result = idCollaborationInserted.getInt(1);
+            }
         } catch(SQLException sqlException) {
             sqlException.printStackTrace();
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return result;
+    }
+    
+    @Override
+    public int startCollaboration(int idCollaboration) throws LogicException {
+        int result = 0;
+        String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String query = "UPDATE Colaboracion SET fechaInicio = ? WHERE idColaboracion = ?";
+        try{
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, currentDate);
+            statement.setInt(2, idCollaboration);
+            result = statement.executeUpdate();
+        } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();

@@ -28,7 +28,9 @@ import logic.DAOs.UserDAO;
 import logic.LogicException;
 import logic.domain.CollaborationOfferCandidate;
 import logic.domain.User;
+import logic.model.CandidateInformation;
 import logic.model.OfferInformation;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -52,6 +54,7 @@ public class CandidatesController implements Initializable {
     private Button btnBack;
     
     OfferInformation professorOffer = OfferInformation.getOffer();
+    CandidateInformation candidateInformation = CandidateInformation.getCandidateInformation();
     SessionManager currentSession = SessionManager.getInstance();
     
     private ObservableList<OfferInformation> candidates;
@@ -82,12 +85,14 @@ public class CandidatesController implements Initializable {
                     String professorEmail = candidateUser.getEmail();
                     String universityName = professorDAO.getUniversityFromAProfessor(candidate.getIdUser()).getFirst();
                     String universityLocation = professorDAO.getUniversityFromAProfessor(candidate.getIdUser()).get(1);
+                    int idUser = candidateUser.getIdUser();
                     
                     OfferInformation candidateRow = new OfferInformation();
                     candidateRow.setProfessorName(professorName);
                     candidateRow.setProfessorEmail(professorEmail);
                     candidateRow.setUniversityName(universityName);
                     candidateRow.setUniversityLocation(universityLocation);
+                    candidateRow.setIdUser(idUser);
                     this.candidates.add(candidateRow);
                     this.tblCandidates.setItems(candidates);
                 }
@@ -102,10 +107,11 @@ public class CandidatesController implements Initializable {
     }
     
     private void setSelectedCandidate() {
-        professorOffer.setProfessorName(this.tblCandidates.getSelectionModel().getSelectedItem().getProfessorName());
-        professorOffer.setProfessorEmail(this.tblCandidates.getSelectionModel().getSelectedItem().getProfessorEmail());
-        professorOffer.setUniversityName(this.tblCandidates.getSelectionModel().getSelectedItem().getUniversityName());
-        professorOffer.setUniversityLocation(this.tblCandidates.getSelectionModel().getSelectedItem().getUniversityLocation());
+        candidateInformation.setProfessorName(this.tblCandidates.getSelectionModel().getSelectedItem().getProfessorName());
+        candidateInformation.setProfessorEmail(this.tblCandidates.getSelectionModel().getSelectedItem().getProfessorEmail());
+        candidateInformation.setUniversityName(this.tblCandidates.getSelectionModel().getSelectedItem().getUniversityName());
+        candidateInformation.setUniversityLocation(this.tblCandidates.getSelectionModel().getSelectedItem().getUniversityLocation());
+        candidateInformation.setIdUser(this.tblCandidates.getSelectionModel().getSelectedItem().getIdUser());
     }
     
     private void checkEmptyTable() {

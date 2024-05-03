@@ -14,4 +14,9 @@ public interface StartupDocumentationManagerInterface {
     public int obtainSyllabus(StartupDocumentation startupDocumentation, String outputPath)  throws LogicException;
     public int obtainStudentsList(StartupDocumentation startupDocumentation, String outputPath) throws LogicException;
     public int obtainMirrorStudentsList(StartupDocumentation startupDocumentation, String outputPath) throws LogicException;
+    
+    public int deleteUploadedFile(String fileType, int idCollaboration) throws LogicException;
+    
+    public boolean hasFileUploaded(String fileType, int idCollaboration) throws LogicException;
+    public boolean isCollaborationRegistrated(int idCollaboration) throws LogicException;
 }
