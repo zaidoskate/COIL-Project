@@ -8,6 +8,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import logic.domain.Coordinator;
 import logic.DAOs.CoordinatorDAO;
+import logic.LogicException;
 
 /**
  *
@@ -25,9 +26,25 @@ public class CoordinatorDAOTest {
         coordinator.setIdUser(54321);
 
         CoordinatorDAO coordinatorDAO = new CoordinatorDAO();
-        int result = coordinatorDAO.insertCoordinator(coordinator);
+        try {
+            int result = coordinatorDAO.insertCoordinator(coordinator);
+            assertNotEquals(0, result);
+        } catch(LogicException logicException) {
+            fail("No se ha podido agregar al coordinador");
+        }
+    }
+    
+    @Test
+    public void testGetIdCoordinatorByIdUserSuccess() {
+        int expectedResult = 1;
         
-        assertNotEquals(0, result);
+        CoordinatorDAO coordinatorDAO = new CoordinatorDAO();
+        try {
+            int result = coordinatorDAO.getIdCoordinatorByIdUser(3);
+            assertEquals(expectedResult, result);
+        } catch(LogicException logicException) {
+            fail("Error al recuperar el id coordinador");
+        }
     }
     
 }

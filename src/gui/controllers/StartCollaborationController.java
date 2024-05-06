@@ -73,30 +73,6 @@ public class StartCollaborationController implements Initializable {
         comboBoxFileType.getItems().addAll("Lista de estudiantes", "Lista de estudiantes espejo", "Syllabus");
     }
     
-    private void showAlertUploaded(String fileType) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText("Mensaje");
-        alert.setTitle("Mensaje");
-        alert.setContentText("El archivo para " + fileType + " ha sido cargado con éxito!");
-        alert.showAndWait();
-    }
-    
-    public void showAlertDeleted(String fileType) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText("Mensaje");
-        alert.setTitle("Mensaje");
-        alert.setContentText("El archivo para " + fileType + " ha sido eliminado con exito!");
-        alert.showAndWait();
-    }
-    
-    public void showAlertHasFile(String fileType) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText("Mensaje");
-        alert.setTitle("Mensaje");
-        alert.setContentText(fileType + " tiene un archivo cargado");
-        alert.showAndWait();
-    }
-    
     private void uploadFile(String selectedFileType, File fileToUpload) throws LogicException {
         StartupDocumentation startupDocumentation = new StartupDocumentation();
         startupDocumentation.setIdColaboration(collaborationInformation.getIdCollaboration());
@@ -105,19 +81,19 @@ public class StartCollaborationController implements Initializable {
                 case "Lista de estudiantes" :
                     startupDocumentation.setStudentsListPath(fileToUpload.getPath());
                     if(startupDocumentationDAO.uploadStudentsList(startupDocumentation) == 1) {
-                        showAlertUploaded(selectedFileType);
+                        Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito!");
                     }
                     break;
                 case "Lista de estudiantes espejo" :
                     startupDocumentation.setMirrorClassStudentsListPath(fileToUpload.getPath());
                     if(startupDocumentationDAO.uploadMirrorStudentsList(startupDocumentation) == 1) {
-                        showAlertUploaded(selectedFileType);
+                        Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito!");
                     }
                     break;
                 case "Syllabus" :
                     startupDocumentation.setSyllabusPath(fileToUpload.getPath());
                     if(startupDocumentationDAO.uploadSyllabus(startupDocumentation) == 1) {
-                        showAlertUploaded(selectedFileType);
+                        Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito!");
                     }
                     break;
                 default:
@@ -146,6 +122,8 @@ public class StartCollaborationController implements Initializable {
     
     @FXML
     public void onDragOver(DragEvent event) {
+        Stage stage = (Stage) this.region.getScene().getWindow();
+        stage.requestFocus();
         if(comboBoxFileType.getSelectionModel().getSelectedItem() != null) {
             if(event.getGestureSource() != region || event.getGestureSource() != imageViewFile){
                 if(event.getDragboard().hasFiles()) {
@@ -186,17 +164,17 @@ public class StartCollaborationController implements Initializable {
                 switch (selectedFileType) {
                     case "Lista de estudiantes" :
                         if(startupDocumentationDAO.deleteUploadedFile("listaEstudiantado", collaborationInformation.getIdCollaboration()) == 1) {
-                            showAlertDeleted(selectedFileType);
+                            Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido Eliminado con éxito!");
                         }
                         break;
                     case "Lista de estudiantes espejo" :
                         if(startupDocumentationDAO.deleteUploadedFile("listaEstudiantadoEspejo", collaborationInformation.getIdCollaboration()) == 1) {
-                            showAlertDeleted(selectedFileType);
+                            Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito!");
                         }
                         break;
                     case "Syllabus" :
                         if(startupDocumentationDAO.deleteUploadedFile("Syllabus", collaborationInformation.getIdCollaboration()) == 1) {
-                            showAlertDeleted(selectedFileType);
+                            Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito!");
                         }
                         break;
                     default:
@@ -216,17 +194,17 @@ public class StartCollaborationController implements Initializable {
                 switch (selectedFileType) {
                     case "Lista de estudiantes" :
                         if(startupDocumentationDAO.hasFileUploaded("listaEstudiantado", collaborationInformation.getIdCollaboration())) {
-                            showAlertHasFile(selectedFileType);
+                            Alerts.showInformationAlert("Mensaje", selectedFileType + "tiene un archivo cargado");
                         }
                         break;
                     case "Lista de estudiantes espejo" :
                         if(startupDocumentationDAO.hasFileUploaded("listaEstudiantadoEspejo", collaborationInformation.getIdCollaboration())) {
-                            showAlertHasFile(selectedFileType);
+                            Alerts.showInformationAlert("Mensaje", selectedFileType + "tiene un archivo cargado");
                         }
                         break;
                     case "Syllabus" :
                         if(startupDocumentationDAO.hasFileUploaded("Syllabus", collaborationInformation.getIdCollaboration())) {
-                            showAlertHasFile(selectedFileType);
+                            Alerts.showInformationAlert("Mensaje", selectedFileType + "tiene un archivo cargado");
                         }
                         break;
                     default:

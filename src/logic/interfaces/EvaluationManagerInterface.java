@@ -13,7 +13,8 @@ import logic.LogicException;
  * @author zaido
  */
 public interface EvaluationManagerInterface {
-    public int insertEvaluation(Evaluation evaluation) throws LogicException;
+    public int insertEvaluationForApprovedOffer(Evaluation evaluation) throws LogicException;
+    public int insertEvaluationForDeclinedOffer(Evaluation evaluation) throws LogicException;
     public Evaluation getEvaluationByIdOfferCollaboration(int idOfferCollaboration) throws LogicException;
     public ArrayList<Evaluation> getEvaluationByIdCoordinator(int idCoordinator) throws LogicException;
     

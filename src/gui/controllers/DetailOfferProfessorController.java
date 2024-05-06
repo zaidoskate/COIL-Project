@@ -6,6 +6,8 @@ package gui.controllers;
 
 import gui.Alerts;
 import gui.SessionManager;
+import gui.stages.DeclineOfferStage;
+import gui.stages.OfferCoordinatorStage;
 import gui.stages.OfferProfessorStage;
 import java.io.IOException;
 import java.net.URL;
@@ -18,10 +20,16 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import logic.DAOs.CollaborationOfferCandidateDAO;
+import logic.DAOs.CollaborationOfferDAO;
+import logic.DAOs.CoordinatorDAO;
+import logic.DAOs.EvaluationDAO;
 import logic.DAOs.ProfessorDAO;
+import logic.DAOs.UserDAO;
 import logic.LogicException;
 import logic.domain.CollaborationOfferCandidate;
+import logic.domain.Evaluation;
 import logic.model.OfferInformation;
 
 /**
@@ -63,8 +71,24 @@ public class DetailOfferProfessorController implements Initializable {
     @FXML
     private Label numberStudents;
     
-    private ProfessorDAO professorDAO = new ProfessorDAO();
-    private CollaborationOfferCandidateDAO candidateDAO = new CollaborationOfferCandidateDAO();
+    @FXML
+    private Button btnCorrespond;
+    
+    @FXML
+    private Button btnBack;
+    
+    @FXML
+    private Button btnApprove;
+    
+    @FXML
+    private Button btnDecline;
+    
+    private final ProfessorDAO professorDAO = new ProfessorDAO();
+    private final CollaborationOfferCandidateDAO candidateDAO = new CollaborationOfferCandidateDAO();
+    private final UserDAO userDAO = new UserDAO();
+    private final CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
+    private final EvaluationDAO evaluationDAO = new EvaluationDAO();
+    private final CoordinatorDAO coordinatorDAO = new CoordinatorDAO();
     
     OfferInformation selectedOffer = OfferInformation.getOffer();
     SessionManager currentSession = SessionManager.getInstance();
@@ -81,6 +105,7 @@ public class DetailOfferProfessorController implements Initializable {
         this.numberStudents.setText(String.valueOf(selectedOffer.getNumberStudents()));
         this.profile.setText(selectedOffer.getStudentProfile());
         try {
+            checkVisibleButtons();
             ArrayList<String> universityInfo = professorDAO.getUniversityFromAProfessor(selectedOffer.getIdUser());
             this.universityName.setText(universityInfo.get(0));
             this.universityCountry.setText(universityInfo.get(1));
@@ -89,18 +114,50 @@ public class DetailOfferProfessorController implements Initializable {
         }
     }
     
+    private void checkVisibleButtons() throws LogicException {
+        if(getTypeUser().equals("Coordinador")) {
+            this.btnApprove.setVisible(true);
+            this.btnDecline.setVisible(true);
+        } else {
+            this.btnCorrespond.setVisible(true);
+        }
+    }
+    
+    private String getTypeUser() throws LogicException {
+        return userDAO.getUserTypeById(currentSession.getUserData().getIdUser());
+    }
+
+    private void applyForOffer() throws LogicException {
+        CollaborationOfferCandidate candidate = new CollaborationOfferCandidate();
+        candidate.setIdCollaboration(selectedOffer.getIdOfferCollaboration());
+        candidate.setIdUser(currentSession.getUserData().getIdUser());
+        int appliedSuccess = candidateDAO.InsertCollaborationOfferCandidate(candidate);
+        if(appliedSuccess == 1) {
+            Alerts.showInformationAlert("Te has postulado", "Se ha postulado a esta oferta, espere la correspondencia del profesor");
+        }
+    }
+
+    
+    private Evaluation createEvaluation() throws LogicException {
+        Evaluation evaluation = new Evaluation();
+        evaluation.setIdCoordinator(coordinatorDAO.getIdCoordinatorByIdUser(currentSession.getUserData().getIdUser()));
+        evaluation.setIdOfferCollaboration(selectedOffer.getIdOfferCollaboration());
+        return evaluation;
+    }
+
     @FXML
     public void previousMenu() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText("ATENCION");
-        alert.setTitle("ATENCION");
-        alert.setContentText("Regresará al menú anterior");
-        alert.showAndWait();
         Stage stage = (Stage) this.objective.getScene().getWindow();
         stage.close();
         try{
-            OfferProfessorStage offerStage = new OfferProfessorStage();
-        } catch(IOException ioException) {
+            if(getTypeUser().equals("Coordinador")) {
+                OfferCoordinatorStage offerCoordinatorStage =  new OfferCoordinatorStage();
+            } else {
+                OfferProfessorStage offerProfessorStage = new OfferProfessorStage();
+            }
+        } catch(LogicException logicException) {
+            Alerts.displayAlertLogicException(logicException);
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
         }
     }
@@ -108,13 +165,13 @@ public class DetailOfferProfessorController implements Initializable {
     @FXML
     public void applyOffer() {
         if (selectedOffer.getIdUser() == currentSession.getUserData().getIdUser()) {
-            showWarningAlert("No puede postularse a su propia oferta");
+            Alerts.showWarningAlert("No puede postularse a su propia oferta");
             return;
         }
 
         try {
             if (candidateDAO.professorHasAppliedForOffer(currentSession.getUserData().getIdUser(), selectedOffer.getIdOfferCollaboration())) {
-                showWarningAlert("Ya se ha postulado a esta oferta");
+                Alerts.showWarningAlert("Ya se ha postulado a esta oferta");
             } else {
                 applyForOffer();
             }
@@ -122,34 +179,29 @@ public class DetailOfferProfessorController implements Initializable {
             Alerts.displayAlertLogicException(logicException);
         }
     }
-
-    private void applyForOffer() throws LogicException {
-        CollaborationOfferCandidate candidate = new CollaborationOfferCandidate();
-        candidate.setIdCollaboration(selectedOffer.getIdOfferCollaboration());
-        candidate.setIdUser(currentSession.getUserData().getIdUser());
-        candidateDAO.InsertCollaborationOfferCandidate(candidate);
-
-        showInformationAlert("Te has postulado", "Se ha postulado a esta oferta, espere la correspondencia del profesor");
+    
+    @FXML
+    private void approveOffer() {
+        try {
+            if(collaborationOfferDAO.evaluateCollaborationOffer(selectedOffer.getIdOfferCollaboration(), "Aprobada") == 1) {
+                Evaluation evaluation = createEvaluation();
+                if(evaluationDAO.insertEvaluationForApprovedOffer(evaluation) == 1) {
+                    Alerts.showInformationAlert("Mensaje", "Ha aprobado esta oferta de colaboración");
+                    previousMenu();
+                }
+            }
+        } catch(LogicException logicException) {
+            Alerts.displayAlertLogicException(logicException);
+        }
     }
-
-    private void showInformationAlert(String headerText, String contentText) {
-        showAlert(Alert.AlertType.INFORMATION, headerText, contentText);
+    
+    @FXML
+    private void displayDeclineOffer() {
+        try {
+            DeclineOfferStage declineOfferStage = new DeclineOfferStage();
+            previousMenu();
+        } catch(IOException ioException) {
+            Alerts.displayAlertIOException();
+        }
     }
-
-    private void showWarningAlert(String contentText) {
-        showAlert(Alert.AlertType.WARNING, "Advertencia", contentText);
-    }
-
-    private void showErrorAlert(String contentText) {
-        showAlert(Alert.AlertType.ERROR, "Error", contentText);
-    }
-
-    private void showAlert(Alert.AlertType alertType, String headerText, String contentText) {
-        Alert alert = new Alert(alertType);
-        alert.setHeaderText(headerText);
-        alert.setTitle(headerText);
-        alert.setContentText(contentText);
-        alert.showAndWait();
-    }
-
 }

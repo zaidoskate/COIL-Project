@@ -139,11 +139,7 @@ public class CandidatesController implements Initializable {
                 Alerts.displayAlertIOException();
             }
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setHeaderText("Advertencia");
-            alert.setTitle("Advertencia");
-            alert.setContentText("Seleccione un candidato para poder ver su detalle");
-            alert.showAndWait();
+            Alerts.showWarningAlert("Seleccione un candidato para poder ver su detalle");
         }
     }
     

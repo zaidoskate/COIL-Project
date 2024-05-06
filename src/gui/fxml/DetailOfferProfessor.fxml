@@ -24,16 +24,18 @@
                   <Image url="@../images/CoilLogo.png" />
                </image>
             </ImageView>
-            <Button fx:id="regresar" layoutX="25.0" layoutY="560.0" mnemonicParsing="false" onAction="#previousMenu" prefWidth="150.0" styleClass="button-regresar" text="Regresar">
+            <Button fx:id="btnBack" layoutX="25.0" layoutY="560.0" mnemonicParsing="false" onAction="#previousMenu" prefWidth="150.0" styleClass="button-regresar" text="Regresar">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="corresponder" layoutX="25.0" layoutY="519.0" mnemonicParsing="false" onAction="#applyOffer" prefWidth="150.0" styleClass="button-accion" text="Postularme">
+            <Button fx:id="btnCorrespond" layoutX="25.0" layoutY="519.0" mnemonicParsing="false" onAction="#applyOffer" prefWidth="150.0" styleClass="button-accion" text="Postularme" visible="false">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
+            <Button fx:id="btnApprove" layoutX="25.0" layoutY="477.0" mnemonicParsing="false" onAction="#approveOffer" prefWidth="150.0" styleClass="button-accion" text="Aprobar" visible="false" />
+            <Button fx:id="btnDecline" layoutX="25.0" layoutY="519.0" mnemonicParsing="false" onAction="#displayDeclineOffer" prefWidth="150.0" styleClass="button-accion2" text="Rechazar" visible="false" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="200.0" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: rgba(79, 79, 79, 0.1);">

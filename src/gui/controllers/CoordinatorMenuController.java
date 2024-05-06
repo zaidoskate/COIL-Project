@@ -4,10 +4,12 @@
  */
 package gui.controllers;
 
+import gui.Alerts;
 import gui.COILVICApplication;
 import gui.SessionManager;
 import gui.stages.AccountRequestMenuStage;
 import gui.stages.ExternalAccountCreateStage;
+import gui.stages.OfferCoordinatorStage;
 import gui.stages.UniversitiesStage;
 import java.io.IOException;
 import java.net.URL;
@@ -87,6 +89,17 @@ public class CoordinatorMenuController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("ERROR, intentalo mas tarde.");
             alert.showAndWait();
+        }
+    }
+    
+    @FXML
+    private void displayOfferCoordinator() {
+        Stage stage = (Stage) this.textName.getScene().getWindow();
+        stage.close();
+        try {
+            OfferCoordinatorStage offerCoordinatorStage = new OfferCoordinatorStage();
+        } catch(IOException ioException) {
+            Alerts.displayAlertIOException();
         }
     }
 }

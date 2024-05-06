@@ -78,6 +78,53 @@ public class CollaborationOfferDAOTest {
     }
     
     @Test
+    public void testEvaluateCollaborationOfferSuccess() {
+        int expectedResult = 1;
+        CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
+        try {
+            int result = collaborationOfferDAO.evaluateCollaborationOffer(8, "Aprobada");
+            assertEquals(expectedResult, result);
+        } catch(LogicException logicException) {
+            fail("No se pudo evaluar la oferta");
+        }
+    }
+    
+    @Test
+    public void testGetUnapprovedCollaborationOffer() {
+        CollaborationOffer offerExpected = new CollaborationOffer();
+        offerExpected.setIdCollaboration(5);
+        offerExpected.setIdUser(1);
+        offerExpected.setObjective("Compartir conocimiento de patrones de diseño");
+        offerExpected.setTopicsOfInterest("Diseño de software");
+        offerExpected.setNumberOfStudents(50);
+        offerExpected.setProfile("Ingeniero de software");
+        offerExpected.setLanguage("Español");
+        offerExpected.setPeriod("Agosto - Enero 2025");
+        
+        CollaborationOffer offerExpected2 = new CollaborationOffer();
+        offerExpected2.setIdCollaboration(6);
+        offerExpected2.setIdUser(1);
+        offerExpected2.setObjective("Enseñar Springboot framework a estudiantes");
+        offerExpected2.setTopicsOfInterest("Informática");
+        offerExpected2.setNumberOfStudents(32);
+        offerExpected2.setProfile("Ingeniero de software");
+        offerExpected2.setLanguage("Español");
+        offerExpected2.setPeriod("Febrero - Julio 2025");
+        
+        ArrayList<CollaborationOffer> offersExpected = new ArrayList<>();
+        offersExpected.add(offerExpected);
+        offersExpected.add(offerExpected2);
+        
+        CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
+        try {
+            ArrayList<CollaborationOffer> offersObtained = collaborationOfferDAO.getUnapprovedCollaborationOffer();
+            assertEquals(offersExpected, offersObtained);
+        } catch(LogicException logicException) {
+            fail("No se ha podido obtener las ofertas vigentes");
+        }
+    }
+    
+    @Test
     public void testGetProfessorApprovedOffer() {
         CollaborationOffer offerExpected = new CollaborationOffer();
         offerExpected.setIdCollaboration(1);

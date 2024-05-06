@@ -41,31 +41,26 @@ import logic.domain.User;
 public class OfferProfessorController implements Initializable {
 
     @FXML
-    private TableView<OfferInformation> tableView;
+    private TableView<OfferInformation> tblViewOffersAvailable;
     
     @FXML
-    private TableColumn<OfferInformation, String> professorColumn;
+    private TableColumn<OfferInformation, String> clmProfessorName;
     
     @FXML
-    private TableColumn<OfferInformation, String> emailColumn;
+    private TableColumn<OfferInformation, String> clmProfessorEmail;
     
     @FXML
-    private TableColumn<OfferInformation, String> periodColumn;
+    private TableColumn<OfferInformation, String> clmOfferPeriod;
     
     @FXML
-    private TableColumn<OfferInformation, String> languageColumn;
+    private TableColumn<OfferInformation, String> clmOfferLanguage;
     
-    private CollaborationOfferDAO collaborationOfferDAO;
-    private UserDAO userDAO;
-    private ObservableList<OfferInformation> offers;
+    private final CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
+    private final UserDAO userDAO = new UserDAO();
+    private ObservableList<OfferInformation> displayableOffers;
     
     OfferInformation selectedOffer = OfferInformation.getOffer();
     SessionManager currentSession = SessionManager.getInstance();
-    
-    public OfferProfessorController() {
-        collaborationOfferDAO = new CollaborationOfferDAO();
-        userDAO = new UserDAO();
-    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -74,18 +69,18 @@ public class OfferProfessorController implements Initializable {
     }
     
     private void initializeTable() {
-        offers = FXCollections.observableArrayList();
-        this.professorColumn.setCellValueFactory(new PropertyValueFactory("professorName"));
-        this.emailColumn.setCellValueFactory(new PropertyValueFactory("professorEmail"));
-        this.periodColumn.setCellValueFactory(new PropertyValueFactory("offerPeriod"));
-        this.languageColumn.setCellValueFactory(new PropertyValueFactory("offerLanguage"));
+        displayableOffers = FXCollections.observableArrayList();
+        this.clmProfessorName.setCellValueFactory(new PropertyValueFactory("professorName"));
+        this.clmProfessorEmail.setCellValueFactory(new PropertyValueFactory("professorEmail"));
+        this.clmOfferPeriod.setCellValueFactory(new PropertyValueFactory("offerPeriod"));
+        this.clmOfferLanguage.setCellValueFactory(new PropertyValueFactory("offerLanguage"));
     }
     
     private void setApprovedCollaborationOffer(){
         try{
-            ArrayList<CollaborationOffer> offersToDisplay = collaborationOfferDAO.getApprovedCollaborationOffer();
-            if(offersToDisplay != null){
-                for (CollaborationOffer offer : offersToDisplay) {
+            ArrayList<CollaborationOffer> displayableOffersToDisplay = collaborationOfferDAO.getApprovedCollaborationOffer();
+            if(displayableOffersToDisplay != null){
+                for (CollaborationOffer offer : displayableOffersToDisplay) {
                     User user = userDAO.getUserById(offer.getIdUser());
                     String professorName = user.getName() + " " + user.getLastName();
                     String professorEmail = user.getEmail();
@@ -111,8 +106,8 @@ public class OfferProfessorController implements Initializable {
                     offerRow.setIdUser(userId);
                     offerRow.setNumberStudents(numberStudents);
                     offerRow.setStudentProfile(profile);
-                    this.offers.add(offerRow);
-                    this.tableView.setItems(offers);
+                    this.displayableOffers.add(offerRow);
+                    this.tblViewOffersAvailable.setItems(displayableOffers);
                 }
             }
         } catch(LogicException logicException) {
@@ -121,23 +116,23 @@ public class OfferProfessorController implements Initializable {
     }
     
     private void setSelectedOffer() {
-        selectedOffer.setProfessorName(tableView.getSelectionModel().getSelectedItem().getProfessorName());
-        selectedOffer.setProfessorEmail(tableView.getSelectionModel().getSelectedItem().getProfessorEmail());
-        selectedOffer.setObjective(tableView.getSelectionModel().getSelectedItem().getObjective());
-        selectedOffer.setTopicsInterest(tableView.getSelectionModel().getSelectedItem().getTopicsInterest());
-        selectedOffer.setOfferPeriod(tableView.getSelectionModel().getSelectedItem().getOfferPeriod());
-        selectedOffer.setOfferLanguage(tableView.getSelectionModel().getSelectedItem().getOfferLanguage());
-        selectedOffer.setAditionalInformation(tableView.getSelectionModel().getSelectedItem().getAditionalInformation());
-        selectedOffer.setIdOfferCollaboration(tableView.getSelectionModel().getSelectedItem().getIdOfferCollaboration());
-        selectedOffer.setIdUser(tableView.getSelectionModel().getSelectedItem().getIdUser());
-        selectedOffer.setNumberStudents(tableView.getSelectionModel().getSelectedItem().getNumberStudents());
-        selectedOffer.setStudentProfile(tableView.getSelectionModel().getSelectedItem().getStudentProfile());
+        selectedOffer.setProfessorName(tblViewOffersAvailable.getSelectionModel().getSelectedItem().getProfessorName());
+        selectedOffer.setProfessorEmail(tblViewOffersAvailable.getSelectionModel().getSelectedItem().getProfessorEmail());
+        selectedOffer.setObjective(tblViewOffersAvailable.getSelectionModel().getSelectedItem().getObjective());
+        selectedOffer.setTopicsInterest(tblViewOffersAvailable.getSelectionModel().getSelectedItem().getTopicsInterest());
+        selectedOffer.setOfferPeriod(tblViewOffersAvailable.getSelectionModel().getSelectedItem().getOfferPeriod());
+        selectedOffer.setOfferLanguage(tblViewOffersAvailable.getSelectionModel().getSelectedItem().getOfferLanguage());
+        selectedOffer.setAditionalInformation(tblViewOffersAvailable.getSelectionModel().getSelectedItem().getAditionalInformation());
+        selectedOffer.setIdOfferCollaboration(tblViewOffersAvailable.getSelectionModel().getSelectedItem().getIdOfferCollaboration());
+        selectedOffer.setIdUser(tblViewOffersAvailable.getSelectionModel().getSelectedItem().getIdUser());
+        selectedOffer.setNumberStudents(tblViewOffersAvailable.getSelectionModel().getSelectedItem().getNumberStudents());
+        selectedOffer.setStudentProfile(tblViewOffersAvailable.getSelectionModel().getSelectedItem().getStudentProfile());
     }
     
     @FXML
     public void showDetail(ActionEvent event) {
-        if(tableView.getSelectionModel().getSelectedItem() != null) {
-        setSelectedOffer();
+        if(tblViewOffersAvailable.getSelectionModel().getSelectedItem() != null) {
+            setSelectedOffer();
             Node node = (Node) event.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
             stage.close();
@@ -147,11 +142,7 @@ public class OfferProfessorController implements Initializable {
                 Alerts.displayAlertIOException();
             }
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setHeaderText("Advertencia");
-            alert.setTitle("Advertencia");
-            alert.setContentText("Seleccione una oferta para poder ver su detalle");
-            alert.showAndWait();
+            Alerts.showWarningAlert("Seleccione una oferta para poder ver su detalle");
         }
     }
     
@@ -164,11 +155,7 @@ public class OfferProfessorController implements Initializable {
                 Stage stage = (Stage) node.getScene().getWindow();
                 stage.close();
             } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setHeaderText("Mensaje");
-                alert.setTitle("Mensaje");
-                alert.setContentText("Actualmente tiene una oferta publicada o en aprobacion");
-                alert.showAndWait();
+                Alerts.showInformationAlert("Mensaje", "Actualmente tiene una oferta publicada o en aprobacion");
             }
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
@@ -179,7 +166,7 @@ public class OfferProfessorController implements Initializable {
     
     @FXML
     public void previousMenu() {
-        Stage stage = (Stage) tableView.getScene().getWindow();
+        Stage stage = (Stage) tblViewOffersAvailable.getScene().getWindow();
         stage.close();
         try {
             ProfesorMenuStage menuStage = new ProfesorMenuStage();
@@ -190,7 +177,7 @@ public class OfferProfessorController implements Initializable {
     
     @FXML
     public void showMyOffers() {
-        Stage stage = (Stage) this.tableView.getScene().getWindow();
+        Stage stage = (Stage) this.tblViewOffersAvailable.getScene().getWindow();
         stage.close();
         try {
             MyOffersStage myOffersStage = new MyOffersStage();

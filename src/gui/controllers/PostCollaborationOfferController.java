@@ -84,26 +84,6 @@ public class PostCollaborationOfferController implements Initializable {
         return currentOffer;
     }
     
-    private void showInformationAlert(String headerText, String contentText) {
-        showAlert(Alert.AlertType.INFORMATION, headerText, contentText);
-    }
-    
-    private void showWarningAlert(String contentText) {
-        showAlert(Alert.AlertType.WARNING, "Advertencia", contentText);
-    }
-    
-    private void showErrorAlert(String contentText) {
-        showAlert(Alert.AlertType.ERROR, "Error", contentText);
-    }
-    
-    private void showAlert(Alert.AlertType alertType, String headerText, String contentText) {
-        Alert alert = new Alert(alertType);
-        alert.setHeaderText(headerText);
-        alert.setTitle(headerText);
-        alert.setContentText(contentText);
-        alert.showAndWait();
-    }
-    
     private boolean validateFields() {
         String objective = txtAreaObjective.getText();
         String topicsOfInterest = txtAreaTopicsOfInterest.getText();
@@ -116,12 +96,12 @@ public class PostCollaborationOfferController implements Initializable {
         String[] fieldsObtained = {objective, topicsOfInterest, period, language, additionalInformation, profile, numberStudents};
         for(String field : fieldsObtained) {
             if(!DataValidation.validateWord(field)) {
-                showErrorAlert("Datos incorrectos, inténtalo de nuevo");
+                Alerts.showWarningAlert("Datos incorrectos, inténtalo de nuevo");
                 return false;
             }
         }
         if(!DataValidation.validateNotBlanks(numberStudents)) {
-            showErrorAlert("Datos incorrectos, inténtalo de nuevo");
+            Alerts.showWarningAlert("Datos incorrectos, inténtalo de nuevo");
             return false;
         }
         return true;
@@ -135,7 +115,9 @@ public class PostCollaborationOfferController implements Initializable {
             try {
                 int offerInsertedSuccess = collaborationOfferDAO.insertColaborationOffer(currentOffer);
                 if(offerInsertedSuccess == 1) {
-                    showInformationAlert("Hecho", "Su oferta será evaluada, espere un correo con el resultado");
+                    Alerts.showInformationAlert("Hecho", "Su oferta será evaluada, espere un correo con el resultado");
+                    Stage stage = (Stage) this.btnPost.getScene().getWindow();
+                    stage.close();
                 }
             } catch(LogicException logicException) {
                 Alerts.displayAlertLogicException(logicException);
@@ -145,7 +127,7 @@ public class PostCollaborationOfferController implements Initializable {
     
     @FXML
     public void cancelPost() {
-        showWarningAlert("¿Está seguro de que desea cancelar la oferta de colaboración?");
+        Alerts.showWarningAlert("¿Está seguro de que desea cancelar la oferta de colaboración?");
         Stage stage = (Stage) this.txtAreaObjective.getScene().getWindow();
         stage.close();
         try {

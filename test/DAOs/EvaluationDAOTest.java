@@ -19,16 +19,30 @@ public class EvaluationDAOTest {
     }
     
     @Test
-    public void testInsertEvaluationSuccess() {
+    public void testInsertEvaluationForApprovedOfferSuccess() {
         Evaluation evaluation = new Evaluation();
         evaluation.setIdOfferCollaboration(1);
         evaluation.setIdCoordinator(1);
-        evaluation.setDate("2024-04-12");
+        
+        EvaluationDAO evaluationDAO = new EvaluationDAO();
+        try{
+            int result = evaluationDAO.insertEvaluationForApprovedOffer(evaluation);
+            assertEquals(1, result);
+        } catch(LogicException logicException) {
+            fail("No se ha registrado correctamente la evaluacion" + logicException.getMessage());
+        }
+    }
+    
+    @Test
+    public void testInsertEvaluationForDeclinedOfferSuccess() {
+        Evaluation evaluation = new Evaluation();
+        evaluation.setIdOfferCollaboration(1);
+        evaluation.setIdCoordinator(1);
         evaluation.setReason("Falta de documentos");
         
         EvaluationDAO evaluationDAO = new EvaluationDAO();
         try{
-            int result = evaluationDAO.insertEvaluation(evaluation);
+            int result = evaluationDAO.insertEvaluationForDeclinedOffer(evaluation);
             assertEquals(1, result);
         } catch(LogicException logicException) {
             fail("No se ha registrado correctamente la evaluacion" + logicException.getMessage());

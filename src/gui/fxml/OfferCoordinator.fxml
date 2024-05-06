@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.CubicCurve?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(from 0% 0% to 0% 30%, rgb(254, 60, 87), rgb(201, 35, 58));" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.OfferCoordinatorController">
+   <children>
+      <AnchorPane layoutY="91.0" prefHeight="295.0" prefWidth="602.0">
+         <children>
+            <AnchorPane layoutX="10.0" layoutY="15.0" prefHeight="250.0" prefWidth="580.0">
+               <children>
+                  <TableView fx:id="tblViewUnapprovedOffers" layoutX="200.0" prefHeight="200.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                      <TableColumn fx:id="clmProfessorName" minWidth="290.0" prefWidth="75.0" text="Profesor" />
+                      <TableColumn fx:id="clmOfferPeriod" minWidth="290.0" prefWidth="75.0" text="Periodo" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+            <CubicCurve controlX1="-236.81808471679688" controlX2="432.0335693359375" controlY1="-96.39999389648438" controlY2="-96.39999389648438" endX="401.0" endY="-47.0" fill="#c9c9c9" layoutX="199.0" layoutY="356.0" startX="-199.0" startY="-46.999969482421875" stroke="#c9c9c9" />
+            <Button fx:id="btnEvaluate" layoutX="127.0" layoutY="278.0" mnemonicParsing="false" onAction="#showDetail" prefWidth="100.0" styleClass="button-accion2" text="Evaluar" />
+            <Button fx:id="btnBack" layoutX="374.0" layoutY="278.0" mnemonicParsing="false" onAction="#previousMenu" prefWidth="100.0" styleClass="button-regresar" text="Regresar" />
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="112.0" fitWidth="100.0" layoutX="251.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/checkListIcon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="116.0" fitWidth="100.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/coilIcon.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

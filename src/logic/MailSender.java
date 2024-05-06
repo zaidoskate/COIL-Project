@@ -13,8 +13,8 @@ import java.util.Properties;
  * @author zaido
  */
 public class MailSender {
-    private static final String USERNAME = "zaidskate@hotmail.com";
-    private static final String PASSWORD = "Posdata19";
+    private static final String USERNAME = "coilviczamatl@hotmail.com";
+    private static final String PASSWORD = "zamatl123";
     private static final String HOST = "smtp-mail.outlook.com";
     private static final int PORT = 587;
     

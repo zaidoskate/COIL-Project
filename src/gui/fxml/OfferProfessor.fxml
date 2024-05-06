@@ -28,12 +28,12 @@
          <children>
             <AnchorPane layoutX="7.0" layoutY="14.0" prefHeight="200.0" prefWidth="585.0">
                <children>
-                  <TableView fx:id="tableView" fixedCellSize="20.0" prefHeight="200.0" prefWidth="585.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="tblViewOffersAvailable" fixedCellSize="20.0" prefHeight="200.0" prefWidth="585.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn fx:id="professorColumn" prefWidth="146.4" resizable="false" text="Profesor" />
-                      <TableColumn fx:id="emailColumn" prefWidth="146.4" resizable="false" text="Correo" />
-                      <TableColumn fx:id="periodColumn" prefWidth="146.4" resizable="false" text="Periodo preferido" />
-                      <TableColumn fx:id="languageColumn" prefWidth="146.4" resizable="false" text="Idioma preferido" />
+                      <TableColumn fx:id="clmProfessorName" prefWidth="146.4" resizable="false" text="Profesor" />
+                      <TableColumn fx:id="clmProfessorEmail" prefWidth="146.4" resizable="false" text="Correo" />
+                      <TableColumn fx:id="clmOfferPeriod" prefWidth="146.4" resizable="false" text="Periodo preferido" />
+                      <TableColumn fx:id="clmOfferLanguage" prefWidth="146.4" resizable="false" text="Idioma preferido" />
                     </columns>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -54,7 +54,7 @@
                   <Image url="@../images/CoilLogo.png" />
                </image>
             </ImageView>
-            <Button fx:id="detail" layoutX="264.0" layoutY="334.0" mnemonicParsing="false" onAction="#showDetail" prefHeight="25.0" prefWidth="70.0" styleClass="button-accion" text="Detalle">
+            <Button layoutX="264.0" layoutY="334.0" mnemonicParsing="false" onAction="#showDetail" prefHeight="25.0" prefWidth="70.0" styleClass="button-accion" text="Detalle">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

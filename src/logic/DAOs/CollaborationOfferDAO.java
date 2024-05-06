@@ -48,6 +48,41 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
         }
         return result;
     }
+
+    @Override
+    public int deleteCollaborationOffer(int idCollaborationOffer) throws LogicException {
+        int result = 0;
+        String query = "DELETE FROM OfertaColaboracion WHERE idOfertaColaboracion = ?";
+        try {
+            Connection connection = databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idCollaborationOffer);
+            result = statement.executeUpdate();
+        } catch (SQLException sqlException) {
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return result;
+    }
+    
+    @Override
+    public int evaluateCollaborationOffer(int idCollaborationOffer, String decision) throws LogicException {
+        int evaluationResult = 0;
+        String query = "UPDATE ofertaColaboracion SET estadoOferta = '" + decision + "' WHERE idOfertaColaboracion = ?";
+        try {
+            Connection connection = databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idCollaborationOffer);
+            evaluationResult = statement.executeUpdate();
+        } catch(SQLException sqlException) {
+            sqlException.printStackTrace();
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return evaluationResult;
+    }
     
     @Override
     public ArrayList<CollaborationOffer> getApprovedCollaborationOffer() throws LogicException {
@@ -76,6 +111,34 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
         }
         return approvedOffers;
     }
+    
+    @Override
+    public ArrayList<CollaborationOffer> getUnapprovedCollaborationOffer() throws LogicException {
+        ArrayList<CollaborationOffer> unapprovedOffers = new ArrayList<>();
+        String query = "SELECT * FROM OfertaColaboracion WHERE estadoOferta = ?";
+        try {
+            Connection connection = databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, "Pendiente");
+            ResultSet offersObtained = statement.executeQuery();
+            while(offersObtained.next()) {
+                CollaborationOffer offer = new CollaborationOffer();
+                offer.setIdCollaboration(offersObtained.getInt("idOfertaColaboracion"));
+                offer.setIdUser(offersObtained.getInt("Profesor_Usuario_idUsuario"));
+                offer.setObjective(offersObtained.getString("objetivo"));
+                offer.setTopicsOfInterest(offersObtained.getString("temasInteres"));
+                offer.setNumberOfStudents(offersObtained.getInt("cantidadEstudiantes"));
+                offer.setProfile(offersObtained.getString("perfil"));
+                offer.setLanguage(offersObtained.getString("idioma"));
+                offer.setPeriod(offersObtained.getString("periodo"));
+                offer.setAditionalInfo(offersObtained.getString("informacionAdcional"));
+                unapprovedOffers.add(offer);
+            }
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        }
+        return unapprovedOffers;
+    }
 
     @Override
     public CollaborationOffer getProfessorApprovedOffer(int idUser) throws LogicException {
@@ -103,25 +166,7 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
         }
         return offer;
     }
-
-    @Override
-    public int deleteCollaborationOffer(int idOfferCollaboration) throws LogicException {
-        int result = 0;
-        String query = "DELETE FROM OfertaColaboracion WHERE idOfertaColaboracion = ?";
-        try {
-            Connection connection = databaseConnection.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, idOfferCollaboration);
-            result = statement.executeUpdate();
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
-        } finally {
-            databaseConnection.closeConnection();
-        }
-        return result;
-    }
-
+    
     @Override
     public boolean professorHasOffer(int idUser) throws LogicException {
         boolean result = false;
@@ -142,6 +187,4 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
         }
         return result;
     }
-    
-    
 }

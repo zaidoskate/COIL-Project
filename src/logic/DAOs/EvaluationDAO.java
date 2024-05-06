@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import logic.LogicException;
 import logic.domain.Evaluation;
@@ -28,21 +29,33 @@ public class EvaluationDAO implements EvaluationManagerInterface {
         this.databaseConnection = new DatabaseConnection();
     }
     
-    private Date parseStringToDate(String date) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        java.util.Date parsedDate = dateFormat.parse(date);
-        Date sqlDate = new Date(parsedDate.getTime());
-        return sqlDate;
-    }
-    
     private String parseDateToString(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = dateFormat.format(date);
         return dateString;
     }
-
+    
     @Override
-    public int insertEvaluation(Evaluation evaluation) throws LogicException {
+    public int insertEvaluationForApprovedOffer(Evaluation evaluation) throws LogicException {
+        int result = 0;
+        String query = "INSERT INTO Evaluacion (idOfertaColaboracion, idCoordinador, fechaEvaluacion) VALUES (?, ?, ?)";
+        try {
+            Connection connection = databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, evaluation.getIdOfferCollaboration());
+            statement.setInt(2, evaluation.getIdCoordinator());
+            statement.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
+            result = statement.executeUpdate();
+        } catch (SQLException sqlException) {
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return result;
+    }
+    
+    @Override
+    public int insertEvaluationForDeclinedOffer(Evaluation evaluation) throws LogicException {
         int result = 0;
         String query = "INSERT INTO Evaluacion (idOfertaColaboracion, idCoordinador, fechaEvaluacion, motivo) VALUES (?, ?, ?, ?)";
         try {
@@ -50,14 +63,11 @@ public class EvaluationDAO implements EvaluationManagerInterface {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, evaluation.getIdOfferCollaboration());
             statement.setInt(2, evaluation.getIdCoordinator());
-            statement.setDate(3, parseStringToDate(evaluation.getDate()));
+            statement.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
             statement.setString(4, evaluation.getReason());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
-        } catch (ParseException parseException) {
-            throw new LogicException("Campos incorrectos", parseException);
         } finally {
             databaseConnection.closeConnection();
         }
