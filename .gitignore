@@ -1,5 +1,6 @@
 /build/
 /dist/
+/lib/
 /logs/
 /nbproject/project.xml
 /nbproject/project.properties

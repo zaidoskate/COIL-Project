@@ -9,6 +9,16 @@
 <!-- in the project's Project Properties dialog box.-->
 <project name="COILProject" default="default" basedir=".">
     <description>Builds, tests, and runs the project COILProject.</description>
+<path id="classpath">
+    <!-- Directorio que contiene el archivo de configuración de Log4j -->
+    <pathelement location="ruta/a/.properties" />
+    <!-- Directorio que contiene otras librerías necesarias -->
+    <fileset dir="lib">
+        <include name="*.jar"/>
+    </fileset>
+</path>
+
+
     <import file="nbproject/build-impl.xml"/>
     <!--
 

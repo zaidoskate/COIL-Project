@@ -26,7 +26,7 @@ public class DepartmentDAO implements DepartmentManagerInterface{
     
     @Override
     public ArrayList<String> getRegionsNames() throws LogicException {
-        String query = "SELECT region from facultad group by region";
+        String query = "SELECT resgion from facultad group by region";
         Connection connection;
         PreparedStatement statement;
         ResultSet result;

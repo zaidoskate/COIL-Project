@@ -20,7 +20,7 @@ import logic.DAOs.ExternalAccountRequestDAO;
 import logic.LogicException;
 import logic.domain.ExternalAccountRequest;
 import logic.domain.UvAccountRequest;
-import logic.model.EmailAddress;
+import logic.model.EmailNotification;
 import logic.domain.ExternalAccountRequestData;
 
 /**
@@ -100,13 +100,15 @@ public class AccountRequestExternalListController implements Initializable {
                 Alerts.displayAlertLogicException(logicException);
                 return;
             }
-            EmailAddress.getInstance().setEmail(externalAccountRequest.getEmail());
+            EmailNotification.getInstance().setEmail(externalAccountRequest.getEmail());
+            EmailNotification.getInstance().setMessageCancel("No se ha rechazado esta solicitud de cuenta");
+            EmailNotification.getInstance().setMessageSuccess("Se ha rechazado con exito la solicitud de cuenta");
             try {
                 SendEmailStage sendEmailStage = new SendEmailStage();
             } catch(IOException ioexception) {
                 Alerts.displayAlertIOException();
             }
-            if(EmailAddress.getInstance().getSentStatus()) {
+            if(EmailNotification.getInstance().getSentStatus()) {
                 deleteUvAccountRequest(externalAccountRequest);
                 loadUvAccountRequest();
             }

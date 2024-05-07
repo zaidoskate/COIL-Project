@@ -4,6 +4,7 @@
  */
 package gui.controllers;
 
+import dataaccess.DatabaseConnection;
 import gui.DataValidation;
 import java.net.URL;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import logic.LogicException;
 import logic.domain.Department;
 import logic.domain.ExternalAccountRequest;
 import logic.domain.UvAccountRequest;
+import org.apache.log4j.Logger;
 
 
 public class AccountRequestController implements Initializable {
@@ -84,7 +86,6 @@ public class AccountRequestController implements Initializable {
         try{
             regions = departmentDAO.getRegionsNames();
         } catch(LogicException logicException) {
-            
         }
         comboBoxRegions.getItems().addAll(regions);
     }

@@ -9,8 +9,7 @@
 <?import javafx.scene.shape.QuadCurve?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(from 0% 0% to 0% 80%, white, #ccc);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.SendEmailController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="338.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(from 0% 0% to 0% 80%, white, #ccc);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.SendEmailController">
    <children>
       <QuadCurve controlX="254.79998779296875" controlY="167.1999969482422" endX="550.0" endY="3.051757857974735E-6" fill="#fe3c57" layoutX="50.0" startX="-50.0" stroke="#fe3c57" strokeType="INSIDE" />
       <ImageView fitHeight="84.0" fitWidth="110.0" layoutX="258.0" pickOnBounds="true" preserveRatio="true">
@@ -18,18 +17,18 @@
             <Image url="@../images/emailLogo.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="84.0" fitWidth="145.0" layoutX="258.0" layoutY="302.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="84.0" fitWidth="145.0" layoutX="258.0" layoutY="247.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/CoilLogo.png" />
          </image>
       </ImageView>
-      <TextArea fx:id="txtAreaMessage" layoutX="22.0" layoutY="128.0" prefHeight="158.0" prefWidth="555.0" promptText="Escribe el mensaje del correo." styleClass="red-and-white" />
-      <Button onAction="#declineRequest" layoutX="85.0" layoutY="330.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="62.0" styleClass="accept-button" text="Enviar">
+      <TextArea fx:id="txtAreaMessage" layoutX="22.0" layoutY="128.0" prefHeight="98.0" prefWidth="555.0" promptText="Escribe el mensaje del correo." styleClass="red-and-white" />
+      <Button layoutX="87.0" layoutY="262.0" mnemonicParsing="false" onAction="#declineRequest" prefHeight="26.0" prefWidth="62.0" styleClass="accept-button" text="Enviar">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button onAction="#cancelDecline" layoutX="455.0" layoutY="331.0" mnemonicParsing="false" styleClass="cancel-button" text="Cancelar">
+      <Button layoutX="448.0" layoutY="262.0" mnemonicParsing="false" onAction="#cancelDecline" styleClass="cancel-button" text="Cancelar">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

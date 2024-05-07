@@ -10,12 +10,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import logic.LogicException;
 import logic.MailSender;
-import logic.model.EmailAddress;
+import logic.model.EmailNotification;
 
 /**
  *
@@ -32,17 +31,13 @@ public class SendEmailController implements Initializable {
     
     @FXML
     private void cancelDecline() {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setHeaderText("Advertencia");
-        alert.setTitle("Correo no enviado.");
-        alert.setContentText("No se ha rechazado la solicitud de cuenta.");
-        alert.showAndWait();
+        Alerts.showWarningAlert(EmailNotification.getInstance().getMessageCancel());
         Stage stage = (Stage) txtAreaMessage.getScene().getWindow();
         stage.close();
     }
     @FXML
     private void declineRequest() {
-        String email = EmailAddress.getInstance().getEmail();
+        String email = EmailNotification.getInstance().getEmail();
         String body = txtAreaMessage.getText();
         boolean result = false;
         if(DataValidation.validateWord(body)){
@@ -53,22 +48,12 @@ public class SendEmailController implements Initializable {
             }
         }
         if(result == true) {
-            EmailAddress.getInstance().emailSent();
-            
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("Exito");
-            alert.setTitle("Solicitud rechazada");
-            alert.setContentText("El correo se ha enviado a su destino informando el rechazo de su cuenta.");
-            alert.showAndWait();
-
+            EmailNotification.getInstance().emailSent();
+            Alerts.showInformationAlert("Exito", EmailNotification.getInstance().getMessageSuccess());
             Stage stage = (Stage) txtAreaMessage.getScene().getWindow();
             stage.close();
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setHeaderText("Error");
-            alert.setTitle("Ha ocurrido un error");
-            alert.setContentText("Intentalo de nuevo mas tarde.");
-            alert.showAndWait();
+            Alerts.showWarningAlert("Ha ocurrido un error, Intentalo de nuevo mas tarde.");
         }
     }
 }

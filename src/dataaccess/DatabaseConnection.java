@@ -7,14 +7,12 @@ package dataaccess;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import org.apache.log4j.Logger;
 
 public class DatabaseConnection {
     private Connection databaseConnection;
     private final String DATABASE_URL = "jdbc:mysql://127.0.0.1/coilProject";
     private final String DATABASE_USER = "user1";
     private final String DATABASE_PASSWORD = "ZAMATL";
-    private static final Logger log = Logger.getLogger(DatabaseConnection.class);
     
     public Connection getConnection() throws SQLException {
         connect();
@@ -32,7 +30,6 @@ public class DatabaseConnection {
                     databaseConnection.close();
                 }
             } catch (SQLException exception) {
-                log.error(exception);
             }
         }
     }

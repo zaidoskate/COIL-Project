@@ -19,7 +19,7 @@ import logic.domain.UvAccountRequest;
 import logic.DAOs.UvAccountRequestDAO;
 import logic.LogicException;
 import logic.AccountCreator;
-import logic.model.EmailAddress;
+import logic.model.EmailNotification;
 
 /**
  *
@@ -95,13 +95,13 @@ public class AccountRequestUvListController implements Initializable{
     private void declineAccountRequest() {
         if(tableView.getSelectionModel().getSelectedItem() != null) {
             UvAccountRequest uvaccountRequest = tableView.getSelectionModel().getSelectedItem();
-            EmailAddress.getInstance().setEmail(uvaccountRequest.getEmail());
+            EmailNotification.getInstance().setEmail(uvaccountRequest.getEmail());
             try {
                 SendEmailStage sendEmailStage = new SendEmailStage();
             } catch(IOException ioexception) {
                 Alerts.displayAlertIOException();
             }
-            if(EmailAddress.getInstance().getSentStatus()) {
+            if(EmailNotification.getInstance().getSentStatus()) {
                 deleteUvAccountRequest(uvaccountRequest);
                 loadUvAccountRequest();
             }
