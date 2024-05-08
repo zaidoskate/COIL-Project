@@ -42,4 +42,18 @@ public class Department {
         this.idAcademicArea = idAcademicArea;
     }
     
+    @Override
+    public boolean equals(Object object) {
+        Department departmentToCompare = (Department) object;
+        if(!this.idDepartment.equals(departmentToCompare.getIdDepartment())) {
+            return false;
+        }
+        if(!this.name.equals(departmentToCompare.getName())) {
+            return false; 
+        }
+        if(!this.region.equals(departmentToCompare.getRegion())) {
+            return false;
+        }
+        return true;
+    }
 }

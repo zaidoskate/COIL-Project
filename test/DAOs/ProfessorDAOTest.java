@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAOs;
 
 import java.util.ArrayList;
@@ -10,10 +6,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import logic.domain.Professor;
 import logic.DAOs.ProfessorDAO;
-/**
- *
- * @author zaido
- */
+
 public class ProfessorDAOTest {
     
     @Test

@@ -21,11 +21,9 @@ public class UserDAO implements UserManagerInterface {
     public int addUser(User user)  throws LogicException {
         int result = 0;
         String query = "INSERT INTO Usuario(nombre, apellido,correo) VALUES (?, ?, ?)";
-        Connection connection;
-        PreparedStatement statement;
         try{
-            connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getName());
             statement.setString(2, user.getLastName());
             statement.setString(3, user.getEmail());
@@ -46,15 +44,12 @@ public class UserDAO implements UserManagerInterface {
     @Override
     public User getUserById(int id) throws LogicException  {
         String query = "SELECT * FROM Usuario WHERE idUsuario = ?";
-        Connection connection;
-        PreparedStatement statement;
-        ResultSet result;
         User userResult = new User();
         try{
-            connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement(query);
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
-            result = statement.executeQuery();
+            ResultSet result = statement.executeQuery();
             while(result.next()) {
                 userResult.setIdUser(result.getInt("idUsuario"));
                 userResult.setName(result.getString("nombre"));
@@ -72,15 +67,12 @@ public class UserDAO implements UserManagerInterface {
     @Override
     public String getUserTypeById(int id) throws LogicException {
         String query = "CALL encontrarTipoUsuario( ? )";
-        Connection connection;
-        PreparedStatement statement;
-        ResultSet result;
         String typeUser = null;
         try{
-            connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement(query);
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
-            result = statement.executeQuery();
+            ResultSet result = statement.executeQuery();
             while(result.next()) {
                 typeUser = result.getString("tipo");
             }

@@ -13,7 +13,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.AccountRequestUvListController">
    <children>
-      <TableView fx:id="tableView" layoutX="33.0" layoutY="91.0" prefHeight="298.0" prefWidth="634.0" stylesheets="@../css/styles.css">
+      <TableView fx:id="tblViewUvAccountRequest" layoutX="33.0" layoutY="91.0" prefHeight="298.0" prefWidth="634.0" stylesheets="@../css/styles.css">
         <columns>
           <TableColumn editable="false" prefWidth="115.20001792907715" text="Numero personal">
               <cellValueFactory>

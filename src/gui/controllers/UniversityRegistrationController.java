@@ -1,11 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package gui.controllers;
 
+import gui.Alerts;
 import gui.DataValidation;
-import gui.stages.CoordinatorMenuStage;
 import gui.stages.UniversitiesStage;
 import java.io.IOException;
 import java.net.URL;
@@ -18,13 +14,10 @@ import javafx.stage.Stage;
 import logic.DAOs.UniversityDAO;
 import logic.LogicException;
 import logic.domain.University;
+import org.apache.log4j.Logger;
 
-/**
- * FXML Controller class
- *
- * @author chuch
- */
 public class UniversityRegistrationController implements Initializable {
+    private static final Logger log = Logger.getLogger(UniversityRegistrationController.class);
     @FXML
     private TextField txtFieldName;
     @FXML
@@ -32,7 +25,7 @@ public class UniversityRegistrationController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     } 
     
     @FXML
@@ -42,9 +35,8 @@ public class UniversityRegistrationController implements Initializable {
         try{
             UniversitiesStage universitiesStage = new UniversitiesStage();
         } catch(IOException ioException) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("ERROR, intentalo mas tarde.");
-            alert.showAndWait();
+            log.warn(ioException);
+            Alerts.displayAlertIOException();
         }
     }
     
@@ -66,19 +58,14 @@ public class UniversityRegistrationController implements Initializable {
         try{
             result = universityDAO.insertUniversity(university);
         } catch(LogicException logicException) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText(logicException.getMessage());
-            alert.showAndWait();
+            log.error(logicException);
+            Alerts.displayAlertLogicException(logicException);
         }
         
         if(result==1) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Se ha registrado exitosamente la Universidad.");
-            alert.showAndWait();
+            Alerts.showInformationAlert("Exito", "Se ha registrado exitosamente la Universidad.");
         } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("No se ha podido guardar la informacion de la Universidad.");
-            alert.showAndWait();
+            Alerts.showWarningAlert("No se ha podido guardar la informacion de la Universidad.");
         }
         clearFields();
     }
@@ -90,11 +77,11 @@ public class UniversityRegistrationController implements Initializable {
         
         Alert alert = new Alert(Alert.AlertType.WARNING);
         
-        if(!DataValidation.validateName(universityName)) {
+        if(!DataValidation.validateName(universityName) || !DataValidation.validateLengthField(universityName, 45)) {
             result = false;
             alert.setContentText("Nombre con formato invalido");
         }
-        if(!DataValidation.validateName(country)) {
+        if(!DataValidation.validateName(country) || !DataValidation.validateLengthField(country, 45)) {
             result = false;
             alert.setContentText("Pais con formato invalido");
         }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gui.controllers;
 
 import gui.Alerts;
@@ -14,24 +10,20 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import logic.AccountCreator;
-import logic.DAOs.ExternalAccountRequestDAO;
 import logic.DAOs.UniversityDAO;
 import logic.LogicException;
 import logic.domain.ExternalAccountRequest;
 import logic.domain.University;
+import org.apache.log4j.Logger;
 
-/**
- *
- * @author chuch
- */
 public class ExternalAccountCreateController implements Initializable {
+    private static final Logger log = Logger.getLogger(ExternalAccountCreateController.class);
 
     private ArrayList<University> universities;
     @FXML
-    private ComboBox<String> comboBoxUniversities;
+    private ComboBox<String> cmbBoxUniversities;
     @FXML
     private TextField txtFieldName;
     @FXML
@@ -51,25 +43,24 @@ public class ExternalAccountCreateController implements Initializable {
         try{
             universities = universityDAO.getUniversities();
         } catch(LogicException logicException) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText(logicException.getMessage());
-            alert.showAndWait();
+            log.error(logicException);
+            Alerts.displayAlertLogicException(logicException);
             
-            Stage stage = (Stage) comboBoxUniversities.getScene().getWindow();
+            Stage stage = (Stage) cmbBoxUniversities.getScene().getWindow();
             stage.close();
         }
         
         for(University university:universities) {
             universitiesNames.add(university.getName());
         }
-        comboBoxUniversities.getItems().addAll(universitiesNames);
+        cmbBoxUniversities.getItems().addAll(universitiesNames);
     }
     
     private void clearFields() {
         txtFieldName.setText("");
         txtFieldLastName.setText("");
         txtFieldEmail.setText("");
-        comboBoxUniversities.getSelectionModel().clearSelection();
+        cmbBoxUniversities.getSelectionModel().clearSelection();
     }
     
     private boolean makeValidations() {
@@ -80,6 +71,10 @@ public class ExternalAccountCreateController implements Initializable {
         
         Alert alert = new Alert(Alert.AlertType.WARNING);
         
+        if(!DataValidation.validateLengthField(name, 50) || !DataValidation.validateLengthField(lastName, 25)) {
+            result = false;
+            alert.setContentText("Nombre(s) o Apellido(s) invalido.");
+        }
         if(!DataValidation.validateName(name) || !DataValidation.validateName(lastName)) {
             result = false;
             alert.setContentText("Nombre(s) o Apellido(s) invalido.");
@@ -88,7 +83,7 @@ public class ExternalAccountCreateController implements Initializable {
             result = false;
             alert.setContentText("Formato de correo invalido.");
         }
-        if(comboBoxUniversities.getSelectionModel().getSelectedIndex() == -1) {
+        if(cmbBoxUniversities.getSelectionModel().getSelectedIndex() == -1) {
             result = false;
             alert.setContentText("Universidad no seleccionada.");
         }
@@ -109,22 +104,24 @@ public class ExternalAccountCreateController implements Initializable {
         String name = txtFieldName.getText();
         String lastName = txtFieldLastName.getText();
         String email = txtFieldEmail.getText(); 
+        University universitySelected = universities.get(cmbBoxUniversities.getSelectionModel().getSelectedIndex());
         
         ExternalAccountRequest externalAccountRequest = new ExternalAccountRequest();
         externalAccountRequest.setEmail(email);
         externalAccountRequest.setLastName(lastName);
         externalAccountRequest.setName(name);
-        externalAccountRequest.setIdUniversity(comboBoxUniversities.getSelectionModel().getSelectedIndex());
+        externalAccountRequest.setIdUniversity(universitySelected.getUniversityId());
         
         boolean result = false;
         
         try {
             result = AccountCreator.createExternalAccount(externalAccountRequest);
         } catch(LogicException logicException) {
+            log.error(logicException);
             Alerts.displayAlertLogicException(logicException);
         }
         if(result == true) {
-            Alerts.displayAccountSent();
+            Alerts.showInformationAlert("Exito", "El correo se ha enviado a su destino con la clave de acceso");
             Stage stage = (Stage) txtFieldName.getScene().getWindow();
             stage.close();
         }
@@ -133,7 +130,7 @@ public class ExternalAccountCreateController implements Initializable {
     
     @FXML
     private void cancelExternalAccount() {
-        Alerts.displayAccountNoSent();
+        Alerts.showWarningAlert("No se ha podido registrar ni enviar el correo a su destino, intentelo mas tarde.");
         Stage stage = (Stage) txtFieldName.getScene().getWindow();
         stage.close();
     }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
- */
 package DAOs;
 
 import java.util.ArrayList;
@@ -11,10 +7,6 @@ import logic.domain.CollaborationOffer;
 import logic.DAOs.CollaborationOfferDAO;
 import logic.LogicException;
 
-/**
- *
- * @author chima
- */
 public class CollaborationOfferDAOTest {
     
     public CollaborationOfferDAOTest() {

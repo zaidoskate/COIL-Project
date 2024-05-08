@@ -1,4 +1,4 @@
-package logic.DAOs;
+    package logic.DAOs;
 
 import dataaccess.DatabaseConnection;
 import java.io.File;
@@ -28,11 +28,9 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
     public int addConcludedCollaboration(ConcludedCollaboration concludedCollaboration) throws LogicException{
         int result = 0;
         String query = "INSERT INTO colaboracionconcluida(Colaboracion_idColaboracion, Usuario_idUsuario, numeroEstudiantes) VALUES (?, ?, ?)";
-        Connection connection;
-        PreparedStatement statement;
         try{
-            connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement(query);
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, concludedCollaboration.getIdColaboration());
             statement.setInt(2, concludedCollaboration.getIdUser());
             statement.setInt(3, concludedCollaboration.getNumberStudents());
@@ -49,11 +47,9 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
     public int updateVisibility(ConcludedCollaboration concludedCollaboration) throws LogicException{
         int result = 0;
         String query = "UPDATE colaboracionconcluida SET visibilidad = ? WHERE Colaboracion_idColaboracion = ?";
-        Connection connection;
-        PreparedStatement statement;
         try{
-            connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement(query);
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, concludedCollaboration.getVisibility());
             statement.setInt(2, concludedCollaboration.getIdColaboration());
             result = statement.executeUpdate();
@@ -69,11 +65,9 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
     public int updateRating(ConcludedCollaboration concludedCollaboration) throws LogicException{
         int result = 0;
         String query = "UPDATE colaboracionconcluida SET calificacion = ? WHERE Colaboracion_idColaboracion = ?";
-        Connection connection;
-        PreparedStatement statement;
         try{
-            connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement(query);
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, concludedCollaboration.getRating());
             statement.setInt(2, concludedCollaboration.getIdColaboration());
             result = statement.executeUpdate();
@@ -87,11 +81,10 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
     
     @Override
     public int uploadCertificates(ConcludedCollaboration concludedCollaboration) throws LogicException{
-        Connection connection;
         int result = 0;
         String query = "UPDATE colaboracionconcluida SET constancias = ? WHERE Colaboracion_idColaboracion = ?";
         try {
-            connection = this.databaseConnection.getConnection();
+            Connection connection = this.databaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             File certificatesZip = new File(concludedCollaboration.getCertificatesPath());
             FileInputStream fileInputStream = new FileInputStream(certificatesZip);
@@ -111,13 +104,10 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
 
     @Override
     public int obtainCertificates(ConcludedCollaboration concludedCollaboration, String outputPath) throws LogicException{
-        Connection connection;
-        PreparedStatement statement = null;
-        FileOutputStream fileOutputStream = null;
         int result =0;
         try {
-            connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement("SELECT constancias FROM colaboracionconcluida WHERE Colaboracion_idColaboracion = ?");
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT constancias FROM colaboracionconcluida WHERE Colaboracion_idColaboracion = ?");
             statement.setInt(1, concludedCollaboration.getIdColaboration());
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -140,14 +130,11 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
     @Override
     public ArrayList<ConcludedCollaboration> getConcludedCollaborations() throws LogicException{
         String query = "select Colaboracion_idColaboracion, Usuario_idUsuario from colaboracionconcluida";
-        Connection connection;
-        PreparedStatement statement;
-        ResultSet result;
         ArrayList <ConcludedCollaboration> concludedCollaborationsResult = new ArrayList();
         try{
-            connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement(query);
-            result = statement.executeQuery();
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet result = statement.executeQuery();
             while(result.next()) {
                 ConcludedCollaboration concludedCollaboration = new ConcludedCollaboration();
                 concludedCollaboration.setIdColaboration(result.getInt("Colaboracion_idColaboracion"));

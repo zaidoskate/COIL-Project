@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package gui.controllers;
 
 import gui.Alerts;
@@ -19,20 +15,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 
-/**
- * FXML Controller class
- *
- * @author chuch
- */
 public class CoordinatorMenuController implements Initializable {
-
+    private static final Logger log = Logger.getLogger(CoordinatorMenuController.class);
     @FXML
-    private Text textName;
+    private Text txtName;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        textName.setText(SessionManager.getInstance().getUserData().getName());
+        txtName.setText(SessionManager.getInstance().getUserData().getName());
     }   
 
     @FXML
@@ -41,26 +33,24 @@ public class CoordinatorMenuController implements Initializable {
         try {
             universitiesStage = new UniversitiesStage();
         } catch(IOException ioException) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("ERROR, intentalo mas tarde.");
-            alert.showAndWait();
+            log.warn(ioException);
+            Alerts.displayAlertIOException();
         }
         if (universitiesStage != null) {
-            Stage stage = (Stage) textName.getScene().getWindow();
+            Stage stage = (Stage) txtName.getScene().getWindow();
             stage.close();
         }
     }
     
     @FXML
     private void displayAccountRequestMenu() {
-        Stage stage = (Stage) textName.getScene().getWindow();
+        Stage stage = (Stage) txtName.getScene().getWindow();
         stage.close();
         try {
             AccountRequestMenuStage accoountRequestMenuStage = new AccountRequestMenuStage();
         } catch(IOException ioException) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("ERROR, intentalo mas tarde.");
-            alert.showAndWait();
+            log.warn(ioException);
+            Alerts.displayAlertIOException();
         }
     }
     
@@ -69,16 +59,14 @@ public class CoordinatorMenuController implements Initializable {
         try {
             ExternalAccountCreateStage externalAccountCreateStage = new ExternalAccountCreateStage();
         } catch(IOException ioException) {
-            ioException.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("ERROR, intentalo mas tarde.");
-            alert.showAndWait();
+            log.warn(ioException);
+            Alerts.displayAlertIOException();
         }
     }
     
     @FXML
     private void logout() {
-        Stage stage = (Stage) textName.getScene().getWindow();
+        Stage stage = (Stage) txtName.getScene().getWindow();
         stage.close();
         SessionManager.getInstance().logout();
         try {
@@ -86,19 +74,19 @@ public class CoordinatorMenuController implements Initializable {
             Stage loginStage = new Stage();
             application.start(loginStage);
         } catch(IOException ioException) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("ERROR, intentalo mas tarde.");
-            alert.showAndWait();
+            log.warn(ioException);
+            Alerts.displayAlertIOException();
         }
     }
     
     @FXML
     private void displayOfferCoordinator() {
-        Stage stage = (Stage) this.textName.getScene().getWindow();
+        Stage stage = (Stage) this.txtName.getScene().getWindow();
         stage.close();
         try {
             OfferCoordinatorStage offerCoordinatorStage = new OfferCoordinatorStage();
         } catch(IOException ioException) {
+            log.warn(ioException);
             Alerts.displayAlertIOException();
         }
     }

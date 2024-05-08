@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package gui.controllers;
 
+import gui.Alerts;
 import gui.COILVICApplication;
 import gui.SessionManager;
 import gui.stages.CollaborationStage;
@@ -11,20 +8,14 @@ import gui.stages.OfferProfessorStage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 
-/**
- * FXML Controller class
- *
- * @author chuch
- */
 public class ProfesorMenuController implements Initializable {
-
+    private static final Logger log = Logger.getLogger(ProfesorMenuController.class);
     @FXML
     private Text textName;
     
@@ -40,7 +31,7 @@ public class ProfesorMenuController implements Initializable {
         try {
             OfferProfessorStage offerProfessorStage = new OfferProfessorStage();
         } catch(IOException ioException) {
-            
+            log.warn(ioException);
         }
     }
     @FXML
@@ -53,9 +44,8 @@ public class ProfesorMenuController implements Initializable {
             Stage loginStage = new Stage();
             application.start(loginStage);
         } catch(IOException ioException) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("ERROR, intentalo mas tarde.");
-            alert.showAndWait();
+            log.warn(ioException);
+            Alerts.displayAlertIOException();
         }
     }
 
@@ -66,7 +56,7 @@ public class ProfesorMenuController implements Initializable {
         try {
             CollaborationStage collaborationStage = new CollaborationStage();
         } catch (IOException ioException) {
-            ioException.printStackTrace();
+            log.warn(ioException);
         }
     }
 }

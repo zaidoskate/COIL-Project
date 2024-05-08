@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package logic.domain;
 
-/**
- *
- * @author zaido
- */
 public class ExternalAccountRequest extends AccountRequest{
 
     private int idUniversity;
@@ -18,5 +10,25 @@ public class ExternalAccountRequest extends AccountRequest{
 
     public int getIdUniversity() {
         return idUniversity;
+    }
+    @Override
+    public boolean equals(Object object) {
+        ExternalAccountRequest accountRequestToCompare = (ExternalAccountRequest) object;
+        if(this.getIdRequest() != accountRequestToCompare.getIdRequest()) { 
+            return false;
+        }
+        if(this.getIdUniversity() != accountRequestToCompare.getIdUniversity()) {
+            return false;
+        }
+        if(!this.getEmail().equals(accountRequestToCompare.getEmail())) {
+            return false;
+        }
+        if(!this.getName().equals(accountRequestToCompare.getName())) {
+            return false;
+        }
+        if(!this.getLastName().equals(accountRequestToCompare.getLastName())) {
+            return false;
+        }
+        return true;
     }
 }

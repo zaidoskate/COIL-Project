@@ -20,11 +20,9 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
     public int addProfessorBelongsToCollaboration(ProfessorBelongsToCollaboration professorBelongsToCollaboration) throws LogicException {
         int result = 0;
         String query = "INSERT INTO profesorpertenececolaboracion VALUES (?, ?, ?, ?)";
-        Connection connection;
-        PreparedStatement statement;
         try{
-            connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement(query);
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, professorBelongsToCollaboration.getIdColaboration());
             statement.setInt(2, professorBelongsToCollaboration.getIdUser());
             statement.setInt(3, professorBelongsToCollaboration.getIdUserMirrorClass());
@@ -32,7 +30,6 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
             result = statement.executeUpdate();
             
         } catch(SQLException sqlException) {
-            sqlException.printStackTrace();
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();
@@ -44,11 +41,9 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
     public int deleteProfessorBelongsToCollaborationByIdCollaboration(int idCollaboration) throws LogicException {
         int result = 0;
         String query = "DELETE FROM profesorpertenececolaboracion WHERE Colaboracion_idColaboracion = ?";
-        Connection connection;
-        PreparedStatement statement;
         try{
-            connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement(query);
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idCollaboration);
             result = statement.executeUpdate();
             

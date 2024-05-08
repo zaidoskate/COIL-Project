@@ -13,7 +13,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="700.0"  xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.UniversitiesController">
    <children>
-      <TableView fx:id="tableView" layoutX="70.0" layoutY="85.0" prefHeight="298.0" prefWidth="559.0" stylesheets="@../css/styles.css">
+      <TableView fx:id="tblViewUniversities" layoutX="70.0" layoutY="85.0" prefHeight="298.0" prefWidth="559.0" stylesheets="@../css/styles.css">
         <columns>
           <TableColumn editable="false" prefWidth="64.00000762939453" text="Índice">
               <cellValueFactory>

@@ -126,7 +126,7 @@
                         <VBox prefHeight="128.0" prefWidth="325.0">
                            <children>
                               <Label text="Universidad:" />
-                              <ComboBox fx:id="comboBoxUniversities" onAction="#universitySelected" prefHeight="30.0" prefWidth="250.0" styleClass="text-field-accountRequest" stylesheets="@../css/styles.css">
+                              <ComboBox fx:id="cmbBoxUniversities" onAction="#universitySelected" prefHeight="30.0" prefWidth="250.0" styleClass="text-field-accountRequest" stylesheets="@../css/styles.css">
                                  <VBox.margin>
                                     <Insets top="10.0" />
                                  </VBox.margin>
@@ -142,7 +142,7 @@
                         <VBox fx:id="vBoxRegion" prefHeight="102.0" prefWidth="325.0" visible="false">
                            <children>
                               <Label text="Región:" />
-                              <ComboBox fx:id="comboBoxRegions" onAction="#regionSelected" prefHeight="30.0" prefWidth="250.0" styleClass="text-field-accountRequest" stylesheets="@../css/styles.css">
+                              <ComboBox fx:id="cmbBoxRegions" onAction="#regionSelected" prefHeight="30.0" prefWidth="250.0" styleClass="text-field-accountRequest" stylesheets="@../css/styles.css">
                                  <VBox.margin>
                                     <Insets top="10.0" />
                                  </VBox.margin>
@@ -158,7 +158,7 @@
                         <VBox fx:id="vBoxDepartment" prefHeight="93.0" prefWidth="325.0" visible="false">
                            <children>
                               <Label text="Facultad:" />
-                              <ComboBox fx:id="comboBoxDepartments" prefHeight="30.0" prefWidth="250.0" styleClass="text-field-accountRequest" stylesheets="@../css/styles.css">
+                              <ComboBox fx:id="cmbBoxDepartments" prefHeight="30.0" prefWidth="250.0" styleClass="text-field-accountRequest" stylesheets="@../css/styles.css">
                                  <VBox.margin>
                                     <Insets top="10.0" />
                                  </VBox.margin>

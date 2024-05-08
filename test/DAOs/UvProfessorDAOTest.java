@@ -1,19 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAOs;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import java.sql.SQLException;
-import logic.DAOs.ProfessorDAO;
 import logic.LogicException;
 import logic.domain.UvProfessor;
 import logic.DAOs.UvProfessorDAO;
-/**
- *
- * @author zaido
- */
+
 public class UvProfessorDAOTest {
     
     public UvProfessorDAOTest() {

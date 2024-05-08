@@ -1,24 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAOs;
 
+import java.util.ArrayList;
 import logic.DAOs.ExternalAccountRequestDAO;
 import logic.LogicException;
 import logic.domain.ExternalAccountRequest;
+import logic.domain.ExternalAccountRequestData;
 import org.junit.Test;
 import static org.junit.Assert.*;
-/**
- *
- * @author zaido
- */
+
 public class ExternalAccountRequestDAOTest {
     public ExternalAccountRequestDAOTest() {
     }
     
     @Test
-    public void testInsertExternalAccountRequestSuccess() {
+    public void testInsertExternalAccountRequestSuccess() throws LogicException {
         ExternalAccountRequest externalAccountRequest = new ExternalAccountRequest();
         externalAccountRequest.setName("Luis");
         externalAccountRequest.setLastName("Vargas");
@@ -26,12 +21,10 @@ public class ExternalAccountRequestDAOTest {
         externalAccountRequest.setIdUniversity(2);
         
         ExternalAccountRequestDAO externalAccountRequestDAO = new ExternalAccountRequestDAO();
-        try{
-            int result = externalAccountRequestDAO.insertExternalAccountRequest(externalAccountRequest);
-            assertEquals(1, result);
-        } catch(LogicException logicException) {
-            fail("No se ha dado de alta la solicitud de cuenta del profesor externo" + logicException.getMessage());
-        }
+        
+        int result = externalAccountRequestDAO.insertExternalAccountRequest(externalAccountRequest);
+        assertEquals(1, result);
+        
     }
     
     @Test(expected = LogicException.class)
@@ -47,7 +40,7 @@ public class ExternalAccountRequestDAOTest {
     }
     
     @Test
-    public void testDeleteExternalAccountRequestSuccess() {
+    public void testDeleteExternalAccountRequestSuccess() throws LogicException {
         ExternalAccountRequest externalAccountRequest = new ExternalAccountRequest();
         externalAccountRequest.setIdRequest(4);
         externalAccountRequest.setName("Luis");
@@ -56,11 +49,63 @@ public class ExternalAccountRequestDAOTest {
         externalAccountRequest.setIdUniversity(2);
         
         ExternalAccountRequestDAO externalAccountRequestDAO = new ExternalAccountRequestDAO();
-        try{
-            int result = externalAccountRequestDAO.deleteExternalAccountRequest(externalAccountRequest);
-            assertEquals(1, result);
-        } catch(LogicException logicException) {
-            fail("No se ha eliminado la solicitud de cuenta del profesor externo" + logicException.getMessage());
-        }
+        int result = externalAccountRequestDAO.deleteExternalAccountRequest(externalAccountRequest);
+        assertEquals(1, result);
     }
+    
+    @Test
+    public void testGetExternalAccountRequestsDataSuccess() throws LogicException {
+        ArrayList<ExternalAccountRequestData> externalAccountRequestsExpected = new ArrayList<>();
+        ExternalAccountRequestData externalAccountRequest;
+        externalAccountRequest = new ExternalAccountRequestData();
+        externalAccountRequest.setIdRequest(1);
+        externalAccountRequest.setName("Jesus Lorenzo");
+        externalAccountRequest.setLastName("Tlapa Hdez");
+        externalAccountRequest.setEmail("jesus@hotmail.com");
+        externalAccountRequest.setIdUniversity(1);
+        externalAccountRequestsExpected.add(externalAccountRequest);
+        externalAccountRequest = new ExternalAccountRequestData();
+        externalAccountRequest.setIdRequest(2);
+        externalAccountRequest.setName("Jesus");
+        externalAccountRequest.setLastName("Tlapa");
+        externalAccountRequest.setEmail("jesus@hotmail.com");
+        externalAccountRequest.setIdUniversity(1);
+        externalAccountRequestsExpected.add(externalAccountRequest);
+        
+        ExternalAccountRequestDAO externalAccountRequestDAO = new ExternalAccountRequestDAO();
+        ArrayList<ExternalAccountRequestData> externalAccountRequestsCurrentResult = externalAccountRequestDAO.getExternalAccountRequestsData();
+        
+        assertEquals(externalAccountRequestsExpected, externalAccountRequestsCurrentResult);
+    }
+    
+    @Test
+    public void testGetExternalAccountRequestByIdSuccess() throws LogicException {
+        ExternalAccountRequest externalAccountRequestExpected = new ExternalAccountRequest();
+        externalAccountRequestExpected.setIdRequest(1);
+        externalAccountRequestExpected.setName("Jesus Lorenzo");
+        externalAccountRequestExpected.setLastName("Tlapa Hdez");
+        externalAccountRequestExpected.setEmail("jesus@hotmail.com");
+        externalAccountRequestExpected.setIdUniversity(1);
+        
+        ExternalAccountRequestDAO externalAccountRequestDAO = new ExternalAccountRequestDAO();
+        ExternalAccountRequest currentExternalAccountRequest = externalAccountRequestDAO.getExternalAccountRequestById(1);
+        
+        assertEquals(externalAccountRequestExpected, currentExternalAccountRequest);
+    }
+    
+    @Test
+    public void testGetExternalAccountRequestByIdFailed() throws LogicException {
+        ExternalAccountRequest externalAccountRequestExpected = new ExternalAccountRequest();
+        externalAccountRequestExpected.setIdRequest(2);
+        externalAccountRequestExpected.setName("Jesus Lorenzo");
+        externalAccountRequestExpected.setLastName("Tlapa Hdez");
+        externalAccountRequestExpected.setEmail("jesus@hotmail.com");
+        externalAccountRequestExpected.setIdUniversity(1);
+        
+        ExternalAccountRequestDAO externalAccountRequestDAO = new ExternalAccountRequestDAO();
+        ExternalAccountRequest currentExternalAccountRequest = externalAccountRequestDAO.getExternalAccountRequestById(2);
+        
+        assertNotEquals(externalAccountRequestExpected, currentExternalAccountRequest);
+    }
+
 }

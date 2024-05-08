@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gui.controllers;
 
 import gui.Alerts;
@@ -12,7 +8,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import logic.domain.UvAccountRequest;
@@ -20,14 +15,12 @@ import logic.DAOs.UvAccountRequestDAO;
 import logic.LogicException;
 import logic.AccountCreator;
 import logic.model.EmailNotification;
+import org.apache.log4j.Logger;
 
-/**
- *
- * @author chuch
- */
 public class AccountRequestUvListController implements Initializable{
+    private static final Logger log = Logger.getLogger(AccountRequestUvListController.class);
     @FXML
-    private TableView<UvAccountRequest> tableView;
+    private TableView<UvAccountRequest> tblViewUvAccountRequest;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -35,15 +28,16 @@ public class AccountRequestUvListController implements Initializable{
     }
     
     private void loadUvAccountRequest() {
-        tableView.getItems().clear();
+        tblViewUvAccountRequest.getItems().clear();
         UvAccountRequestDAO uvAccountRequestDAO = new UvAccountRequestDAO();
         ArrayList<UvAccountRequest> uvAccountRequests = new ArrayList();
         try{
             uvAccountRequests = uvAccountRequestDAO.getUvAccountRequests();
         } catch(LogicException logicException) {
+            log.error(logicException);
             Alerts.displayAlertLogicException(logicException);
         }
-        tableView.getItems().addAll(uvAccountRequests);
+        tblViewUvAccountRequest.getItems().addAll(uvAccountRequests);
     }
 
     private void deleteUvAccountRequest(UvAccountRequest uvAccountRequest) {
@@ -51,54 +45,51 @@ public class AccountRequestUvListController implements Initializable{
         try {
             uvAccountRequestDAO.deleteUvAccountRequest(uvAccountRequest);
         } catch(LogicException logicException) {
+            log.error(logicException);
             Alerts.displayAlertLogicException(logicException);
         }
     }
     
     @FXML
     private void previusMenu() {
-        Stage stage = (Stage) tableView.getScene().getWindow();
+        Stage stage = (Stage) tblViewUvAccountRequest.getScene().getWindow();
         stage.close();
     }
     
     @FXML
     private void acceptAccountRequest() {
-        if(tableView.getSelectionModel().getSelectedItem() != null) {
-            UvAccountRequest uvaccountRequest = tableView.getSelectionModel().getSelectedItem();
+        if(tblViewUvAccountRequest.getSelectionModel().getSelectedItem() != null) {
+            UvAccountRequest uvaccountRequestSelected = tblViewUvAccountRequest.getSelectionModel().getSelectedItem();
             boolean result = false;
             try{
-                result = AccountCreator.createUVAccount(uvaccountRequest);   
+                result = AccountCreator.createUVAccount(uvaccountRequestSelected);   
             } catch(LogicException logicException) {
+                log.error(logicException);
                 Alerts.displayAlertLogicException(logicException);
             }
             
             if(result == true) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setHeaderText("Exito");
-                alert.setTitle("Correo enviado");
-                alert.setContentText("El correo se ha enviado a su destino con la clave de acceso");
-                alert.showAndWait();
+                Alerts.showInformationAlert("Exito", "El correo se ha enviado a su destino con la clave de acceso");
                 loadUvAccountRequest();
             } else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Error");
-                alert.setTitle("Usuario no creado");
-                alert.setContentText("No se ha podido registrar ni enviar el correo a su destino, intentelo mas tarde.");
-                alert.showAndWait();
+                Alerts.showWarningAlert("No se ha podido registrar ni enviar el correo a su destino, intentelo mas tarde.");
             }
         } else {
-            Alerts.displayAlertNotSelectedItem();
+            Alerts.showWarningAlert("No se ha seleccionado ninguna solicitud.");
         }
     }
     
     @FXML
     private void declineAccountRequest() {
-        if(tableView.getSelectionModel().getSelectedItem() != null) {
-            UvAccountRequest uvaccountRequest = tableView.getSelectionModel().getSelectedItem();
+        if(tblViewUvAccountRequest.getSelectionModel().getSelectedItem() != null) {
+            UvAccountRequest uvaccountRequest = tblViewUvAccountRequest.getSelectionModel().getSelectedItem();
             EmailNotification.getInstance().setEmail(uvaccountRequest.getEmail());
+            EmailNotification.getInstance().setMessageCancel("No se ha rechazado esta solicitud de cuenta");
+            EmailNotification.getInstance().setMessageSuccess("Se ha rechazado con exito la solicitud de cuenta");
             try {
                 SendEmailStage sendEmailStage = new SendEmailStage();
             } catch(IOException ioexception) {
+                log.warn(ioexception);
                 Alerts.displayAlertIOException();
             }
             if(EmailNotification.getInstance().getSentStatus()) {
@@ -106,7 +97,7 @@ public class AccountRequestUvListController implements Initializable{
                 loadUvAccountRequest();
             }
         } else {
-            Alerts.displayAlertNotSelectedItem();
+            Alerts.showWarningAlert("No se ha seleccionado ninguna solicitud.");
         }
     }
 

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package logic;
 
 import logic.domain.UvAccountRequest;
@@ -19,10 +15,7 @@ import logic.domain.ExternalProfessor;
 import logic.domain.Professor;
 import logic.domain.User;
 import logic.domain.UvProfessor;
-/**
- *
- * @author chuch
- */
+
 public class AccountCreator {
     public static boolean createUVAccount(UvAccountRequest uvaccountRequest) throws LogicException {
         String username = CredentialGenerator.generateUser(uvaccountRequest.getName(), uvaccountRequest.getLastName());

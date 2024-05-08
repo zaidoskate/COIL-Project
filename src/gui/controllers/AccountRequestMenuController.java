@@ -1,5 +1,6 @@
 package gui.controllers;
 
+import gui.Alerts;
 import gui.stages.AccountRequestExternalListStage;
 import gui.stages.AccountRequestUvListStage;
 import gui.stages.CoordinatorMenuStage;
@@ -11,8 +12,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 
 public class AccountRequestMenuController implements Initializable {
+    private static final Logger log = Logger.getLogger(AccountRequestMenuController.class);
     @FXML
     private Button btnCancel;
     
@@ -25,9 +28,8 @@ public class AccountRequestMenuController implements Initializable {
         try{
             AccountRequestExternalListStage accountRequestExternalListStage = new AccountRequestExternalListStage();
         } catch(IOException ioException) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("ERROR, intentalo mas tarde.");
-            alert.showAndWait();
+            log.warn(ioException);
+            Alerts.displayAlertIOException();
         }
     }
     @FXML
@@ -35,9 +37,8 @@ public class AccountRequestMenuController implements Initializable {
         try{
             AccountRequestUvListStage accountRequestUvListStage = new AccountRequestUvListStage();
         } catch(IOException ioException) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("ERROR, intentalo mas tarde.");
-            alert.showAndWait();
+            log.warn(ioException);
+            Alerts.displayAlertIOException();
         }
     }
     @FXML
@@ -47,10 +48,8 @@ public class AccountRequestMenuController implements Initializable {
         try{
             CoordinatorMenuStage coordinatorMenu = new CoordinatorMenuStage();
         } catch(IOException ioException) {
-            ioException.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("ERROR, intentalo mas tarde.");
-            alert.showAndWait();
+            log.warn(ioException);
+            Alerts.displayAlertIOException();
         }
     }
 

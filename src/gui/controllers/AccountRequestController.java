@@ -1,10 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package gui.controllers;
 
-import dataaccess.DatabaseConnection;
+import gui.Alerts;
 import gui.DataValidation;
 import java.net.URL;
 import java.util.ArrayList;
@@ -27,16 +23,17 @@ import logic.domain.ExternalAccountRequest;
 import logic.domain.UvAccountRequest;
 import org.apache.log4j.Logger;
 
-
 public class AccountRequestController implements Initializable {
     private ArrayList<University> universities;
     private ArrayList<Department> departments;
+    private static final Logger log = Logger.getLogger(AccountRequestController.class);
+    
     @FXML
-    private ComboBox<String> comboBoxUniversities;
+    private ComboBox<String> cmbBoxUniversities;
     @FXML
-    private ComboBox<String> comboBoxRegions;
+    private ComboBox<String> cmbBoxRegions;
     @FXML
-    private ComboBox<String> comboBoxDepartments;
+    private ComboBox<String> cmbBoxDepartments;
     @FXML
     private VBox vBoxRegion;
     @FXML
@@ -66,10 +63,8 @@ public class AccountRequestController implements Initializable {
         try{
             universities = universityDAO.getUniversities();
         } catch(LogicException logicException) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText(logicException.getMessage());
-            alert.showAndWait();
-            
+            Alerts.displayAlertLogicException(logicException);
+            log.error(logicException);
             Stage stage = (Stage) vBoxRegion.getScene().getWindow();
             stage.close();
         }
@@ -77,7 +72,7 @@ public class AccountRequestController implements Initializable {
         for(University university:universities) {
             universitiesNames.add(university.getName());
         }
-        comboBoxUniversities.getItems().addAll(universitiesNames);
+        cmbBoxUniversities.getItems().addAll(universitiesNames);
     }
     
     private void loadRegions() {
@@ -86,8 +81,9 @@ public class AccountRequestController implements Initializable {
         try{
             regions = departmentDAO.getRegionsNames();
         } catch(LogicException logicException) {
+            log.error(logicException);
         }
-        comboBoxRegions.getItems().addAll(regions);
+        cmbBoxRegions.getItems().addAll(regions);
     }
     
     private void loadDepartments(String region) {
@@ -97,12 +93,12 @@ public class AccountRequestController implements Initializable {
         try{
             departments = departmentDAO.getDepartmentsByRegion(region);
         } catch(LogicException logicException) {
-            
+            log.error(logicException);
         }
         for(Department department:departments) {
             departmentsNames.add(department.getName());
         }
-        comboBoxDepartments.getItems().addAll(departmentsNames);
+        cmbBoxDepartments.getItems().addAll(departmentsNames);
     }
     
     private boolean makeValidations() {
@@ -114,6 +110,10 @@ public class AccountRequestController implements Initializable {
         
         Alert alert = new Alert(Alert.AlertType.WARNING);
         
+        if(!DataValidation.validateLengthField(name, 50) || !DataValidation.validateLengthField(lastName, 25)) {
+            result = false;
+            alert.setContentText("Nombre(s) o Apellido(s) invalido.");
+        }
         if(!DataValidation.validateName(name) || !DataValidation.validateName(lastName)) {
             result = false;
             alert.setContentText("Nombre(s) o Apellido(s) invalido.");
@@ -122,12 +122,12 @@ public class AccountRequestController implements Initializable {
             result = false;
             alert.setContentText("Formato de correo invalido.");
         }
-        if(comboBoxUniversities.getSelectionModel().getSelectedIndex() == -1) {
+        if(cmbBoxUniversities.getSelectionModel().getSelectedIndex() == -1) {
             result = false;
             alert.setContentText("Universidad no seleccionada.");
         }
-        if(comboBoxUniversities.getSelectionModel().getSelectedIndex() == 0) {
-            if(comboBoxDepartments.getSelectionModel().getSelectedIndex() == -1 || comboBoxDepartments.getSelectionModel().getSelectedIndex() == -1) {
+        if(cmbBoxUniversities.getSelectionModel().getSelectedIndex() == 0) {
+            if(cmbBoxDepartments.getSelectionModel().getSelectedIndex() == -1 || cmbBoxDepartments.getSelectionModel().getSelectedIndex() == -1) {
                 result = false;
                 alert.setContentText("Selecciona region y facultad.");
             }
@@ -153,15 +153,15 @@ public class AccountRequestController implements Initializable {
         txtFieldLastName.setText("");
         txtFieldEmail.setText("");
         txtFieldPersonalNumber.setText("");
-        comboBoxUniversities.getSelectionModel().clearSelection();
-        comboBoxDepartments.getSelectionModel().clearSelection();
-        comboBoxRegions.getSelectionModel().clearSelection();
+        cmbBoxUniversities.getSelectionModel().clearSelection();
+        cmbBoxDepartments.getSelectionModel().clearSelection();
+        cmbBoxRegions.getSelectionModel().clearSelection();
     }
     
     @FXML
     private void universitySelected() {
-        comboBoxRegions.getItems().clear();
-        if (comboBoxUniversities.getSelectionModel().getSelectedIndex() == 0) {
+        cmbBoxRegions.getItems().clear();
+        if (cmbBoxUniversities.getSelectionModel().getSelectedIndex() == 0) {
             loadRegions();
             vBoxRegion.setVisible(true);
             vBoxDepartment.setVisible(true);
@@ -175,8 +175,8 @@ public class AccountRequestController implements Initializable {
     
     @FXML
     private void regionSelected() {
-        comboBoxDepartments.getItems().clear();
-        String regionSelected = comboBoxRegions.getSelectionModel().getSelectedItem();
+        cmbBoxDepartments.getItems().clear();
+        String regionSelected = cmbBoxRegions.getSelectionModel().getSelectedItem();
         loadDepartments(regionSelected);
     }
     
@@ -193,8 +193,8 @@ public class AccountRequestController implements Initializable {
             return;
         }
         
-        if (comboBoxUniversities.getSelectionModel().getSelectedIndex() == 0) {
-            Department departmentSelected = departments.get(comboBoxDepartments.getSelectionModel().getSelectedIndex());
+        if (cmbBoxUniversities.getSelectionModel().getSelectedIndex() == 0) {
+            Department departmentSelected = departments.get(cmbBoxDepartments.getSelectionModel().getSelectedIndex());
             
             UvAccountRequest uvAccountRequest = new UvAccountRequest();
             uvAccountRequest.setEmail(email);
@@ -207,30 +207,30 @@ public class AccountRequestController implements Initializable {
             try {
                 result = uvAccountRequestDAO.insertUvAccountRequest(uvAccountRequest);
             } catch(LogicException logicException) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setContentText(logicException.getMessage());
-                alert.showAndWait();
+                log.error(logicException);
+                Alerts.displayAlertLogicException(logicException);
             }
         } else {
+            University universitySelected = universities.get(cmbBoxUniversities.getSelectionModel().getSelectedIndex());
+            
             ExternalAccountRequest externalAccountRequest = new ExternalAccountRequest();
             externalAccountRequest.setEmail(email);
             externalAccountRequest.setLastName(lastName);
             externalAccountRequest.setName(name);
-            externalAccountRequest.setIdUniversity(comboBoxUniversities.getSelectionModel().getSelectedIndex());
+            externalAccountRequest.setIdUniversity(universitySelected.getUniversityId());
             
             ExternalAccountRequestDAO externalAccountRequestDAO = new ExternalAccountRequestDAO();
             try {
                 result = externalAccountRequestDAO.insertExternalAccountRequest(externalAccountRequest);
             } catch(LogicException logicException) {
+                log.error(logicException);
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setContentText(logicException.getMessage());
                 alert.showAndWait();
             }
         }
         if(result == 1) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Se ha registrado exitosamente su solicitud. Debe esperar un correo con sus datos de acceso.");
-            alert.showAndWait();
+            Alerts.showInformationAlert("Exito", "Se ha registrado exitosamente su solicitud. Debe esperar un correo con sus datos de acceso.");
             Stage stage = (Stage) vBoxRegion.getScene().getWindow();
             stage.close();
         }
@@ -238,9 +238,7 @@ public class AccountRequestController implements Initializable {
     }
     @FXML
     private void cancelAccountRequest() {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setContentText("No se ha enviado la solicitud de cuenta de acceso.");
-        alert.showAndWait();
+        Alerts.showWarningAlert("No se ha enviado la solicitud de cuenta de acceso.");
         Stage stage = (Stage) vBoxRegion.getScene().getWindow();
         stage.close();
     }
