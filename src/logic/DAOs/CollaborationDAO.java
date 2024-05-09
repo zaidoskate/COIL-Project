@@ -1,4 +1,4 @@
-    package logic.DAOs;
+package logic.DAOs;
 
 import dataaccess.DatabaseConnection;
 import java.sql.Statement;
@@ -11,13 +11,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import logic.LogicException;
 import logic.domain.Collaboration;
-import logic.interfaces.ColaborationManagerInterface;
+import logic.interfaces.CollaborationManagerInterface;
 
-public class CollaborationDAO implements ColaborationManagerInterface {
-    private final DatabaseConnection databaseConnection;
-    public CollaborationDAO(){
-        this.databaseConnection = new DatabaseConnection();
-    }
+public class CollaborationDAO implements CollaborationManagerInterface {
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     
     @Override
     public int addColaboration(Collaboration colaboration) throws LogicException{
@@ -35,7 +32,6 @@ public class CollaborationDAO implements ColaborationManagerInterface {
                 result = idCollaborationInserted.getInt(1);
             }
         } catch(SQLException sqlException) {
-            sqlException.printStackTrace();
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();
@@ -65,15 +61,12 @@ public class CollaborationDAO implements ColaborationManagerInterface {
     @Override
     public Collaboration getColaborationById(int id) throws LogicException{
         String query = "SELECT * FROM Colaboracion WHERE idColaboracion = ?";
-        Connection connection;
-        PreparedStatement statement;
-        ResultSet result;
         Collaboration colaboration = new Collaboration();
         try{
-            connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement(query);
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
-            result = statement.executeQuery();
+            ResultSet result = statement.executeQuery();
             while(result.next()) {
                 colaboration.setInterestTopic(result.getString("temaInteres"));
                 colaboration.setColaborationName(result.getString("nombreColaboracion"));
@@ -93,14 +86,11 @@ public class CollaborationDAO implements ColaborationManagerInterface {
     @Override
     public ArrayList<Collaboration> getAllCollaborations() throws LogicException{
         String query = "SELECT * FROM Colaboracion";
-        Connection connection;
-        PreparedStatement statement;
-        ResultSet result;
         ArrayList <Collaboration> collaborationsResult = new ArrayList();
         try{
-            connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement(query);
-            result = statement.executeQuery();
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet result = statement.executeQuery();
             while(result.next()) {
                 Collaboration colaboration = new Collaboration();
                 colaboration.setInterestTopic(result.getString("temaInteres"));
@@ -122,14 +112,11 @@ public class CollaborationDAO implements ColaborationManagerInterface {
     @Override
     public ArrayList<Collaboration> getActiveCollaborations() throws LogicException{
         String query = "SELECT * FROM Colaboracion WHERE  fechaCierre = Null";
-        Connection connection;
-        PreparedStatement statement;
-        ResultSet result;
         ArrayList <Collaboration> collaborationsResult = new ArrayList();
         try{
-            connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement(query);
-            result = statement.executeQuery();
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet result = statement.executeQuery();
             while(result.next()) {
                 Collaboration colaboration = new Collaboration();
                 colaboration.setInterestTopic(result.getString("temaInteres"));
@@ -152,11 +139,9 @@ public class CollaborationDAO implements ColaborationManagerInterface {
     public int updateEndDateByIdCollaboration(int idCollaboration, String date) throws LogicException{
         int result = 0;
         String query = "UPDATE Colaboracion SET fechaCierre = ? WHERE idColaboracion = ?";
-        Connection connection;
-        PreparedStatement statement;
         try{
-            connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement(query);
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, date);
             statement.setInt(2, idCollaboration);
             result = statement.executeUpdate();

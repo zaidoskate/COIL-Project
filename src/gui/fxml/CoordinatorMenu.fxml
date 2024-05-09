@@ -19,7 +19,7 @@
                         <Font name="Century Gothic Bold" size="26.0" />
                      </font>
                   </Text>
-                  <Text fx:id="textName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
+                  <Text fx:id="txtName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
                      <font>
                         <Font name="Century Gothic Bold" size="26.0" />
                      </font>

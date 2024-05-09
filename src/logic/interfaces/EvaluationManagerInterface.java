@@ -6,7 +6,6 @@ package logic.interfaces;
 
 import java.util.ArrayList;
 import logic.domain.Evaluation;
-import java.sql.SQLException;
 import logic.LogicException;
 /**
  *

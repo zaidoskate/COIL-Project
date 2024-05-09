@@ -1,23 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAOs;
 
+import java.util.ArrayList;
 import logic.LogicException;
 import logic.DAOs.UvAccountRequestDAO;
 import logic.domain.UvAccountRequest;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-/**
- *
- * @author zaido
- */
 public class UvAccountRequestDAOTest {
     
     @Test
-    public void testInsertUvAccountRequestSuccess() {
+    public void testInsertUvAccountRequestSuccess() throws LogicException {
         UvAccountRequest uvAccountRequest = new UvAccountRequest();
         uvAccountRequest.setName("Juan Carlos");
         uvAccountRequest.setLastName("Perez Arriaga");
@@ -26,12 +19,8 @@ public class UvAccountRequestDAOTest {
         uvAccountRequest.setIdDepartment("FEIX");
         
         UvAccountRequestDAO uvAccountRequestDAO = new UvAccountRequestDAO();
-        try {
-            int result = uvAccountRequestDAO.insertUvAccountRequest(uvAccountRequest);
-            assertEquals(1, result);
-        } catch (LogicException logicException) {
-            fail("No se ha creado la solicitud de cuenta UV" + logicException.getMessage());
-        }
+        int result = uvAccountRequestDAO.insertUvAccountRequest(uvAccountRequest);
+        assertEquals(1, result);
     }
     
     @Test(expected = LogicException.class)
@@ -48,7 +37,7 @@ public class UvAccountRequestDAOTest {
     }
     
     @Test
-    public void testDeleteUvAccountRequestSuccess() {
+    public void testDeleteUvAccountRequestSuccess() throws LogicException {
         UvAccountRequest uvAccountRequest = new UvAccountRequest();
         uvAccountRequest.setIdRequest(1);
         uvAccountRequest.setName("Juan Carlos");
@@ -58,12 +47,8 @@ public class UvAccountRequestDAOTest {
         uvAccountRequest.setIdDepartment("FEIX");
         
         UvAccountRequestDAO uvAccountRequestDAO = new UvAccountRequestDAO();
-        try {
-            int result = uvAccountRequestDAO.deleteUvAccountRequest(uvAccountRequest);
-            assertEquals(1, result);
-        } catch (LogicException logicException) {
-            fail("No se ha podido eliminar la solicitud de cuenta UV" + logicException.getMessage());
-        }
+        int result = uvAccountRequestDAO.deleteUvAccountRequest(uvAccountRequest);
+        assertEquals(1, result);
     }
     
     @Test
@@ -78,5 +63,42 @@ public class UvAccountRequestDAOTest {
         UvAccountRequestDAO uvAccountRequestDAO = new UvAccountRequestDAO();
         int result = uvAccountRequestDAO.deleteUvAccountRequest(uvAccountRequest);
         assertEquals(0, result);
+    }
+    
+    @Test
+    public void testGetUvAccountRequestsSuccess() throws LogicException {
+        ArrayList<UvAccountRequest> expectedResult = new ArrayList<>();
+        UvAccountRequest uvAccountRequest;
+        uvAccountRequest = new UvAccountRequest();
+        uvAccountRequest.setIdDepartment("FEIX");
+        uvAccountRequest.setEmail("chimalg2001@outlook.com");
+        uvAccountRequest.setIdRequest(9);
+        uvAccountRequest.setLastName("González Chimal");
+        uvAccountRequest.setName("Marcio Miguel");
+        uvAccountRequest.setPersonalNumber("07061");
+        expectedResult.add(uvAccountRequest);
+        
+        UvAccountRequestDAO uvAccountRequestDAO = new UvAccountRequestDAO();
+        ArrayList<UvAccountRequest> result = uvAccountRequestDAO.getUvAccountRequests();
+        
+        assertEquals(expectedResult, result);
+    }
+    @Test
+    public void testGetUvAccountRequestsFailed() throws LogicException {
+        ArrayList<UvAccountRequest> expectedResult = new ArrayList<>();
+        UvAccountRequest uvAccountRequest;
+        uvAccountRequest = new UvAccountRequest();
+        uvAccountRequest.setIdDepartment("FDX");
+        uvAccountRequest.setEmail("chimalg2001@outlook.com");
+        uvAccountRequest.setIdRequest(1);
+        uvAccountRequest.setLastName("González Chimal");
+        uvAccountRequest.setName("Marcio Miguel");
+        uvAccountRequest.setPersonalNumber("12345");
+        expectedResult.add(uvAccountRequest);
+        
+        UvAccountRequestDAO uvAccountRequestDAO = new UvAccountRequestDAO();
+        ArrayList<UvAccountRequest> result = uvAccountRequestDAO.getUvAccountRequests();
+        
+        assertNotEquals(expectedResult, result);
     }
 }

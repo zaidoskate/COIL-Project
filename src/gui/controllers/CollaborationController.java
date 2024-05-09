@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -24,6 +25,8 @@ public class CollaborationController implements Initializable {
     @FXML
     private Button btnBack;
 
+    private static final Logger log = Logger.getLogger(CollaborationController.class);
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -37,6 +40,7 @@ public class CollaborationController implements Initializable {
             MyCollaborationsStage myCollaborationsStage = new MyCollaborationsStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
+            log.error(ioException);
         }
     }
     
@@ -48,6 +52,7 @@ public class CollaborationController implements Initializable {
             ProfesorMenuStage menuStage = new ProfesorMenuStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
+            log.error(ioException);
         }
     }
 }

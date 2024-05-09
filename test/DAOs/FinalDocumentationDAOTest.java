@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAOs;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -9,10 +5,6 @@ import logic.domain.FinalDocumentation;
 import logic.DAOs.FinalDocumentationDAO;
 import logic.LogicException;
 
-/**
- *
- * @author zaido
- */
 public class FinalDocumentationDAOTest {
     public FinalDocumentationDAOTest(){
     }

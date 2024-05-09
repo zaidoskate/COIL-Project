@@ -21,7 +21,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -32,6 +31,7 @@ import logic.LogicException;
 
 import logic.domain.CollaborationOffer;
 import logic.domain.User;
+import org.apache.log4j.Logger;
 
 /**
  * FXML Controller class
@@ -55,12 +55,14 @@ public class OfferProfessorController implements Initializable {
     @FXML
     private TableColumn<OfferInformation, String> clmOfferLanguage;
     
-    private final CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
-    private final UserDAO userDAO = new UserDAO();
+    private static final CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
+    private static final UserDAO userDAO = new UserDAO();
     private ObservableList<OfferInformation> displayableOffers;
     
-    OfferInformation selectedOffer = OfferInformation.getOffer();
-    SessionManager currentSession = SessionManager.getInstance();
+    private static final OfferInformation selectedOffer = OfferInformation.getOffer();
+    private static final SessionManager currentSession = SessionManager.getInstance();
+    
+    private static final Logger log = Logger.getLogger(OfferProfessorController.class);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -112,6 +114,7 @@ public class OfferProfessorController implements Initializable {
             }
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
+            log.error(logicException);
         }
     }
     
@@ -140,6 +143,7 @@ public class OfferProfessorController implements Initializable {
                 DetailOfferProfessorStage detailStage = new DetailOfferProfessorStage();
             } catch(IOException ioException) {
                 Alerts.displayAlertIOException();
+                log.error(ioException);
             }
         } else {
             Alerts.showWarningAlert("Seleccione una oferta para poder ver su detalle");
@@ -159,8 +163,10 @@ public class OfferProfessorController implements Initializable {
             }
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
+            log.error(logicException);
         } catch (IOException ioException) {
             Alerts.displayAlertIOException();
+            log.error(ioException);
         }
     }
     
@@ -183,6 +189,7 @@ public class OfferProfessorController implements Initializable {
             MyOffersStage myOffersStage = new MyOffersStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
+            log.error(ioException);
         }
     }
 }

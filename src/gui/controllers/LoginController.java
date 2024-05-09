@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package gui.controllers;
 
+import gui.Alerts;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import logic.DAOs.CredentialDAO;
@@ -23,13 +20,15 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import org.apache.log4j.Logger;
 
 public class LoginController implements Initializable {
+    private static final Logger log = Logger.getLogger(LoginController.class);
     @FXML
-    private TextField textFieldUser;
+    private TextField txtFieldUser;
     
     @FXML
-    private PasswordField passwordField;
+    private PasswordField psswdFieldPassword;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -41,18 +40,17 @@ public class LoginController implements Initializable {
         try{
             AccountRequestStage accountRequestStage = new AccountRequestStage();
             
-        } catch(IOException ioException) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("ERROR, intentalo mas tarde.");
-                alert.showAndWait();
+        } catch(IOException ioException) {            
+            log.warn(ioException);
+            Alerts.displayAlertIOException();
         }
         
     }
     
     @FXML
     private void logIn() {
-        String user = textFieldUser.getText();
-        String password = passwordField.getText();
+        String user = txtFieldUser.getText();
+        String password = psswdFieldPassword.getText();
         Credential credential = new Credential();
         credential.setUser(user);
         credential.setPassword(password);
@@ -62,17 +60,14 @@ public class LoginController implements Initializable {
             if(idUser != -1) {
                 createSession(idUser);
             } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText("Usuario y contraseña incorrectos.");
-                alert.showAndWait();
+                Alerts.showWarningAlert("Usuario y Contraseña incorrectos");
             }
         } catch(LogicException logicException) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setContentText(logicException.getMessage());
-                alert.showAndWait();
+            log.error(logicException);
+            Alerts.displayAlertLogicException(logicException);
         } finally {
-            textFieldUser.clear();
-            passwordField.clear();
+            txtFieldUser.clear();
+            psswdFieldPassword.clear();
         }
             
     }
@@ -94,20 +89,18 @@ public class LoginController implements Initializable {
             try{
                 CoordinatorMenuStage coordinatorMenuStage = new CoordinatorMenuStage();
             } catch(IOException ioException) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("ERROR, intentalo mas tarde.");
-                alert.showAndWait();
+                log.warn(ioException);
+                Alerts.displayAlertIOException();
             }
         } else {
             try{
                 ProfesorMenuStage profesorMenuStage = new ProfesorMenuStage();
             } catch(IOException ioException) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("ERROR, intentalo mas tarde.");
-                alert.showAndWait();
+                log.warn(ioException);
+                Alerts.displayAlertIOException();
             }
         }
-        Stage stage = (Stage) textFieldUser.getScene().getWindow();
+        Stage stage = (Stage) txtFieldUser.getScene().getWindow();
         stage.close();
     }
 }

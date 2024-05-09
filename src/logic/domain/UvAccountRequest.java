@@ -1,15 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package logic.domain;
 
-/**
- *
- * @author zaido
- */
 public class UvAccountRequest extends AccountRequest{
-    private int idRequest;
     private String name;
     private String lastName;
     private String email;
@@ -53,5 +44,20 @@ public class UvAccountRequest extends AccountRequest{
     
     public String getPersonalNumber() {
         return personalNumber;
+    }
+    
+    @Override
+    public boolean equals(Object object) {
+        UvAccountRequest uvAccountRequestToCompare = (UvAccountRequest) object;
+        if(this.getIdRequest() != uvAccountRequestToCompare.getIdRequest()) {
+            return false;
+        }
+        if(this.getIdDepartment().equals(uvAccountRequestToCompare.getIdRequest())) {
+            return false;
+        }
+        if(this.getPersonalNumber().equals(uvAccountRequestToCompare.getPersonalNumber())) {
+            return false;
+        }
+        return true;
     }
 }

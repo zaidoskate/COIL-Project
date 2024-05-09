@@ -23,12 +23,12 @@
          </image>
       </ImageView>
       <TextArea fx:id="txtAreaMessage" layoutX="22.0" layoutY="128.0" prefHeight="98.0" prefWidth="555.0" promptText="Escribe el mensaje del correo." styleClass="red-and-white" />
-      <Button layoutX="87.0" layoutY="262.0" mnemonicParsing="false" onAction="#declineRequest" prefHeight="26.0" prefWidth="62.0" styleClass="accept-button" text="Enviar">
+      <Button layoutX="87.0" layoutY="262.0" mnemonicParsing="false" onAction="#sendEmail" prefHeight="26.0" prefWidth="62.0" styleClass="accept-button" text="Enviar">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button layoutX="448.0" layoutY="262.0" mnemonicParsing="false" onAction="#cancelDecline" styleClass="cancel-button" text="Cancelar">
+      <Button layoutX="448.0" layoutY="262.0" mnemonicParsing="false" onAction="#cancelEmail" styleClass="cancel-button" text="Cancelar">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

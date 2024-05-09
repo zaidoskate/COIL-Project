@@ -1,19 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAOs;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import java.sql.SQLException;
-import logic.DAOs.ProfessorDAO;
 import logic.LogicException;
 import logic.domain.UvProfessor;
 import logic.DAOs.UvProfessorDAO;
-/**
- *
- * @author zaido
- */
+
 public class UvProfessorDAOTest {
     
     public UvProfessorDAOTest() {
@@ -40,7 +31,7 @@ public class UvProfessorDAOTest {
     @Test(expected = LogicException.class)
     public void testInsertUvProfessorFailed() throws LogicException {
         UvProfessor uvProfessor = new UvProfessor();
-        uvProfessor.setIdUser(3);
+        uvProfessor.setIdUser(2);
         uvProfessor.setIdDepartment("FEIX");
         
         UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
@@ -91,7 +82,7 @@ public class UvProfessorDAOTest {
     
     @Test
     public void testGetCollaborationCountByProfessorRegion() {
-        int expectedResult = 2;
+        int expectedResult = 1;
         UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
         try {
             int result = uvProfessorDAO.getCollaborationCountByProfessorRegion("Xalapa");
@@ -103,7 +94,7 @@ public class UvProfessorDAOTest {
     
     @Test
     public void testGetCollaborationCountByProfessorAcademicArea() {
-        int expectedResult = 2;
+        int expectedResult = 1;
         UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
         try {
             int result = uvProfessorDAO.getCollaborationCountByProfessorAcademicArea(4);

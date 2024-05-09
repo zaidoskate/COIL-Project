@@ -1,5 +1,6 @@
 package gui.controllers;
 
+import gui.Alerts;
 import gui.stages.CoordinatorMenuStage;
 import gui.stages.UniversityRegistrationStage;
 import java.io.IOException;
@@ -14,19 +15,12 @@ import javafx.stage.Stage;
 import logic.DAOs.UniversityDAO;
 import logic.domain.University;
 import logic.LogicException;
+import org.apache.log4j.Logger;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author chuch
- */
 public class UniversitiesController implements Initializable {
+    private static final Logger log = Logger.getLogger(UniversitiesController.class);
     @FXML
-    private TableView<University> tableView;
+    private TableView<University> tblViewUniversities;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -39,34 +33,32 @@ public class UniversitiesController implements Initializable {
         try {
             universities = universityDAO.getUniversities();            
         } catch(LogicException logicException) {
-            logicException.printStackTrace();
+            log.error(logicException);
         }
-        tableView.getItems().addAll(universities);
+        tblViewUniversities.getItems().addAll(universities);
     }
     
     @FXML
     private void previusMenu() {
-        Stage stage = (Stage) tableView.getScene().getWindow();
+        Stage stage = (Stage) tblViewUniversities.getScene().getWindow();
         stage.close();
         try{
             CoordinatorMenuStage coordinatorMenuStage = new CoordinatorMenuStage();
         } catch(IOException ioException) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("ERROR, intentalo mas tarde.");
-            alert.showAndWait();
+            log.warn(ioException);
+            Alerts.displayAlertIOException();
         }
     }
     
     @FXML
     private void newUniversity() {
-        Stage stage = (Stage) tableView.getScene().getWindow();
+        Stage stage = (Stage) tblViewUniversities.getScene().getWindow();
         stage.close();
         try{
             UniversityRegistrationStage universityRegistrationStage = new UniversityRegistrationStage();
         } catch(IOException ioException) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("ERROR, intentalo mas tarde.");
-            alert.showAndWait();
+            log.warn(ioException);
+            Alerts.displayAlertIOException();
         }
     }
     

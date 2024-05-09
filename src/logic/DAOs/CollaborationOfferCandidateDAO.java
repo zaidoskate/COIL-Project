@@ -19,11 +19,7 @@ import logic.LogicException;
  * @author chima
  */
 public class CollaborationOfferCandidateDAO implements CollaborationOfferCandidateManagerInterface {
-    private final DatabaseConnection databaseConnection;
-    
-    public CollaborationOfferCandidateDAO(){
-        this.databaseConnection = new DatabaseConnection();
-    }
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     
     @Override
     public int InsertCollaborationOfferCandidate(CollaborationOfferCandidate collaborationOfferCandidate) throws LogicException {
@@ -61,6 +57,8 @@ public class CollaborationOfferCandidateDAO implements CollaborationOfferCandida
             }
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion, intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
         }
         return applied;
     }

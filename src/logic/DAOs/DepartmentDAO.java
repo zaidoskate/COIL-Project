@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package logic.DAOs;
 
 import dataaccess.DatabaseConnection;
@@ -14,10 +10,6 @@ import logic.LogicException;
 import logic.domain.Department;
 import logic.interfaces.DepartmentManagerInterface;
 
-/**
- *
- * @author chuch
- */
 public class DepartmentDAO implements DepartmentManagerInterface{
     private final DatabaseConnection databaseConnection;
     public DepartmentDAO() {
@@ -26,15 +18,12 @@ public class DepartmentDAO implements DepartmentManagerInterface{
     
     @Override
     public ArrayList<String> getRegionsNames() throws LogicException {
-        String query = "SELECT resgion from facultad group by region";
-        Connection connection;
-        PreparedStatement statement;
-        ResultSet result;
+        String query = "SELECT region from facultad group by region";
         ArrayList<String> regionsNames = new ArrayList();
         try{
-            connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement(query);
-            result = statement.executeQuery();
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet result = statement.executeQuery();
             while(result.next()) {
                 String regionName;
                 regionName = result.getString("region");
@@ -51,15 +40,12 @@ public class DepartmentDAO implements DepartmentManagerInterface{
     @Override
     public ArrayList<Department> getDepartmentsByRegion(String region) throws LogicException {
         String query = "SELECT * FROM facultad WHERE region = ?";
-        Connection connection;
-        PreparedStatement statement;
-        ResultSet result;
         ArrayList<Department> departments = new ArrayList();
         try{
-            connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement(query);
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, region);
-            result = statement.executeQuery();
+            ResultSet result = statement.executeQuery();
             while(result.next()) {
                 Department department = new Department();
                 department.setIdAcademicArea(result.getInt("idAreaAcademica"));

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gui.controllers;
 
 import gui.Alerts;
@@ -15,12 +11,10 @@ import javafx.stage.Stage;
 import logic.LogicException;
 import logic.MailSender;
 import logic.model.EmailNotification;
+import org.apache.log4j.Logger;
 
-/**
- *
- * @author chuch
- */
 public class SendEmailController implements Initializable {
+    private static final Logger log = Logger.getLogger(SendEmailController.class);
     @FXML
     private TextArea txtAreaMessage;
     
@@ -30,13 +24,13 @@ public class SendEmailController implements Initializable {
     }
     
     @FXML
-    private void cancelDecline() {
+    private void cancelEmail() {
         Alerts.showWarningAlert(EmailNotification.getInstance().getMessageCancel());
         Stage stage = (Stage) txtAreaMessage.getScene().getWindow();
         stage.close();
     }
     @FXML
-    private void declineRequest() {
+    private void sendEmail() {
         String email = EmailNotification.getInstance().getEmail();
         String body = txtAreaMessage.getText();
         boolean result = false;
@@ -44,6 +38,7 @@ public class SendEmailController implements Initializable {
             try{
                 result = MailSender.sendEmail(body, email);
             } catch(LogicException logicException) {
+                log.error(logicException);
                 Alerts.displayAlertLogicException(logicException);
             }
         }

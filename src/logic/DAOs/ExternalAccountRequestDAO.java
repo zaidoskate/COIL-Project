@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package logic.DAOs;
 
 import dataaccess.DatabaseConnection;
@@ -14,16 +10,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import logic.LogicException;
 import logic.domain.ExternalAccountRequestData;
-/**
- *
- * @author zaido
- */
+
 public class ExternalAccountRequestDAO implements ExternalAccountRequestManagerInterface {
-    private final DatabaseConnection databaseConnection;
-    
-    public ExternalAccountRequestDAO() {
-        this.databaseConnection = new DatabaseConnection();
-    }
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     
     @Override
     public int insertExternalAccountRequest(ExternalAccountRequest externalAccountRequest) throws LogicException {
@@ -61,7 +50,7 @@ public class ExternalAccountRequestDAO implements ExternalAccountRequestManagerI
         }
         return result;
     }
-
+    @Override
     public ArrayList<ExternalAccountRequestData> getExternalAccountRequestsData() throws LogicException  {
         String query = "SELECT solicitudcuentaexterno.nombre AS nombre, solicitudcuentaexterno.idSolicitud "
                 + "as id, solicitudcuentaexterno.apellido AS apellido, solicitudcuentaexterno.correo as correo, "
@@ -92,7 +81,7 @@ public class ExternalAccountRequestDAO implements ExternalAccountRequestManagerI
         }
         return externalAccountRequestsData;
     }
-    
+    @Override
     public ExternalAccountRequest getExternalAccountRequestById(int idExternalAccountRequest) throws LogicException{
         String query = "SELECT * from solicitudcuentaexterno WHERE idSolicitud = ?";
         ExternalAccountRequest externalAccountRequest = new ExternalAccountRequest();

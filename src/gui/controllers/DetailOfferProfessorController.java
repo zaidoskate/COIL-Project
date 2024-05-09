@@ -31,6 +31,7 @@ import logic.domain.CollaborationOfferCandidate;
 import logic.domain.Evaluation;
 import logic.model.EmailNotification;
 import logic.model.OfferInformation;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -83,15 +84,17 @@ public class DetailOfferProfessorController implements Initializable {
     @FXML
     private Button btnDecline;
     
-    private final ProfessorDAO professorDAO = new ProfessorDAO();
-    private final CollaborationOfferCandidateDAO candidateDAO = new CollaborationOfferCandidateDAO();
-    private final UserDAO userDAO = new UserDAO();
-    private final CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
-    private final EvaluationDAO evaluationDAO = new EvaluationDAO();
-    private final CoordinatorDAO coordinatorDAO = new CoordinatorDAO();
+    private static final ProfessorDAO professorDAO = new ProfessorDAO();
+    private static final CollaborationOfferCandidateDAO candidateDAO = new CollaborationOfferCandidateDAO();
+    private static final UserDAO userDAO = new UserDAO();
+    private static final CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
+    private static final EvaluationDAO evaluationDAO = new EvaluationDAO();
+    private static final CoordinatorDAO coordinatorDAO = new CoordinatorDAO();
     
-    OfferInformation selectedOffer = OfferInformation.getOffer();
-    SessionManager currentSession = SessionManager.getInstance();
+    private static final OfferInformation selectedOffer = OfferInformation.getOffer();
+    private static final SessionManager currentSession = SessionManager.getInstance();
+    
+    private static final Logger log = Logger.getLogger(DetailOfferProfessorController.class);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -111,6 +114,7 @@ public class DetailOfferProfessorController implements Initializable {
             this.universityCountry.setText(universityInfo.get(1));
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
+            log.error(logicException);
         }
     }
     
@@ -165,8 +169,10 @@ public class DetailOfferProfessorController implements Initializable {
             }
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
+            log.error(logicException);
         } catch (IOException ioException) {
             Alerts.displayAlertIOException();
+            log.error(ioException);
         }
     }
     
@@ -185,6 +191,7 @@ public class DetailOfferProfessorController implements Initializable {
             }
         } catch (LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
+            log.error(logicException);
         }
     }
     
@@ -200,6 +207,7 @@ public class DetailOfferProfessorController implements Initializable {
             }
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
+            log.error(logicException);
         }
     }
     
@@ -220,8 +228,10 @@ public class DetailOfferProfessorController implements Initializable {
             }
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
+            log.error(logicException);
         } catch (IOException ioException) {
             Alerts.displayAlertIOException();
+            log.error(ioException);
         }
     }
 }

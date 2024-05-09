@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import logic.DAOs.UvProfessorDAO;
 import logic.FileDownloader;
 import logic.LogicException;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -35,10 +36,12 @@ public class GenerateStatisticsController implements Initializable {
     @FXML
     private Label lblGenerated;
     
-    private final UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
-    
     private int[] regionCollaborationCounts = new int[5];
     private int[] academicAreaCollaborationCounts = new int[6];
+    
+    private static final UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
+    
+    private static final Logger log = Logger.getLogger(GenerateStatisticsController.class);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -69,6 +72,7 @@ public class GenerateStatisticsController implements Initializable {
             }
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
+            log.error(logicException);
         }
         return available;
     }
@@ -81,6 +85,7 @@ public class GenerateStatisticsController implements Initializable {
             CoordinatorMenuStage coordinatorMenuStage = new CoordinatorMenuStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
+            log.error(ioException);
         }
     }
     
@@ -98,6 +103,7 @@ public class GenerateStatisticsController implements Initializable {
                 FileDownloader.exportToExcel(selectedPath.getAbsolutePath(), regionCollaborationCounts, academicAreaCollaborationCounts);
             } catch (IOException ioException) {
                 Alerts.displayAlertIOException();
+                log.error(ioException);
             }
             Alerts.showInformationAlert("Mensaje", "Se ha descargado la numeralia con éxito");
             closeDownload();

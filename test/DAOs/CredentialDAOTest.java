@@ -1,6 +1,5 @@
 package DAOs;
 
-import java.security.NoSuchAlgorithmException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import logic.DAOs.CredentialDAO;
@@ -13,7 +12,7 @@ public class CredentialDAOTest {
     }
     
     @Test
-    public void TestInsertCredentialSuccess()  throws LogicException, NoSuchAlgorithmException{
+    public void testInsertCredentialSuccess()  throws LogicException {
         CredentialDAO credentialDAO = new CredentialDAO();
         Credential credential = new Credential();
         credential.setIdUser(2);
@@ -26,13 +25,24 @@ public class CredentialDAOTest {
     }
     
     @Test
-    public void TestgetIdUserByCredentialSuccess()  throws LogicException, NoSuchAlgorithmException {
+    public void testGetIdUserByCredentialSuccess()  throws LogicException {
         CredentialDAO credentialDAO = new CredentialDAO();
         Credential credential = new Credential();
         credential.setUser("Usuario13");
         credential.setPassword("password123");
         
         int currentResult = credentialDAO.getIdUserByCredential(credential);
+        int expectedResult = 1;
+        
+        assertEquals(expectedResult, currentResult);
+    }
+    
+    @Test
+    public void testCountCredentialsByUserSuccess() throws LogicException {
+        
+        CredentialDAO credentialDAO = new CredentialDAO();
+        
+        int currentResult = credentialDAO.countCredentialsByUser("Usuario1");
         int expectedResult = 1;
         
         assertEquals(expectedResult, currentResult);

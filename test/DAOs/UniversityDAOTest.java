@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAOs;
 
 import logic.LogicException;
@@ -10,10 +6,6 @@ import static org.junit.Assert.*;
 import logic.domain.University;
 import logic.DAOs.UniversityDAO;
 
-/**
- *
- * @author zaido
- */
 public class UniversityDAOTest {
     
     public UniversityDAOTest(){

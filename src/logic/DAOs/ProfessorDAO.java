@@ -19,11 +19,7 @@ import java.util.ArrayList;
  * @author zaido
  */
 public class ProfessorDAO implements ProfessorManagerInterface {
-    private final DatabaseConnection databaseConnection;
-    
-    public ProfessorDAO() {
-        this.databaseConnection =  new DatabaseConnection();
-    }
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     
     @Override
     public int insertProfessor(Professor professor) throws LogicException {

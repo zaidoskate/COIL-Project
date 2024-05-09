@@ -4,7 +4,7 @@ import logic.domain.Collaboration;
 import logic.LogicException;
 import java.util.ArrayList;
 
-public interface ColaborationManagerInterface {
+public interface CollaborationManagerInterface {
     int addColaboration(Collaboration colaboration) throws LogicException;
     int startCollaboration(int idCollaboration) throws LogicException;
     int updateEndDateByIdCollaboration(int idCollaboration, String date) throws LogicException;

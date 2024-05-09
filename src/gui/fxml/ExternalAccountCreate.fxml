@@ -116,7 +116,7 @@
                         <VBox prefHeight="128.0" prefWidth="300.0">
                            <children>
                               <Label text="Universidad:" />
-                              <ComboBox fx:id="comboBoxUniversities" prefHeight="30.0" prefWidth="250.0" styleClass="text-field-accountRequest" stylesheets="@../css/styles.css">
+                              <ComboBox fx:id="cmbBoxUniversities" prefHeight="30.0" prefWidth="250.0" styleClass="text-field-accountRequest" stylesheets="@../css/styles.css">
                                  <VBox.margin>
                                     <Insets top="10.0" />
                                  </VBox.margin>

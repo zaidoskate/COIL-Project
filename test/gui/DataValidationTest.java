@@ -1,17 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
- */
 package gui;
 
-import gui.DataValidation;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author zaido
- */
 public class DataValidationTest {
     
     public DataValidationTest() {
@@ -51,7 +42,7 @@ public class DataValidationTest {
     
     @Test
     public void testValidateEmailSuccess() {
-        String email = "zaidskate@hotmail.mx.com";
+        String email = "zaidskate@hotmail.com";
         boolean expectedResult = true;
         boolean result = DataValidation.validateEmail(email);
         assertEquals(expectedResult, result);
@@ -94,6 +85,22 @@ public class DataValidationTest {
         String text = "      ";
         boolean expectedResult = false;
         boolean result = DataValidation.validateNotBlanks(text);
+        assertEquals(expectedResult, result);
+    }
+    
+    @Test
+    public void testValidateFieldLengthSuccess() {
+        String text = "Lorenzo Tlapa";
+        boolean expectedResult = true;
+        boolean result = DataValidation.validateLengthField(text, 25);
+        assertEquals(expectedResult, result);
+    }
+    
+    @Test
+    public void testValidateFieldLengthFail() {
+        String text = "Lorenzo Tlapa";
+        boolean expectedResult = false;
+        boolean result = DataValidation.validateLengthField(text, 5);
         assertEquals(expectedResult, result);
     }
 }

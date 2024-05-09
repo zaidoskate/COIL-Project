@@ -9,9 +9,6 @@ import static org.junit.Assert.*;
 
 public class UserDAOTest {
     
-    public UserDAOTest() {
-    }
-    
     @Test
     public void testAddUserSuccess() throws LogicException{
         UserDAO userDAO = new UserDAO();
@@ -22,6 +19,18 @@ public class UserDAOTest {
         
         int currentResult = userDAO.addUser(user);
         int expectedResult = 1;
+        assertEquals(expectedResult, currentResult);
+    }
+    @Test(expected = LogicException.class)
+    public void testAddUserFailed() throws LogicException{
+        UserDAO userDAO = new UserDAO();
+        User user = new User();
+        user.setName("Lorenzofgjhdsgjdgjdgfjhfgjdgjhdfghddsfhgdhdfghdghsdsfghsfhdfhdfgh");
+        user.setLastName("Hdezdsfhdghdgfhsazdfhdgshdsfghdfgdsfhdsfghdsghdsfghhfgjdgjhfbbhjdfgjhdszgfhdszh");
+        user.setEmail("tlapa@gmail.com");
+        
+        int currentResult = userDAO.addUser(user);
+        int expectedResult = -1;
         assertEquals(expectedResult, currentResult);
     }
     

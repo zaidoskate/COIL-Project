@@ -72,7 +72,7 @@
                                           <Image url="@../images/userIcon.png" />
                                        </image>
                                     </ImageView>
-                                    <TextField fx:id="textFieldUser" promptText="Usuario" />
+                                    <TextField fx:id="txtFieldUser" promptText="Usuario" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -82,7 +82,7 @@
                                           <Image url="@../images/pswdIcon.png" />
                                        </image>
                                     </ImageView>
-                                    <PasswordField fx:id="passwordField" promptText="Contraseña" />
+                                    <PasswordField fx:id="psswdFieldPassword" promptText="Contraseña" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">

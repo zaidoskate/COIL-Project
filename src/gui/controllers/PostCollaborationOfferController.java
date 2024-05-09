@@ -13,7 +13,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -21,6 +20,7 @@ import javafx.stage.Stage;
 import logic.DAOs.CollaborationOfferDAO;
 import logic.LogicException;
 import logic.domain.CollaborationOffer;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -55,8 +55,10 @@ public class PostCollaborationOfferController implements Initializable {
     @FXML
     private Button btnCancel;
     
-    private SessionManager currentSession = SessionManager.getInstance();
-    private CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
+    private static final SessionManager currentSession = SessionManager.getInstance();
+    private static final CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
+    
+    private static final Logger log = Logger.getLogger(PostCollaborationOfferController.class);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -121,6 +123,7 @@ public class PostCollaborationOfferController implements Initializable {
                 }
             } catch(LogicException logicException) {
                 Alerts.displayAlertLogicException(logicException);
+                log.error(logicException);
             }
         }
     }
@@ -134,6 +137,7 @@ public class PostCollaborationOfferController implements Initializable {
             OfferProfessorStage offerStage = new OfferProfessorStage();
         } catch (IOException ioException) {
             Alerts.displayAlertIOException();
+            log.error(ioException);
         }
     }
     

@@ -16,7 +16,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -31,6 +30,7 @@ import logic.domain.CollaborationOfferCandidate;
 import logic.domain.User;
 import logic.model.CandidateInformation;
 import logic.model.OfferInformation;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -53,14 +53,17 @@ public class CandidatesController implements Initializable {
     @FXML
     private Button btnBack;
     
-    OfferInformation professorOffer = OfferInformation.getOffer();
-    CandidateInformation candidateInformation = CandidateInformation.getCandidateInformation();
-    SessionManager currentSession = SessionManager.getInstance();
-    
     private ObservableList<OfferInformation> candidates;
-    private CollaborationOfferCandidateDAO collaborationOfferCandidateDAO = new CollaborationOfferCandidateDAO();
-    private UserDAO userDAO = new UserDAO();
-    private ProfessorDAO professorDAO = new ProfessorDAO();
+    
+    private static final OfferInformation professorOffer = OfferInformation.getOffer();
+    private static final CandidateInformation candidateInformation = CandidateInformation.getCandidateInformation();
+    private static final SessionManager currentSession = SessionManager.getInstance();
+    
+    private static final CollaborationOfferCandidateDAO collaborationOfferCandidateDAO = new CollaborationOfferCandidateDAO();
+    private static final UserDAO userDAO = new UserDAO();
+    private static final ProfessorDAO professorDAO = new ProfessorDAO();
+    
+    private static final Logger log = Logger.getLogger(CandidatesController.class);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -99,6 +102,7 @@ public class CandidatesController implements Initializable {
             }
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
+            log.error(logicException);
         }
     }
     
@@ -124,6 +128,7 @@ public class CandidatesController implements Initializable {
             MyOffersStage myOffersStage = new MyOffersStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
+            log.error(ioException);
         }
     }
     
@@ -137,6 +142,7 @@ public class CandidatesController implements Initializable {
                 ProfessorDetailStage professorDetailStage = new ProfessorDetailStage();
             } catch(IOException ioException) {
                 Alerts.displayAlertIOException();
+                log.error(ioException);
             }
         } else {
             Alerts.showWarningAlert("Seleccione un candidato para poder ver su detalle");

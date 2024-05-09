@@ -1,17 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gui;
 
 import logic.DAOs.UvProfessorDAO;
 import logic.LogicException;
 
-
-/**
- *
- * @author zaido
- */
 public class DataValidation {
     
     public static boolean validateWord(String input) {
@@ -56,6 +47,9 @@ public class DataValidation {
     public static boolean validatePersonalNumberFormat(String personalNumber) {
         String validNameForm = "^\\d{5}$";
         return personalNumber.matches(validNameForm);
+    }
+    public static boolean validateLengthField(String field, int length) {
+        return field.length() <= length;
     }
     
 }
