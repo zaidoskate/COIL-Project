@@ -14,11 +14,8 @@ import java.sql.ResultSet;
 import logic.LogicException;
 
 public class UvProfessorDAO implements UvProfessorManagerInterface{
-    private final DatabaseConnection databaseConnection;
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     
-    public UvProfessorDAO() {
-        this.databaseConnection = new DatabaseConnection();
-    }
 
     @Override
     public int insertUvProfessor(UvProfessor uvProfessor) throws LogicException{
@@ -64,7 +61,6 @@ public class UvProfessorDAO implements UvProfessorManagerInterface{
     @Override
     public int countUvProfessorByPersonalNumber(String personalNumber) throws LogicException {
         String query = "SELECT count(*) as count from ProfesorUv WHERE numeroPersonal = ?";
-        
         int count = 0;
         try{
             Connection connection = this.databaseConnection.getConnection();
@@ -100,5 +96,56 @@ public class UvProfessorDAO implements UvProfessorManagerInterface{
             databaseConnection.closeConnection();
         }
         return departmentName; 
+    }
+
+    @Override
+    public int getCollaborationCountByProfessorRegion(String region) throws LogicException {
+        String query = "SELECT COUNT(DISTINCT pu.Profesor_Usuario_idUsuario) AS count "
+                + "FROM profesorUv pu JOIN facultad f ON pu.idFacultad = f.idFacultad "
+                + "JOIN profesorPerteneceColaboracion pc ON "
+                + "pu.Profesor_Usuario_idUsuario = pc.Profesor_idUsuario "
+                + "OR pu.Profesor_Usuario_idUsuario = pc.Profesor_idUsuarioEspejo "
+                + "WHERE f.region = ?";
+        int collaborationCount = 0;
+        try {
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, region);
+            ResultSet countResult = statement.executeQuery();
+            if(countResult.next()) {
+                collaborationCount = countResult.getInt("count");
+            }
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return collaborationCount;
+    }
+
+    @Override
+    public int getCollaborationCountByProfessorAcademicArea(int idAcademicArea) throws LogicException {
+        String query = "SELECT COUNT(DISTINCT pu.Profesor_Usuario_idUsuario) AS count " +
+                   "FROM profesorUv pu " +
+                   "JOIN facultad f ON pu.idFacultad = f.idFacultad " +
+                   "JOIN profesorPerteneceColaboracion pc ON pu.Profesor_Usuario_idUsuario = pc.Profesor_idUsuario " +
+                   "OR pu.Profesor_Usuario_idUsuario = pc.Profesor_idUsuarioEspejo " +
+                   "WHERE f.idAreaAcademica = ?";
+        int count = 0;
+        try {
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idAcademicArea);
+            ResultSet result = statement.executeQuery();
+
+            if (result.next()) {
+                count = result.getInt("count");
+            }
+        } catch (SQLException sqlException) {
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return count;
     }
 }

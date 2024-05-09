@@ -50,6 +50,14 @@
     -fx-text-fill: white;
 }
 
+.button-menu {
+    -fx-text-fill: #000;
+    -fx-background-color: #fff;
+    -fx-border-width: 2px;
+    -fx-border-color: rgb(254,60,87);
+    -fx-border-radius: 3;
+}
+
 .button-regresar {
     -fx-background-color: gray; 
     -fx-border-color: #ffffff; 

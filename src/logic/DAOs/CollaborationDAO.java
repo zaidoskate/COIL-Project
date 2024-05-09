@@ -11,13 +11,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import logic.LogicException;
 import logic.domain.Collaboration;
-import logic.interfaces.ColaborationManagerInterface;
+import logic.interfaces.CollaborationManagerInterface;
 
-public class CollaborationDAO implements ColaborationManagerInterface {
-    private final DatabaseConnection databaseConnection;
-    public CollaborationDAO(){
-        this.databaseConnection = new DatabaseConnection();
-    }
+public class CollaborationDAO implements CollaborationManagerInterface {
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     
     @Override
     public int addColaboration(Collaboration colaboration) throws LogicException{

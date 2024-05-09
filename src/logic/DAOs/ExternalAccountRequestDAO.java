@@ -12,11 +12,7 @@ import logic.LogicException;
 import logic.domain.ExternalAccountRequestData;
 
 public class ExternalAccountRequestDAO implements ExternalAccountRequestManagerInterface {
-    private final DatabaseConnection databaseConnection;
-    
-    public ExternalAccountRequestDAO() {
-        this.databaseConnection = new DatabaseConnection();
-    }
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     
     @Override
     public int insertExternalAccountRequest(ExternalAccountRequest externalAccountRequest) throws LogicException {

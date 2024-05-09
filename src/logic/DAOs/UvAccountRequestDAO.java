@@ -11,12 +11,8 @@ import java.util.ArrayList;
 import logic.LogicException;
 
 public class UvAccountRequestDAO implements UvAccountRequestManagerInterface{
-   private final DatabaseConnection databaseConnection;
+   private static final DatabaseConnection databaseConnection = new DatabaseConnection();
    
-   public UvAccountRequestDAO() {
-       this.databaseConnection = new DatabaseConnection();
-   }
-
     @Override
     public int insertUvAccountRequest(UvAccountRequest uvAccountRequest) throws LogicException{
         String query = "INSERT INTO SolicitudCuentaUv (idSolicitud, nombre, apellido, correo, numeropersonal, idFacultad) VALUES (?, ?, ?, ?, ?, ?)";

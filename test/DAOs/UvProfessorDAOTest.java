@@ -31,7 +31,7 @@ public class UvProfessorDAOTest {
     @Test(expected = LogicException.class)
     public void testInsertUvProfessorFailed() throws LogicException {
         UvProfessor uvProfessor = new UvProfessor();
-        uvProfessor.setIdUser(3);
+        uvProfessor.setIdUser(2);
         uvProfessor.setIdDepartment("FEIX");
         
         UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
@@ -77,6 +77,30 @@ public class UvProfessorDAOTest {
             assertEquals(departmentNameExpected, departmentNameObtained);
         } catch (LogicException logicException) {
             fail("Error al obtener el nombre del departamento");
+        }
+    }
+    
+    @Test
+    public void testGetCollaborationCountByProfessorRegion() {
+        int expectedResult = 1;
+        UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
+        try {
+            int result = uvProfessorDAO.getCollaborationCountByProfessorRegion("Xalapa");
+            assertEquals(expectedResult, result);
+        } catch(LogicException logicException) {
+            fail("Error al obtener el count de profesores con colaboraciones basado en su region");
+        }
+    }
+    
+    @Test
+    public void testGetCollaborationCountByProfessorAcademicArea() {
+        int expectedResult = 1;
+        UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
+        try {
+            int result = uvProfessorDAO.getCollaborationCountByProfessorAcademicArea(4);
+            assertEquals(expectedResult, result);
+        } catch(LogicException logicException) {
+            fail("Error al obtener el count de profesores con colaboraciones basado en su region");
         }
     }
 }

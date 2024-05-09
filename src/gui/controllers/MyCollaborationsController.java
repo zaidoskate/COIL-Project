@@ -23,6 +23,7 @@ import logic.LogicException;
 import logic.domain.Collaboration;
 import logic.domain.ProfessorBelongsToCollaboration;
 import logic.model.CollaborationInformation;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -45,11 +46,13 @@ public class MyCollaborationsController implements Initializable {
     @FXML
     private Button btnStartCollaboration;
     
-    private final ProfessorBelongsToCollaborationDAO professorBelongsToCollaborationDAO = new ProfessorBelongsToCollaborationDAO();
-    private final CollaborationDAO collaborationDAO = new CollaborationDAO();
+    private static final ProfessorBelongsToCollaborationDAO professorBelongsToCollaborationDAO = new ProfessorBelongsToCollaborationDAO();
+    private static final CollaborationDAO collaborationDAO = new CollaborationDAO();
     
-    private SessionManager currentSession = SessionManager.getInstance();
-    private CollaborationInformation currentCollaboration = CollaborationInformation.getCollaboration();
+    private static final SessionManager currentSession = SessionManager.getInstance();
+    private static final CollaborationInformation currentCollaboration = CollaborationInformation.getCollaboration();
+    
+    private static final Logger log = Logger.getLogger(MyCollaborationsController.class);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -74,6 +77,7 @@ public class MyCollaborationsController implements Initializable {
             currentCollaboration.setLanguage(collaborationObtained.getLanguage());
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
+            log.error(logicException);
         }
     }
     
@@ -98,6 +102,7 @@ public class MyCollaborationsController implements Initializable {
             CollaborationStage collaborationStage = new CollaborationStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
+            log.error(ioException);
         }
     }
     
@@ -109,7 +114,7 @@ public class MyCollaborationsController implements Initializable {
             StartCollaborationStage startCollaborationStage = new StartCollaborationStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
+            log.error(ioException);
         }
     }
-    
 }

@@ -21,6 +21,7 @@ import logic.DAOs.CollaborationOfferDAO;
 import logic.LogicException;
 import logic.domain.CollaborationOffer;
 import logic.model.OfferInformation;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -43,10 +44,12 @@ public class MyOffersController implements Initializable {
     @FXML
     private Label lblPeriod;
     
-    private final CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
+    private static final CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
     
-    private final SessionManager currentSession = SessionManager.getInstance();
-    private final OfferInformation professorOffer = OfferInformation.getOffer();
+    private static final SessionManager currentSession = SessionManager.getInstance();
+    private static final OfferInformation professorOffer = OfferInformation.getOffer();
+    
+    private static final Logger log = Logger.getLogger(MyOffersController.class);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -68,6 +71,7 @@ public class MyOffersController implements Initializable {
             professorOffer.setTopicsInterest(offer.getTopicsOfInterest());
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
+            log.error(logicException);
         }
         
     }
@@ -90,6 +94,7 @@ public class MyOffersController implements Initializable {
             OfferProfessorStage offerStage = new OfferProfessorStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
+            log.error(ioException);
         }
     }
     
@@ -101,6 +106,7 @@ public class MyOffersController implements Initializable {
             CandidatesStage candidatesStage = new CandidatesStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
+            log.error(ioException);
         }
     }
 }

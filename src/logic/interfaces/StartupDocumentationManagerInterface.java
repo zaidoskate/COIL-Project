@@ -1,4 +1,3 @@
-
 package logic.interfaces;
 
 import logic.LogicException;

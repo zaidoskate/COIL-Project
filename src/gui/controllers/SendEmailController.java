@@ -44,6 +44,7 @@ public class SendEmailController implements Initializable {
         }
         if(result == true) {
             EmailNotification.getInstance().emailSent();
+            EmailNotification.getInstance().setEmailBody(this.txtAreaMessage.getText());
             Alerts.showInformationAlert("Exito", EmailNotification.getInstance().getMessageSuccess());
             Stage stage = (Stage) txtAreaMessage.getScene().getWindow();
             stage.close();

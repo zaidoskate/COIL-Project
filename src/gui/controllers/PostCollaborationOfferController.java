@@ -13,7 +13,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -21,6 +20,7 @@ import javafx.stage.Stage;
 import logic.DAOs.CollaborationOfferDAO;
 import logic.LogicException;
 import logic.domain.CollaborationOffer;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -55,8 +55,10 @@ public class PostCollaborationOfferController implements Initializable {
     @FXML
     private Button btnCancel;
     
-    private SessionManager currentSession = SessionManager.getInstance();
-    private CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
+    private static final SessionManager currentSession = SessionManager.getInstance();
+    private static final CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
+    
+    private static final Logger log = Logger.getLogger(PostCollaborationOfferController.class);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -85,27 +87,50 @@ public class PostCollaborationOfferController implements Initializable {
     }
     
     private boolean validateFields() {
-        String objective = txtAreaObjective.getText();
-        String topicsOfInterest = txtAreaTopicsOfInterest.getText();
-        String period = txtFieldPeriod.getText();
-        String language = txtAreaLanguage.getText();
-        String additionalInformation = txtAreaAditionalInformation.getText();
-        String profile = txtFieldProfile.getText();
-        String numberStudents = txtFieldNumberStudents.getText();
-        
-        String[] fieldsObtained = {objective, topicsOfInterest, period, language, additionalInformation, profile, numberStudents};
-        for(String field : fieldsObtained) {
-            if(!DataValidation.validateWord(field)) {
+        String[] fields = {
+            txtAreaObjective.getText(),
+            txtAreaTopicsOfInterest.getText(),
+            txtFieldPeriod.getText(),
+            txtAreaLanguage.getText(),
+            txtAreaAditionalInformation.getText(),
+            txtFieldProfile.getText(),
+            txtFieldNumberStudents.getText()
+        };
+
+        for (String field : fields) {
+            if (!DataValidation.validateWord(field)) {
                 Alerts.showWarningAlert("Datos incorrectos, inténtalo de nuevo");
                 return false;
             }
         }
-        if(!DataValidation.validateNotBlanks(numberStudents)) {
-            Alerts.showWarningAlert("Datos incorrectos, inténtalo de nuevo");
+
+        String[] fieldsToCheckLength = {
+            txtAreaObjective.getText(),
+            txtAreaTopicsOfInterest.getText(),
+            txtFieldPeriod.getText(),
+            txtAreaLanguage.getText(),
+            txtAreaAditionalInformation.getText(),
+            txtFieldProfile.getText()
+        };
+
+        int[] maxLengths = {150, 150, 50, 20, 150, 40};
+        String[] fieldNames = {"Objetivo", "Temas de interés", "Periodo", "Idioma", "Información adicional", "Perfil"};
+
+        for (int i = 0; i < fieldsToCheckLength.length; i++) {
+            if (!DataValidation.validateLengthField(fieldsToCheckLength[i], maxLengths[i])) {
+                Alerts.showWarningAlert(fieldNames[i] + " excede la longitud máxima permitida");
+                return false;
+            }
+        }
+
+        if (!DataValidation.validateNotBlanks(txtFieldNumberStudents.getText())) {
+            Alerts.showWarningAlert("Número de estudiantes no puede estar en blanco");
             return false;
         }
+
         return true;
     }
+
 
     
     @FXML
@@ -121,6 +146,7 @@ public class PostCollaborationOfferController implements Initializable {
                 }
             } catch(LogicException logicException) {
                 Alerts.displayAlertLogicException(logicException);
+                log.error(logicException);
             }
         }
     }
@@ -134,6 +160,7 @@ public class PostCollaborationOfferController implements Initializable {
             OfferProfessorStage offerStage = new OfferProfessorStage();
         } catch (IOException ioException) {
             Alerts.displayAlertIOException();
+            log.error(ioException);
         }
     }
     

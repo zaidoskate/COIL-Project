@@ -19,8 +19,4 @@ public interface CollaborationOfferManagerInterface {
     ArrayList<CollaborationOffer> getUnapprovedCollaborationOffer() throws LogicException;
     CollaborationOffer getProfessorApprovedOffer(int idUser) throws LogicException;
     boolean professorHasOffer(int idUser) throws LogicException;
-    //eliminar
-    //actualizar estatus de colaboración 
-    //obtener colaboraciones pendientes: regresar arraylist de collaborationoffer buscar por estatus
-    //obtener oferta colaboracion: regresa collaboration offer buscar con id
 }

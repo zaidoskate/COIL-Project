@@ -24,11 +24,7 @@ import logic.FileDownloader;
  * @author zaido
  */
 public class FinalDocumentationDAO implements FinalDocumentationManagerInterface {
-    private final DatabaseConnection databaseConnection;
-    
-    public FinalDocumentationDAO() {
-        this.databaseConnection = new DatabaseConnection();
-    }
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     
     @Override
     public int uploadProfessorFeedback(FinalDocumentation finalDocumentation) throws LogicException{

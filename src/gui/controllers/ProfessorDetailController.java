@@ -21,6 +21,7 @@ import logic.DAOs.CollaborationOfferDAO;
 import logic.DAOs.ProfessorBelongsToCollaborationDAO;
 import logic.model.CandidateInformation;
 import logic.model.OfferInformation;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -46,13 +47,15 @@ public class ProfessorDetailController implements Initializable {
     @FXML
     private Button btnBack;
     
-    SessionManager currentSession = SessionManager.getInstance();
-    OfferInformation currentOffer = OfferInformation.getOffer();
-    CandidateInformation currentCandidate = CandidateInformation.getCandidateInformation();
+    private static final SessionManager currentSession = SessionManager.getInstance();
+    private static final OfferInformation currentOffer = OfferInformation.getOffer();
+    private static final CandidateInformation currentCandidate = CandidateInformation.getCandidateInformation();
     
-    CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
-    CollaborationDAO collaborationDAO = new CollaborationDAO();//CREAR PRIMERO LA COLAB
-    ProfessorBelongsToCollaborationDAO professorBelongsCollaborationDAO = new ProfessorBelongsToCollaborationDAO();//CREAR EL BELONGS
+    private static final CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
+    private static final CollaborationDAO collaborationDAO = new CollaborationDAO();
+    private static final ProfessorBelongsToCollaborationDAO professorBelongsCollaborationDAO = new ProfessorBelongsToCollaborationDAO();
+    
+    private static final Logger log = Logger.getLogger(ProfessorDetailController.class);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -70,6 +73,7 @@ public class ProfessorDetailController implements Initializable {
             CandidatesStage candidatesStage = new CandidatesStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
+            log.error(ioException);
         }
     }
     
@@ -79,6 +83,7 @@ public class ProfessorDetailController implements Initializable {
             RegistrateCollaborationStage registrateCollaborationStage = new RegistrateCollaborationStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
+            log.error(ioException);
         }
     }
     

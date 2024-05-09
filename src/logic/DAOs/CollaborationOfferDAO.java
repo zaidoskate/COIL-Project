@@ -18,11 +18,7 @@ import logic.interfaces.CollaborationOfferManagerInterface;
  * @author chima
  */
 public class CollaborationOfferDAO implements CollaborationOfferManagerInterface {
-    private final DatabaseConnection databaseConnection; 
-    
-    public CollaborationOfferDAO() {
-        this.databaseConnection = new DatabaseConnection();
-    }
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection(); 
     
    @Override
     public int insertColaborationOffer(CollaborationOffer colaborationOffer) throws LogicException{
@@ -76,7 +72,6 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
             statement.setInt(1, idCollaborationOffer);
             evaluationResult = statement.executeUpdate();
         } catch(SQLException sqlException) {
-            sqlException.printStackTrace();
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();
@@ -108,6 +103,8 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
             }
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
         }
         return approvedOffers;
     }
@@ -136,6 +133,8 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
             }
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
         }
         return unapprovedOffers;
     }
@@ -163,6 +162,8 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
             
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
         }
         return offer;
     }

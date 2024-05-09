@@ -10,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Date;
 import java.sql.ResultSet;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,11 +22,7 @@ import logic.interfaces.EvaluationManagerInterface;
  * @author zaido
  */
 public class EvaluationDAO implements EvaluationManagerInterface {
-    private final DatabaseConnection databaseConnection;
-    
-    public EvaluationDAO() {
-        this.databaseConnection = new DatabaseConnection();
-    }
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     
     private String parseDateToString(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -116,6 +111,8 @@ public class EvaluationDAO implements EvaluationManagerInterface {
             }
         } catch (SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
         }
         return evaluationsFromCoordinator;
     }

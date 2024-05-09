@@ -25,6 +25,7 @@ import logic.DAOs.StartupDocumentationDAO;
 import logic.LogicException;
 import logic.domain.StartupDocumentation;
 import logic.model.CollaborationInformation;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -41,11 +42,13 @@ public class StartCollaborationController implements Initializable {
     @FXML
     private ComboBox comboBoxFileType;
     
-    private final StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO();
-    private final CollaborationDAO collaborationDAO = new CollaborationDAO();
-    private final ProfessorBelongsToCollaborationDAO professorBelongsToCollaborationDAO = new ProfessorBelongsToCollaborationDAO();
+    private static final StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO();
+    private static final CollaborationDAO collaborationDAO = new CollaborationDAO();
+    private static final ProfessorBelongsToCollaborationDAO professorBelongsToCollaborationDAO = new ProfessorBelongsToCollaborationDAO();
     
-    private final CollaborationInformation collaborationInformation = CollaborationInformation.getCollaboration();
+    private static final CollaborationInformation collaborationInformation = CollaborationInformation.getCollaboration();
+    
+    private static final Logger log = Logger.getLogger(StartCollaborationController.class);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -60,6 +63,7 @@ public class StartCollaborationController implements Initializable {
             }
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
+            log.error(logicException);
         }
     }
     
@@ -101,6 +105,7 @@ public class StartCollaborationController implements Initializable {
             }
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
+            log.error(logicException);
         }
     }
     
@@ -116,6 +121,7 @@ public class StartCollaborationController implements Initializable {
             }
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
+            log.error(logicException);
         }
         return allFilesUploaded;
     }
@@ -182,6 +188,7 @@ public class StartCollaborationController implements Initializable {
                 }
             } catch(LogicException logicException) {
                 Alerts.displayAlertLogicException(logicException);
+                log.error(logicException);
             }
         }
     }
@@ -212,6 +219,7 @@ public class StartCollaborationController implements Initializable {
                 }
             } catch(LogicException logicException) {
                 Alerts.displayAlertLogicException(logicException);
+                log.error(logicException);
             }
         }
     }
@@ -224,6 +232,7 @@ public class StartCollaborationController implements Initializable {
             MyCollaborationsStage myCollaborationsStage = new MyCollaborationsStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
+            log.error(ioException);
         }
     }
     
@@ -245,11 +254,7 @@ public class StartCollaborationController implements Initializable {
             }
             previousMenu();
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setHeaderText("Cuidado");
-            alert.setTitle("Cuidado");
-            alert.setContentText("Tiene que cargar un documento para cada archivo solicitado antes de iniciar");
-            alert.showAndWait();
+            Alerts.showWarningAlert("Tiene que cargar un documento para cada archivo solicitado antes de iniciar");
         }
     }
 }

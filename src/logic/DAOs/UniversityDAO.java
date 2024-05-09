@@ -15,21 +15,15 @@ import java.util.ArrayList;
 import logic.LogicException;
 
 public class UniversityDAO implements UniversityManagerInterface {
-    private final DatabaseConnection databaseConnection;
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     
-    public UniversityDAO(){
-        this.databaseConnection = new DatabaseConnection();
-    }
-
     @Override
     public int insertUniversity(University university) throws LogicException {
         int result = 0;
         String query = "INSERT INTO Universidad (nombre, pais) VALUES (?, ?)";
-        Connection connection;
-        PreparedStatement statement;
         try{
-            connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement(query);
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, university.getName());
             statement.setString(2, university.getCountry());
             result = statement.executeUpdate();
@@ -44,14 +38,11 @@ public class UniversityDAO implements UniversityManagerInterface {
     @Override
     public ArrayList<University> getUniversities() throws LogicException {
         String query = "SELECT * FROM Universidad";
-        Connection connection;
-        PreparedStatement statement;
-        ResultSet result;
         ArrayList <University> universitiesResult = new ArrayList();
         try{
-            connection = this.databaseConnection.getConnection();
-            statement = connection.prepareStatement(query);
-            result = statement.executeQuery();
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet result = statement.executeQuery();
             while(result.next()) {
                 University university = new University();
                 university.setCountry(result.getString("pais"));

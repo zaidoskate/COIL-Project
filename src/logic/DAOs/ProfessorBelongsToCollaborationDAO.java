@@ -10,11 +10,7 @@ import logic.domain.ProfessorBelongsToCollaboration;
 import logic.interfaces.ProfessorBelongsToCollaborationManagerInterface;
 
 public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCollaborationManagerInterface {
-    private final DatabaseConnection databaseConnection;
-    
-    public ProfessorBelongsToCollaborationDAO(){
-        this.databaseConnection = new DatabaseConnection();
-    }
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     
     @Override
     public int addProfessorBelongsToCollaboration(ProfessorBelongsToCollaboration professorBelongsToCollaboration) throws LogicException {

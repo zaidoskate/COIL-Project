@@ -16,7 +16,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -29,6 +28,7 @@ import logic.LogicException;
 import logic.domain.CollaborationOffer;
 import logic.domain.User;
 import logic.model.OfferInformation;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -37,7 +37,7 @@ import logic.model.OfferInformation;
 public class OfferCoordinatorController implements Initializable {
 
     @FXML
-    private TableView<OfferInformation> tblViewUnapprovedOffers;
+    private TableView<OfferInformation> tblViewPendingOffers;
     
     @FXML
     private TableColumn<OfferInformation, String> clmProfessorName;
@@ -51,13 +51,15 @@ public class OfferCoordinatorController implements Initializable {
     @FXML
     private Button btnBack;
     
-    private final CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
-    private final UserDAO userDAO = new UserDAO();
+    private static final CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
+    private static final UserDAO userDAO = new UserDAO();
     
     private ObservableList<OfferInformation> displayableOffers;
     
-    private final OfferInformation selectedOffer = OfferInformation.getOffer();
-    private final SessionManager currentSession = SessionManager.getInstance();
+    private static final OfferInformation selectedOffer = OfferInformation.getOffer();
+    private static final SessionManager currentSession = SessionManager.getInstance();
+    
+    private static final Logger log = Logger.getLogger(OfferCoordinatorController.class);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -103,37 +105,38 @@ public class OfferCoordinatorController implements Initializable {
                     offerRow.setNumberStudents(numberStudents);
                     offerRow.setStudentProfile(profile);
                     this.displayableOffers.add(offerRow);
-                    this.tblViewUnapprovedOffers.setItems(displayableOffers);
+                    this.tblViewPendingOffers.setItems(displayableOffers);
                 }
             }
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
+            log.error(logicException);
         }
     }
     
     private void setSelectedOffer() {
-        selectedOffer.setProfessorName(tblViewUnapprovedOffers.getSelectionModel().getSelectedItem().getProfessorName());
-        selectedOffer.setProfessorEmail(tblViewUnapprovedOffers.getSelectionModel().getSelectedItem().getProfessorEmail());
-        selectedOffer.setObjective(tblViewUnapprovedOffers.getSelectionModel().getSelectedItem().getObjective());
-        selectedOffer.setTopicsInterest(tblViewUnapprovedOffers.getSelectionModel().getSelectedItem().getTopicsInterest());
-        selectedOffer.setOfferPeriod(tblViewUnapprovedOffers.getSelectionModel().getSelectedItem().getOfferPeriod());
-        selectedOffer.setOfferLanguage(tblViewUnapprovedOffers.getSelectionModel().getSelectedItem().getOfferLanguage());
-        selectedOffer.setAditionalInformation(tblViewUnapprovedOffers.getSelectionModel().getSelectedItem().getAditionalInformation());
-        selectedOffer.setIdOfferCollaboration(tblViewUnapprovedOffers.getSelectionModel().getSelectedItem().getIdOfferCollaboration());
-        selectedOffer.setIdUser(tblViewUnapprovedOffers.getSelectionModel().getSelectedItem().getIdUser());
-        selectedOffer.setNumberStudents(tblViewUnapprovedOffers.getSelectionModel().getSelectedItem().getNumberStudents());
-        selectedOffer.setStudentProfile(tblViewUnapprovedOffers.getSelectionModel().getSelectedItem().getStudentProfile());
+        selectedOffer.setProfessorName(tblViewPendingOffers.getSelectionModel().getSelectedItem().getProfessorName());
+        selectedOffer.setProfessorEmail(tblViewPendingOffers.getSelectionModel().getSelectedItem().getProfessorEmail());
+        selectedOffer.setObjective(tblViewPendingOffers.getSelectionModel().getSelectedItem().getObjective());
+        selectedOffer.setTopicsInterest(tblViewPendingOffers.getSelectionModel().getSelectedItem().getTopicsInterest());
+        selectedOffer.setOfferPeriod(tblViewPendingOffers.getSelectionModel().getSelectedItem().getOfferPeriod());
+        selectedOffer.setOfferLanguage(tblViewPendingOffers.getSelectionModel().getSelectedItem().getOfferLanguage());
+        selectedOffer.setAditionalInformation(tblViewPendingOffers.getSelectionModel().getSelectedItem().getAditionalInformation());
+        selectedOffer.setIdOfferCollaboration(tblViewPendingOffers.getSelectionModel().getSelectedItem().getIdOfferCollaboration());
+        selectedOffer.setIdUser(tblViewPendingOffers.getSelectionModel().getSelectedItem().getIdUser());
+        selectedOffer.setNumberStudents(tblViewPendingOffers.getSelectionModel().getSelectedItem().getNumberStudents());
+        selectedOffer.setStudentProfile(tblViewPendingOffers.getSelectionModel().getSelectedItem().getStudentProfile());
     }
     
     private void checkEmptyTable() {
         if(this.displayableOffers.isEmpty()) {
-            this.tblViewUnapprovedOffers.setPlaceholder(new Label ("No hay ofertas por evaluar"));
+            this.tblViewPendingOffers.setPlaceholder(new Label ("No hay ofertas por evaluar"));
         }
     }
     
     @FXML
     private void showDetail() {
-        if(this.tblViewUnapprovedOffers.getSelectionModel().getSelectedItem() != null) {
+        if(this.tblViewPendingOffers.getSelectionModel().getSelectedItem() != null) {
             setSelectedOffer();
             Stage stage = (Stage) this.btnEvaluate.getScene().getWindow();
             stage.close();
@@ -141,6 +144,7 @@ public class OfferCoordinatorController implements Initializable {
                 DetailOfferProfessorStage detailOfferStage = new DetailOfferProfessorStage();
             } catch(IOException ioException) {
                 Alerts.displayAlertIOException();
+                log.error(ioException);
             }
         } else {
             Alerts.showWarningAlert("Seleccione una oferta para poder ver su detalle");
@@ -155,6 +159,7 @@ public class OfferCoordinatorController implements Initializable {
             CoordinatorMenuStage coordinatorMenuStage = new CoordinatorMenuStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
+            log.error(ioException);
         }
     }
     

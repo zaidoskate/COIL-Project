@@ -24,6 +24,7 @@ import logic.DAOs.ProfessorBelongsToCollaborationDAO;
 import logic.domain.ProfessorBelongsToCollaboration;
 import logic.model.CandidateInformation;
 import logic.model.OfferInformation;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -40,14 +41,16 @@ public class RegistrateCollaborationController implements Initializable {
     @FXML
     private Button btnAccept;
     
-    CollaborationDAO collaborationDAO = new CollaborationDAO();
-    ProfessorBelongsToCollaborationDAO professorBelongsToCollaborationDAO = new ProfessorBelongsToCollaborationDAO();
-    CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
-    CollaborationOfferCandidateDAO collaborationOfferCandidatesDAO = new CollaborationOfferCandidateDAO();
+    private static final CollaborationDAO collaborationDAO = new CollaborationDAO();
+    private static final ProfessorBelongsToCollaborationDAO professorBelongsToCollaborationDAO = new ProfessorBelongsToCollaborationDAO();
+    private static final CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
+    private static final CollaborationOfferCandidateDAO collaborationOfferCandidatesDAO = new CollaborationOfferCandidateDAO();
     
-    OfferInformation professorOffer = OfferInformation.getOffer();
-    SessionManager currentSession = SessionManager.getInstance();
-    CandidateInformation currentCandidate = CandidateInformation.getCandidateInformation();
+    private static final OfferInformation professorOffer = OfferInformation.getOffer();
+    private static final SessionManager currentSession = SessionManager.getInstance();
+    private static final CandidateInformation currentCandidate = CandidateInformation.getCandidateInformation();
+    
+    private static final Logger log = Logger.getLogger(RegistrateCollaborationController.class);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -71,20 +74,15 @@ public class RegistrateCollaborationController implements Initializable {
         return professorBelongsToCollaboration;
     }
     
-    private void showWarningAlert(String contentText) {
-        showAlert(Alert.AlertType.WARNING, "Advertencia", contentText);
-    }
-
-    private void showErrorAlert(String contentText) {
-        showAlert(Alert.AlertType.ERROR, "Error", contentText);
-    }
-    
-    private void showAlert(Alert.AlertType alertType, String headerText, String contentText) {
-        Alert alert = new Alert(alertType);
-        alert.setHeaderText(headerText);
-        alert.setTitle(headerText);
-        alert.setContentText(contentText);
-        alert.showAndWait();
+    private boolean validateCollaborationName() {
+        boolean validName = true;
+        if(!DataValidation.validateNotBlanks(txtFieldCollaborationName.getText()) && !DataValidation.validateWord(txtFieldCollaborationName.getText())) {
+            validName = false;
+        }
+        if(!DataValidation.validateLengthField(txtFieldCollaborationName.getText(), 45)) {
+            validName = false;
+        }
+        return validName;
     }
     
     @FXML
@@ -96,7 +94,7 @@ public class RegistrateCollaborationController implements Initializable {
     @FXML
     public void acceptCandidate() {
         try {
-            if(DataValidation.validateNotBlanks(txtFieldCollaborationName.getText()) && DataValidation.validateWord(txtFieldCollaborationName.getText())) {
+            if(validateCollaborationName()) {
                 Collaboration collaboration = createCollaboration();
                 int idCollaborationInserted = collaborationDAO.addColaboration(collaboration);
                 if(idCollaborationInserted > 0) {
@@ -118,12 +116,13 @@ public class RegistrateCollaborationController implements Initializable {
                         }
                     }
                 }
-                showErrorAlert("Ha ocurrido un problema al aceptar al candidato");
+                Alerts.showWarningAlert("Ha ocurrido un problema al aceptar al candidato");
             } else {
-                showWarningAlert("Proporcione un nombre válido para la colaboración");
+                Alerts.showWarningAlert("Proporcione un nombre válido para la colaboración");
             }
         } catch (LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
+            log.error(logicException);
         }
     }
 }

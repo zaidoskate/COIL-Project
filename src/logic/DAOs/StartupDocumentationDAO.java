@@ -4,7 +4,6 @@ import dataaccess.DatabaseConnection;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.Connection;
@@ -17,11 +16,7 @@ import logic.domain.StartupDocumentation;
 import logic.interfaces.StartupDocumentationManagerInterface;
 
 public class StartupDocumentationDAO implements StartupDocumentationManagerInterface {
-    private final DatabaseConnection databaseConnection;
-    
-    public StartupDocumentationDAO(){
-        this.databaseConnection = new DatabaseConnection();
-    }
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     
     @Override
     public int addStartupDocumentation(StartupDocumentation startupDocumentation) throws LogicException{
