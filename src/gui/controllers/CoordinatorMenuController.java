@@ -9,6 +9,7 @@ import gui.COILVICApplication;
 import gui.SessionManager;
 import gui.stages.AccountRequestMenuStage;
 import gui.stages.ExternalAccountCreateStage;
+import gui.stages.GenerateStatisticsStage;
 import gui.stages.OfferCoordinatorStage;
 import gui.stages.UniversitiesStage;
 import java.io.IOException;
@@ -99,6 +100,18 @@ public class CoordinatorMenuController implements Initializable {
         try {
             OfferCoordinatorStage offerCoordinatorStage = new OfferCoordinatorStage();
         } catch(IOException ioException) {
+            Alerts.displayAlertIOException();
+        }
+    }
+    
+    @FXML
+    private void displayGenerateStatistics() {
+        Stage stage = (Stage) this.textName.getScene().getWindow();
+        stage.close();
+        try {
+            GenerateStatisticsStage generateStatisticsStage = new GenerateStatisticsStage();
+        } catch(IOException ioException) {
+            ioException.printStackTrace();
             Alerts.displayAlertIOException();
         }
     }

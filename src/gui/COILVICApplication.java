@@ -15,7 +15,6 @@ public class COILVICApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         
-        log.error("hola");
         
         Parent root = FXMLLoader.load(getClass().getResource("fxml/login.fxml"));
         Scene scene = new Scene(root);

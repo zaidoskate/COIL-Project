@@ -6,9 +6,9 @@ package gui.controllers;
 
 import gui.Alerts;
 import gui.SessionManager;
-import gui.stages.DeclineOfferStage;
 import gui.stages.OfferCoordinatorStage;
 import gui.stages.OfferProfessorStage;
+import gui.stages.SendEmailStage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -19,7 +19,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import logic.DAOs.CollaborationOfferCandidateDAO;
 import logic.DAOs.CollaborationOfferDAO;
@@ -30,6 +29,7 @@ import logic.DAOs.UserDAO;
 import logic.LogicException;
 import logic.domain.CollaborationOfferCandidate;
 import logic.domain.Evaluation;
+import logic.model.EmailNotification;
 import logic.model.OfferInformation;
 
 /**
@@ -138,10 +138,18 @@ public class DetailOfferProfessorController implements Initializable {
     }
 
     
-    private Evaluation createEvaluation() throws LogicException {
+    private Evaluation createEvaluationApproved() throws LogicException {
         Evaluation evaluation = new Evaluation();
         evaluation.setIdCoordinator(coordinatorDAO.getIdCoordinatorByIdUser(currentSession.getUserData().getIdUser()));
         evaluation.setIdOfferCollaboration(selectedOffer.getIdOfferCollaboration());
+        return evaluation;
+    }
+    
+    private Evaluation createEvaluationDeclined() throws LogicException {
+        Evaluation evaluation = new Evaluation();
+        evaluation.setIdCoordinator(coordinatorDAO.getIdCoordinatorByIdUser(currentSession.getUserData().getIdUser()));
+        evaluation.setIdOfferCollaboration(selectedOffer.getIdOfferCollaboration());
+        evaluation.setReason(EmailNotification.getInstance().getEmailBody());
         return evaluation;
     }
 
@@ -184,7 +192,7 @@ public class DetailOfferProfessorController implements Initializable {
     private void approveOffer() {
         try {
             if(collaborationOfferDAO.evaluateCollaborationOffer(selectedOffer.getIdOfferCollaboration(), "Aprobada") == 1) {
-                Evaluation evaluation = createEvaluation();
+                Evaluation evaluation = createEvaluationApproved();
                 if(evaluationDAO.insertEvaluationForApprovedOffer(evaluation) == 1) {
                     Alerts.showInformationAlert("Mensaje", "Ha aprobado esta oferta de colaboración");
                     previousMenu();
@@ -197,10 +205,22 @@ public class DetailOfferProfessorController implements Initializable {
     
     @FXML
     private void displayDeclineOffer() {
+        EmailNotification.getInstance().setEmail(selectedOffer.getProfessorEmail());
+        EmailNotification.getInstance().setMessageSuccess("Oferta rechazada");
+        EmailNotification.getInstance().setMessageCancel("Se cancelará el rechazo de la oferta");
         try {
-            DeclineOfferStage declineOfferStage = new DeclineOfferStage();
-            previousMenu();
-        } catch(IOException ioException) {
+            SendEmailStage sendEmailStage = new SendEmailStage();
+            Evaluation evaluation = createEvaluationDeclined();
+            if(collaborationOfferDAO.evaluateCollaborationOffer(selectedOffer.getIdOfferCollaboration(), "Rechazada") == 1) {
+                if(evaluationDAO.insertEvaluationForDeclinedOffer(evaluation) == 1) {
+                    if(EmailNotification.getInstance().getSentStatus()) {
+                        previousMenu();
+                    }
+                }
+            }
+        } catch(LogicException logicException) {
+            Alerts.displayAlertLogicException(logicException);
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
         }
     }

@@ -51,7 +51,7 @@
                   <Font name="Century Gothic Bold" size="18.0" />
                </font>
             </Button>
-            <Button layoutX="266.0" layoutY="360.0" mnemonicParsing="false" prefHeight="92.0" prefWidth="180.0" styleClass="button-menu" stylesheets="@../css/styles.css" text="Generar reporte">
+            <Button layoutX="266.0" layoutY="360.0" mnemonicParsing="false" onAction="#displayGenerateStatistics" prefHeight="92.0" prefWidth="180.0" styleClass="button-menu" stylesheets="@../css/styles.css" text="Generar reporte">
                <font>
                   <Font name="Century Gothic Bold" size="18.0" />
                </font>

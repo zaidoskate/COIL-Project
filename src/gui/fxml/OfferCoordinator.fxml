@@ -8,14 +8,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.CubicCurve?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(from 0% 0% to 0% 30%, rgb(254, 60, 87), rgb(201, 35, 58));" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.OfferCoordinatorController">
    <children>
       <AnchorPane layoutY="91.0" prefHeight="295.0" prefWidth="602.0">
          <children>
             <AnchorPane layoutX="10.0" layoutY="15.0" prefHeight="250.0" prefWidth="580.0">
                <children>
-                  <TableView fx:id="tblViewUnapprovedOffers" layoutX="200.0" prefHeight="200.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="tblViewPendingOffers" layoutX="200.0" prefHeight="200.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                       <TableColumn fx:id="clmProfessorName" minWidth="290.0" prefWidth="75.0" text="Profesor" />
                       <TableColumn fx:id="clmOfferPeriod" minWidth="290.0" prefWidth="75.0" text="Periodo" />

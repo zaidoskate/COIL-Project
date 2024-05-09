@@ -1,0 +1,106 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package gui.controllers;
+
+import gui.Alerts;
+import gui.stages.CoordinatorMenuStage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import logic.DAOs.UvProfessorDAO;
+import logic.FileDownloader;
+import logic.LogicException;
+
+/**
+ *
+ * @author zaido
+ */
+public class GenerateStatisticsController implements Initializable {
+
+    @FXML
+    private Button btnContinue;
+    
+    @FXML
+    private Button btnDownloadStatistics;
+    
+    @FXML
+    private Label lblGenerated;
+    
+    private final UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
+    
+    private int[] regionCollaborationCounts = new int[5];
+    private int[] academicAreaCollaborationCounts = new int[6];
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        if(checkCollaborationsAvailable()) {
+            this.btnDownloadStatistics.setVisible(true);
+        } else {
+            this.lblGenerated.setText("No se pudo generar la numeralia");
+        }
+    }
+    
+    private boolean checkCollaborationsAvailable() {
+        boolean available = false;
+        String[] regions = {"Xalapa", "Veracruz", "Coatzacoalcos", "Orizaba", "Tuxpan"};
+        try {
+            for(int i = 0; i < regions.length; i++) {
+                regionCollaborationCounts[i] = uvProfessorDAO.getCollaborationCountByProfessorRegion(regions[i]);
+                if (regionCollaborationCounts[i] != 0) {
+                    available = true;
+                    break;
+                }
+            }
+            for(int i = 1; i < 7; i++) {
+                academicAreaCollaborationCounts[i-1] = uvProfessorDAO.getCollaborationCountByProfessorAcademicArea(i);
+                if (academicAreaCollaborationCounts[i-1] != 0) {
+                    available = true;
+                    break;
+                }
+            }
+        } catch(LogicException logicException) {
+            Alerts.displayAlertLogicException(logicException);
+        }
+        return available;
+    }
+    
+    @FXML
+    private void closeDownload() {
+        Stage stage = (Stage) this.btnContinue.getScene().getWindow();
+        stage.close();
+        try {
+            CoordinatorMenuStage coordinatorMenuStage = new CoordinatorMenuStage();
+        } catch(IOException ioException) {
+            Alerts.displayAlertIOException();
+        }
+    }
+    
+    @FXML
+    private void downloadStatistics() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Guardar numeralia");
+        fileChooser.setInitialFileName("Numeralia.xlsx");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Archivos de Excel", "*.xlsx"));
+        
+        File selectedPath = fileChooser.showSaveDialog(btnContinue.getScene().getWindow());
+        
+        if(selectedPath != null) {
+            try {
+                FileDownloader.exportToExcel(selectedPath.getAbsolutePath(), regionCollaborationCounts, academicAreaCollaborationCounts);
+            } catch (IOException ioException) {
+                Alerts.displayAlertIOException();
+            }
+            Alerts.showInformationAlert("Mensaje", "Se ha descargado la numeralia con éxito");
+            closeDownload();
+        }
+    }
+}

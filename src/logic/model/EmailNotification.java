@@ -5,6 +5,15 @@ public class EmailNotification {
     private String email;
     private String messageSuccess;
     private String messageCancel;
+    private String emailBody;
+
+    public String getEmailBody() {
+        return emailBody;
+    }
+
+    public void setEmailBody(String emailBody) {
+        this.emailBody = emailBody;
+    }
     private boolean sent;
 
     private EmailNotification() {
@@ -46,4 +55,6 @@ public class EmailNotification {
     public void setMessageCancel(String messageCancel) {
         this.messageCancel = messageCancel;
     }
+    
+    
 }

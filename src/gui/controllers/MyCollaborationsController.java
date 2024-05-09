@@ -111,5 +111,4 @@ public class MyCollaborationsController implements Initializable {
             Alerts.displayAlertIOException();
         }
     }
-    
 }

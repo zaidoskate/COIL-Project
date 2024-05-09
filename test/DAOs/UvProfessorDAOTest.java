@@ -88,4 +88,28 @@ public class UvProfessorDAOTest {
             fail("Error al obtener el nombre del departamento");
         }
     }
+    
+    @Test
+    public void testGetCollaborationCountByProfessorRegion() {
+        int expectedResult = 2;
+        UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
+        try {
+            int result = uvProfessorDAO.getCollaborationCountByProfessorRegion("Xalapa");
+            assertEquals(expectedResult, result);
+        } catch(LogicException logicException) {
+            fail("Error al obtener el count de profesores con colaboraciones basado en su region");
+        }
+    }
+    
+    @Test
+    public void testGetCollaborationCountByProfessorAcademicArea() {
+        int expectedResult = 2;
+        UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
+        try {
+            int result = uvProfessorDAO.getCollaborationCountByProfessorAcademicArea(4);
+            assertEquals(expectedResult, result);
+        } catch(LogicException logicException) {
+            fail("Error al obtener el count de profesores con colaboraciones basado en su region");
+        }
+    }
 }

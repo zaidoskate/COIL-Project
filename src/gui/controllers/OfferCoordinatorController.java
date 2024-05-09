@@ -37,7 +37,7 @@ import logic.model.OfferInformation;
 public class OfferCoordinatorController implements Initializable {
 
     @FXML
-    private TableView<OfferInformation> tblViewUnapprovedOffers;
+    private TableView<OfferInformation> tblViewPendingOffers;
     
     @FXML
     private TableColumn<OfferInformation, String> clmProfessorName;
@@ -103,7 +103,7 @@ public class OfferCoordinatorController implements Initializable {
                     offerRow.setNumberStudents(numberStudents);
                     offerRow.setStudentProfile(profile);
                     this.displayableOffers.add(offerRow);
-                    this.tblViewUnapprovedOffers.setItems(displayableOffers);
+                    this.tblViewPendingOffers.setItems(displayableOffers);
                 }
             }
         } catch(LogicException logicException) {
@@ -112,28 +112,28 @@ public class OfferCoordinatorController implements Initializable {
     }
     
     private void setSelectedOffer() {
-        selectedOffer.setProfessorName(tblViewUnapprovedOffers.getSelectionModel().getSelectedItem().getProfessorName());
-        selectedOffer.setProfessorEmail(tblViewUnapprovedOffers.getSelectionModel().getSelectedItem().getProfessorEmail());
-        selectedOffer.setObjective(tblViewUnapprovedOffers.getSelectionModel().getSelectedItem().getObjective());
-        selectedOffer.setTopicsInterest(tblViewUnapprovedOffers.getSelectionModel().getSelectedItem().getTopicsInterest());
-        selectedOffer.setOfferPeriod(tblViewUnapprovedOffers.getSelectionModel().getSelectedItem().getOfferPeriod());
-        selectedOffer.setOfferLanguage(tblViewUnapprovedOffers.getSelectionModel().getSelectedItem().getOfferLanguage());
-        selectedOffer.setAditionalInformation(tblViewUnapprovedOffers.getSelectionModel().getSelectedItem().getAditionalInformation());
-        selectedOffer.setIdOfferCollaboration(tblViewUnapprovedOffers.getSelectionModel().getSelectedItem().getIdOfferCollaboration());
-        selectedOffer.setIdUser(tblViewUnapprovedOffers.getSelectionModel().getSelectedItem().getIdUser());
-        selectedOffer.setNumberStudents(tblViewUnapprovedOffers.getSelectionModel().getSelectedItem().getNumberStudents());
-        selectedOffer.setStudentProfile(tblViewUnapprovedOffers.getSelectionModel().getSelectedItem().getStudentProfile());
+        selectedOffer.setProfessorName(tblViewPendingOffers.getSelectionModel().getSelectedItem().getProfessorName());
+        selectedOffer.setProfessorEmail(tblViewPendingOffers.getSelectionModel().getSelectedItem().getProfessorEmail());
+        selectedOffer.setObjective(tblViewPendingOffers.getSelectionModel().getSelectedItem().getObjective());
+        selectedOffer.setTopicsInterest(tblViewPendingOffers.getSelectionModel().getSelectedItem().getTopicsInterest());
+        selectedOffer.setOfferPeriod(tblViewPendingOffers.getSelectionModel().getSelectedItem().getOfferPeriod());
+        selectedOffer.setOfferLanguage(tblViewPendingOffers.getSelectionModel().getSelectedItem().getOfferLanguage());
+        selectedOffer.setAditionalInformation(tblViewPendingOffers.getSelectionModel().getSelectedItem().getAditionalInformation());
+        selectedOffer.setIdOfferCollaboration(tblViewPendingOffers.getSelectionModel().getSelectedItem().getIdOfferCollaboration());
+        selectedOffer.setIdUser(tblViewPendingOffers.getSelectionModel().getSelectedItem().getIdUser());
+        selectedOffer.setNumberStudents(tblViewPendingOffers.getSelectionModel().getSelectedItem().getNumberStudents());
+        selectedOffer.setStudentProfile(tblViewPendingOffers.getSelectionModel().getSelectedItem().getStudentProfile());
     }
     
     private void checkEmptyTable() {
         if(this.displayableOffers.isEmpty()) {
-            this.tblViewUnapprovedOffers.setPlaceholder(new Label ("No hay ofertas por evaluar"));
+            this.tblViewPendingOffers.setPlaceholder(new Label ("No hay ofertas por evaluar"));
         }
     }
     
     @FXML
     private void showDetail() {
-        if(this.tblViewUnapprovedOffers.getSelectionModel().getSelectedItem() != null) {
+        if(this.tblViewPendingOffers.getSelectionModel().getSelectedItem() != null) {
             setSelectedOffer();
             Stage stage = (Stage) this.btnEvaluate.getScene().getWindow();
             stage.close();
