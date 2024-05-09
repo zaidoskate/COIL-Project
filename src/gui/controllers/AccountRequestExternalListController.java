@@ -66,7 +66,9 @@ public class AccountRequestExternalListController implements Initializable {
             boolean result = false;
             try{
                 externalAccountRequest = externalAccountRequestDAO.getExternalAccountRequestById(idAccountRequestSelected);
-                result = AccountCreator.createExternalAccount(externalAccountRequest); 
+                if(externalAccountRequest.getName() != null && externalAccountRequest.getEmail()!= null){
+                    result = AccountCreator.createExternalAccount(externalAccountRequest); 
+                }
             } catch(LogicException logicException) {
                 log.error(logicException);
                 Alerts.displayAlertLogicException(logicException);
