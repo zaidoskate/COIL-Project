@@ -87,27 +87,50 @@ public class PostCollaborationOfferController implements Initializable {
     }
     
     private boolean validateFields() {
-        String objective = txtAreaObjective.getText();
-        String topicsOfInterest = txtAreaTopicsOfInterest.getText();
-        String period = txtFieldPeriod.getText();
-        String language = txtAreaLanguage.getText();
-        String additionalInformation = txtAreaAditionalInformation.getText();
-        String profile = txtFieldProfile.getText();
-        String numberStudents = txtFieldNumberStudents.getText();
-        
-        String[] fieldsObtained = {objective, topicsOfInterest, period, language, additionalInformation, profile, numberStudents};
-        for(String field : fieldsObtained) {
-            if(!DataValidation.validateWord(field)) {
+        String[] fields = {
+            txtAreaObjective.getText(),
+            txtAreaTopicsOfInterest.getText(),
+            txtFieldPeriod.getText(),
+            txtAreaLanguage.getText(),
+            txtAreaAditionalInformation.getText(),
+            txtFieldProfile.getText(),
+            txtFieldNumberStudents.getText()
+        };
+
+        for (String field : fields) {
+            if (!DataValidation.validateWord(field)) {
                 Alerts.showWarningAlert("Datos incorrectos, inténtalo de nuevo");
                 return false;
             }
         }
-        if(!DataValidation.validateNotBlanks(numberStudents)) {
-            Alerts.showWarningAlert("Datos incorrectos, inténtalo de nuevo");
+
+        String[] fieldsToCheckLength = {
+            txtAreaObjective.getText(),
+            txtAreaTopicsOfInterest.getText(),
+            txtFieldPeriod.getText(),
+            txtAreaLanguage.getText(),
+            txtAreaAditionalInformation.getText(),
+            txtFieldProfile.getText()
+        };
+
+        int[] maxLengths = {150, 150, 50, 20, 150, 40};
+        String[] fieldNames = {"Objetivo", "Temas de interés", "Periodo", "Idioma", "Información adicional", "Perfil"};
+
+        for (int i = 0; i < fieldsToCheckLength.length; i++) {
+            if (!DataValidation.validateLengthField(fieldsToCheckLength[i], maxLengths[i])) {
+                Alerts.showWarningAlert(fieldNames[i] + " excede la longitud máxima permitida");
+                return false;
+            }
+        }
+
+        if (!DataValidation.validateNotBlanks(txtFieldNumberStudents.getText())) {
+            Alerts.showWarningAlert("Número de estudiantes no puede estar en blanco");
             return false;
         }
+
         return true;
     }
+
 
     
     @FXML

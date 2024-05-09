@@ -74,6 +74,17 @@ public class RegistrateCollaborationController implements Initializable {
         return professorBelongsToCollaboration;
     }
     
+    private boolean validateCollaborationName() {
+        boolean validName = true;
+        if(!DataValidation.validateNotBlanks(txtFieldCollaborationName.getText()) && !DataValidation.validateWord(txtFieldCollaborationName.getText())) {
+            validName = false;
+        }
+        if(!DataValidation.validateLengthField(txtFieldCollaborationName.getText(), 45)) {
+            validName = false;
+        }
+        return validName;
+    }
+    
     @FXML
     public void previousMenu() {
         Stage stage = (Stage) this.btnAccept.getScene().getWindow();
@@ -83,7 +94,7 @@ public class RegistrateCollaborationController implements Initializable {
     @FXML
     public void acceptCandidate() {
         try {
-            if(DataValidation.validateNotBlanks(txtFieldCollaborationName.getText()) && DataValidation.validateWord(txtFieldCollaborationName.getText())) {
+            if(validateCollaborationName()) {
                 Collaboration collaboration = createCollaboration();
                 int idCollaborationInserted = collaborationDAO.addColaboration(collaboration);
                 if(idCollaborationInserted > 0) {
