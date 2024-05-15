@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package logic.DAOs;
 
 import logic.interfaces.FinalDocumentationManagerInterface;
@@ -19,10 +15,6 @@ import java.sql.Blob;
 import logic.LogicException;
 import logic.FileDownloader;
 
-/**
- *
- * @author zaido
- */
 public class FinalDocumentationDAO implements FinalDocumentationManagerInterface {
     private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     

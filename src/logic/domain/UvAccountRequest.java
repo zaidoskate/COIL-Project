@@ -52,10 +52,10 @@ public class UvAccountRequest extends AccountRequest{
         if(this.getIdRequest() != uvAccountRequestToCompare.getIdRequest()) {
             return false;
         }
-        if(this.getIdDepartment().equals(uvAccountRequestToCompare.getIdRequest())) {
+        if(!this.getIdDepartment().equals(uvAccountRequestToCompare.getIdDepartment())) {
             return false;
         }
-        if(this.getPersonalNumber().equals(uvAccountRequestToCompare.getPersonalNumber())) {
+        if(!this.getPersonalNumber().equals(uvAccountRequestToCompare.getPersonalNumber())) {
             return false;
         }
         return true;

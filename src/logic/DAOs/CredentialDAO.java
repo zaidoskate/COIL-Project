@@ -10,11 +10,8 @@ import java.sql.ResultSet;
 import logic.LogicException;
 
 public class CredentialDAO implements CredentialManagerInterface {
-    private final DatabaseConnection databaseConnection;
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     
-    public CredentialDAO(){
-        this.databaseConnection = new DatabaseConnection();
-    }
     @Override
     public int insertCredential(Credential credential)  throws LogicException {
         int result = 0;

@@ -23,11 +23,7 @@ import java.sql.Blob;
  * @author chima
  */
 public class EvidenceDAO implements EvidenceManagerInterface {
-     private final DatabaseConnection databaseConnection;
-    
-    public EvidenceDAO() {
-        this.databaseConnection = new DatabaseConnection();
-    }
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
 
     @Override
     public int uploadEvidence(Evidence evidence) {

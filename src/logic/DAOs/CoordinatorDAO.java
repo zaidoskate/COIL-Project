@@ -19,21 +19,16 @@ import logic.LogicException;
  * @author chima
  */
 public class CoordinatorDAO implements CoordinatorManagerInterface {
-    private final DatabaseConnection databaseConnection;
-    
-    public CoordinatorDAO() {
-        this.databaseConnection = new DatabaseConnection();
-    }
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     
     @Override
     public int insertCoordinator(Coordinator coordinator) throws LogicException {
         int result = 0;
-        String query = "INSERT INTO coordinador (idcoordinador, usuario_idusuario) VALUES (?, ?)";
+        String query = "INSERT INTO coordinador (usuario_idusuario) VALUES (?)";
         try{
             Connection connection = databaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, coordinator.getIdCoordinator());
-            statement.setInt(2, coordinator.getIdUser());
+            statement.setInt(1, coordinator.getIdUser());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);

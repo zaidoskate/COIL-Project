@@ -72,10 +72,18 @@ public class UvAccountRequestDAOTest {
         uvAccountRequest = new UvAccountRequest();
         uvAccountRequest.setIdDepartment("FEIX");
         uvAccountRequest.setEmail("chimalg2001@outlook.com");
-        uvAccountRequest.setIdRequest(9);
+        uvAccountRequest.setIdRequest(13);
         uvAccountRequest.setLastName("González Chimal");
         uvAccountRequest.setName("Marcio Miguel");
-        uvAccountRequest.setPersonalNumber("07061");
+        uvAccountRequest.setPersonalNumber("16171");
+        expectedResult.add(uvAccountRequest);
+        uvAccountRequest = new UvAccountRequest();
+        uvAccountRequest.setIdDepartment("FEIX");
+        uvAccountRequest.setEmail("chuchitotlapa@hotmail.com");
+        uvAccountRequest.setIdRequest(14);
+        uvAccountRequest.setLastName("Tlapa Hernández");
+        uvAccountRequest.setName("Jesús Lorenzo");
+        uvAccountRequest.setPersonalNumber("20984");
         expectedResult.add(uvAccountRequest);
         
         UvAccountRequestDAO uvAccountRequestDAO = new UvAccountRequestDAO();

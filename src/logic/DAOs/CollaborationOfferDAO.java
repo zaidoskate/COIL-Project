@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package logic.DAOs;
 
 import dataaccess.DatabaseConnection;
@@ -13,10 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import logic.LogicException;
 import logic.interfaces.CollaborationOfferManagerInterface;
-/**
- *
- * @author chima
- */
+
 public class CollaborationOfferDAO implements CollaborationOfferManagerInterface {
     private static final DatabaseConnection databaseConnection = new DatabaseConnection(); 
     

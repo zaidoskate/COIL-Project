@@ -17,11 +17,7 @@ import java.sql.ResultSet;
  * @author chima
  */
 public class EvidenceFolderDAO implements EvidenceFolderManagerInterface {
-    private final DatabaseConnection databaseConnection; 
-    
-    public EvidenceFolderDAO(){
-        this.databaseConnection = new DatabaseConnection();
-    }
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     
     @Override
     public int insertEvidenceFolder(EvidenceFolder evidenceFolder){

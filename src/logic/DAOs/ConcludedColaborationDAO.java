@@ -1,10 +1,9 @@
-    package logic.DAOs;
+package logic.DAOs;
 
 import dataaccess.DatabaseConnection;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.Connection;
@@ -18,11 +17,7 @@ import logic.domain.ConcludedCollaboration;
 import logic.interfaces.ConcludedCollaborationManagerInterface;
 
 public class ConcludedColaborationDAO implements ConcludedCollaborationManagerInterface {
-    private final DatabaseConnection databaseConnection;
-    
-    public ConcludedColaborationDAO(){
-        this.databaseConnection = new DatabaseConnection();
-    }
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     
     @Override
     public int addConcludedCollaboration(ConcludedCollaboration concludedCollaboration) throws LogicException{
