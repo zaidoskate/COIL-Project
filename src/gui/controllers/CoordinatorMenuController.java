@@ -4,6 +4,7 @@ import gui.Alerts;
 import gui.COILVICApplication;
 import gui.SessionManager;
 import gui.stages.AccountRequestMenuStage;
+import gui.stages.CollaborationsCoordinatorMenuStage;
 import gui.stages.ExternalAccountCreateStage;
 import gui.stages.GenerateStatisticsStage;
 import gui.stages.OfferCoordinatorStage;
@@ -99,7 +100,17 @@ public class CoordinatorMenuController implements Initializable {
         try {
             GenerateStatisticsStage generateStatisticsStage = new GenerateStatisticsStage();
         } catch(IOException ioException) {
-            ioException.printStackTrace();
+            Alerts.displayAlertIOException();
+        }
+    }
+    
+    @FXML
+    private void displayCollaborations() {
+        Stage stage = (Stage) this.txtName.getScene().getWindow();
+        stage.close();
+        try {
+            CollaborationsCoordinatorMenuStage collaborationsCoordinatorMenuStage = new CollaborationsCoordinatorMenuStage();
+        } catch(IOException ioException) {
             Alerts.displayAlertIOException();
         }
     }
