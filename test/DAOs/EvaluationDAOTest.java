@@ -42,6 +42,18 @@ public class EvaluationDAOTest {
     }
     
     @Test
+    public void testDeleteEvaluationSuccess() {
+        EvaluationDAO evaluationDAO = new EvaluationDAO();
+        int expectedResult = 1;
+        try {
+            int result = evaluationDAO.deleteEvaluation(1);
+            assertEquals(expectedResult, result);
+        } catch(LogicException logicException) {
+            fail("Error al eliminar la evaluacion");
+        }
+    }
+    
+    @Test
     public void testGetEvaluationByIdOfferCollaborationSuccess() {
         Evaluation evaluation = new Evaluation();
         evaluation.setIdOfferCollaboration(1);

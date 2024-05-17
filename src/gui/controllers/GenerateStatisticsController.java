@@ -45,34 +45,36 @@ public class GenerateStatisticsController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        if(checkCollaborationsAvailable()) {
-            this.btnDownloadStatistics.setVisible(true);
-        } else {
+        try {
+            if(checkCollaborationsAvailable()) {
+                this.btnDownloadStatistics.setVisible(true);
+            } else {
+                this.lblGenerated.setText("No se pudo generar la numeralia");
+            }
+        } catch(LogicException logicException) {
+            this.btnDownloadStatistics.setVisible(false);
             this.lblGenerated.setText("No se pudo generar la numeralia");
+            Alerts.displayAlertLogicException(logicException);
+            log.error(logicException);
         }
     }
     
-    private boolean checkCollaborationsAvailable() {
+    private boolean checkCollaborationsAvailable() throws LogicException {
         boolean available = false;
         String[] regions = {"Xalapa", "Veracruz", "Coatzacoalcos", "Orizaba", "Tuxpan"};
-        try {
-            for(int i = 0; i < regions.length; i++) {
-                regionCollaborationCounts[i] = uvProfessorDAO.getCollaborationCountByProfessorRegion(regions[i]);
-                if (regionCollaborationCounts[i] != 0) {
-                    available = true;
-                    break;
-                }
+        for(int i = 0; i < regions.length; i++) {
+            regionCollaborationCounts[i] = uvProfessorDAO.getCollaborationCountByProfessorRegion(regions[i]);
+            if (regionCollaborationCounts[i] != 0) {
+                available = true;
+                break;
             }
-            for(int i = 1; i < 7; i++) {
-                academicAreaCollaborationCounts[i-1] = uvProfessorDAO.getCollaborationCountByProfessorAcademicArea(i);
-                if (academicAreaCollaborationCounts[i-1] != 0) {
-                    available = true;
-                    break;
-                }
+        }
+        for(int i = 1; i < 7; i++) {
+            academicAreaCollaborationCounts[i-1] = uvProfessorDAO.getCollaborationCountByProfessorAcademicArea(i);
+            if (academicAreaCollaborationCounts[i-1] != 0) {
+                available = true;
+                break;
             }
-        } catch(LogicException logicException) {
-            Alerts.displayAlertLogicException(logicException);
-            log.error(logicException);
         }
         return available;
     }

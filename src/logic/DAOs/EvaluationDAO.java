@@ -68,6 +68,23 @@ public class EvaluationDAO implements EvaluationManagerInterface {
         }
         return result;
     }
+    
+    @Override
+    public int deleteEvaluation(int idCollaborationOffer) throws LogicException {
+        int result = 0;
+        String query = "DELETE FROM Evaluacion WHERE idOfertaColaboracion = ?";
+        try {
+            Connection connection = databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idCollaborationOffer);
+            result = statement.executeUpdate();
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return result;
+    }
 
     @Override
     public Evaluation getEvaluationByIdOfferCollaboration(int idOfferCollaboration) throws LogicException {

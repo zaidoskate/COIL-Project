@@ -22,7 +22,7 @@
                </cursor>
             </Region>
             <Button layoutX="459.0" layoutY="110.0" mnemonicParsing="false" onAction="#startCollaboration" prefHeight="27.0" prefWidth="100.0" styleClass="button-accion" text="Iniciar" />
-            <Button layoutX="459.0" layoutY="144.0" mnemonicParsing="false" onAction="#deleteFile" prefWidth="100.0" styleClass="button-accion2" text="Quitar archivos" />
+            <Button layoutX="459.0" layoutY="144.0" mnemonicParsing="false" onAction="#deleteFile" prefWidth="100.0" styleClass="button-accion2" text="Quitar archivo" />
             <Button layoutX="459.0" layoutY="197.0" mnemonicParsing="false" onAction="#previousMenu" prefWidth="100.0" styleClass="button-regresar" text="Regresar" />
             <ImageView fx:id="imageViewFile" fitHeight="115.0" fitWidth="94.0" layoutX="180.0" layoutY="77.0" onDragDropped="#onDragDropped" onDragOver="#onDragOver" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -32,7 +32,7 @@
                   <Cursor fx:constant="CLOSED_HAND" />
                </cursor>
             </ImageView>
-            <Label layoutX="47.0" layoutY="2.0" text="Selecciona el archivo y luego arrástralo">
+            <Label layoutX="47.0" layoutY="2.0" text="Selecciona el archivo y luego arrástralo.">
                <font>
                   <Font size="16.0" />
                </font>

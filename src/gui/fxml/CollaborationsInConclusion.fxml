@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.CubicCurve?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #FF74A3, #AA0D2C);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.CollaborationsInConclusionController">
+   <children>
+      <CubicCurve controlX1="-236.81808471679688" controlX2="432.0335693359375" controlY1="-96.39999389648438" controlY2="-96.39999389648438" endX="401.0" endY="-47.0" fill="#f2f2f2" layoutX="199.0" layoutY="451.0" startX="-199.0" startY="-46.999969482421875" stroke="#f2f2f2" />
+      <Button layoutX="153.0" layoutY="372.0" mnemonicParsing="false" onAction="#displayReviewConclusionCollaboration" prefWidth="100.0" styleClass="button-accion2" text="Evaluar" />
+      <Button layoutX="335.0" layoutY="372.0" mnemonicParsing="false" onAction="#previousMenu" prefWidth="100.0" styleClass="button-regresar" text="Regresar" />
+      <AnchorPane layoutX="10.0" layoutY="115.0" prefHeight="250.0" prefWidth="580.0">
+         <children>
+            <TableView fx:id="tblViewPendingCollaborations" layoutX="163.0" layoutY="14.0" prefHeight="250.4" prefWidth="580.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <columns>
+                <TableColumn prefWidth="193.33" text="Colaboración" />
+                <TableColumn prefWidth="193.33" text="Universidad profesor" />
+                  <TableColumn prefWidth="193.33" text="Universidad profesor espejo" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="106.0" fitWidth="146.0" layoutX="10.0" layoutY="9.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/coilIcon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="106.0" fitWidth="100.0" layoutX="250.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/checkListIcon.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

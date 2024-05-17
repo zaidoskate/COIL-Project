@@ -46,6 +46,12 @@ public class MyCollaborationsController implements Initializable {
     @FXML
     private Button btnStartCollaboration;
     
+    @FXML
+    private Button btnConcludeCollaboration;
+    
+    @FXML
+    private Button btnUploadEvidence;
+    
     private static final ProfessorBelongsToCollaborationDAO professorBelongsToCollaborationDAO = new ProfessorBelongsToCollaborationDAO();
     private static final CollaborationDAO collaborationDAO = new CollaborationDAO();
     
@@ -87,6 +93,8 @@ public class MyCollaborationsController implements Initializable {
         this.collaborationAvailablePane.setVisible(true);
         if(currentCollaboration.getCollaborationStatus().equals("Iniciada")) {
             this.btnStartCollaboration.setVisible(false);
+            this.btnConcludeCollaboration.setVisible(true);
+            this.btnUploadEvidence.setVisible(true);
         }
     }
     
@@ -116,5 +124,20 @@ public class MyCollaborationsController implements Initializable {
             Alerts.displayAlertIOException();
             log.error(ioException);
         }
+    }
+    
+    @FXML
+    private void displayConcludeCollaboration() {
+        
+    }
+    
+    @FXML
+    private void displayUploadEvidence() {
+        
+    }
+    
+    @FXML
+    private void displayCollaborationHistory() {
+        
     }
 }

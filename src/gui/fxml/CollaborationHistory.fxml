@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #F2F2F2;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.CollaborationHistory">
+   <children>
+      <AnchorPane prefHeight="400.0" prefWidth="150.0" style="-fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #FF74A3, #AA0D2C);">
+         <children>
+            <Button layoutX="25.0" layoutY="358.0" mnemonicParsing="false" onAction="#previousMenu" prefWidth="100.0" styleClass="button-regresar" text="Regresar" />
+            <Button layoutX="25.0" layoutY="320.0" mnemonicParsing="false" onAction="#displayDetailMyCollaboration" prefWidth="100.0" styleClass="button-accion" text="Detalle" />
+            <ImageView fitHeight="107.0" fitWidth="100.0" layoutX="25.0" layoutY="120.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/coilIcon.png" />
+               </image>
+            </ImageView>
+            <Label layoutY="221.0" prefHeight="50.0" prefWidth="150.0" text="Historial de colaboraciones" textAlignment="CENTER" textFill="#f2f2f2" wrapText="true">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="160.0" layoutY="14.0" prefHeight="350.0" prefWidth="430.0">
+         <children>
+            <TableView fx:id="tblViewConcludedCollaborations" layoutX="74.0" layoutY="14.0" prefHeight="250.4" prefWidth="430.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <columns>
+                <TableColumn prefWidth="215.0" text="Colaboración" />
+                <TableColumn prefWidth="215.0" text="Universidad del profesor espejo" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

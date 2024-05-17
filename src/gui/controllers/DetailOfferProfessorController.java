@@ -218,11 +218,13 @@ public class DetailOfferProfessorController implements Initializable {
         EmailNotification.getInstance().setMessageCancel("Se cancelará el rechazo de la oferta");
         try {
             SendEmailStage sendEmailStage = new SendEmailStage();
-            Evaluation evaluation = createEvaluationDeclined();
-            if(collaborationOfferDAO.evaluateCollaborationOffer(selectedOffer.getIdOfferCollaboration(), "Rechazada") == 1) {
-                if(evaluationDAO.insertEvaluationForDeclinedOffer(evaluation) == 1) {
-                    if(EmailNotification.getInstance().getSentStatus()) {
-                        previousMenu();
+            if(EmailNotification.getInstance().getSentStatus()) {
+                Evaluation evaluation = createEvaluationDeclined();
+                if(collaborationOfferDAO.evaluateCollaborationOffer(selectedOffer.getIdOfferCollaboration(), "Rechazada") == 1) {
+                    if(evaluationDAO.insertEvaluationForDeclinedOffer(evaluation) == 1) {
+                        if(EmailNotification.getInstance().getSentStatus()) {
+                            previousMenu();
+                        }
                     }
                 }
             }

@@ -15,8 +15,8 @@ public class CredentialDAOTest {
     public void testInsertCredentialSuccess()  throws LogicException {
         CredentialDAO credentialDAO = new CredentialDAO();
         Credential credential = new Credential();
-        credential.setIdUser(2);
-        credential.setUser("usuario2");
+        credential.setIdUser(1);
+        credential.setUser("admin1");
         credential.setPassword("password123");
         
         int currentResult = credentialDAO.insertCredential(credential);

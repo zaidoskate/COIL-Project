@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import logic.DAOs.CollaborationDAO;
 import logic.DAOs.CollaborationOfferCandidateDAO;
 import logic.DAOs.CollaborationOfferDAO;
+import logic.DAOs.EvaluationDAO;
 import logic.DAOs.ProfessorBelongsToCollaborationDAO;
 import logic.domain.ProfessorBelongsToCollaboration;
 import logic.model.CandidateInformation;
@@ -45,6 +46,7 @@ public class RegistrateCollaborationController implements Initializable {
     private static final ProfessorBelongsToCollaborationDAO professorBelongsToCollaborationDAO = new ProfessorBelongsToCollaborationDAO();
     private static final CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
     private static final CollaborationOfferCandidateDAO collaborationOfferCandidatesDAO = new CollaborationOfferCandidateDAO();
+    private static final EvaluationDAO evaluationDAO = new EvaluationDAO();
     
     private static final OfferInformation professorOffer = OfferInformation.getOffer();
     private static final SessionManager currentSession = SessionManager.getInstance();
@@ -102,7 +104,8 @@ public class RegistrateCollaborationController implements Initializable {
                     int added = professorBelongsToCollaborationDAO.addProfessorBelongsToCollaboration(professorBelongsToCollaboration);
                     if(added == 1) {
                         int candidatesDeleted = collaborationOfferCandidatesDAO.deleteCollaborationOffer(professorOffer.getIdOfferCollaboration());
-                        if(candidatesDeleted > 0) {
+                        int evaluationDeleted = evaluationDAO.deleteEvaluation(professorOffer.getIdOfferCollaboration());
+                        if(candidatesDeleted > 0 && evaluationDeleted == 1) {
                             int offerDeleted = collaborationOfferDAO.deleteCollaborationOffer(professorOffer.getIdOfferCollaboration());
                             if(offerDeleted == 1) {
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -121,6 +124,7 @@ public class RegistrateCollaborationController implements Initializable {
                 Alerts.showWarningAlert("Proporcione un nombre válido para la colaboración");
             }
         } catch (LogicException logicException) {
+            System.out.println(logicException.getCause());
             Alerts.displayAlertLogicException(logicException);
             log.error(logicException);
         }

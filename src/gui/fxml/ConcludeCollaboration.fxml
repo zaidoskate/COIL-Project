@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.shape.CubicCurve?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(from 0% 0% to 0% 30%, rgb(254, 60, 87), rgb(201, 35, 58));" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ConcludeCollaborationController">
+   <children>
+      <CubicCurve controlX1="-32.20216369628906" controlX2="178.8270263671875" controlY1="-45.0" controlY2="-45.0" endX="371.0" endY="55.82025909423828" fill="#f2f2f2" layoutX="228.0" layoutY="101.0" startX="-229.0" startY="55.82026672363281" stroke="#f2f2f2" />
+      <AnchorPane layoutY="156.0" prefHeight="246.0" prefWidth="600.0" style="-fx-background-color: #f2f2f2;">
+         <children>
+            <Label layoutX="45.0" layoutY="6.0" text="Selecciona el archivo y luego arrástralo.">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Region layoutX="45.0" layoutY="32.0" onDragDropped="#onDragDropped" onDragOver="#onDragOver" prefHeight="200.0" prefWidth="360.0" styleClass="dashed-border-item" />
+            <ComboBox fx:id="comboBoxFileType" layoutX="424.0" layoutY="32.0" onAction="#showHasUploadedFile" prefHeight="26.0" prefWidth="161.0" promptText="Selecciona el archivo" />
+            <Button layoutX="455.0" layoutY="109.0" mnemonicParsing="false" onAction="#concludeCollaboration" prefWidth="100.0" styleClass="button-accion" text="Concluir" />
+            <Button layoutX="455.0" layoutY="150.0" mnemonicParsing="false" onAction="#deleteFile" prefWidth="100.0" styleClass="button-accion2" text="Quitar archivo" />
+            <Button layoutX="455.0" layoutY="204.0" mnemonicParsing="false" onAction="#previousMenu" prefWidth="100.0" styleClass="button-regresar" text="Regresar" />
+            <ImageView fx:id="imageViewFile" fitHeight="115.0" fitWidth="94.0" layoutX="180.0" layoutY="77.0" onDragDropped="#onDragDropped" onDragOver="#onDragOver" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/upload-icon.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="88.0" fitWidth="118.0" layoutX="256.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/fileIcon.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="-1.0" layoutY="106.0" prefHeight="26.0" prefWidth="602.0" text="Carga tu feedback!">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

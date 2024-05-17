@@ -13,9 +13,9 @@ public class UserDAOTest {
     public void testAddUserSuccess() throws LogicException{
         UserDAO userDAO = new UserDAO();
         User user = new User();
-        user.setName("Lorenzo");
-        user.setLastName("Hdez");
-        user.setEmail("tlapa@gmail.com");
+        user.setName("Rafael");
+        user.setLastName("Baños");
+        user.setEmail("zaidskate@hotmail.com");
         
         int currentResult = userDAO.addUser(user);
         int expectedResult = 1;

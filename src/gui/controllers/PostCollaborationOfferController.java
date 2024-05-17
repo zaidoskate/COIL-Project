@@ -143,10 +143,14 @@ public class PostCollaborationOfferController implements Initializable {
                     Alerts.showInformationAlert("Hecho", "Su oferta será evaluada, espere un correo con el resultado");
                     Stage stage = (Stage) this.btnPost.getScene().getWindow();
                     stage.close();
+                    Stage offerStage = new OfferProfessorStage();
                 }
             } catch(LogicException logicException) {
                 Alerts.displayAlertLogicException(logicException);
                 log.error(logicException);
+            } catch (IOException ioException) {
+                Alerts.displayAlertIOException();
+                log.error(ioException);
             }
         }
     }

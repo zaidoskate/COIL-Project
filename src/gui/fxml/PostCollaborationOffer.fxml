@@ -29,7 +29,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="btnPublicar" layoutX="25.0" layoutY="519.0" mnemonicParsing="false" onAction="#postCollaborationOffer" prefWidth="150.0" styleClass="button-accion" text="Publicar">
+            <Button fx:id="btnPost" layoutX="25.0" layoutY="519.0" mnemonicParsing="false" onAction="#postCollaborationOffer" prefWidth="150.0" styleClass="button-accion" text="Publicar">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #FF74A3, #AA0D2C);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ReviewConclusionCollaborationController">
+   <children>
+      <Line endX="-0.5999755859375" endY="-9.199993133544922" layoutX="400.0" layoutY="38.0" startX="-0.5999755859375" startY="125.19999694824219" stroke="#6b5151" />
+      <AnchorPane layoutY="177.0" prefHeight="150.0" prefWidth="800.0">
+         <children>
+            <AnchorPane layoutX="400.0" prefHeight="150.0" prefWidth="400.0">
+               <children>
+                  <TableView layoutX="119.0" layoutY="-33.0" prefHeight="167.2" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                      <TableColumn fx:id="tblViewEvidence" prefWidth="400.0" text="Evidencia" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+            <ComboBox fx:id="comboBoxFeedbackType" layoutX="14.0" layoutY="1.0" prefHeight="26.0" prefWidth="375.0" promptText="Seleccione un archivo de feedback para descargar" />
+            <Button layoutX="140.0" layoutY="48.0" mnemonicParsing="false" onAction="#downloadFeedback" styleClass="button-accion" text="Descargar feedback" />
+            <Button layoutX="140.0" layoutY="81.0" mnemonicParsing="false" onAction="#downloadEvidence" styleClass="button-accion" text="Descargar evidencia" />
+         </children>
+      </AnchorPane>
+      <Button layoutX="270.0" layoutY="361.0" mnemonicParsing="false" onAction="#approveConclusion" styleClass="button-accion" text="Aprobar" />
+      <Button layoutX="481.0" layoutY="361.0" mnemonicParsing="false" onAction="#declineConclusion" styleClass="button-accion2" text="Rechazar" />
+      <Button layoutX="722.0" layoutY="361.0" mnemonicParsing="false" onAction="#previousMenu" styleClass="button-regresar" text="Regresar" />
+      <AnchorPane layoutX="14.0" layoutY="59.0" prefHeight="80.0" prefWidth="375.0" styleClass="shadowed">
+         <children>
+            <Label fx:id="lblProfessorName" layoutY="14.0" prefHeight="26.0" prefWidth="375.0" text="ProfessorName">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblProfessorEmail" layoutY="39.0" prefHeight="26.0" prefWidth="375.0" text="ProfessorEmail">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="410.0" layoutY="59.0" prefHeight="80.0" prefWidth="375.0" styleClass="shadowed">
+         <children>
+            <Label fx:id="lblMirrorProfessorName" layoutY="14.0" prefHeight="26.0" prefWidth="375.0" text="MirrorName">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblMirrorProfessorEmail" layoutY="40.0" prefHeight="26.0" prefWidth="375.0" text="MirrorEmail">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="70.0" fitWidth="74.0" layoutX="167.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/userIcon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="70.0" fitWidth="74.0" layoutX="568.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/userIcon.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
