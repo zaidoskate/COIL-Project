@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
@@ -40,6 +41,9 @@ public class ReviewConclusionCollaborationController implements Initializable {
     
     @FXML
     private TableView tblViewEvidence;
+    
+    @FXML
+    private TableColumn tblColumnEvidence;
     
     private static final Logger log = Logger.getLogger(ReviewConclusionCollaborationController.class);
 

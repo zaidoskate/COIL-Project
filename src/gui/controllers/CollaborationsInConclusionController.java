@@ -5,6 +5,7 @@
 package gui.controllers;
 
 import gui.Alerts;
+import gui.stages.CollaborationsCoordinatorMenuStage;
 import gui.stages.ReviewConclusionCollaborationStage;
 import java.io.IOException;
 import java.net.URL;
@@ -39,12 +40,20 @@ public class CollaborationsInConclusionController implements Initializable {
             ReviewConclusionCollaborationStage reviewConclusionStage = new ReviewConclusionCollaborationStage();
         } catch (IOException ioException) {
             Alerts.displayAlertIOException();
-            log.error(ioException);
+            ioException.printStackTrace();
+            //log.error(ioException);
         }
     }
     
     @FXML
     private void previousMenu() {
-        //FALTA IMPLEMENTAR
+        Stage stage = (Stage) this.tblViewPendingCollaborations.getScene().getWindow();
+        stage.close();
+        try {
+            CollaborationsCoordinatorMenuStage collaborationsCoordinatorStage = new CollaborationsCoordinatorMenuStage();
+        } catch(IOException ioException) {
+            Alerts.displayAlertIOException();
+            log.error(ioException);
+        }
     }
 }

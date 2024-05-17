@@ -103,4 +103,21 @@ public class DataValidationTest {
         boolean result = DataValidation.validateLengthField(text, 5);
         assertEquals(expectedResult, result);
     }
+    
+    @Test
+    public void testValidateFileExtensionSuccess() {
+        String fileName = "Syllabus.pdf";
+        String extension = "pdf";
+        boolean expectedResult = true;
+        boolean result = DataValidation.validateFileExtension(fileName, extension);
+        assertEquals(expectedResult, result);
+    }
+    
+    @Test
+    public void testValidatePeriodFormatSuccess() {
+        String period = "Enero - Febrero 2024";
+        boolean expectedResult = true;
+        boolean result = DataValidation.validatePeriodFormat(period);
+        assertEquals(expectedResult, result);
+    }
 }

@@ -5,6 +5,7 @@
 package gui.controllers;
 
 import gui.Alerts;
+import gui.DataValidation;
 import gui.stages.MyCollaborationsStage;
 import java.io.File;
 import java.io.IOException;
@@ -34,7 +35,7 @@ import org.apache.log4j.Logger;
 public class StartCollaborationController implements Initializable {
     
     @FXML
-    private Region region;
+    private Region regionFile;
     
     @FXML
     private ImageView imageViewFile;
@@ -128,10 +129,10 @@ public class StartCollaborationController implements Initializable {
     
     @FXML
     public void onDragOver(DragEvent event) {
-        Stage stage = (Stage) this.region.getScene().getWindow();
+        Stage stage = (Stage) this.regionFile.getScene().getWindow();
         stage.requestFocus();
         if(comboBoxFileType.getSelectionModel().getSelectedItem() != null) {
-            if(event.getGestureSource() != region || event.getGestureSource() != imageViewFile){
+            if(event.getGestureSource() != this.regionFile || event.getGestureSource() != imageViewFile){
                 if(event.getDragboard().hasFiles()) {
                     event.acceptTransferModes(TransferMode.COPY);
                 }
@@ -143,18 +144,19 @@ public class StartCollaborationController implements Initializable {
     @FXML
     public void onDragDropped(DragEvent event) {
         if(comboBoxFileType.getSelectionModel().getSelectedItem() != null) {
-            if(event.getGestureSource() != region || event.getGestureSource() != imageViewFile){
+            if(event.getGestureSource() != regionFile || event.getGestureSource() != imageViewFile){
                 if(event.getDragboard().hasFiles()) {
                     File fileToUpload = event.getDragboard().getFiles().get(0);
                     String selectedFileType = (String) comboBoxFileType.getSelectionModel().getSelectedItem().toString();
-                    try {
-                        uploadFile(selectedFileType, fileToUpload);
-                        event.setDropCompleted(true);
-                    } catch(LogicException logicException) {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setHeaderText("Error");
-                        alert.setTitle("Error");
-                        alert.setContentText(logicException.getMessage());
+                    if(DataValidation.validateFileExtension(fileToUpload.getName(), "pdf")){
+                        try {
+                            uploadFile(selectedFileType, fileToUpload);
+                            event.setDropCompleted(true);
+                        } catch(LogicException logicException) {
+                            Alerts.displayAlertLogicException(logicException);
+                        }
+                    } else {
+                        Alerts.showWarningAlert("Solo se permiten archivos con extensión PDF");
                     }
                     event.consume();
                 }

@@ -50,7 +50,7 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="txtAreaObjective" layoutX="178.0" layoutY="14.0" prefHeight="40.0" prefWidth="390.0" promptText="¿Cuál es el objetivo de tu oferta?" />
+                  <TextArea fx:id="txtAreaObjective" layoutX="178.0" layoutY="14.0" prefHeight="40.0" prefWidth="390.0" promptText="¿Cuál es el objetivo de su oferta?" wrapText="true" />
                   <Label layoutX="15.0" layoutY="75.0" prefHeight="25.0" prefWidth="153.0" text="Tema de interés">
                      <font>
                         <Font size="16.0" />
@@ -71,10 +71,10 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="txtAreaTopicsOfInterest" layoutX="178.0" layoutY="68.0" prefHeight="40.0" prefWidth="390.0" promptText="Algunos temas que te gustaría tocar" />
-                  <TextField fx:id="txtFieldPeriod" layoutX="178.0" layoutY="123.0" prefHeight="40.0" prefWidth="390.0" promptText="¿En qué periodo?" />
-                  <TextArea fx:id="txtAreaLanguage" layoutX="178.0" layoutY="178.0" prefHeight="40.0" prefWidth="390.0" promptText="¿Qué idioma puedes manejar en la colaboración?" />
-                  <TextArea fx:id="txtAreaAditionalInformation" layoutX="178.0" layoutY="233.0" prefHeight="40.0" prefWidth="390.0" />
+                  <TextArea fx:id="txtAreaTopicsOfInterest" layoutX="178.0" layoutY="68.0" prefHeight="40.0" prefWidth="390.0" promptText="Algunos temas que le gustaría tocar" wrapText="true" />
+                  <TextField fx:id="txtFieldPeriod" layoutX="178.0" layoutY="123.0" prefHeight="40.0" prefWidth="390.0" promptText="¿En qué periodo? (Dale el formato Enero - Julio 2025 por ejemplo)" />
+                  <TextArea fx:id="txtAreaLanguage" layoutX="178.0" layoutY="178.0" prefHeight="40.0" prefWidth="390.0" promptText="¿Qué idioma puede manejar en la colaboración?" wrapText="true" />
+                  <TextArea fx:id="txtAreaAditionalInformation" layoutX="178.0" layoutY="233.0" prefHeight="40.0" prefWidth="390.0" promptText="¿Algo más que compartir?" wrapText="true" />
                </children>
             </AnchorPane>
             <Label layoutX="1.0" layoutY="412.0" prefHeight="26.0" prefWidth="600.0" text="Información de los estudiantes">
@@ -94,8 +94,8 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtFieldProfile" alignment="CENTER" layoutX="50.0" layoutY="97.0" prefHeight="26.0" prefWidth="475.0" promptText="¿Qué perfil buscas en los estudiantes espejo?" />
-                  <TextField fx:id="txtFieldNumberStudents" layoutX="199.0" layoutY="40.0" prefHeight="26.0" prefWidth="180.0" promptText="¿Cuál es el tamaño de tu clase?" />
+                  <TextField fx:id="txtFieldProfile" alignment="CENTER" layoutX="50.0" layoutY="97.0" prefHeight="26.0" prefWidth="475.0" promptText="¿Qué perfil busca en los estudiantes espejo?" />
+                  <TextField fx:id="txtFieldNumberStudents" layoutX="199.0" layoutY="40.0" prefHeight="26.0" prefWidth="180.0" promptText="¿Cuál es el tamaño de su clase?" style="-fx-alignment: CENTER;" />
                </children>
             </AnchorPane>
             <Label layoutY="14.0" prefHeight="27.0" prefWidth="602.0" text="Publicar oferta de colaboración">

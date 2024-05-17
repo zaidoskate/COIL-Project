@@ -52,4 +52,16 @@ public class DataValidation {
         return field.length() <= length;
     }
     
+    public static boolean validateFileExtension(String fileName, String extension) {
+        if(fileName == null || extension == null || extension.isBlank()) {
+            return false;
+        }
+        
+        return fileName.toLowerCase().endsWith("." + extension.toLowerCase());
+    }
+    
+    public static boolean validatePeriodFormat(String period) {
+        String validPeriodForm = "^(Enero|Febrero|Marzo|Abril|Mayo|Junio|Julio|Agosto|Septiembre|Octubre|Noviembre|Diciembre) ?- ?(Enero|Febrero|Marzo|Abril|Mayo|Junio|Julio|Agosto|Septiembre|Octubre|Noviembre|Diciembre) \\d{4}$";
+        return period.matches(validPeriodForm);
+    }
 }

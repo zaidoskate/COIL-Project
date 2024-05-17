@@ -80,7 +80,8 @@ public class ProfessorDetailController implements Initializable {
     @FXML
     private void acceptCandidate() {
         try {
-            RegistrateCollaborationStage registrateCollaborationStage = new RegistrateCollaborationStage();
+            Stage currentStage = (Stage) this.btnAccept.getScene().getWindow();
+            RegistrateCollaborationStage registrateCollaborationStage = new RegistrateCollaborationStage(currentStage);
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
             log.error(ioException);

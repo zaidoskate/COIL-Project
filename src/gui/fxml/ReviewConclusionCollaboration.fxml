@@ -18,9 +18,9 @@
          <children>
             <AnchorPane layoutX="400.0" prefHeight="150.0" prefWidth="400.0">
                <children>
-                  <TableView layoutX="119.0" layoutY="-33.0" prefHeight="167.2" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="tblViewEvidence" layoutX="119.0" layoutY="-33.0" prefHeight="167.2" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn fx:id="tblViewEvidence" prefWidth="400.0" text="Evidencia" />
+                      <TableColumn fx:id="tblColumnEvidence" prefWidth="400.0" text="Evidencia" />
                     </columns>
                   </TableView>
                </children>

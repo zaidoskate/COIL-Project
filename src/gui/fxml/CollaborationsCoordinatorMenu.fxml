@@ -26,7 +26,7 @@
                   <Font name="Century Gothic Bold" size="18.0" />
                </font>
             </Button>
-            <Button layoutX="86.0" layoutY="222.0" mnemonicParsing="false" prefHeight="92.0" prefWidth="310.0" styleClass="button-menu" text="Por concluir" textAlignment="CENTER" wrapText="true">
+            <Button layoutX="86.0" layoutY="222.0" mnemonicParsing="false" onAction="#displayCollaborationsInConclusion" prefHeight="92.0" prefWidth="310.0" styleClass="button-menu" text="Por concluir" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Century Gothic Bold" size="18.0" />
                </font>

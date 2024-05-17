@@ -7,13 +7,15 @@ package gui.controllers;
 import gui.Alerts;
 import gui.SessionManager;
 import gui.DataValidation;
+import gui.stages.OfferProfessorStage;
+import gui.stages.RegistrateCollaborationStage;
+import java.io.IOException;
 import logic.LogicException;
 import logic.domain.Collaboration;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -108,12 +110,16 @@ public class RegistrateCollaborationController implements Initializable {
                         if(candidatesDeleted > 0 && evaluationDeleted == 1) {
                             int offerDeleted = collaborationOfferDAO.deleteCollaborationOffer(professorOffer.getIdOfferCollaboration());
                             if(offerDeleted == 1) {
-                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                alert.setHeaderText("Mensaje");
-                                alert.setTitle("Mensaje");
-                                alert.setContentText("Has aceptado esta colaboración ponte en contacto con el profesor");
-                                alert.showAndWait();
+                                Alerts.showInformationAlert("Mensaje", "Has aceptado esta colaboración ponte en contacto con el profesor");
+                                Stage professorDetailStage = ((RegistrateCollaborationStage)this.btnAccept.getScene().getWindow()).getProfessorDetailStage();
+                                professorDetailStage.close();
                                 previousMenu();
+                                try {
+                                    OfferProfessorStage offerStage = new OfferProfessorStage();
+                                } catch(IOException ioException) {
+                                    Alerts.displayAlertIOException();
+                                    log.error(ioException);
+                                }
                                 return;
                             }
                         }
@@ -124,7 +130,6 @@ public class RegistrateCollaborationController implements Initializable {
                 Alerts.showWarningAlert("Proporcione un nombre válido para la colaboración");
             }
         } catch (LogicException logicException) {
-            System.out.println(logicException.getCause());
             Alerts.displayAlertLogicException(logicException);
             log.error(logicException);
         }

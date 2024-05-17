@@ -31,7 +31,7 @@ public class FileDownloader {
         Sheet regionSheet = workBook.createSheet("Regiones");
         Row regionHeader = regionSheet.createRow(0);
         regionHeader.createCell(0).setCellValue("Región");
-        regionHeader.createCell(1).setCellValue("Colaboraciones");
+        regionHeader.createCell(1).setCellValue("Profesores");
         String[] regions = {"Xalapa", "Veracruz", "Coatzacoalcos", "Orizaba", "Tuxpan"};
         for (int i = 0; i < regions.length; i++) {
             Row regionData = regionSheet.createRow(i + 1);
@@ -44,7 +44,7 @@ public class FileDownloader {
         Sheet academicAreaSheet = workBook.createSheet("Áreas académicas");
         Row academicAreaHeader = academicAreaSheet.createRow(0);
         academicAreaHeader.createCell(0).setCellValue("Área Académica");
-        academicAreaHeader.createCell(1).setCellValue("Colaboraciones");
+        academicAreaHeader.createCell(1).setCellValue("Profesores");
         String[] academicAreas = {"Artes", "Ciencias Biológicas y Agropecuarias", "Ciencias de la Salud", "Económico Administrativo", "Humanidades", "Técnicas"};
         for (int i=0; i<academicAreas.length; i ++) {
             Row academicAreaData = academicAreaSheet.createRow(i + 1);

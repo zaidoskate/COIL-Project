@@ -10,7 +10,10 @@ import javafx.stage.Stage;
 
 public class RegistrateCollaborationStage extends Stage {
     
-    public RegistrateCollaborationStage() throws IOException {
+    private Stage professorDetailStage;
+    
+    public RegistrateCollaborationStage(Stage professorDetailStage) throws IOException {
+        this.professorDetailStage = professorDetailStage;
         FXMLLoader loader = new FXMLLoader(COILVICApplication.class.getResource("fxml/RegistrateCollaboration.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -19,5 +22,9 @@ public class RegistrateCollaborationStage extends Stage {
         this.setTitle("Registrar colaboracion");
         this.setScene(scene);
         this.showAndWait();
+    }
+    
+    public Stage getProfessorDetailStage() {
+        return this.professorDetailStage;
     }
 }

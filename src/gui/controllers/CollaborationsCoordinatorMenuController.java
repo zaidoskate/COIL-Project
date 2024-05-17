@@ -1,6 +1,7 @@
 package gui.controllers;
 
 import gui.Alerts;
+import gui.stages.CollaborationsInConclusionStage;
 import gui.stages.CoordinatorMenuStage;
 import java.io.IOException;
 import java.net.URL;
@@ -30,6 +31,18 @@ public class CollaborationsCoordinatorMenuController implements Initializable {
         } catch(IOException ioException) {
             log.warn(ioException);
             Alerts.displayAlertIOException();
+        }
+    }
+    
+    @FXML
+    private void displayCollaborationsInConclusion() {
+        Stage stage = (Stage) this.btnClose.getScene().getWindow();
+        stage.close();
+        try {
+            CollaborationsInConclusionStage collaborationsInConclusionStage = new CollaborationsInConclusionStage();
+        } catch(IOException ioException) {
+            Alerts.displayAlertIOException();
+            log.error(ioException);
         }
     }
     

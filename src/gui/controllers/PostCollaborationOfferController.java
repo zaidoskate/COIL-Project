@@ -127,6 +127,11 @@ public class PostCollaborationOfferController implements Initializable {
             Alerts.showWarningAlert("Número de estudiantes no puede estar en blanco");
             return false;
         }
+        
+        if(!DataValidation.validatePeriodFormat(txtFieldPeriod.getText())) {
+            Alerts.showWarningAlert("El periodo tiene que tener el formato MesX - MesY Año");
+            return false;
+        }
 
         return true;
     }

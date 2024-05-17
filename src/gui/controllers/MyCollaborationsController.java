@@ -6,7 +6,9 @@ package gui.controllers;
 
 import gui.Alerts;
 import gui.SessionManager;
+import gui.stages.CollaborationHistoryStage;
 import gui.stages.CollaborationStage;
+import gui.stages.ConcludeCollaborationStage;
 import gui.stages.StartCollaborationStage;
 import java.io.IOException;
 import java.net.URL;
@@ -128,7 +130,15 @@ public class MyCollaborationsController implements Initializable {
     
     @FXML
     private void displayConcludeCollaboration() {
-        
+        Stage stage = (Stage) this.btnConcludeCollaboration.getScene().getWindow();
+        stage.close();
+        try {
+            ConcludeCollaborationStage concludeCollaborationStage = new ConcludeCollaborationStage();
+        } catch(IOException ioException) {
+            Alerts.displayAlertIOException();
+            ioException.printStackTrace();
+            //log.error(ioException);
+        }
     }
     
     @FXML
@@ -138,6 +148,13 @@ public class MyCollaborationsController implements Initializable {
     
     @FXML
     private void displayCollaborationHistory() {
-        
+        Stage stage = (Stage) this.lblCollaborationName.getScene().getWindow();
+        stage.close();
+        try {
+            CollaborationHistoryStage collaborationHistoryStage = new CollaborationHistoryStage();
+        } catch(IOException ioException) {
+            Alerts.displayAlertIOException();
+            log.error(ioException);
+        }
     }
 }
