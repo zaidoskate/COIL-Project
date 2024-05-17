@@ -56,11 +56,6 @@ public class Collaboration {
         this.language = language;
     }
 
-    /**
-     *
-     * @param object
-     * @return
-     */
     @Override
     public boolean equals(Object object) {
         Collaboration collaborationToCompare = (Collaboration) object;

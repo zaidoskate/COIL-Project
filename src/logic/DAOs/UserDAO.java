@@ -11,11 +11,7 @@ import logic.LogicException;
 import java.sql.Statement;
 
 public class UserDAO implements UserManagerInterface {
-    private final DatabaseConnection databaseConnection;
-    
-    public UserDAO(){
-        this.databaseConnection = new DatabaseConnection();
-    }
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     
     @Override
     public int addUser(User user)  throws LogicException {

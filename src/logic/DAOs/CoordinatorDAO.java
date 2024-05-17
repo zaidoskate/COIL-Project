@@ -19,11 +19,7 @@ import logic.LogicException;
  * @author chima
  */
 public class CoordinatorDAO implements CoordinatorManagerInterface {
-    private final DatabaseConnection databaseConnection;
-    
-    public CoordinatorDAO() {
-        this.databaseConnection = new DatabaseConnection();
-    }
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     
     @Override
     public int insertCoordinator(Coordinator coordinator) throws LogicException {

@@ -11,10 +11,7 @@ import logic.domain.Department;
 import logic.interfaces.DepartmentManagerInterface;
 
 public class DepartmentDAO implements DepartmentManagerInterface{
-    private final DatabaseConnection databaseConnection;
-    public DepartmentDAO() {
-        this.databaseConnection = new DatabaseConnection();
-    }
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     
     @Override
     public ArrayList<String> getRegionsNames() throws LogicException {

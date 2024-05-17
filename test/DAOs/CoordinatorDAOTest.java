@@ -14,7 +14,7 @@ public class CoordinatorDAOTest {
     @Test
     public void testInsertCoordinatorSuccess() {
         Coordinator coordinator = new Coordinator();
-        coordinator.setIdUser(1);
+        coordinator.setIdUser(54321);
 
         CoordinatorDAO coordinatorDAO = new CoordinatorDAO();
         try {

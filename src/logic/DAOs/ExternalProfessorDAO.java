@@ -18,11 +18,7 @@ import logic.LogicException;
  * @author chima
  */
 public class ExternalProfessorDAO implements ExternalProfessorManagerInterface {
-    private final DatabaseConnection databaseConnection;
-    
-    public ExternalProfessorDAO() {
-        this.databaseConnection = new DatabaseConnection();
-    }
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     
     @Override
     public int insertExternalProfessor(ExternalProfessor externalProfessor) throws LogicException{

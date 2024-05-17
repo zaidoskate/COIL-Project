@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import logic.domain.User;
 import logic.model.UserData;
 import gui.stages.AccountRequestStage;
+import gui.stages.AdminMenuStage;
 import gui.stages.ProfesorMenuStage;
 import java.io.IOException;
 import java.net.URL;
@@ -88,6 +89,13 @@ public class LoginController implements Initializable {
         if(typeUser.equals("Coordinador")) {
             try{
                 CoordinatorMenuStage coordinatorMenuStage = new CoordinatorMenuStage();
+            } catch(IOException ioException) {
+                log.warn(ioException);
+                Alerts.displayAlertIOException();
+            }
+        } else if(typeUser.equals("Administrador")) {
+            try{
+                AdminMenuStage adminMenuStage = new AdminMenuStage();
             } catch(IOException ioException) {
                 log.warn(ioException);
                 Alerts.displayAlertIOException();

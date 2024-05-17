@@ -1,5 +1,6 @@
 package DAOs;
 
+import java.util.ArrayList;
 import logic.LogicException;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -37,5 +38,37 @@ public class UniversityDAOTest {
         int result = universityDAO.insertUniversity(university);
         
         assertEquals(0, result);
+    }
+    
+    @Test
+    public void testGetUniversitiesSuccess() throws LogicException {
+        ArrayList<University> universitiesExpected = new ArrayList<>();
+        University university;
+        university = new University();
+        university.setUniversityId(1);
+        university.setName("UNAM");
+        university.setCountry("Mexico");
+        universitiesExpected.add(university);
+        university = new University();
+        university.setUniversityId(2);
+        university.setName("BUAP");
+        university.setCountry("Mexico");
+        universitiesExpected.add(university);
+        university = new University();
+        university.setUniversityId(3);
+        university.setName("Harvard University");
+        university.setCountry("Estados Unidos");
+        universitiesExpected.add(university);
+        university = new University();
+        university.setUniversityId(4);
+        university.setName("Universidad Noch");
+        university.setCountry("Nochistlan");
+        universitiesExpected.add(university);
+        
+        UniversityDAO universityDAO = new UniversityDAO();
+        ArrayList<University> universitiesResult;
+        universitiesResult = universityDAO.getUniversities();
+        
+        assertEquals(universitiesExpected, universitiesResult);
     }
 }
