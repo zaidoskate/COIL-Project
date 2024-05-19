@@ -8,6 +8,7 @@ import gui.stages.CollaborationsCoordinatorMenuStage;
 import gui.stages.ExternalAccountCreateStage;
 import gui.stages.GenerateStatisticsStage;
 import gui.stages.OfferCoordinatorStage;
+import gui.stages.PendingMailsStage;
 import gui.stages.UniversitiesStage;
 import java.io.IOException;
 import java.net.URL;
@@ -100,6 +101,7 @@ public class CoordinatorMenuController implements Initializable {
         try {
             GenerateStatisticsStage generateStatisticsStage = new GenerateStatisticsStage();
         } catch(IOException ioException) {
+            log.warn(ioException);
             Alerts.displayAlertIOException();
         }
     }
@@ -111,6 +113,17 @@ public class CoordinatorMenuController implements Initializable {
         try {
             CollaborationsCoordinatorMenuStage collaborationsCoordinatorMenuStage = new CollaborationsCoordinatorMenuStage();
         } catch(IOException ioException) {
+            log.warn(ioException);
+            Alerts.displayAlertIOException();
+        }
+    }
+    
+    @FXML
+    private void openPendingMails() {
+        try {
+            PendingMailsStage pendingMailsStage = new PendingMailsStage();
+        } catch(IOException ioException) {
+            log.warn(ioException);
             Alerts.displayAlertIOException();
         }
     }

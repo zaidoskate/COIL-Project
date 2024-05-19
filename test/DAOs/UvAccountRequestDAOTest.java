@@ -84,7 +84,7 @@ public class UvAccountRequestDAOTest {
         uvAccountRequest.setLastName("Tlapa Hernández");
         uvAccountRequest.setName("Jesús Lorenzo");
         uvAccountRequest.setPersonalNumber("20984");
-        expectedResult.add(uvAccountRequest);
+        expectedResult.add(uvAccountRequest);   
         
         UvAccountRequestDAO uvAccountRequestDAO = new UvAccountRequestDAO();
         ArrayList<UvAccountRequest> result = uvAccountRequestDAO.getUvAccountRequests();

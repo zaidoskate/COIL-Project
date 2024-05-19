@@ -72,7 +72,7 @@ public class AccountRequestUvListController implements Initializable{
                 Alerts.showInformationAlert("Exito", "El correo se ha enviado a su destino con la clave de acceso");
                 loadUvAccountRequest();
             } else {
-                Alerts.showWarningAlert("No se ha podido registrar ni enviar el correo a su destino, intentelo mas tarde.");
+                Alerts.showWarningAlert("No se ha podido enviar la clave de acceso a su destino, intentelo mas tarde.");
             }
         } else {
             Alerts.showWarningAlert("No se ha seleccionado ninguna solicitud.");
