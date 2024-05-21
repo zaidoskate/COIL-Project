@@ -54,11 +54,11 @@ public class ProfessorBelongsToCollaborationTest {
     }
     
     @Test
-    public void testSetStartedStatusToCollaboration() {
+    public void testSetStatusToCollaboration() {
         int expectedResult = 1;
         ProfessorBelongsToCollaborationDAO professorBelongsToCollaborationDAO = new ProfessorBelongsToCollaborationDAO();
         try {
-            int result = professorBelongsToCollaborationDAO.setStartedStatusToCollaboration(11);
+            int result = professorBelongsToCollaborationDAO.setStatusToCollaboration(1, "Iniciada");
             assertEquals(expectedResult, result);
         } catch(LogicException logicException) {
             fail("No se ha podido cambiar el status de la colaboracion");

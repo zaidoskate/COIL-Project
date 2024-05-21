@@ -1,5 +1,7 @@
 package logic.domain;
 
+import java.io.File;
+
 public class ConcludedCollaboration {
     private int idColaboration;
     private int idUser;
@@ -7,6 +9,8 @@ public class ConcludedCollaboration {
     private int rating;
     private String visibility;
     private String certificatesPath;
+    private String conclusion;
+    private File certificatesFile;
 
     public int getIdColaboration() {
         return idColaboration;
@@ -54,6 +58,22 @@ public class ConcludedCollaboration {
 
     public void setCertificatesPath(String certificatesPath) {
         this.certificatesPath = certificatesPath;
+    }
+
+    public String getConclusion() {
+        return conclusion;
+    }
+
+    public void setConclusion(String conclusion) {
+        this.conclusion = conclusion;
+    }
+
+    public File getCertificatesFile() {
+        return certificatesFile;
+    }
+
+    public void setCertificatesFile(File certificatesFile) {
+        this.certificatesFile = certificatesFile;
     }
     
     @Override

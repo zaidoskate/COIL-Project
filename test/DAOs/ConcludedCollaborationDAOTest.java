@@ -90,4 +90,15 @@ public class ConcludedCollaborationDAOTest {
         assertEquals(concludedCollaborationsExpected, concludedCollaborationsResult);
     }
     
+    @Test
+    public void testHasCertificatesUploadedSuccess() {
+        ConcludedColaborationDAO concludedCollaborationDAO = new ConcludedColaborationDAO();
+        boolean expectedResult = false;
+        try {
+            boolean result = concludedCollaborationDAO.hasCertificatesUploaded(1);
+            assertEquals(expectedResult, result);
+        } catch(LogicException logicException) {
+            fail("Error al consultar si la colaboracion tiene constancias cargadas");
+        }
+    }
 }

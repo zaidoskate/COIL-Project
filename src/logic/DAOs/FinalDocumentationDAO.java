@@ -19,6 +19,23 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
     private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     
     @Override
+    public int addFinalDocumentation(FinalDocumentation finalDocumentation) throws LogicException {
+        int added = 0;
+        String query = "INSERT INTO documentacionFinal (Colaboracion_idColaboracion) VALUES (?)";
+        try {
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, finalDocumentation.getIdColaboration());
+            added = statement.executeUpdate();
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexión, inténtelo de nuevo más tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return added;
+    }
+    
+    @Override
     public int uploadProfessorFeedback(FinalDocumentation finalDocumentation) throws LogicException{
         int result = 0;
         String query = "UPDATE DocumentacionFinal SET feedbackProfesor = ? WHERE Colaboracion_idColaboracion = ?";
@@ -208,5 +225,65 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
             databaseConnection.closeConnection();
         }
         return result;
+    }
+    
+    @Override
+    public int deleteUploadedFile(String fileType, int idCollaboration) throws LogicException {
+        int deleted = 0;
+        String query = "UPDATE documentacionFinal SET " + fileType + " = NULL WHERE colaboracion_idcolaboracion = ?";
+        try {
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idCollaboration);
+            deleted = statement.executeUpdate();
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexión, inténtelo de nuevo más tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return deleted;
+    }
+    
+    @Override
+    public boolean isCollaborationRegistrated(int idCollaboration) throws LogicException {
+        boolean registrated = false;
+        String query = "SELECT COUNT(*) AS count FROM documentacionFinal WHERE Colaboracion_idColaboracion = ?";
+        try {
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idCollaboration);
+            ResultSet countCollaboration = statement.executeQuery();
+            if(countCollaboration.next()) {
+                int count = countCollaboration.getInt("count");
+                registrated = count > 0;
+            }
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexión, inténtelo de nuevo más tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return registrated;
+    }
+    
+    @Override
+    public boolean hasFileUploaded(String fileType, int idCollaboration) throws LogicException {
+        boolean hasFileUploaded = false;
+        String query = "SELECT " + fileType + " AS file FROM documentacionFinal WHERE colaboracion_idColaboracion = ?";
+        try {
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idCollaboration);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                if(resultSet.getString("file") != null) {
+                    hasFileUploaded = true;
+                }
+            }
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return hasFileUploaded;
     }
 }

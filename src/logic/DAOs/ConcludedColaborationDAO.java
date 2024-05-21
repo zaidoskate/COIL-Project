@@ -22,13 +22,15 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
     @Override
     public int addConcludedCollaboration(ConcludedCollaboration concludedCollaboration) throws LogicException{
         int result = 0;
-        String query = "INSERT INTO colaboracionconcluida(Colaboracion_idColaboracion, Usuario_idUsuario, numeroEstudiantes) VALUES (?, ?, ?)";
+        String query = "INSERT INTO colaboracionconcluida(Colaboracion_idColaboracion, Usuario_idUsuario, visibilidad, calificacion, conclusion) VALUES (?, ?, ?, ?, ?)";
         try{
             Connection connection = this.databaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, concludedCollaboration.getIdColaboration());
             statement.setInt(2, concludedCollaboration.getIdUser());
-            statement.setInt(3, concludedCollaboration.getNumberStudents());
+            statement.setString(3, concludedCollaboration.getVisibility());
+            statement.setInt(4, concludedCollaboration.getRating());
+            statement.setString(5, concludedCollaboration.getConclusion());
             result = statement.executeUpdate();
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
@@ -81,9 +83,8 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
         try {
             Connection connection = this.databaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
-            File certificatesZip = new File(concludedCollaboration.getCertificatesPath());
-            FileInputStream fileInputStream = new FileInputStream(certificatesZip);
-            statement.setBinaryStream(1, fileInputStream, (int) certificatesZip.length());
+            FileInputStream fileInputStream = new FileInputStream(concludedCollaboration.getCertificatesFile());
+            statement.setBinaryStream(1, fileInputStream, (int) concludedCollaboration.getCertificatesFile().length());
             statement.setInt(2, concludedCollaboration.getIdColaboration());
             result = statement.executeUpdate();
             statement.close();
@@ -120,6 +121,28 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
             databaseConnection.closeConnection();
         }
         return result;
+    }
+    
+    @Override
+    public boolean hasCertificatesUploaded(int idCollaboration) throws LogicException {
+        boolean hasCertificatesUploaded = false;
+        String query = "SELECT constancias FROM colaboracionconcluida WHERE Colaboracion_idColaboracion = ?";
+        try {
+            Connection connection = this.databaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idCollaboration);
+            ResultSet certificates = statement.executeQuery();
+            if(certificates.next()) {
+                if(certificates.getString("constancias") != null) {
+                    hasCertificatesUploaded = true;
+                }
+            }
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            databaseConnection.closeConnection();
+        }
+        return hasCertificatesUploaded;
     }
 
     @Override

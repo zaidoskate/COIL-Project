@@ -39,7 +39,7 @@ import org.apache.log4j.Logger;
 public class CandidatesController implements Initializable {
 
     @FXML
-    private TableView<OfferInformation> tblCandidates;
+    private TableView<OfferInformation> tblViewCandidates;
     
     @FXML
     private TableColumn<OfferInformation, String> clmProfessorName;
@@ -97,7 +97,7 @@ public class CandidatesController implements Initializable {
                     candidateRow.setUniversityLocation(universityLocation);
                     candidateRow.setIdUser(idUser);
                     this.candidates.add(candidateRow);
-                    this.tblCandidates.setItems(candidates);
+                    this.tblViewCandidates.setItems(candidates);
                 }
             }
         } catch(LogicException logicException) {
@@ -107,16 +107,16 @@ public class CandidatesController implements Initializable {
     }
     
     private void setSelectedCandidate() {
-        candidateInformation.setProfessorName(this.tblCandidates.getSelectionModel().getSelectedItem().getProfessorName());
-        candidateInformation.setProfessorEmail(this.tblCandidates.getSelectionModel().getSelectedItem().getProfessorEmail());
-        candidateInformation.setUniversityName(this.tblCandidates.getSelectionModel().getSelectedItem().getUniversityName());
-        candidateInformation.setUniversityLocation(this.tblCandidates.getSelectionModel().getSelectedItem().getUniversityLocation());
-        candidateInformation.setIdUser(this.tblCandidates.getSelectionModel().getSelectedItem().getIdUser());
+        candidateInformation.setProfessorName(this.tblViewCandidates.getSelectionModel().getSelectedItem().getProfessorName());
+        candidateInformation.setProfessorEmail(this.tblViewCandidates.getSelectionModel().getSelectedItem().getProfessorEmail());
+        candidateInformation.setUniversityName(this.tblViewCandidates.getSelectionModel().getSelectedItem().getUniversityName());
+        candidateInformation.setUniversityLocation(this.tblViewCandidates.getSelectionModel().getSelectedItem().getUniversityLocation());
+        candidateInformation.setIdUser(this.tblViewCandidates.getSelectionModel().getSelectedItem().getIdUser());
     }
     
     private void checkEmptyTable() {
         if(candidates.isEmpty()) {
-            this.tblCandidates.setPlaceholder(new Label ("Aún no hay candidatos para su oferta"));
+            this.tblViewCandidates.setPlaceholder(new Label ("Aún no hay candidatos para su oferta"));
         }
     }
     
@@ -134,7 +134,7 @@ public class CandidatesController implements Initializable {
     
     @FXML
     public void showProfessorDetail() {
-        if(this.tblCandidates.getSelectionModel().getSelectedItem() != null) {
+        if(this.tblViewCandidates.getSelectionModel().getSelectedItem() != null) {
             setSelectedCandidate();
             Stage stage = (Stage) this.btnDetail.getScene().getWindow();
             stage.close();

@@ -17,9 +17,9 @@
          <children>
             <TableView fx:id="tblViewPendingCollaborations" layoutX="163.0" layoutY="14.0" prefHeight="250.4" prefWidth="580.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
-                <TableColumn prefWidth="193.33" text="Colaboración" />
-                <TableColumn prefWidth="193.33" text="Universidad profesor" />
-                  <TableColumn prefWidth="193.33" text="Universidad profesor espejo" />
+                <TableColumn fx:id="clmCollaborationName" prefWidth="193.33" text="Colaboración" />
+                <TableColumn fx:id="clmProfessorUniversity" prefWidth="193.33" text="Universidad profesor" />
+                  <TableColumn fx:id="clmMirrorProfessorUniversity" prefWidth="193.33" text="Universidad profesor espejo" />
               </columns>
             </TableView>
          </children>

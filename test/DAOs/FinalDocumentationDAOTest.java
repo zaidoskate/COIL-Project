@@ -3,10 +3,25 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import logic.domain.FinalDocumentation;
 import logic.DAOs.FinalDocumentationDAO;
+import logic.DAOs.StartupDocumentationDAO;
 import logic.LogicException;
 
 public class FinalDocumentationDAOTest {
     public FinalDocumentationDAOTest(){
+    }
+    
+    @Test
+    public void testAddFinalDocumentationSuccess() {
+        FinalDocumentation finalDocumentation = new FinalDocumentation();
+        finalDocumentation.setIdColaboration(1);
+        FinalDocumentationDAO finalDocumentationDAO = new FinalDocumentationDAO();
+        int expectedResult = 1;
+        try {
+            int result = finalDocumentationDAO.addFinalDocumentation(finalDocumentation);
+            assertEquals(expectedResult, result);
+        } catch(LogicException logicException) {
+            fail("Error al insertar la documentacion final");
+        }
     }
     
     @Test
@@ -124,5 +139,38 @@ public class FinalDocumentationDAOTest {
             fail("No se ha descargado el feedback de los estudiantes espejo " + logicException.getMessage());
         }
     }
+    
+    @Test
+    public void testDeleteUploadedFileSuccess() {
+        int expectedResult = 1;
+        FinalDocumentationDAO finalDocumentationDAO = new FinalDocumentationDAO();
+        try {
+            int result = finalDocumentationDAO.deleteUploadedFile("feedbackProfesor", 11);
+            assertEquals(expectedResult, result);
+        } catch(LogicException logicException) {
+            fail("No se ha podido eliminar el archivo cargado");
+        }
+    }
+    
+    @Test
+    public void testIsCollaborationRegistratedSuccess() {
+        FinalDocumentationDAO finalDocumentationDAO = new FinalDocumentationDAO();
+        try {
+            boolean result = finalDocumentationDAO.isCollaborationRegistrated(1);
+            assertTrue(result);
+        } catch(LogicException logicException) {
+            fail("No se ha podido saber si la colaboracion ya esta registrada con su documentacion final");
+        }
+    }
 
+    @Test
+    public void testHasFileUploadedSuccess() {
+        FinalDocumentationDAO finalDocumentationDAO = new FinalDocumentationDAO();
+        try {
+            boolean result = finalDocumentationDAO.hasFileUploaded("feedbackProfesor", 1);
+            assertFalse(result);
+        } catch(LogicException logicException) {
+            fail("No se ha podido obtener si el tipo de archivo ya tiene un archivo cargado");
+        }
+    }
 }

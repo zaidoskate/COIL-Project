@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #F2F2F2;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.CollaborationHistoryController">
    <children>
       <AnchorPane prefHeight="400.0" prefWidth="150.0" style="-fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #FF74A3, #AA0D2C);">
@@ -32,8 +31,8 @@
          <children>
             <TableView fx:id="tblViewConcludedCollaborations" layoutX="74.0" layoutY="14.0" prefHeight="250.4" prefWidth="430.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
-                <TableColumn prefWidth="215.0" text="Colaboración" />
-                <TableColumn prefWidth="215.0" text="Universidad del profesor espejo" />
+                <TableColumn fx:id="clmCollaborationName" prefWidth="215.0" text="Colaboración" />
+                <TableColumn fx:id="clmMirrorProfessorUniversity" prefWidth="215.0" text="Universidad del profesor espejo" />
               </columns>
             </TableView>
          </children>

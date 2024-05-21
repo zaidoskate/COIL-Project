@@ -211,7 +211,6 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
             statement.setInt(1, idCollaboration);
             deleted = statement.executeUpdate();
         } catch(SQLException sqlException) {
-            sqlException.printStackTrace();
             throw new LogicException("No hay conexión, inténtelo de nuevo más tarde", sqlException);
         } finally {
             databaseConnection.closeConnection();

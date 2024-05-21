@@ -10,5 +10,6 @@ public interface ConcludedCollaborationManagerInterface {
     public int updateRating(ConcludedCollaboration concludedCollaboration) throws LogicException;
     public int uploadCertificates(ConcludedCollaboration concludedCollaboration) throws LogicException;
     public int obtainCertificates(ConcludedCollaboration concludedCollaboration, String outputPath) throws LogicException;
+    public boolean hasCertificatesUploaded(int idCollaboration) throws LogicException;
     public ArrayList<ConcludedCollaboration> getConcludedCollaborations() throws LogicException;
 }
