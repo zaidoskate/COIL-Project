@@ -1,17 +1,20 @@
 package logic;
 
+import gui.SessionManager;
 import logic.domain.UvAccountRequest;
 import logic.domain.ExternalAccountRequest;
 import logic.DAOs.UvAccountRequestDAO;
 import logic.DAOs.CredentialDAO;
 import logic.DAOs.ExternalAccountRequestDAO;
 import logic.DAOs.ExternalProfessorDAO;
+import logic.DAOs.PendingMailDAO;
 import logic.DAOs.UserDAO;
 import logic.DAOs.ProfessorDAO;
 import logic.DAOs.UvProfessorDAO;
 import logic.domain.AccountRequest;
 import logic.domain.Credential;
 import logic.domain.ExternalProfessor;
+import logic.domain.PendingMail;
 import logic.domain.Professor;
 import logic.domain.User;
 import logic.domain.UvProfessor;
@@ -20,30 +23,30 @@ public class AccountCreator {
     public static boolean createUVAccount(UvAccountRequest uvaccountRequest) throws LogicException {
         String username = CredentialGenerator.generateUser(uvaccountRequest.getName(), uvaccountRequest.getLastName());
         String password = CredentialGenerator.generatePassword();
+        int idUser = registerUser(uvaccountRequest);
+        registerCredential(username, password , idUser);
+        registerProfessor(idUser);
+        registerUvProfessor(uvaccountRequest, idUser);
+        deleteAccountRequestUv(uvaccountRequest);
         if(sendCredential(username, password, uvaccountRequest.getEmail())) {
-            int idUser = registerUser(uvaccountRequest);
-            registerCredential(username, password , idUser);
-            registerProfessor(idUser);
-            registerUvProfessor(uvaccountRequest, idUser);
-            deleteAccountRequestUv(uvaccountRequest);
+            return true;
         } else {
             return false;
         }
-        return true;
     }
     public static boolean createExternalAccount(ExternalAccountRequest externalAccountRequest) throws LogicException {
         String username = CredentialGenerator.generateUser(externalAccountRequest.getName(), externalAccountRequest.getLastName());
         String password = CredentialGenerator.generatePassword();
+        int idUser = registerUser(externalAccountRequest);
+        registerCredential(username, password , idUser);
+        registerProfessor(idUser);
+        registerExternalProfessor(externalAccountRequest, idUser);
+        deleteAccountRequestExternal(externalAccountRequest);
         if(sendCredential(username, password, externalAccountRequest.getEmail())) {
-            int idUser = registerUser(externalAccountRequest);
-            registerCredential(username, password , idUser);
-            registerProfessor(idUser);
-            registerExternalProfessor(externalAccountRequest, idUser);
-            deleteAccountRequestExternal(externalAccountRequest);
+            return true;
         } else {
             return false;
         }
-        return true;
     }
     
     private static boolean sendCredential(String username, String password, String email) throws LogicException {
@@ -53,11 +56,27 @@ public class AccountCreator {
                 + "\nUsuario: "+username
                 + "\nContrasena: "+password;
         
-        boolean result = MailSender.sendEmail(body, email);
-    
+        boolean result = false;
+        try{
+            result = MailSender.sendEmail(body, email);
+        } catch(LogicException logicException) {
+            savePendingMail(body, email);
+            throw new LogicException(logicException.getMessage(), logicException);
+        }
         return result;
     }
 
+    private static void savePendingMail(String body, String email) throws LogicException{
+        PendingMail pendingMail = new PendingMail();
+        pendingMail.setContent(body);
+        pendingMail.setDestinationEmail(email);
+        pendingMail.setSubject("Cuenta de acceso Profesor");
+        pendingMail.setIdUser(SessionManager.getInstance().getUserData().getIdUser());
+        
+        PendingMailDAO pendingMailDAO = new PendingMailDAO();
+        pendingMailDAO.insertPendingMail(pendingMail);
+    }
+    
     private static int registerUser(AccountRequest accountRequest) throws LogicException {
         User user = new User();
         user.setName(accountRequest.getName());

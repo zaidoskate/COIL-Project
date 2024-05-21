@@ -4,6 +4,7 @@ import gui.Alerts;
 import gui.COILVICApplication;
 import gui.SessionManager;
 import gui.stages.CreateCoordinatorAccountStage;
+import gui.stages.PendingMailsStage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -43,6 +44,15 @@ public class AdminMenuController implements Initializable {
             COILVICApplication application = new COILVICApplication();
             Stage loginStage = new Stage();
             application.start(loginStage);
+        } catch(IOException ioException) {
+            log.warn(ioException);
+            Alerts.displayAlertIOException();
+        }
+    }
+     @FXML
+    private void openPendingMails() {
+        try {
+            PendingMailsStage pendingMailsStage = new PendingMailsStage();
         } catch(IOException ioException) {
             log.warn(ioException);
             Alerts.displayAlertIOException();

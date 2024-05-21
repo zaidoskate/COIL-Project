@@ -3,8 +3,10 @@ package gui.controllers;
 
 import gui.Alerts;
 import gui.DataValidation;
+import gui.SessionManager;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -12,11 +14,13 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import logic.DAOs.CoordinatorDAO;
 import logic.DAOs.CredentialDAO;
+import logic.DAOs.PendingMailDAO;
 import logic.DAOs.UserDAO;
 import logic.LogicException;
 import logic.MailSender;
 import logic.domain.Coordinator;
 import logic.domain.Credential;
+import logic.domain.PendingMail;
 import logic.domain.User;
 import org.apache.log4j.Logger;
 
@@ -95,6 +99,27 @@ public class CreateCoordinatorAccountController implements Initializable {
         return result;
     }
     
+    private void registerPendingMail(User user, Credential credential) {
+        String body = "Te damos la bienvenida al Sistema COIL-VIC de la Universidad Veracruzana."
+                + "\nTus datos de acceso son los siguientes:"
+                + "\nUsuario: "+credential.getUser()
+                + "\nContrasena: "+credential.getPassword();
+        int currentIdUser = SessionManager.getInstance().getUserData().getIdUser();
+        
+        PendingMail pendingMail = new PendingMail();
+        pendingMail.setIdUser(currentIdUser);
+        pendingMail.setContent(body);
+        pendingMail.setSubject("Cuenta de acceso coordinador");
+        pendingMail.setDestinationEmail(user.getEmail());
+        
+        PendingMailDAO pendingMailDAO = new PendingMailDAO();
+        try {
+            pendingMailDAO.insertPendingMail(pendingMail);
+        } catch (LogicException logicException) {
+            log.error(logicException);
+        }
+    }
+    
     @FXML
     public void createAccount() {
         if(!makeValidations()) {
@@ -155,6 +180,9 @@ public class CreateCoordinatorAccountController implements Initializable {
             if(emailSent == true) {
                 clearFields();
                 Alerts.showInformationAlert("Exito", "Se ha enviado el usuario y contraseña al correo.");
+            } else if(result > 0) {
+                registerPendingMail(user, credential);
+                Alerts.showInformationAlert("Correo pendiente", "El correo queda pendiente por enviarse a su destino.");
             }
         } 
     }
