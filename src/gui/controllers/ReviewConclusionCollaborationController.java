@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gui.controllers;
 
 import gui.Alerts;
+import gui.SessionManager;
 import gui.stages.CollaborationsInConclusionStage;
 import gui.stages.SendEmailStage;
 import gui.stages.UploadCertificatesStage;
@@ -26,20 +23,18 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import logic.DAOs.EvidenceDAO;
 import logic.DAOs.FinalDocumentationDAO;
+import logic.DAOs.PendingMailDAO;
 import logic.DAOs.ProfessorBelongsToCollaborationDAO;
 import logic.DAOs.UserDAO;
 import logic.LogicException;
 import logic.domain.Evidence;
 import logic.domain.FinalDocumentation;
+import logic.domain.PendingMail;
 import logic.domain.User;
 import logic.model.CollaborationInformation;
 import logic.model.EmailNotification;
 import org.apache.log4j.Logger;
 
-/**
- *
- * @author zaido
- */
 public class ReviewConclusionCollaborationController implements Initializable {
     
     @FXML
@@ -55,7 +50,7 @@ public class ReviewConclusionCollaborationController implements Initializable {
     private Label lblMirrorProfessorEmail;
     
     @FXML
-    private ComboBox comboBoxFeedbackType;
+    private ComboBox cmbBoxFeedbackType;
     
     @FXML
     private TableView<Evidence> tblViewEvidence;
@@ -65,11 +60,14 @@ public class ReviewConclusionCollaborationController implements Initializable {
     
     private ObservableList<Evidence> evidencesToDisplay = FXCollections.observableArrayList();
     
-    private static final UserDAO userDAO = new UserDAO();
-    private static final EvidenceDAO evidenceDAO = new EvidenceDAO();
-    private static final FinalDocumentationDAO finalDocumentationDAO = new FinalDocumentationDAO();
-    private static final ProfessorBelongsToCollaborationDAO professorBelongsToCollaborationDAO = new ProfessorBelongsToCollaborationDAO();
-    private static final CollaborationInformation selectedCollaboration = CollaborationInformation.getCollaboration();
+    private static final UserDAO USER_DAO = new UserDAO();
+    private static final EvidenceDAO EVIDENCE_DAO = new EvidenceDAO();
+    private static final FinalDocumentationDAO FINAL_DOCUMENTATION_DAO = new FinalDocumentationDAO();
+    private static final PendingMailDAO PENDING_MAIL_DAO = new PendingMailDAO();
+    private static final ProfessorBelongsToCollaborationDAO PROFESSOR_BELONGS_TO_COLLABORATION_DAO = new ProfessorBelongsToCollaborationDAO();
+    
+    private static final CollaborationInformation SELECTED_COLLABORATION = CollaborationInformation.getCollaboration();
+    private static final SessionManager CURRENT_SESSION = SessionManager.getInstance();
 
     private static final Logger log = Logger.getLogger(ReviewConclusionCollaborationController.class);
 
@@ -84,20 +82,20 @@ public class ReviewConclusionCollaborationController implements Initializable {
     
     private void setLabels() {
         try {
-            User professor = userDAO.getUserById(selectedCollaboration.getIdUser());
-            User mirrorProfessor = userDAO.getUserById(selectedCollaboration.getIdMirrorUser());
+            User professor = USER_DAO.getUserById(SELECTED_COLLABORATION.getIdUser());
+            User mirrorProfessor = USER_DAO.getUserById(SELECTED_COLLABORATION.getIdMirrorUser());
             this.lblProfessorName.setText(professor.getName() + " " +professor.getLastName());
             this.lblProfessorEmail.setText(professor.getEmail());
             this.lblMirrorProfessorName.setText(mirrorProfessor.getName() + " " + mirrorProfessor.getLastName());
             this.lblMirrorProfessorEmail.setText(mirrorProfessor.getEmail());
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
-            //log.error(logicException);
+            log.error(logicException);
         }
     }
     
     private void setComboBoxFeedbacks() {
-        this.comboBoxFeedbackType.getItems().addAll("Feedback profesor", "Feedback estudiantado", "Feedback profesor espejo", "Feedback estudiantado espejo");
+        this.cmbBoxFeedbackType.getItems().addAll("Feedback profesor", "Feedback estudiantado", "Feedback profesor espejo", "Feedback estudiantado espejo");
     }
     
     private void initializeTable() {
@@ -106,7 +104,7 @@ public class ReviewConclusionCollaborationController implements Initializable {
     
     private void setEvidences() {
         try {
-            ArrayList<Evidence> evidencesUploaded = evidenceDAO.getAllEvidencesByIdCollaboration(selectedCollaboration.getIdCollaboration());
+            ArrayList<Evidence> evidencesUploaded = EVIDENCE_DAO.getAllEvidencesByIdCollaboration(SELECTED_COLLABORATION.getIdCollaboration());
             for(Evidence evidence : evidencesUploaded) {
                 Evidence evidenceInformation = new Evidence();
                 evidenceInformation.setName(evidence.getName());
@@ -118,7 +116,7 @@ public class ReviewConclusionCollaborationController implements Initializable {
             }
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
-            //log.error(logicException);
+            log.error(logicException);
         }
     }
     
@@ -139,31 +137,31 @@ public class ReviewConclusionCollaborationController implements Initializable {
     
     @FXML
     private void downloadFeedback() {
-        if(this.comboBoxFeedbackType.getSelectionModel().getSelectedItem() != null) {
-            String feedbackType = comboBoxFeedbackType.getSelectionModel().getSelectedItem().toString();
+        if(this.cmbBoxFeedbackType.getSelectionModel().getSelectedItem() != null) {
+            String feedbackType = cmbBoxFeedbackType.getSelectionModel().getSelectedItem().toString();
             File downloadPath = getDownloadPath("Guardar feedback", feedbackType);
             if(downloadPath != null) {
                 FinalDocumentation finalDocumentation = new FinalDocumentation();
-                finalDocumentation.setIdColaboration(selectedCollaboration.getIdCollaboration());
+                finalDocumentation.setIdColaboration(SELECTED_COLLABORATION.getIdCollaboration());
                 try {
                     switch (feedbackType) {
                         case "Feedback profesor":
-                            if(finalDocumentationDAO.obtainProfessorFeedback(finalDocumentation, downloadPath.toString()) == 1) {
+                            if(FINAL_DOCUMENTATION_DAO.obtainProfessorFeedback(finalDocumentation, downloadPath.toString()) == 1) {
                                 Alerts.showInformationAlert("Mensaje", "Feedback de profesor descargado");
                             }
                             break;
                         case "Feedback estudiantado":
-                            if(finalDocumentationDAO.obtainStudentsFeedback(finalDocumentation, downloadPath.toString()) == 1) {
+                            if(FINAL_DOCUMENTATION_DAO.obtainStudentsFeedback(finalDocumentation, downloadPath.toString()) == 1) {
                                 Alerts.showInformationAlert("Mensaje", "Feedback de estudiantes descargado");
                             }
                             break;
                         case "Feedback profesor espejo":
-                            if(finalDocumentationDAO.obtainMirrorProfessorFeedback(finalDocumentation, downloadPath.toString()) == 1) {
+                            if(FINAL_DOCUMENTATION_DAO.obtainMirrorProfessorFeedback(finalDocumentation, downloadPath.toString()) == 1) {
                                 Alerts.showInformationAlert("Mensaje", "Feedback de profesor espejo descargado");
                             }
                             break;
                         case "Feedback estudiantado espejo":
-                            if(finalDocumentationDAO.obtainMirrorStudentsFeedback(finalDocumentation, downloadPath.toString()) == 1) {
+                            if(FINAL_DOCUMENTATION_DAO.obtainMirrorStudentsFeedback(finalDocumentation, downloadPath.toString()) == 1) {
                                 Alerts.showInformationAlert("Mensaje", "Feedback de estudiantes espejo descargado");
                             }
                             break;
@@ -172,7 +170,7 @@ public class ReviewConclusionCollaborationController implements Initializable {
                     }
                 } catch(LogicException logicException) {
                     Alerts.displayAlertLogicException(logicException);
-                    //log.error(logicException);
+                    log.error(logicException);
                 }
             }
         } else {
@@ -189,12 +187,12 @@ public class ReviewConclusionCollaborationController implements Initializable {
                 Evidence evidence = new Evidence();
                 evidence.setName(evidenceName);
                 try {
-                    if (evidenceDAO.obtainEvidence(evidence, downloadPath.toString()) == 1) {
+                    if (EVIDENCE_DAO.obtainEvidence(evidence, downloadPath.toString()) == 1) {
                         Alerts.showInformationAlert("Mensaje", "Evidencia descargada con exito");
                     }
                 } catch(LogicException logicException) {
                     Alerts.displayAlertLogicException(logicException);
-                    //log.error(logicException);
+                    log.error(logicException);
                 }
             }
         } else {
@@ -210,31 +208,37 @@ public class ReviewConclusionCollaborationController implements Initializable {
             UploadCertificatesStage uploadCertificatesStage = new UploadCertificatesStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
-            //log.error(ioException);
+            log.error(ioException);
         }
     }
     
     @FXML
     private void declineConclusion() {
         try {
-            if(professorBelongsToCollaborationDAO.setStatusToCollaboration(selectedCollaboration.getIdCollaboration(), "Iniciada") == 1) {
-                User professorCollaboration = userDAO.getUserById(selectedCollaboration.getIdUser());
+            if(PROFESSOR_BELONGS_TO_COLLABORATION_DAO.setStatusToCollaboration(SELECTED_COLLABORATION.getIdCollaboration(), "Iniciada") == 1) {
+                User professorCollaboration = USER_DAO.getUserById(SELECTED_COLLABORATION.getIdUser());
                 EmailNotification.getInstance().setEmail(professorCollaboration.getEmail());
                 EmailNotification.getInstance().setMessageSuccess("Conclusión rechazada");
-                EmailNotification.getInstance().setMessageCancel("Se cancelará el rechazo de la conclusión");
                 try {
                     SendEmailStage sendEmailStage = new SendEmailStage();
                     if(EmailNotification.getInstance().getSentStatus()) {
                         Alerts.showInformationAlert("Mensaje", "Conclusión rechazada con éxito");
+                    } else {
+                        Alerts.showWarningAlert("Hubo un problema con el envío del correo");
+                        PendingMail pendingMail = new PendingMail();
+                        pendingMail.setSubject("Conclusión de colaboración");
+                        pendingMail.setContent(EmailNotification.getInstance().getEmailBody());
+                        pendingMail.setDestinationEmail(professorCollaboration.getEmail());
+                        pendingMail.setIdUser(CURRENT_SESSION.getUserData().getIdUser());
                     }
                 } catch(IOException ioException) {
                     Alerts.displayAlertIOException();
-                    //log.error(ioException);
+                    log.error(ioException);
                 }
             }
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
-            //log.error(logicException);
+            log.error(logicException);
         }
     }
     

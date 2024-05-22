@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gui.controllers;
 
 import gui.Alerts;
@@ -21,10 +17,6 @@ import logic.FileDownloader;
 import logic.LogicException;
 import org.apache.log4j.Logger;
 
-/**
- *
- * @author zaido
- */
 public class GenerateStatisticsController implements Initializable {
 
     @FXML
@@ -39,9 +31,9 @@ public class GenerateStatisticsController implements Initializable {
     private int[] regionCollaborationCounts = new int[5];
     private int[] academicAreaCollaborationCounts = new int[6];
     
-    private static final UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
+    private static final UvProfessorDAO UV_PROFESSOR_DAO = new UvProfessorDAO();
     
-    private static final Logger log = Logger.getLogger(GenerateStatisticsController.class);
+    private static final Logger LOG = Logger.getLogger(GenerateStatisticsController.class);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -55,7 +47,7 @@ public class GenerateStatisticsController implements Initializable {
             this.btnDownloadStatistics.setVisible(false);
             this.lblGenerated.setText("No se pudo generar la numeralia");
             Alerts.displayAlertLogicException(logicException);
-            log.error(logicException);
+            LOG.error(logicException);
         }
     }
     
@@ -63,14 +55,14 @@ public class GenerateStatisticsController implements Initializable {
         boolean available = false;
         String[] regions = {"Xalapa", "Veracruz", "Coatzacoalcos", "Orizaba", "Tuxpan"};
         for(int i = 0; i < regions.length; i++) {
-            regionCollaborationCounts[i] = uvProfessorDAO.getCollaborationCountByProfessorRegion(regions[i]);
+            regionCollaborationCounts[i] = UV_PROFESSOR_DAO.getCollaborationCountByProfessorRegion(regions[i]);
             if (regionCollaborationCounts[i] != 0) {
                 available = true;
                 break;
             }
         }
         for(int i = 1; i < 7; i++) {
-            academicAreaCollaborationCounts[i-1] = uvProfessorDAO.getCollaborationCountByProfessorAcademicArea(i);
+            academicAreaCollaborationCounts[i-1] = UV_PROFESSOR_DAO.getCollaborationCountByProfessorAcademicArea(i);
             if (academicAreaCollaborationCounts[i-1] != 0) {
                 available = true;
                 break;
@@ -87,7 +79,7 @@ public class GenerateStatisticsController implements Initializable {
             CoordinatorMenuStage coordinatorMenuStage = new CoordinatorMenuStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
-            log.error(ioException);
+            LOG.error(ioException);
         }
     }
     
@@ -105,7 +97,7 @@ public class GenerateStatisticsController implements Initializable {
                 FileDownloader.exportToExcel(selectedPath.getAbsolutePath(), regionCollaborationCounts, academicAreaCollaborationCounts);
             } catch (IOException ioException) {
                 Alerts.displayAlertIOException();
-                log.error(ioException);
+                LOG.error(ioException);
             }
             Alerts.showInformationAlert("Mensaje", "Se ha descargado la numeralia con éxito");
             closeDownload();

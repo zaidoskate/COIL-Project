@@ -21,7 +21,7 @@
                </font>
             </Label>
             <Region fx:id="regionFile" layoutX="45.0" layoutY="32.0" onDragDropped="#onDragDropped" onDragOver="#onDragOver" prefHeight="200.0" prefWidth="360.0" styleClass="dashed-border-item" />
-            <ComboBox fx:id="comboBoxFileType" layoutX="424.0" layoutY="32.0" onAction="#showHasUploadedFile" prefHeight="26.0" prefWidth="161.0" promptText="Selecciona el archivo" />
+            <ComboBox fx:id="cmbBoxFileType" layoutX="424.0" layoutY="32.0" onAction="#showHasUploadedFile" prefHeight="26.0" prefWidth="161.0" promptText="Selecciona el archivo" />
             <Button layoutX="455.0" layoutY="109.0" mnemonicParsing="false" onAction="#concludeCollaboration" prefWidth="100.0" styleClass="button-accion" text="Concluir" />
             <Button layoutX="455.0" layoutY="150.0" mnemonicParsing="false" onAction="#deleteFile" prefWidth="100.0" styleClass="button-accion2" text="Quitar archivo" />
             <Button layoutX="455.0" layoutY="204.0" mnemonicParsing="false" onAction="#previousMenu" prefWidth="100.0" styleClass="button-regresar" text="Regresar" />

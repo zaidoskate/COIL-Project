@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package logic.interfaces;
 
 import logic.LogicException;
@@ -9,9 +5,23 @@ import logic.domain.ExternalProfessor;
 
 /**
  *
- * @author chima
+ * @author zaido
  */
 public interface ExternalProfessorManagerInterface {
+
+    /**
+     *
+     * @param externalProfessor
+     * @return
+     * @throws LogicException
+     */
     int insertExternalProfessor(ExternalProfessor externalProfessor) throws LogicException;
-    ExternalProfessor getExternalProfessorByIdUniversity(int idUniversity);
+
+    /**
+     *
+     * @param idUniversity
+     * @return
+     * @throws LogicException
+     */
+    ExternalProfessor getExternalProfessorByIdUniversity(int idUniversity) throws LogicException;
 }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gui.controllers;
 
 import gui.Alerts;
@@ -32,10 +28,7 @@ import logic.model.CandidateInformation;
 import logic.model.OfferInformation;
 import org.apache.log4j.Logger;
 
-/**
- *
- * @author zaido
- */
+
 public class CandidatesController implements Initializable {
 
     @FXML
@@ -55,15 +48,15 @@ public class CandidatesController implements Initializable {
     
     private ObservableList<OfferInformation> candidates;
     
-    private static final OfferInformation professorOffer = OfferInformation.getOffer();
-    private static final CandidateInformation candidateInformation = CandidateInformation.getCandidateInformation();
-    private static final SessionManager currentSession = SessionManager.getInstance();
+    private static final OfferInformation PROFESSOR_OFFER = OfferInformation.getOffer();
+    private static final CandidateInformation CANDIDATE_INFORMATION = CandidateInformation.getCandidateInformation();
+    private static final SessionManager CURRENT_SESSION = SessionManager.getInstance();
     
-    private static final CollaborationOfferCandidateDAO collaborationOfferCandidateDAO = new CollaborationOfferCandidateDAO();
-    private static final UserDAO userDAO = new UserDAO();
-    private static final ProfessorDAO professorDAO = new ProfessorDAO();
+    private static final CollaborationOfferCandidateDAO COLLABORATION_OFFER_CANDIDATE_DAO = new CollaborationOfferCandidateDAO();
+    private static final UserDAO USER_DAO = new UserDAO();
+    private static final ProfessorDAO PROFESSOR_DAO = new ProfessorDAO();
     
-    private static final Logger log = Logger.getLogger(CandidatesController.class);
+    private static final Logger LOG = Logger.getLogger(CandidatesController.class);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -80,14 +73,14 @@ public class CandidatesController implements Initializable {
     
     private void setOfferCandidates() {
         try {
-            ArrayList<CollaborationOfferCandidate> candidatesObtained = collaborationOfferCandidateDAO.GetCollaborationOfferCandidateByIdCollaborationOffer(professorOffer.getIdOfferCollaboration());
+            ArrayList<CollaborationOfferCandidate> candidatesObtained = COLLABORATION_OFFER_CANDIDATE_DAO.GetCollaborationOfferCandidateByIdCollaborationOffer(PROFESSOR_OFFER.getIdOfferCollaboration());
             if(candidatesObtained != null) {
                 for(CollaborationOfferCandidate candidate : candidatesObtained) {
-                    User candidateUser = userDAO.getUserById(candidate.getIdUser());
+                    User candidateUser = USER_DAO.getUserById(candidate.getIdUser());
                     String professorName = candidateUser.getName() + " " + candidateUser.getLastName();
                     String professorEmail = candidateUser.getEmail();
-                    String universityName = professorDAO.getUniversityFromAProfessor(candidate.getIdUser()).getFirst();
-                    String universityLocation = professorDAO.getUniversityFromAProfessor(candidate.getIdUser()).get(1);
+                    String universityName = PROFESSOR_DAO.getUniversityFromAProfessor(candidate.getIdUser()).getFirst();
+                    String universityLocation = PROFESSOR_DAO.getUniversityFromAProfessor(candidate.getIdUser()).get(1);
                     int idUser = candidateUser.getIdUser();
                     
                     OfferInformation candidateRow = new OfferInformation();
@@ -102,16 +95,16 @@ public class CandidatesController implements Initializable {
             }
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
-            log.error(logicException);
+            LOG.error(logicException);
         }
     }
     
     private void setSelectedCandidate() {
-        candidateInformation.setProfessorName(this.tblViewCandidates.getSelectionModel().getSelectedItem().getProfessorName());
-        candidateInformation.setProfessorEmail(this.tblViewCandidates.getSelectionModel().getSelectedItem().getProfessorEmail());
-        candidateInformation.setUniversityName(this.tblViewCandidates.getSelectionModel().getSelectedItem().getUniversityName());
-        candidateInformation.setUniversityLocation(this.tblViewCandidates.getSelectionModel().getSelectedItem().getUniversityLocation());
-        candidateInformation.setIdUser(this.tblViewCandidates.getSelectionModel().getSelectedItem().getIdUser());
+        CANDIDATE_INFORMATION.setProfessorName(this.tblViewCandidates.getSelectionModel().getSelectedItem().getProfessorName());
+        CANDIDATE_INFORMATION.setProfessorEmail(this.tblViewCandidates.getSelectionModel().getSelectedItem().getProfessorEmail());
+        CANDIDATE_INFORMATION.setUniversityName(this.tblViewCandidates.getSelectionModel().getSelectedItem().getUniversityName());
+        CANDIDATE_INFORMATION.setUniversityLocation(this.tblViewCandidates.getSelectionModel().getSelectedItem().getUniversityLocation());
+        CANDIDATE_INFORMATION.setIdUser(this.tblViewCandidates.getSelectionModel().getSelectedItem().getIdUser());
     }
     
     private void checkEmptyTable() {
@@ -128,7 +121,7 @@ public class CandidatesController implements Initializable {
             MyOffersStage myOffersStage = new MyOffersStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
-            log.error(ioException);
+            LOG.error(ioException);
         }
     }
     
@@ -142,11 +135,10 @@ public class CandidatesController implements Initializable {
                 ProfessorDetailStage professorDetailStage = new ProfessorDetailStage();
             } catch(IOException ioException) {
                 Alerts.displayAlertIOException();
-                log.error(ioException);
+                LOG.error(ioException);
             }
         } else {
             Alerts.showWarningAlert("Seleccione un candidato para poder ver su detalle");
         }
     }
-    
 }

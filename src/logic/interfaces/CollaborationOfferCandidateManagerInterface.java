@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package logic.interfaces;
 
 import java.util.ArrayList;
@@ -10,11 +6,40 @@ import logic.domain.CollaborationOfferCandidate;
 
 /**
  *
- * @author chima
+ * @author zaido
  */
 public interface CollaborationOfferCandidateManagerInterface {
+
+    /**
+     *
+     * @param collaborationOfferCandidate
+     * @return
+     * @throws LogicException
+     */
     int InsertCollaborationOfferCandidate(CollaborationOfferCandidate collaborationOfferCandidate) throws LogicException;
+
+    /**
+     *
+     * @param idOfferCollaboration
+     * @return
+     * @throws LogicException
+     */
     int deleteCollaborationOffer(int idOfferCollaboration) throws LogicException;
+
+    /**
+     *
+     * @param idUser
+     * @param idCollaborationOffer
+     * @return
+     * @throws LogicException
+     */
     boolean professorHasAppliedForOffer(int idUser, int idCollaborationOffer) throws LogicException;
+
+    /**
+     *
+     * @param idCollaboration
+     * @return
+     * @throws LogicException
+     */
     ArrayList<CollaborationOfferCandidate> GetCollaborationOfferCandidateByIdCollaborationOffer(int idCollaboration) throws LogicException;
 }

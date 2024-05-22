@@ -1,14 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gui.controllers;
 
 import gui.Alerts;
 import gui.SessionManager;
+import gui.stages.DeclineOfferStage;
 import gui.stages.OfferCoordinatorStage;
 import gui.stages.OfferProfessorStage;
-import gui.stages.SendEmailStage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -29,14 +25,11 @@ import logic.DAOs.UserDAO;
 import logic.LogicException;
 import logic.domain.CollaborationOfferCandidate;
 import logic.domain.Evaluation;
+import logic.domain.PendingMail;
 import logic.model.EmailNotification;
 import logic.model.OfferInformation;
 import org.apache.log4j.Logger;
 
-/**
- *
- * @author zaido
- */
 public class DetailOfferProfessorController implements Initializable {
     
     @FXML
@@ -84,37 +77,37 @@ public class DetailOfferProfessorController implements Initializable {
     @FXML
     private Button btnDecline;
     
-    private static final ProfessorDAO professorDAO = new ProfessorDAO();
-    private static final CollaborationOfferCandidateDAO candidateDAO = new CollaborationOfferCandidateDAO();
-    private static final UserDAO userDAO = new UserDAO();
-    private static final CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
-    private static final EvaluationDAO evaluationDAO = new EvaluationDAO();
+    private static final ProfessorDAO PROFESSOR_DAO = new ProfessorDAO();
+    private static final CollaborationOfferCandidateDAO CANDIDATE_DAO = new CollaborationOfferCandidateDAO();
+    private static final UserDAO USER_DAO = new UserDAO();
+    private static final CollaborationOfferDAO COLLABORATION_OFFER_DAO = new CollaborationOfferDAO();
+    private static final EvaluationDAO EVALUATION_DAO = new EvaluationDAO();
     private static final CoordinatorDAO coordinatorDAO = new CoordinatorDAO();
     
-    private static final OfferInformation selectedOffer = OfferInformation.getOffer();
-    private static final SessionManager currentSession = SessionManager.getInstance();
+    private static final OfferInformation SELECTED_OFFER = OfferInformation.getOffer();
+    private static final SessionManager CURRENT_SESSION = SessionManager.getInstance();
     
-    private static final Logger log = Logger.getLogger(DetailOfferProfessorController.class);
+    private static final Logger LOG = Logger.getLogger(DetailOfferProfessorController.class);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.professorName.setText(selectedOffer.getProfessorName());
-        this.professorEmail.setText(selectedOffer.getProfessorEmail());
-        this.objective.setText(selectedOffer.getObjective());
-        this.topicsOfInterest.setText(selectedOffer.getTopicsInterest());
-        this.period.setText(selectedOffer.getOfferPeriod());
-        this.language.setText(selectedOffer.getOfferLanguage());
-        this.aditionalInformation.setText(selectedOffer.getAditionalInformation());
-        this.numberStudents.setText(String.valueOf(selectedOffer.getNumberStudents()));
-        this.profile.setText(selectedOffer.getStudentProfile());
+        this.professorName.setText(SELECTED_OFFER.getProfessorName());
+        this.professorEmail.setText(SELECTED_OFFER.getProfessorEmail());
+        this.objective.setText(SELECTED_OFFER.getObjective());
+        this.topicsOfInterest.setText(SELECTED_OFFER.getTopicsInterest());
+        this.period.setText(SELECTED_OFFER.getOfferPeriod());
+        this.language.setText(SELECTED_OFFER.getOfferLanguage());
+        this.aditionalInformation.setText(SELECTED_OFFER.getAditionalInformation());
+        this.numberStudents.setText(String.valueOf(SELECTED_OFFER.getNumberStudents()));
+        this.profile.setText(SELECTED_OFFER.getStudentProfile());
         try {
             checkVisibleButtons();
-            ArrayList<String> universityInfo = professorDAO.getUniversityFromAProfessor(selectedOffer.getIdUser());
+            ArrayList<String> universityInfo = PROFESSOR_DAO.getUniversityFromAProfessor(SELECTED_OFFER.getIdUser());
             this.universityName.setText(universityInfo.get(0));
             this.universityCountry.setText(universityInfo.get(1));
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
-            log.error(logicException);
+            LOG.error(logicException);
         }
     }
     
@@ -128,14 +121,14 @@ public class DetailOfferProfessorController implements Initializable {
     }
     
     private String getTypeUser() throws LogicException {
-        return userDAO.getUserTypeById(currentSession.getUserData().getIdUser());
+        return USER_DAO.getUserTypeById(CURRENT_SESSION.getUserData().getIdUser());
     }
 
     private void applyForOffer() throws LogicException {
         CollaborationOfferCandidate candidate = new CollaborationOfferCandidate();
-        candidate.setIdCollaboration(selectedOffer.getIdOfferCollaboration());
-        candidate.setIdUser(currentSession.getUserData().getIdUser());
-        int appliedSuccess = candidateDAO.InsertCollaborationOfferCandidate(candidate);
+        candidate.setIdCollaboration(SELECTED_OFFER.getIdOfferCollaboration());
+        candidate.setIdUser(CURRENT_SESSION.getUserData().getIdUser());
+        int appliedSuccess = CANDIDATE_DAO.InsertCollaborationOfferCandidate(candidate);
         if(appliedSuccess == 1) {
             Alerts.showInformationAlert("Te has postulado", "Se ha postulado a esta oferta, espere la correspondencia del profesor");
         }
@@ -144,15 +137,15 @@ public class DetailOfferProfessorController implements Initializable {
     
     private Evaluation createEvaluationApproved() throws LogicException {
         Evaluation evaluation = new Evaluation();
-        evaluation.setIdCoordinator(coordinatorDAO.getIdCoordinatorByIdUser(currentSession.getUserData().getIdUser()));
-        evaluation.setIdOfferCollaboration(selectedOffer.getIdOfferCollaboration());
+        evaluation.setIdCoordinator(coordinatorDAO.getIdCoordinatorByIdUser(CURRENT_SESSION.getUserData().getIdUser()));
+        evaluation.setIdOfferCollaboration(SELECTED_OFFER.getIdOfferCollaboration());
         return evaluation;
     }
     
     private Evaluation createEvaluationDeclined() throws LogicException {
         Evaluation evaluation = new Evaluation();
-        evaluation.setIdCoordinator(coordinatorDAO.getIdCoordinatorByIdUser(currentSession.getUserData().getIdUser()));
-        evaluation.setIdOfferCollaboration(selectedOffer.getIdOfferCollaboration());
+        evaluation.setIdCoordinator(coordinatorDAO.getIdCoordinatorByIdUser(CURRENT_SESSION.getUserData().getIdUser()));
+        evaluation.setIdOfferCollaboration(SELECTED_OFFER.getIdOfferCollaboration());
         evaluation.setReason(EmailNotification.getInstance().getEmailBody());
         return evaluation;
     }
@@ -169,71 +162,67 @@ public class DetailOfferProfessorController implements Initializable {
             }
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
-            log.error(logicException);
+            LOG.error(logicException);
         } catch (IOException ioException) {
             Alerts.displayAlertIOException();
-            log.error(ioException);
+            LOG.error(ioException);
         }
     }
     
     @FXML
     public void applyOffer() {
-        if (selectedOffer.getIdUser() == currentSession.getUserData().getIdUser()) {
+        if (SELECTED_OFFER.getIdUser() == CURRENT_SESSION.getUserData().getIdUser()) {
             Alerts.showWarningAlert("No puede postularse a su propia oferta");
             return;
         }
 
         try {
-            if (candidateDAO.professorHasAppliedForOffer(currentSession.getUserData().getIdUser(), selectedOffer.getIdOfferCollaboration())) {
+            if (CANDIDATE_DAO.professorHasAppliedForOffer(CURRENT_SESSION.getUserData().getIdUser(), SELECTED_OFFER.getIdOfferCollaboration())) {
                 Alerts.showWarningAlert("Ya se ha postulado a esta oferta");
             } else {
                 applyForOffer();
             }
         } catch (LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
-            log.error(logicException);
+            LOG.error(logicException);
         }
     }
     
     @FXML
     private void approveOffer() {
         try {
-            if(collaborationOfferDAO.evaluateCollaborationOffer(selectedOffer.getIdOfferCollaboration(), "Aprobada") == 1) {
+            if(COLLABORATION_OFFER_DAO.evaluateCollaborationOffer(SELECTED_OFFER.getIdOfferCollaboration(), "Aprobada") == 1) {
                 Evaluation evaluation = createEvaluationApproved();
-                if(evaluationDAO.insertEvaluationForApprovedOffer(evaluation) == 1) {
+                if(EVALUATION_DAO.insertEvaluationForApprovedOffer(evaluation) == 1) {
                     Alerts.showInformationAlert("Mensaje", "Ha aprobado esta oferta de colaboración");
                     previousMenu();
                 }
             }
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
-            log.error(logicException);
+            LOG.error(logicException);
         }
     }
     
     @FXML
     private void displayDeclineOffer() {
-        EmailNotification.getInstance().setEmail(selectedOffer.getProfessorEmail());
+        EmailNotification.getInstance().setEmail(SELECTED_OFFER.getProfessorEmail());
         EmailNotification.getInstance().setMessageSuccess("Oferta rechazada");
-        EmailNotification.getInstance().setMessageCancel("Se cancelará el rechazo de la oferta");
         try {
-            SendEmailStage sendEmailStage = new SendEmailStage();
+            DeclineOfferStage declineOfferStage = new DeclineOfferStage();
             if(EmailNotification.getInstance().getSentStatus()) {
-                Evaluation evaluation = createEvaluationDeclined();
-                if(collaborationOfferDAO.evaluateCollaborationOffer(selectedOffer.getIdOfferCollaboration(), "Rechazada") == 1) {
-                    if(evaluationDAO.insertEvaluationForDeclinedOffer(evaluation) == 1) {
-                        if(EmailNotification.getInstance().getSentStatus()) {
-                            previousMenu();
-                        }
-                    }
-                }
+                Alerts.showInformationAlert("Mensaje", "Oferta rechazada con éxito");
+            } else {
+                Alerts.showWarningAlert("Hubo un problema con el envío del correo");
+                PendingMail pendingMail = new PendingMail();
+                pendingMail.setSubject("Conclusión de colaboración");
+                pendingMail.setContent(EmailNotification.getInstance().getEmailBody());
+                pendingMail.setDestinationEmail(SELECTED_OFFER.getProfessorEmail());
+                pendingMail.setIdUser(CURRENT_SESSION.getUserData().getIdUser());
             }
-        } catch(LogicException logicException) {
-            Alerts.displayAlertLogicException(logicException);
-            log.error(logicException);
         } catch (IOException ioException) {
             Alerts.displayAlertIOException();
-            log.error(ioException);
+            LOG.error(ioException);
         }
     }
 }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gui.controllers;
 
 import gui.Alerts;
@@ -29,10 +25,6 @@ import logic.domain.ProfessorBelongsToCollaboration;
 import logic.model.CollaborationInformation;
 import org.apache.log4j.Logger;
 
-/**
- *
- * @author zaido
- */
 public class CollaborationsInConclusionController implements Initializable {
     
     @FXML
@@ -49,12 +41,12 @@ public class CollaborationsInConclusionController implements Initializable {
     
     private ObservableList<CollaborationInformation> collaborationsToDisplay;
     
-    private static final ProfessorBelongsToCollaborationDAO professorBelongsToCollaborationDAO = new ProfessorBelongsToCollaborationDAO();
-    private static final CollaborationDAO collaborationDAO = new CollaborationDAO();
-    private static final ProfessorDAO professorDAO = new ProfessorDAO();
+    private static final ProfessorBelongsToCollaborationDAO PROFESSOR_BELONGS_TO_COLLABORATION_DAO = new ProfessorBelongsToCollaborationDAO();
+    private static final CollaborationDAO COLLABORATION_DAO = new CollaborationDAO();
+    private static final ProfessorDAO PROFESSOR_DAO = new ProfessorDAO();
     
-    private static final CollaborationInformation selectedCollaboration = CollaborationInformation.getCollaboration();
-    private static final Logger log = Logger.getLogger(CollaborationsInConclusionController.class);
+    private static final CollaborationInformation SELECTED_COLLABORATION = CollaborationInformation.getCollaboration();
+    private static final Logger LOG = Logger.getLogger(CollaborationsInConclusionController.class);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -72,8 +64,8 @@ public class CollaborationsInConclusionController implements Initializable {
     
     private void setCollaborationsInConclusion() {
         try {
-            ArrayList<ProfessorBelongsToCollaboration> onHoldProfessorBelongs = professorBelongsToCollaborationDAO.getOnHoldCollaborations();
-            ArrayList<Collaboration> onHoldCollaborations = collaborationDAO.getProfessorConcludedCollaborations(onHoldProfessorBelongs);
+            ArrayList<ProfessorBelongsToCollaboration> onHoldProfessorBelongs = PROFESSOR_BELONGS_TO_COLLABORATION_DAO.getOnHoldCollaborations();
+            ArrayList<Collaboration> onHoldCollaborations = COLLABORATION_DAO.getProfessorConcludedCollaborations(onHoldProfessorBelongs);
 
             for (ProfessorBelongsToCollaboration professorBelongsCollaboration : onHoldProfessorBelongs) {
                 CollaborationInformation collaborationInfo = createCollaborationInformation(professorBelongsCollaboration, onHoldCollaborations);
@@ -85,7 +77,7 @@ public class CollaborationsInConclusionController implements Initializable {
             this.tblViewPendingCollaborations.setItems(collaborationsToDisplay);
         } catch (LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
-            log.error(logicException);
+            LOG.error(logicException);
         }
     }
 
@@ -122,7 +114,7 @@ public class CollaborationsInConclusionController implements Initializable {
     }
 
     private String getUniversityName(int userId) throws LogicException {
-        ArrayList<String> universityInfo = professorDAO.getUniversityFromAProfessor(userId);
+        ArrayList<String> universityInfo = PROFESSOR_DAO.getUniversityFromAProfessor(userId);
         String universityName = universityInfo.get(0);
         String universityCountry = universityInfo.get(1);
         return universityName + " (" + universityCountry + ")";
@@ -135,17 +127,17 @@ public class CollaborationsInConclusionController implements Initializable {
     }
     
     private void setSelectedCollaboration() {
-        selectedCollaboration.setCollaborationName(this.tblViewPendingCollaborations.getSelectionModel().getSelectedItem().getCollaborationName());
-        selectedCollaboration.setCloseDate(this.tblViewPendingCollaborations.getSelectionModel().getSelectedItem().getCloseDate());
-        selectedCollaboration.setStartDate(this.tblViewPendingCollaborations.getSelectionModel().getSelectedItem().getStartDate());
-        selectedCollaboration.setLanguage(this.tblViewPendingCollaborations.getSelectionModel().getSelectedItem().getLanguage());
-        selectedCollaboration.setTopicsOfInterest(this.tblViewPendingCollaborations.getSelectionModel().getSelectedItem().getLanguage());
-        selectedCollaboration.setCollaborationStatus(this.tblViewPendingCollaborations.getSelectionModel().getSelectedItem().getCollaborationStatus());
-        selectedCollaboration.setProfessorUniversity(this.tblViewPendingCollaborations.getSelectionModel().getSelectedItem().getProfessorUniversity());
-        selectedCollaboration.setMirrorProfessorUniversity(this.tblViewPendingCollaborations.getSelectionModel().getSelectedItem().getMirrorProfessorUniversity());
-        selectedCollaboration.setIdCollaboration(this.tblViewPendingCollaborations.getSelectionModel().getSelectedItem().getIdCollaboration());
-        selectedCollaboration.setIdUser(this.tblViewPendingCollaborations.getSelectionModel().getSelectedItem().getIdUser());
-        selectedCollaboration.setIdMirrorUser(this.tblViewPendingCollaborations.getSelectionModel().getSelectedItem().getIdMirrorUser());
+        SELECTED_COLLABORATION.setCollaborationName(this.tblViewPendingCollaborations.getSelectionModel().getSelectedItem().getCollaborationName());
+        SELECTED_COLLABORATION.setCloseDate(this.tblViewPendingCollaborations.getSelectionModel().getSelectedItem().getCloseDate());
+        SELECTED_COLLABORATION.setStartDate(this.tblViewPendingCollaborations.getSelectionModel().getSelectedItem().getStartDate());
+        SELECTED_COLLABORATION.setLanguage(this.tblViewPendingCollaborations.getSelectionModel().getSelectedItem().getLanguage());
+        SELECTED_COLLABORATION.setTopicsOfInterest(this.tblViewPendingCollaborations.getSelectionModel().getSelectedItem().getLanguage());
+        SELECTED_COLLABORATION.setCollaborationStatus(this.tblViewPendingCollaborations.getSelectionModel().getSelectedItem().getCollaborationStatus());
+        SELECTED_COLLABORATION.setProfessorUniversity(this.tblViewPendingCollaborations.getSelectionModel().getSelectedItem().getProfessorUniversity());
+        SELECTED_COLLABORATION.setMirrorProfessorUniversity(this.tblViewPendingCollaborations.getSelectionModel().getSelectedItem().getMirrorProfessorUniversity());
+        SELECTED_COLLABORATION.setIdCollaboration(this.tblViewPendingCollaborations.getSelectionModel().getSelectedItem().getIdCollaboration());
+        SELECTED_COLLABORATION.setIdUser(this.tblViewPendingCollaborations.getSelectionModel().getSelectedItem().getIdUser());
+        SELECTED_COLLABORATION.setIdMirrorUser(this.tblViewPendingCollaborations.getSelectionModel().getSelectedItem().getIdMirrorUser());
     }
     
     @FXML
@@ -158,7 +150,7 @@ public class CollaborationsInConclusionController implements Initializable {
                 ReviewConclusionCollaborationStage reviewConclusionStage = new ReviewConclusionCollaborationStage();
             } catch (IOException ioException) {
                 Alerts.displayAlertIOException();
-                log.error(ioException);
+                LOG.error(ioException);
             }
         } else {
             Alerts.showWarningAlert("Seleccione una colaboración para evaluarla");
@@ -173,7 +165,7 @@ public class CollaborationsInConclusionController implements Initializable {
             CollaborationsCoordinatorMenuStage collaborationsCoordinatorStage = new CollaborationsCoordinatorMenuStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
-            log.error(ioException);
+            LOG.error(ioException);
         }
     }
 }

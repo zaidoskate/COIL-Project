@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gui.controllers;
 
 import gui.Alerts;
@@ -23,10 +19,6 @@ import logic.model.CandidateInformation;
 import logic.model.OfferInformation;
 import org.apache.log4j.Logger;
 
-/**
- *
- * @author zaido
- */
 public class ProfessorDetailController implements Initializable {
 
     @FXML
@@ -47,22 +39,22 @@ public class ProfessorDetailController implements Initializable {
     @FXML
     private Button btnBack;
     
-    private static final SessionManager currentSession = SessionManager.getInstance();
-    private static final OfferInformation currentOffer = OfferInformation.getOffer();
-    private static final CandidateInformation currentCandidate = CandidateInformation.getCandidateInformation();
+    private static final SessionManager CURRENT_SESSION = SessionManager.getInstance();
+    private static final OfferInformation CURRENT_OFFER = OfferInformation.getOffer();
+    private static final CandidateInformation CURRENT_CANDIDATE = CandidateInformation.getCandidateInformation();
     
-    private static final CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
-    private static final CollaborationDAO collaborationDAO = new CollaborationDAO();
-    private static final ProfessorBelongsToCollaborationDAO professorBelongsCollaborationDAO = new ProfessorBelongsToCollaborationDAO();
+    private static final CollaborationOfferDAO COLLABORATION_OFFER_DAO = new CollaborationOfferDAO();
+    private static final CollaborationDAO COLLABORATION_DAO = new CollaborationDAO();
+    private static final ProfessorBelongsToCollaborationDAO PROFESSOR_BELONGS_TO_COLLABORATION_DAO = new ProfessorBelongsToCollaborationDAO();
     
-    private static final Logger log = Logger.getLogger(ProfessorDetailController.class);
+    private static final Logger LOG = Logger.getLogger(ProfessorDetailController.class);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.lblProfessorName.setText(currentCandidate.getProfessorName());
-        this.lblProfessorEmail.setText(currentCandidate.getProfessorEmail());
-        this.lblUniversityName.setText(currentCandidate.getUniversityName());
-        this.lblUniversityLocation.setText(currentCandidate.getUniversityLocation());
+        this.lblProfessorName.setText(CURRENT_CANDIDATE.getProfessorName());
+        this.lblProfessorEmail.setText(CURRENT_CANDIDATE.getProfessorEmail());
+        this.lblUniversityName.setText(CURRENT_CANDIDATE.getUniversityName());
+        this.lblUniversityLocation.setText(CURRENT_CANDIDATE.getUniversityLocation());
     }
     
     @FXML
@@ -73,7 +65,7 @@ public class ProfessorDetailController implements Initializable {
             CandidatesStage candidatesStage = new CandidatesStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
-            log.error(ioException);
+            LOG.error(ioException);
         }
     }
     
@@ -84,7 +76,7 @@ public class ProfessorDetailController implements Initializable {
             RegistrateCollaborationStage registrateCollaborationStage = new RegistrateCollaborationStage(currentStage);
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
-            log.error(ioException);
+            LOG.error(ioException);
         }
     }
     

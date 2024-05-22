@@ -25,7 +25,7 @@
                   </TableView>
                </children>
             </AnchorPane>
-            <ComboBox fx:id="comboBoxFeedbackType" layoutX="14.0" layoutY="1.0" prefHeight="26.0" prefWidth="375.0" promptText="Seleccione un archivo de feedback para descargar" />
+            <ComboBox fx:id="cmbBoxFeedbackType" layoutX="14.0" layoutY="1.0" prefHeight="26.0" prefWidth="375.0" promptText="Seleccione un archivo de feedback para descargar" />
             <Button layoutX="140.0" layoutY="48.0" mnemonicParsing="false" onAction="#downloadFeedback" styleClass="button-accion" text="Descargar feedback" />
             <Button layoutX="140.0" layoutY="81.0" mnemonicParsing="false" onAction="#downloadEvidence" styleClass="button-accion" text="Descargar evidencia" />
          </children>

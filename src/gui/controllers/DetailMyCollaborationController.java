@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gui.controllers;
 
 import gui.Alerts;
@@ -22,10 +18,6 @@ import logic.domain.ConcludedCollaboration;
 import logic.model.CollaborationInformation;
 import org.apache.log4j.Logger;
 
-/**
- *
- * @author zaido
- */
 public class DetailMyCollaborationController implements Initializable {
 
     @FXML
@@ -40,11 +32,11 @@ public class DetailMyCollaborationController implements Initializable {
     @FXML
     private Label lblCertificatesAvailable;
     
-    private static final ConcludedColaborationDAO concludedCollaborationDAO = new ConcludedColaborationDAO();
+    private static final ConcludedColaborationDAO CONCLUDED_COLLABORATION_DAO = new ConcludedColaborationDAO();
     
-    private static final CollaborationInformation selectedCollaboration = CollaborationInformation.getCollaboration();
+    private static final CollaborationInformation SELECTED_COLLABORATION = CollaborationInformation.getCollaboration();
     
-    private static final Logger log = Logger.getLogger(DetailMyCollaborationController.class);
+    private static final Logger LOG = Logger.getLogger(DetailMyCollaborationController.class);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -52,14 +44,15 @@ public class DetailMyCollaborationController implements Initializable {
     }
     
     private void setLabels() {
-        this.lblCollaborationName.setText(selectedCollaboration.getCollaborationName());
-        this.lblStartDate.setText(selectedCollaboration.getStartDate());
+        this.lblCollaborationName.setText(SELECTED_COLLABORATION.getCollaborationName());
+        this.lblStartDate.setText(SELECTED_COLLABORATION.getStartDate());
         try {
-            if(!concludedCollaborationDAO.hasCertificatesUploaded(selectedCollaboration.getIdCollaboration())) {
+            if(!CONCLUDED_COLLABORATION_DAO.hasCertificatesUploaded(SELECTED_COLLABORATION.getIdCollaboration())) {
                 this.lblCertificatesAvailable.setText("Constancias no disponibles para descargar");
             }
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
+            LOG.error(logicException);
         }
     }
     
@@ -76,14 +69,14 @@ public class DetailMyCollaborationController implements Initializable {
         File downloadPath = getDownloadPath("Guardar constancias", "Constancias");
         if(downloadPath != null) {
             ConcludedCollaboration concludedCollaboration = new ConcludedCollaboration();
-            concludedCollaboration.setIdColaboration(selectedCollaboration.getIdCollaboration());
+            concludedCollaboration.setIdColaboration(SELECTED_COLLABORATION.getIdCollaboration());
             try {
-                if(concludedCollaborationDAO.obtainCertificates(concludedCollaboration, downloadPath.toString()) == 1) {
+                if(CONCLUDED_COLLABORATION_DAO.obtainCertificates(concludedCollaboration, downloadPath.toString()) == 1) {
                     Alerts.showInformationAlert("Mensaje", "Constancias descargadas con éxito");
                 }
             } catch(LogicException logicException) {
                 Alerts.displayAlertLogicException(logicException);
-                //log.error(logicException);
+                LOG.error(logicException);
             }
         }
     }
@@ -96,7 +89,7 @@ public class DetailMyCollaborationController implements Initializable {
             CollaborationHistoryStage historyStage = new CollaborationHistoryStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
-            log.error(ioException);
+            LOG.error(ioException);
         }
     }
 }

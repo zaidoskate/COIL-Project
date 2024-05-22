@@ -10,15 +10,25 @@ import logic.LogicException;
 import logic.domain.ProfessorBelongsToCollaboration;
 import logic.interfaces.ProfessorBelongsToCollaborationManagerInterface;
 
+/**
+ *
+ * @author zaido
+ */
 public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCollaborationManagerInterface {
-    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
+    private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
     
+    /**
+     *
+     * @param professorBelongsToCollaboration
+     * @return
+     * @throws LogicException
+     */
     @Override
     public int addProfessorBelongsToCollaboration(ProfessorBelongsToCollaboration professorBelongsToCollaboration) throws LogicException {
         int result = 0;
         String query = "INSERT INTO profesorpertenececolaboracion VALUES (?, ?, ?, ?)";
         try{
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, professorBelongsToCollaboration.getIdColaboration());
             statement.setInt(2, professorBelongsToCollaboration.getIdUser());
@@ -29,17 +39,23 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return result;
     } 
 
+    /**
+     *
+     * @param idCollaboration
+     * @return
+     * @throws LogicException
+     */
     @Override
     public int deleteProfessorBelongsToCollaborationByIdCollaboration(int idCollaboration) throws LogicException {
         int result = 0;
         String query = "DELETE FROM profesorpertenececolaboracion WHERE Colaboracion_idColaboracion = ?";
         try{
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idCollaboration);
             result = statement.executeUpdate();
@@ -47,17 +63,23 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return result;
     }
 
+    /**
+     *
+     * @param idUser
+     * @return
+     * @throws LogicException
+     */
     @Override
     public ProfessorBelongsToCollaboration getProfessorPendingCollaboration(int idUser) throws LogicException {
         ProfessorBelongsToCollaboration professorBelongsToCollaboration = new ProfessorBelongsToCollaboration();
         String query = "SELECT * FROM profesorpertenececolaboracion WHERE profesor_idusuario = ? AND estadoColaboracion IN ('Pendiente', 'Iniciada')";
         try {
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idUser);
             ResultSet idObtained = statement.executeQuery();
@@ -70,17 +92,24 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexión intentelo de nuevo más tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return professorBelongsToCollaboration;
     }
 
+    /**
+     *
+     * @param idCollaboration
+     * @param status
+     * @return
+     * @throws LogicException
+     */
     @Override
     public int setStatusToCollaboration(int idCollaboration, String status) throws LogicException {
         int result = 0;
         String query = "UPDATE profesorPerteneceColaboracion SET estadoColaboracion = ? WHERE Colaboracion_idColaboracion = ?";
         try{
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, status);
             statement.setInt(2, idCollaboration);
@@ -88,17 +117,22 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return result;
     }
     
+    /**
+     *
+     * @return
+     * @throws LogicException
+     */
     @Override
     public ArrayList<ProfessorBelongsToCollaboration> getOnHoldCollaborations() throws LogicException {
         ArrayList<ProfessorBelongsToCollaboration> collaborations = new ArrayList<>();
         String query = "SELECT * FROM profesorpertenececolaboracion WHERE estadoColaboracion = 'Espera'";
         try {
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet result = statement.executeQuery();
             while (result.next()) {
@@ -112,17 +146,23 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
         } catch (SQLException sqlException) {
             throw new LogicException("No hay conexión intentelo de nuevo más tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return collaborations;
     }
     
+    /**
+     *
+     * @param idUser
+     * @return
+     * @throws LogicException
+     */
     @Override
     public ArrayList<ProfessorBelongsToCollaboration> getConcludedCollaborationsByIdUser(int idUser) throws LogicException {
         ArrayList<ProfessorBelongsToCollaboration> collaborations = new ArrayList<>();
         String query = "SELECT * FROM profesorpertenececolaboracion WHERE Profesor_idUsuario = ? AND estadoColaboracion = 'Concluida' OR Profesor_idUsuarioEspejo = ? AND estadoColaboracion = 'Concluida'";
         try {
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idUser);
             statement.setInt(2, idUser);
@@ -138,7 +178,7 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
         } catch (SQLException sqlException) {
             throw new LogicException("No hay conexión intentelo de nuevo más tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return collaborations;
     }

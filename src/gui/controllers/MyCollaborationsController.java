@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gui.controllers;
 
 import gui.Alerts;
@@ -27,10 +23,6 @@ import logic.domain.ProfessorBelongsToCollaboration;
 import logic.model.CollaborationInformation;
 import org.apache.log4j.Logger;
 
-/**
- *
- * @author zaido
- */
 public class MyCollaborationsController implements Initializable {
     
     @FXML
@@ -54,18 +46,18 @@ public class MyCollaborationsController implements Initializable {
     @FXML
     private Button btnUploadEvidence;
     
-    private static final ProfessorBelongsToCollaborationDAO professorBelongsToCollaborationDAO = new ProfessorBelongsToCollaborationDAO();
-    private static final CollaborationDAO collaborationDAO = new CollaborationDAO();
+    private static final ProfessorBelongsToCollaborationDAO PROFESSOR_BELONGS_TO_COLLABORATION_DAO = new ProfessorBelongsToCollaborationDAO();
+    private static final CollaborationDAO COLLABORATION_DAO = new CollaborationDAO();
     
-    private static final SessionManager currentSession = SessionManager.getInstance();
-    private static final CollaborationInformation currentCollaboration = CollaborationInformation.getCollaboration();
+    private static final SessionManager CURRENT_SESSION = SessionManager.getInstance();
+    private static final CollaborationInformation CURRENT_COLLABORATION = CollaborationInformation.getCollaboration();
     
-    private static final Logger log = Logger.getLogger(MyCollaborationsController.class);
+    private static final Logger LOG = Logger.getLogger(MyCollaborationsController.class);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setProfessorCollaboration();
-        if(currentCollaboration.getIdUser() == currentSession.getUserData().getIdUser()) {
+        if(CURRENT_COLLABORATION.getIdUser() == CURRENT_SESSION.getUserData().getIdUser()) {
             showCollaborationAvailable();
         } else {
             showNoCollaborationAvailable();
@@ -74,26 +66,26 @@ public class MyCollaborationsController implements Initializable {
     
     private void setProfessorCollaboration() {
         try {
-            ProfessorBelongsToCollaboration professorsBelong = professorBelongsToCollaborationDAO.getProfessorPendingCollaboration(currentSession.getUserData().getIdUser());
-            Collaboration collaborationObtained = collaborationDAO.getColaborationById(professorsBelong.getIdColaboration());
-            currentCollaboration.setCollaborationStatus(professorsBelong.getColaborationStatus());
-            currentCollaboration.setIdUser(professorsBelong.getIdUser());
-            currentCollaboration.setIdMirrorUser(professorsBelong.getIdUserMirrorClass());
-            currentCollaboration.setIdCollaboration(collaborationObtained.getIdColaboration());
-            currentCollaboration.setCollaborationName(collaborationObtained.getColaborationName());
-            currentCollaboration.setTopicsOfInterest(collaborationObtained.getInterestTopic());
-            currentCollaboration.setLanguage(collaborationObtained.getLanguage());
+            ProfessorBelongsToCollaboration professorsBelong = PROFESSOR_BELONGS_TO_COLLABORATION_DAO.getProfessorPendingCollaboration(CURRENT_SESSION.getUserData().getIdUser());
+            Collaboration collaborationObtained = COLLABORATION_DAO.getColaborationById(professorsBelong.getIdColaboration());
+            CURRENT_COLLABORATION.setCollaborationStatus(professorsBelong.getColaborationStatus());
+            CURRENT_COLLABORATION.setIdUser(professorsBelong.getIdUser());
+            CURRENT_COLLABORATION.setIdMirrorUser(professorsBelong.getIdUserMirrorClass());
+            CURRENT_COLLABORATION.setIdCollaboration(collaborationObtained.getIdColaboration());
+            CURRENT_COLLABORATION.setCollaborationName(collaborationObtained.getColaborationName());
+            CURRENT_COLLABORATION.setTopicsOfInterest(collaborationObtained.getInterestTopic());
+            CURRENT_COLLABORATION.setLanguage(collaborationObtained.getLanguage());
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
-            log.error(logicException);
+            LOG.error(logicException);
         }
     }
     
     private void showCollaborationAvailable() {
-        this.lblCollaborationName.setText(currentCollaboration.getCollaborationName());
-        this.lblCollaborationStatus.setText(currentCollaboration.getCollaborationStatus());
+        this.lblCollaborationName.setText(CURRENT_COLLABORATION.getCollaborationName());
+        this.lblCollaborationStatus.setText(CURRENT_COLLABORATION.getCollaborationStatus());
         this.collaborationAvailablePane.setVisible(true);
-        if(currentCollaboration.getCollaborationStatus().equals("Iniciada")) {
+        if(CURRENT_COLLABORATION.getCollaborationStatus().equals("Iniciada")) {
             this.btnStartCollaboration.setVisible(false);
             this.btnConcludeCollaboration.setVisible(true);
             this.btnUploadEvidence.setVisible(true);
@@ -112,7 +104,7 @@ public class MyCollaborationsController implements Initializable {
             CollaborationStage collaborationStage = new CollaborationStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
-            log.error(ioException);
+            LOG.error(ioException);
         }
     }
     
@@ -124,7 +116,7 @@ public class MyCollaborationsController implements Initializable {
             StartCollaborationStage startCollaborationStage = new StartCollaborationStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
-            log.error(ioException);
+            LOG.error(ioException);
         }
     }
     
@@ -136,8 +128,7 @@ public class MyCollaborationsController implements Initializable {
             ConcludeCollaborationStage concludeCollaborationStage = new ConcludeCollaborationStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
-            ioException.printStackTrace();
-            //log.error(ioException);
+            LOG.error(ioException);
         }
     }
     
@@ -154,7 +145,7 @@ public class MyCollaborationsController implements Initializable {
             CollaborationHistoryStage collaborationHistoryStage = new CollaborationHistoryStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
-            log.error(ioException);
+            LOG.error(ioException);
         }
     }
 }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gui.controllers;
 
 import gui.Alerts;
@@ -13,7 +9,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -28,10 +23,6 @@ import logic.domain.StartupDocumentation;
 import logic.model.CollaborationInformation;
 import org.apache.log4j.Logger;
 
-/**
- *
- * @author zaido
- */
 public class StartCollaborationController implements Initializable {
     
     @FXML
@@ -41,13 +32,13 @@ public class StartCollaborationController implements Initializable {
     private ImageView imageViewFile;
     
     @FXML
-    private ComboBox comboBoxFileType;
+    private ComboBox cmbBoxFileType;
     
-    private static final StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO();
-    private static final CollaborationDAO collaborationDAO = new CollaborationDAO();
-    private static final ProfessorBelongsToCollaborationDAO professorBelongsToCollaborationDAO = new ProfessorBelongsToCollaborationDAO();
+    private static final StartupDocumentationDAO STARTUP_DOCUMENTATION_DAO = new StartupDocumentationDAO();
+    private static final CollaborationDAO COLLABORATION_DAO = new CollaborationDAO();
+    private static final ProfessorBelongsToCollaborationDAO PROFESSOR_BELONGS_TO_COLLABORATION_DAO = new ProfessorBelongsToCollaborationDAO();
     
-    private static final CollaborationInformation collaborationInformation = CollaborationInformation.getCollaboration();
+    private static final CollaborationInformation COLLABORATION_INFORMATION = CollaborationInformation.getCollaboration();
     
     private static final Logger log = Logger.getLogger(StartCollaborationController.class);
 
@@ -59,7 +50,7 @@ public class StartCollaborationController implements Initializable {
     
     private void checkCollaborationRegistrated() {
         try {
-            if(!startupDocumentationDAO.isCollaborationRegistrated(collaborationInformation.getIdCollaboration())) {
+            if(!STARTUP_DOCUMENTATION_DAO.isCollaborationRegistrated(COLLABORATION_INFORMATION.getIdCollaboration())) {
                 createStartupDocumentation();
             }
         } catch(LogicException logicException) {
@@ -70,34 +61,34 @@ public class StartCollaborationController implements Initializable {
     
     private void createStartupDocumentation() throws LogicException {
         StartupDocumentation startupDocumentation = new StartupDocumentation();
-        startupDocumentation.setIdColaboration(collaborationInformation.getIdCollaboration());
-        startupDocumentationDAO.addStartupDocumentation(startupDocumentation);
+        startupDocumentation.setIdColaboration(COLLABORATION_INFORMATION.getIdCollaboration());
+        STARTUP_DOCUMENTATION_DAO.addStartupDocumentation(startupDocumentation);
     }
     
     private void setComboBox() {
-        comboBoxFileType.getItems().addAll("Lista de estudiantes", "Lista de estudiantes espejo", "Syllabus");
+        cmbBoxFileType.getItems().addAll("Lista de estudiantes", "Lista de estudiantes espejo", "Syllabus");
     }
     
     private void uploadFile(String selectedFileType, File fileToUpload) throws LogicException {
         StartupDocumentation startupDocumentation = new StartupDocumentation();
-        startupDocumentation.setIdColaboration(collaborationInformation.getIdCollaboration());
+        startupDocumentation.setIdColaboration(COLLABORATION_INFORMATION.getIdCollaboration());
         try {
             switch (selectedFileType) {
                 case "Lista de estudiantes" :
                     startupDocumentation.setStudentsListPath(fileToUpload.getPath());
-                    if(startupDocumentationDAO.uploadStudentsList(startupDocumentation) == 1) {
+                    if(STARTUP_DOCUMENTATION_DAO.uploadStudentsList(startupDocumentation) == 1) {
                         Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito!");
                     }
                     break;
                 case "Lista de estudiantes espejo" :
                     startupDocumentation.setMirrorClassStudentsListPath(fileToUpload.getPath());
-                    if(startupDocumentationDAO.uploadMirrorStudentsList(startupDocumentation) == 1) {
+                    if(STARTUP_DOCUMENTATION_DAO.uploadMirrorStudentsList(startupDocumentation) == 1) {
                         Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito!");
                     }
                     break;
                 case "Syllabus" :
                     startupDocumentation.setSyllabusPath(fileToUpload.getPath());
-                    if(startupDocumentationDAO.uploadSyllabus(startupDocumentation) == 1) {
+                    if(STARTUP_DOCUMENTATION_DAO.uploadSyllabus(startupDocumentation) == 1) {
                         Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito!");
                     }
                     break;
@@ -113,9 +104,9 @@ public class StartCollaborationController implements Initializable {
     private boolean validateAllFilesUploaded() {
         boolean allFilesUploaded = false;
         try {
-            if(startupDocumentationDAO.hasFileUploaded("listaEstudiantado", collaborationInformation.getIdCollaboration())) {
-                if (startupDocumentationDAO.hasFileUploaded("listaEstudiantadoEspejo", collaborationInformation.getIdCollaboration())) {
-                    if (startupDocumentationDAO.hasFileUploaded("Syllabus", collaborationInformation.getIdCollaboration())) {
+            if(STARTUP_DOCUMENTATION_DAO.hasFileUploaded("listaEstudiantado", COLLABORATION_INFORMATION.getIdCollaboration())) {
+                if (STARTUP_DOCUMENTATION_DAO.hasFileUploaded("listaEstudiantadoEspejo", COLLABORATION_INFORMATION.getIdCollaboration())) {
+                    if (STARTUP_DOCUMENTATION_DAO.hasFileUploaded("Syllabus", COLLABORATION_INFORMATION.getIdCollaboration())) {
                         allFilesUploaded = true;
                     }
                 }
@@ -131,7 +122,7 @@ public class StartCollaborationController implements Initializable {
     public void onDragOver(DragEvent event) {
         Stage stage = (Stage) this.regionFile.getScene().getWindow();
         stage.requestFocus();
-        if(comboBoxFileType.getSelectionModel().getSelectedItem() != null) {
+        if(cmbBoxFileType.getSelectionModel().getSelectedItem() != null) {
             if(event.getGestureSource() != this.regionFile || event.getGestureSource() != imageViewFile) {
                 if(event.getDragboard().hasFiles()) {
                     event.acceptTransferModes(TransferMode.COPY);
@@ -143,11 +134,11 @@ public class StartCollaborationController implements Initializable {
     
     @FXML
     public void onDragDropped(DragEvent event) {
-        if(comboBoxFileType.getSelectionModel().getSelectedItem() != null) {
+        if(cmbBoxFileType.getSelectionModel().getSelectedItem() != null) {
             if(event.getGestureSource() != regionFile || event.getGestureSource() != imageViewFile){
                 if(event.getDragboard().hasFiles()) {
                     File fileToUpload = event.getDragboard().getFiles().get(0);
-                    String selectedFileType = (String) comboBoxFileType.getSelectionModel().getSelectedItem().toString();
+                    String selectedFileType = (String) cmbBoxFileType.getSelectionModel().getSelectedItem().toString();
                     if(DataValidation.validateFileExtension(fileToUpload.getName(), "pdf")) {
                         try {
                             uploadFile(selectedFileType, fileToUpload);
@@ -167,22 +158,22 @@ public class StartCollaborationController implements Initializable {
     
     @FXML
     public void deleteFile() {
-        if(comboBoxFileType.getSelectionModel().getSelectedItem() != null) {
-            String selectedFileType = (String) comboBoxFileType.getSelectionModel().getSelectedItem().toString();
+        if(cmbBoxFileType.getSelectionModel().getSelectedItem() != null) {
+            String selectedFileType = (String) cmbBoxFileType.getSelectionModel().getSelectedItem().toString();
             try {
                 switch (selectedFileType) {
                     case "Lista de estudiantes" :
-                        if(startupDocumentationDAO.deleteUploadedFile("listaEstudiantado", collaborationInformation.getIdCollaboration()) == 1) {
+                        if(STARTUP_DOCUMENTATION_DAO.deleteUploadedFile("listaEstudiantado", COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
                             Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito!");
                         }
                         break;
                     case "Lista de estudiantes espejo" :
-                        if(startupDocumentationDAO.deleteUploadedFile("listaEstudiantadoEspejo", collaborationInformation.getIdCollaboration()) == 1) {
+                        if(STARTUP_DOCUMENTATION_DAO.deleteUploadedFile("listaEstudiantadoEspejo", COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
                             Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito!");
                         }
                         break;
                     case "Syllabus" :
-                        if(startupDocumentationDAO.deleteUploadedFile("Syllabus", collaborationInformation.getIdCollaboration()) == 1) {
+                        if(STARTUP_DOCUMENTATION_DAO.deleteUploadedFile("Syllabus", COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
                             Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito!");
                         }
                         break;
@@ -198,22 +189,22 @@ public class StartCollaborationController implements Initializable {
     
     @FXML
     public void showHasUploadedFile() {
-        if(comboBoxFileType.getSelectionModel().getSelectedItem() != null) {
-            String selectedFileType = (String) comboBoxFileType.getSelectionModel().getSelectedItem().toString();
+        if(cmbBoxFileType.getSelectionModel().getSelectedItem() != null) {
+            String selectedFileType = (String) cmbBoxFileType.getSelectionModel().getSelectedItem().toString();
             try {
                 switch (selectedFileType) {
                     case "Lista de estudiantes" :
-                        if(startupDocumentationDAO.hasFileUploaded("listaEstudiantado", collaborationInformation.getIdCollaboration())) {
+                        if(STARTUP_DOCUMENTATION_DAO.hasFileUploaded("listaEstudiantado", COLLABORATION_INFORMATION.getIdCollaboration())) {
                             Alerts.showInformationAlert("Mensaje", selectedFileType + " tiene un archivo cargado");
                         }
                         break;
                     case "Lista de estudiantes espejo" :
-                        if(startupDocumentationDAO.hasFileUploaded("listaEstudiantadoEspejo", collaborationInformation.getIdCollaboration())) {
+                        if(STARTUP_DOCUMENTATION_DAO.hasFileUploaded("listaEstudiantadoEspejo", COLLABORATION_INFORMATION.getIdCollaboration())) {
                             Alerts.showInformationAlert("Mensaje", selectedFileType + " tiene un archivo cargado");
                         }
                         break;
                     case "Syllabus" :
-                        if(startupDocumentationDAO.hasFileUploaded("Syllabus", collaborationInformation.getIdCollaboration())) {
+                        if(STARTUP_DOCUMENTATION_DAO.hasFileUploaded("Syllabus", COLLABORATION_INFORMATION.getIdCollaboration())) {
                             Alerts.showInformationAlert("Mensaje", selectedFileType + " tiene un archivo cargado");
                         }
                         break;
@@ -229,7 +220,7 @@ public class StartCollaborationController implements Initializable {
     
     @FXML
     public void previousMenu() {
-        Stage stage = (Stage) this.comboBoxFileType.getScene().getWindow();
+        Stage stage = (Stage) this.cmbBoxFileType.getScene().getWindow();
         stage.close();
         try {
             MyCollaborationsStage myCollaborationsStage = new MyCollaborationsStage();
@@ -243,8 +234,8 @@ public class StartCollaborationController implements Initializable {
     public void startCollaboration() {
         if(validateAllFilesUploaded()) {
             try {
-                if(professorBelongsToCollaborationDAO.setStatusToCollaboration(collaborationInformation.getIdCollaboration(), "Iniciada") == 1) {
-                    if(collaborationDAO.startCollaboration(collaborationInformation.getIdCollaboration()) == 1) {
+                if(PROFESSOR_BELONGS_TO_COLLABORATION_DAO.setStatusToCollaboration(COLLABORATION_INFORMATION.getIdCollaboration(), "Iniciada") == 1) {
+                    if(COLLABORATION_DAO.startCollaboration(COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
                         Alerts.showInformationAlert("Hecho", "Ha iniciado esta colaboración");
                     }
                 }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gui.controllers;
 
 import gui.Alerts;
@@ -30,10 +26,6 @@ import logic.domain.User;
 import logic.model.OfferInformation;
 import org.apache.log4j.Logger;
 
-/**
- *
- * @author zaido
- */
 public class OfferCoordinatorController implements Initializable {
 
     @FXML
@@ -51,15 +43,15 @@ public class OfferCoordinatorController implements Initializable {
     @FXML
     private Button btnBack;
     
-    private static final CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
-    private static final UserDAO userDAO = new UserDAO();
+    private static final CollaborationOfferDAO COLLABORATION_OFFER_DAO = new CollaborationOfferDAO();
+    private static final UserDAO USER_DAO = new UserDAO();
     
     private ObservableList<OfferInformation> displayableOffers;
     
-    private static final OfferInformation selectedOffer = OfferInformation.getOffer();
-    private static final SessionManager currentSession = SessionManager.getInstance();
+    private static final OfferInformation SELECTED_OFFER = OfferInformation.getOffer();
+    private static final SessionManager CURRENT_SESSION = SessionManager.getInstance();
     
-    private static final Logger log = Logger.getLogger(OfferCoordinatorController.class);
+    private static final Logger LOG = Logger.getLogger(OfferCoordinatorController.class);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -76,10 +68,10 @@ public class OfferCoordinatorController implements Initializable {
     
     private void setUnapprovedCollaborationOffer() {
         try {
-            ArrayList<CollaborationOffer> offersToDisplay = collaborationOfferDAO.getUnapprovedCollaborationOffer();
+            ArrayList<CollaborationOffer> offersToDisplay = COLLABORATION_OFFER_DAO.getUnapprovedCollaborationOffer();
             if(offersToDisplay != null){
                 for (CollaborationOffer offer : offersToDisplay) {
-                    User user = userDAO.getUserById(offer.getIdUser());
+                    User user = USER_DAO.getUserById(offer.getIdUser());
                     String professorName = user.getName() + " " + user.getLastName();
                     String professorEmail = user.getEmail();
                     String objective = offer.getObjective();
@@ -110,22 +102,22 @@ public class OfferCoordinatorController implements Initializable {
             }
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
-            log.error(logicException);
+            LOG.error(logicException);
         }
     }
     
     private void setSelectedOffer() {
-        selectedOffer.setProfessorName(tblViewPendingOffers.getSelectionModel().getSelectedItem().getProfessorName());
-        selectedOffer.setProfessorEmail(tblViewPendingOffers.getSelectionModel().getSelectedItem().getProfessorEmail());
-        selectedOffer.setObjective(tblViewPendingOffers.getSelectionModel().getSelectedItem().getObjective());
-        selectedOffer.setTopicsInterest(tblViewPendingOffers.getSelectionModel().getSelectedItem().getTopicsInterest());
-        selectedOffer.setOfferPeriod(tblViewPendingOffers.getSelectionModel().getSelectedItem().getOfferPeriod());
-        selectedOffer.setOfferLanguage(tblViewPendingOffers.getSelectionModel().getSelectedItem().getOfferLanguage());
-        selectedOffer.setAditionalInformation(tblViewPendingOffers.getSelectionModel().getSelectedItem().getAditionalInformation());
-        selectedOffer.setIdOfferCollaboration(tblViewPendingOffers.getSelectionModel().getSelectedItem().getIdOfferCollaboration());
-        selectedOffer.setIdUser(tblViewPendingOffers.getSelectionModel().getSelectedItem().getIdUser());
-        selectedOffer.setNumberStudents(tblViewPendingOffers.getSelectionModel().getSelectedItem().getNumberStudents());
-        selectedOffer.setStudentProfile(tblViewPendingOffers.getSelectionModel().getSelectedItem().getStudentProfile());
+        SELECTED_OFFER.setProfessorName(tblViewPendingOffers.getSelectionModel().getSelectedItem().getProfessorName());
+        SELECTED_OFFER.setProfessorEmail(tblViewPendingOffers.getSelectionModel().getSelectedItem().getProfessorEmail());
+        SELECTED_OFFER.setObjective(tblViewPendingOffers.getSelectionModel().getSelectedItem().getObjective());
+        SELECTED_OFFER.setTopicsInterest(tblViewPendingOffers.getSelectionModel().getSelectedItem().getTopicsInterest());
+        SELECTED_OFFER.setOfferPeriod(tblViewPendingOffers.getSelectionModel().getSelectedItem().getOfferPeriod());
+        SELECTED_OFFER.setOfferLanguage(tblViewPendingOffers.getSelectionModel().getSelectedItem().getOfferLanguage());
+        SELECTED_OFFER.setAditionalInformation(tblViewPendingOffers.getSelectionModel().getSelectedItem().getAditionalInformation());
+        SELECTED_OFFER.setIdOfferCollaboration(tblViewPendingOffers.getSelectionModel().getSelectedItem().getIdOfferCollaboration());
+        SELECTED_OFFER.setIdUser(tblViewPendingOffers.getSelectionModel().getSelectedItem().getIdUser());
+        SELECTED_OFFER.setNumberStudents(tblViewPendingOffers.getSelectionModel().getSelectedItem().getNumberStudents());
+        SELECTED_OFFER.setStudentProfile(tblViewPendingOffers.getSelectionModel().getSelectedItem().getStudentProfile());
     }
     
     private void checkEmptyTable() {
@@ -144,7 +136,7 @@ public class OfferCoordinatorController implements Initializable {
                 DetailOfferProfessorStage detailOfferStage = new DetailOfferProfessorStage();
             } catch(IOException ioException) {
                 Alerts.displayAlertIOException();
-                log.error(ioException);
+                LOG.error(ioException);
             }
         } else {
             Alerts.showWarningAlert("Seleccione una oferta para poder ver su detalle");
@@ -159,7 +151,7 @@ public class OfferCoordinatorController implements Initializable {
             CoordinatorMenuStage coordinatorMenuStage = new CoordinatorMenuStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
-            log.error(ioException);
+            LOG.error(ioException);
         }
     }
     

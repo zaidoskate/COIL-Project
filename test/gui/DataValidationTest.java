@@ -1,5 +1,6 @@
 package gui;
 
+import logic.LogicException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -114,10 +115,37 @@ public class DataValidationTest {
     }
     
     @Test
-    public void testValidatePeriodFormatSuccess() {
-        String period = "Enero - Febrero 2024";
+    public void testValidateYearSuccess() {
+        
+    }
+    
+    @Test
+    public void testValidatePeriodValiditySuccess() {
+        String period = "Agosto - Enero";
+        String year = "2026";
         boolean expectedResult = true;
-        boolean result = DataValidation.validatePeriodFormat(period);
+        boolean result = DataValidation.validatePeriodValidity(period, year);
+        assertEquals(expectedResult, result);
+    }
+    
+    @Test
+    public void testValidateDateRangeSuccess() {
+        boolean expectedResult = true;
+        String startDate = "2024-12-19";
+        String endDate = "2025-01-17";
+        try {
+            boolean result = DataValidation.validateDateRange(startDate, endDate);
+            assertEquals(expectedResult, result);
+        } catch(LogicException logicException) {
+            fail("Error al validar el rango de fechas");
+        }
+    }
+    
+    @Test
+    public void testValidateNumberStudentsSuccess() {
+        boolean expectedResult = true;
+        String numberStudents = "125";
+        boolean result = DataValidation.validateNumberStudents(numberStudents);
         assertEquals(expectedResult, result);
     }
 }
