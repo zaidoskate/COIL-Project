@@ -6,14 +6,17 @@ import dataaccess.DatabaseConnection;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Blob;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import logic.FileDownloader;
+import logic.LogicException;
 
 /**
  *
@@ -21,6 +24,11 @@ import java.sql.Blob;
  */
 public class EvidenceDAO implements EvidenceManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
+    
+    private String parseDateToString(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        return formatter.format(date);
+    }
 
     /**
      *
@@ -61,37 +69,51 @@ public class EvidenceDAO implements EvidenceManagerInterface {
      * @return
      */
     @Override
-    public int obtainEvidence(Evidence evidence, String outputPath) {
-        Connection connection;
-        PreparedStatement statement = null;
-        FileOutputStream fileOutputStream = null;
+    public int obtainEvidence(Evidence evidence, String outputPath) throws LogicException {
+        int downloaded = 0;
         try {
-            connection = this.DATABASE_CONNECTION.getConnection();
-            statement = connection.prepareStatement("SELECT archivo FROM evidencia WHERE folderevidencia_idfolderevidencia = ?");
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT archivo FROM evidencia WHERE folderevidencia_idfolderevidencia = ?");
             statement.setInt(1, evidence.getIdFolderEvidence());
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 Blob blob = resultSet.getBlob("archivo");
-                InputStream inputStream = blob.getBinaryStream();
-                File outputFile = new File(outputPath);
-                fileOutputStream = new FileOutputStream(outputFile);
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    fileOutputStream.write(buffer, 0, bytesRead);
-                }
-                return 1;
+                FileDownloader.transformBlobToFile(outputPath, blob);
+                downloaded = 1;
             }
         } catch (SQLException sqlException) {
-            return -1;
+            throw new LogicException("No hay conexión, inténtelo de nuevo más tarde", sqlException);
         } catch (FileNotFoundException fileNotFoundException) {
-            return -2;
+            throw new LogicException("No existe tal archivo en la ruta especificada", fileNotFoundException);
         } catch (IOException ioException){
-            return -3;
+            throw new LogicException("Hubo un problema al descargar el archivo, inténtelo de nuevo", ioException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }
         return -4;
+    }
+    
+    @Override
+    public ArrayList<Evidence> getAllEvidencesByIdCollaboration(int idCollaboration) throws LogicException {
+        ArrayList<Evidence> collaborationEvidences = new ArrayList<>();
+        String query = "SELECT e.* FROM evidencia e INNER JOIN folderEvidencia fe ON e.FolderEvidencia_idFolderEvidencia = fe.idFolderEvidencia WHERE fe.Colaboracion_idColaboracion = ?";
+        try {
+            Connection connection = DATABASE_CONNECTION.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idCollaboration);
+            ResultSet evidences = statement.executeQuery();
+            while(evidences.next()) {
+                Evidence evidence = new Evidence();
+                evidence.setIdFolderEvidence(evidences.getInt("FolderEvidencia_idFolderEvidencia"));
+                evidence.setName(evidences.getString("nombre"));
+                evidence.setAuthor(evidences.getString("autor"));
+                evidence.setDateOfCreation(parseDateToString(evidences.getDate("fechaCreacion")));
+                collaborationEvidences.add(evidence);
+            }
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexión, inténtelo de nuevo más tarde", sqlException);
+        }
+        return collaborationEvidences;
     }
     
 }

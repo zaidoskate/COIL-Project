@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gui.controllers;
 
 import gui.Alerts;
@@ -23,10 +19,6 @@ import logic.domain.CollaborationOffer;
 import logic.model.OfferInformation;
 import org.apache.log4j.Logger;
 
-/**
- *
- * @author zaido
- */
 public class MyOffersController implements Initializable {
     
     @FXML
@@ -44,17 +36,17 @@ public class MyOffersController implements Initializable {
     @FXML
     private Label lblPeriod;
     
-    private static final CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
+    private static final CollaborationOfferDAO COLLABORATION_OFFER_DAO = new CollaborationOfferDAO();
     
-    private static final SessionManager currentSession = SessionManager.getInstance();
-    private static final OfferInformation professorOffer = OfferInformation.getOffer();
+    private static final SessionManager CURRENT_SESSION = SessionManager.getInstance();
+    private static final OfferInformation PROFESSOR_OFFER = OfferInformation.getOffer();
     
-    private static final Logger log = Logger.getLogger(MyOffersController.class);
+    private static final Logger LOG = Logger.getLogger(MyOffersController.class);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setProfessorOffer();
-        if(professorOffer.getIdOfferCollaboration() != 0) {
+        if(PROFESSOR_OFFER.getIdOfferCollaboration() != 0) {
             showOffersAvailable();
         } else {
             showNoOffersAvailable();
@@ -63,21 +55,21 @@ public class MyOffersController implements Initializable {
     
     private void setProfessorOffer() {
         try {
-            CollaborationOffer offer = collaborationOfferDAO.getProfessorApprovedOffer(currentSession.getUserData().getIdUser());
-            professorOffer.setIdOfferCollaboration(offer.getIdCollaboration());
-            professorOffer.setIdUser(offer.getIdUser());
-            professorOffer.setOfferPeriod(offer.getPeriod());
-            professorOffer.setOfferLanguage(offer.getLanguage());
-            professorOffer.setTopicsInterest(offer.getTopicsOfInterest());
+            CollaborationOffer offer = COLLABORATION_OFFER_DAO.getProfessorApprovedOffer(CURRENT_SESSION.getUserData().getIdUser());
+            PROFESSOR_OFFER.setIdOfferCollaboration(offer.getIdCollaboration());
+            PROFESSOR_OFFER.setIdUser(offer.getIdUser());
+            PROFESSOR_OFFER.setOfferPeriod(offer.getPeriod());
+            PROFESSOR_OFFER.setOfferLanguage(offer.getLanguage());
+            PROFESSOR_OFFER.setTopicsInterest(offer.getTopicsOfInterest());
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
-            log.error(logicException);
+            LOG.error(logicException);
         }
         
     }
     
     private void showOffersAvailable() {
-        this.lblPeriod.setText(professorOffer.getOfferPeriod());
+        this.lblPeriod.setText(PROFESSOR_OFFER.getOfferPeriod());
         this.offerAvailablePane.setVisible(true);
         
     }
@@ -94,7 +86,7 @@ public class MyOffersController implements Initializable {
             OfferProfessorStage offerStage = new OfferProfessorStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
-            log.error(ioException);
+            LOG.error(ioException);
         }
     }
     
@@ -106,7 +98,7 @@ public class MyOffersController implements Initializable {
             CandidatesStage candidatesStage = new CandidatesStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
-            log.error(ioException);
+            LOG.error(ioException);
         }
     }
 }

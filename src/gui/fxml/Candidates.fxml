@@ -8,7 +8,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.CandidatesController">
    <children>
       <AnchorPane prefHeight="400.0" prefWidth="70.0" style="-fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #F2F2F2, rgb(254, 60, 87));">
@@ -24,7 +23,7 @@
       </AnchorPane>
       <AnchorPane layoutX="85.0" layoutY="10.0" prefHeight="340.0" prefWidth="500.0">
          <children>
-            <TableView fx:id="tblCandidates" prefHeight="354.4" prefWidth="530.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TableView fx:id="tblViewCandidates" prefHeight="354.4" prefWidth="530.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
                 <TableColumn fx:id="clmProfessorName" prefWidth="265.0" resizable="false" text="Profesor" />
                 <TableColumn fx:id="clmUniversity" prefWidth="265.0" resizable="false" text="Universidad" />

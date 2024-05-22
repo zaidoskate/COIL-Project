@@ -1,4 +1,3 @@
-
 package logic.DAOs;
 
 import logic.interfaces.CollaborationOfferCandidateManagerInterface;
@@ -11,15 +10,25 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import logic.LogicException;
 
+/**
+ *
+ * @author zaido
+ */
 public class CollaborationOfferCandidateDAO implements CollaborationOfferCandidateManagerInterface {
-    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
+    private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
     
+    /**
+     *
+     * @param collaborationOfferCandidate
+     * @return
+     * @throws LogicException
+     */
     @Override
     public int InsertCollaborationOfferCandidate(CollaborationOfferCandidate collaborationOfferCandidate) throws LogicException {
         int result = 0;
         String query = "INSERT INTO candidatosofertacolaboracion (idofertacolaboracion, profesor_usuario_idusuario) VALUES (?, ?)";
         try{
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, collaborationOfferCandidate.getIdCollaboration());
             statement.setInt(2, collaborationOfferCandidate.getIdUser());
@@ -28,17 +37,24 @@ public class CollaborationOfferCandidateDAO implements CollaborationOfferCandida
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion, intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return result;
     }
     
+    /**
+     *
+     * @param idUser
+     * @param idCollaborationOffer
+     * @return
+     * @throws LogicException
+     */
     @Override
     public boolean professorHasAppliedForOffer(int idUser, int idCollaborationOffer) throws LogicException {
         boolean applied = false;
         String query = "SELECT COUNT(*) AS cantidad FROM candidatosofertacolaboracion WHERE idOfertaColaboracion = ? AND profesor_usuario_idusuario = ?";
         try {
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idCollaborationOffer);
             statement.setInt(2, idUser);
@@ -51,17 +67,23 @@ public class CollaborationOfferCandidateDAO implements CollaborationOfferCandida
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion, intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return applied;
     }
     
+    /**
+     *
+     * @param idCollaboration
+     * @return
+     * @throws LogicException
+     */
     @Override
     public ArrayList<CollaborationOfferCandidate> GetCollaborationOfferCandidateByIdCollaborationOffer(int idCollaboration) throws LogicException {
         String query = "SELECT * FROM candidatosofertacolaboracion WHERE idOfertaColaboracion = ?";
         ArrayList<CollaborationOfferCandidate> candidates = new ArrayList<>();
         try {
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idCollaboration);
             ResultSet result = statement.executeQuery();
@@ -74,24 +96,30 @@ public class CollaborationOfferCandidateDAO implements CollaborationOfferCandida
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return candidates;
     }
 
+    /**
+     *
+     * @param idOfferCollaboration
+     * @return
+     * @throws LogicException
+     */
     @Override
     public int deleteCollaborationOffer(int idOfferCollaboration) throws LogicException {
         int deletedRows = 0;
         String query = "DELETE FROM candidatosOfertaColaboracion WHERE idOfertaColaboracion = ?";
         try {
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idOfferCollaboration);
             deletedRows = statement.executeUpdate();
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return deletedRows;
     }

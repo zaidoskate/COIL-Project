@@ -20,12 +20,12 @@
                <children>
                   <TableView fx:id="tblViewEvidence" layoutX="119.0" layoutY="-33.0" prefHeight="167.2" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn fx:id="tblColumnEvidence" prefWidth="400.0" text="Evidencia" />
+                      <TableColumn fx:id="clmEvidenceName" prefWidth="400.0" text="Evidencia" />
                     </columns>
                   </TableView>
                </children>
             </AnchorPane>
-            <ComboBox fx:id="comboBoxFeedbackType" layoutX="14.0" layoutY="1.0" prefHeight="26.0" prefWidth="375.0" promptText="Seleccione un archivo de feedback para descargar" />
+            <ComboBox fx:id="cmbBoxFeedbackType" layoutX="14.0" layoutY="1.0" prefHeight="26.0" prefWidth="375.0" promptText="Seleccione un archivo de feedback para descargar" />
             <Button layoutX="140.0" layoutY="48.0" mnemonicParsing="false" onAction="#downloadFeedback" styleClass="button-accion" text="Descargar feedback" />
             <Button layoutX="140.0" layoutY="81.0" mnemonicParsing="false" onAction="#downloadEvidence" styleClass="button-accion" text="Descargar evidencia" />
          </children>
@@ -35,12 +35,12 @@
       <Button layoutX="722.0" layoutY="361.0" mnemonicParsing="false" onAction="#previousMenu" styleClass="button-regresar" text="Regresar" />
       <AnchorPane layoutX="14.0" layoutY="59.0" prefHeight="80.0" prefWidth="375.0" styleClass="shadowed">
          <children>
-            <Label fx:id="lblProfessorName" layoutY="14.0" prefHeight="26.0" prefWidth="375.0" text="ProfessorName">
+            <Label fx:id="lblProfessorName" layoutY="14.0" prefHeight="26.0" prefWidth="375.0" text="Unavailable name">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label fx:id="lblProfessorEmail" layoutY="39.0" prefHeight="26.0" prefWidth="375.0" text="ProfessorEmail">
+            <Label fx:id="lblProfessorEmail" layoutY="39.0" prefHeight="26.0" prefWidth="375.0" text="Unavailable email">
                <font>
                   <Font size="16.0" />
                </font>
@@ -49,12 +49,12 @@
       </AnchorPane>
       <AnchorPane layoutX="410.0" layoutY="59.0" prefHeight="80.0" prefWidth="375.0" styleClass="shadowed">
          <children>
-            <Label fx:id="lblMirrorProfessorName" layoutY="14.0" prefHeight="26.0" prefWidth="375.0" text="MirrorName">
+            <Label fx:id="lblMirrorProfessorName" layoutY="14.0" prefHeight="26.0" prefWidth="375.0" text="Unavailable name">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label fx:id="lblMirrorProfessorEmail" layoutY="40.0" prefHeight="26.0" prefWidth="375.0" text="MirrorEmail">
+            <Label fx:id="lblMirrorProfessorEmail" layoutY="40.0" prefHeight="26.0" prefWidth="375.0" text="Unavailable email">
                <font>
                   <Font size="16.0" />
                </font>

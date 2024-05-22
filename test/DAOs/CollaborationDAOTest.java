@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import logic.DAOs.CollaborationDAO;
 import logic.LogicException;
 import logic.domain.Collaboration;
+import logic.domain.ProfessorBelongsToCollaboration;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -27,13 +28,24 @@ public class CollaborationDAOTest {
     }
     
     @Test
-    public void testStartCollaboration() {
+    public void testStartCollaborationSuccess() {
         CollaborationDAO collaborationDAO = new CollaborationDAO();
         try {
             int result = collaborationDAO.startCollaboration(1);
             assertEquals(1, result);
         } catch(LogicException logicException) {
             fail("No se ha podido iniciar la colaboracion");
+        }
+    }
+    
+    @Test
+    public void testConcludeCollaborationSuccess() {
+        CollaborationDAO collaborationDAO = new CollaborationDAO();
+        try {
+            int result = collaborationDAO.concludeCollaboration(1);
+            assertEquals(1, result);
+        } catch(LogicException logicException) {
+            fail("No se ha podido concluir la colaboracion");
         }
     }
     
@@ -53,14 +65,14 @@ public class CollaborationDAOTest {
     public void testUpdateEndDateByIdCollaboration() throws LogicException{
         CollaborationDAO collaborationDAO = new CollaborationDAO();
         
-        int currentResult = collaborationDAO.updateEndDateByIdCollaboration(1, "2025-01-01");
+        int currentResult = collaborationDAO.updateEndDateByIdCollaboration(1);
         int expectedResult = 1;
         
         assertEquals(expectedResult, currentResult);
     }
     
     @Test
-    public void testGetAllCollaborations() throws LogicException{
+    public void testGetAllCollaborationsSuccess() throws LogicException{
         CollaborationDAO collaborationDAO = new CollaborationDAO();
         ArrayList<Collaboration> collaborationsResult = collaborationDAO.getAllCollaborations();
         
@@ -83,7 +95,7 @@ public class CollaborationDAOTest {
     }
     
     @Test
-    public void testGetActiveCollaborations() throws LogicException{
+    public void testGetActiveCollaborationsSuccess() throws LogicException{
         CollaborationDAO collaborationDAO = new CollaborationDAO();
         ArrayList<Collaboration> collaborationsResult = collaborationDAO.getActiveCollaborations();
         
@@ -97,5 +109,31 @@ public class CollaborationDAOTest {
         
         
         assertEquals(collaborationsExpected, collaborationsResult);
+    }
+    
+    @Test
+    public void testGetProfessorConcludedCollaborationsSuccess() {
+        CollaborationDAO collaborationDAO = new CollaborationDAO();
+        ArrayList<ProfessorBelongsToCollaboration> professorBelongs = new ArrayList<>();
+        
+        ProfessorBelongsToCollaboration professorBelongsToCollaboration = new ProfessorBelongsToCollaboration();
+        professorBelongsToCollaboration.setIdColaboration(1);
+        
+        ArrayList<Collaboration> collaborationsExpected = new ArrayList<>();
+        Collaboration collaborationExpected = new Collaboration();
+        
+        collaborationExpected.setIdColaboration(1);
+        collaborationExpected.setColaborationName("Colaboración Tlapa-Zaid");
+        collaborationExpected.setEndDate("2024-05-17");
+        collaborationExpected.setStartDate("2024-05-17");
+        collaborationExpected.setLanguage("Español");
+        collaborationExpected.setInterestTopic("Ciencias de la computación, JavaScript");
+        
+        try {
+            ArrayList<Collaboration> collaborationsObtained = collaborationDAO.getProfessorConcludedCollaborations(professorBelongs);
+            assertEquals(collaborationsExpected, collaborationsObtained);
+        } catch(LogicException logicException) {
+            fail("Error al obtener las colaboraciones concluidas del profesor");
+        }
     }
 }

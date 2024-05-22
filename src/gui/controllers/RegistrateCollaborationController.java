@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gui.controllers;
 
 import gui.Alerts;
@@ -29,10 +25,6 @@ import logic.model.CandidateInformation;
 import logic.model.OfferInformation;
 import org.apache.log4j.Logger;
 
-/**
- *
- * @author zaido
- */
 public class RegistrateCollaborationController implements Initializable {
     
     @FXML
@@ -44,17 +36,17 @@ public class RegistrateCollaborationController implements Initializable {
     @FXML
     private Button btnAccept;
     
-    private static final CollaborationDAO collaborationDAO = new CollaborationDAO();
-    private static final ProfessorBelongsToCollaborationDAO professorBelongsToCollaborationDAO = new ProfessorBelongsToCollaborationDAO();
-    private static final CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
-    private static final CollaborationOfferCandidateDAO collaborationOfferCandidatesDAO = new CollaborationOfferCandidateDAO();
-    private static final EvaluationDAO evaluationDAO = new EvaluationDAO();
+    private static final CollaborationDAO COLLABORATION_DAO = new CollaborationDAO();
+    private static final ProfessorBelongsToCollaborationDAO PROFESSOR_BELONGS_TO_COLLABORATION_DAO = new ProfessorBelongsToCollaborationDAO();
+    private static final CollaborationOfferDAO COLLABORATION_OFFER_DAO = new CollaborationOfferDAO();
+    private static final CollaborationOfferCandidateDAO COLLABORATION_OFFER_CANDIDATE_DAO = new CollaborationOfferCandidateDAO();
+    private static final EvaluationDAO EVALUATION_DAO = new EvaluationDAO();
     
-    private static final OfferInformation professorOffer = OfferInformation.getOffer();
-    private static final SessionManager currentSession = SessionManager.getInstance();
-    private static final CandidateInformation currentCandidate = CandidateInformation.getCandidateInformation();
+    private static final OfferInformation PROFESSOR_OFFER = OfferInformation.getOffer();
+    private static final SessionManager CURRENT_SESSION = SessionManager.getInstance();
+    private static final CandidateInformation CURRENT_CANDIDATE = CandidateInformation.getCandidateInformation();
     
-    private static final Logger log = Logger.getLogger(RegistrateCollaborationController.class);
+    private static final Logger LOG = Logger.getLogger(RegistrateCollaborationController.class);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -64,16 +56,16 @@ public class RegistrateCollaborationController implements Initializable {
     private Collaboration createCollaboration() {
         Collaboration collaboration = new Collaboration();
         collaboration.setColaborationName(txtFieldCollaborationName.getText());
-        collaboration.setLanguage(professorOffer.getOfferLanguage());
-        collaboration.setInterestTopic(professorOffer.getTopicsInterest());
+        collaboration.setLanguage(PROFESSOR_OFFER.getOfferLanguage());
+        collaboration.setInterestTopic(PROFESSOR_OFFER.getTopicsInterest());
         return collaboration;
     }
     
     private ProfessorBelongsToCollaboration createProfessorBelongsToCollaboration(int idCollaboration) {
         ProfessorBelongsToCollaboration professorBelongsToCollaboration = new ProfessorBelongsToCollaboration();
         professorBelongsToCollaboration.setIdColaboration(idCollaboration);
-        professorBelongsToCollaboration.setIdUser(currentSession.getUserData().getIdUser());
-        professorBelongsToCollaboration.setIdUserMirrorClass(currentCandidate.getIdUser());
+        professorBelongsToCollaboration.setIdUser(CURRENT_SESSION.getUserData().getIdUser());
+        professorBelongsToCollaboration.setIdUserMirrorClass(CURRENT_CANDIDATE.getIdUser());
         professorBelongsToCollaboration.setColaborationStatus("Pendiente");
         return professorBelongsToCollaboration;
     }
@@ -100,15 +92,15 @@ public class RegistrateCollaborationController implements Initializable {
         try {
             if(validateCollaborationName()) {
                 Collaboration collaboration = createCollaboration();
-                int idCollaborationInserted = collaborationDAO.addColaboration(collaboration);
+                int idCollaborationInserted = COLLABORATION_DAO.addColaboration(collaboration);
                 if(idCollaborationInserted > 0) {
                     ProfessorBelongsToCollaboration professorBelongsToCollaboration = createProfessorBelongsToCollaboration(idCollaborationInserted);
-                    int added = professorBelongsToCollaborationDAO.addProfessorBelongsToCollaboration(professorBelongsToCollaboration);
+                    int added = PROFESSOR_BELONGS_TO_COLLABORATION_DAO.addProfessorBelongsToCollaboration(professorBelongsToCollaboration);
                     if(added == 1) {
-                        int candidatesDeleted = collaborationOfferCandidatesDAO.deleteCollaborationOffer(professorOffer.getIdOfferCollaboration());
-                        int evaluationDeleted = evaluationDAO.deleteEvaluation(professorOffer.getIdOfferCollaboration());
+                        int candidatesDeleted = COLLABORATION_OFFER_CANDIDATE_DAO.deleteCollaborationOffer(PROFESSOR_OFFER.getIdOfferCollaboration());
+                        int evaluationDeleted = EVALUATION_DAO.deleteEvaluation(PROFESSOR_OFFER.getIdOfferCollaboration());
                         if(candidatesDeleted > 0 && evaluationDeleted == 1) {
-                            int offerDeleted = collaborationOfferDAO.deleteCollaborationOffer(professorOffer.getIdOfferCollaboration());
+                            int offerDeleted = COLLABORATION_OFFER_DAO.deleteCollaborationOffer(PROFESSOR_OFFER.getIdOfferCollaboration());
                             if(offerDeleted == 1) {
                                 Alerts.showInformationAlert("Mensaje", "Has aceptado esta colaboración ponte en contacto con el profesor");
                                 Stage professorDetailStage = ((RegistrateCollaborationStage)this.btnAccept.getScene().getWindow()).getProfessorDetailStage();
@@ -118,7 +110,7 @@ public class RegistrateCollaborationController implements Initializable {
                                     OfferProfessorStage offerStage = new OfferProfessorStage();
                                 } catch(IOException ioException) {
                                     Alerts.displayAlertIOException();
-                                    log.error(ioException);
+                                    LOG.error(ioException);
                                 }
                                 return;
                             }
@@ -131,7 +123,7 @@ public class RegistrateCollaborationController implements Initializable {
             }
         } catch (LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
-            log.error(logicException);
+            LOG.error(logicException);
         }
     }
 }

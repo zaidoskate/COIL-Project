@@ -1,9 +1,11 @@
 package DAOs;
 
+import java.util.ArrayList;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import logic.domain.Evidence;
 import logic.DAOs.EvidenceDAO;
+import logic.LogicException;
 
 public class EvidenceDAOTest {
     public EvidenceDAOTest() {
@@ -32,8 +34,25 @@ public class EvidenceDAOTest {
         evidence.setName("1");
         evidence.setAuthor("Yo");
         evidence.setDateOfCreation("2024-04-04");
-        int result = evidenceDAO.obtainEvidence(evidence, outputPath);
-        assertEquals(1, result);
+        try {
+            int result = evidenceDAO.obtainEvidence(evidence, outputPath);
+            assertEquals(1, result);
+        } catch(LogicException logicException) {
+            fail("Error al descargar la evidencia");
+        }
+    }
+    
+    @Test
+    public void testGetAllEvidenceByIdCollaborationSuccess() {
+        ArrayList<Evidence> evidencesExpected = new ArrayList<>();
+        
+        EvidenceDAO evidenceDAO = new EvidenceDAO();
+        try {
+            ArrayList<Evidence> evidencesObtained = evidenceDAO.getAllEvidencesByIdCollaboration(1);
+            assertEquals(evidencesExpected, evidencesObtained);
+        } catch(LogicException logicException) {
+            fail("Error al obtener todas las evidencias de la colaboracion");
+        }
     }
     
 }

@@ -1,5 +1,8 @@
 package gui;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import logic.DAOs.UvProfessorDAO;
 import logic.LogicException;
 
@@ -60,8 +63,63 @@ public class DataValidation {
         return fileName.toLowerCase().endsWith("." + extension.toLowerCase());
     }
     
-    public static boolean validatePeriodFormat(String period) {
-        String validPeriodForm = "^(Enero|Febrero|Marzo|Abril|Mayo|Junio|Julio|Agosto|Septiembre|Octubre|Noviembre|Diciembre) ?- ?(Enero|Febrero|Marzo|Abril|Mayo|Junio|Julio|Agosto|Septiembre|Octubre|Noviembre|Diciembre) \\d{4}$";
-        return period.matches(validPeriodForm);
+    public static boolean validateYear(String year) {
+        String validYearForm = "^\\d{4}$";
+        if (!year.matches(validYearForm)) {
+            return false;
+        }
+
+        int yearInt = Integer.parseInt(year);
+        int currentYear = LocalDate.now().getYear();
+        return yearInt >= currentYear;
     }
+    
+    public static boolean validatePeriodValidity(String period, String year) {
+        String validPeriod1 = "Febrero - Julio";
+        String validPeriod2 = "Agosto - Enero";
+
+        int yearInt = Integer.parseInt(year);
+
+        LocalDate now = LocalDate.now();
+        int currentYear = now.getYear();
+        int currentMonth = now.getMonthValue();
+
+        if (period.equals(validPeriod1)) {
+            if (currentMonth >= 2 && currentMonth <= 7) {
+                return yearInt > currentYear;
+            } else {
+                return yearInt > currentYear;
+            }
+        } else if (period.equals(validPeriod2)) {
+            if (currentMonth >= 8 || currentMonth == 1) {
+                return yearInt > currentYear;
+            } else {
+                return yearInt >= currentYear;
+            }
+        }
+        return false;
+    }
+    
+    public static boolean validateDateRange(String startDate, String endDate) throws LogicException {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        boolean validRange = false;
+        try {
+            LocalDate start = LocalDate.parse(startDate, dateFormatter);
+            LocalDate end = LocalDate.parse(endDate, dateFormatter);
+            validRange = !end.isBefore(start);
+        } catch(DateTimeParseException dateTimeParseException) {
+            throw new LogicException("Fecha recibida no tiene el formato válido", dateTimeParseException);
+        }
+        return validRange;
+    }
+    
+    public static boolean validateNumberStudents(String numberStudents) {
+        try {
+            int num = Integer.parseInt(numberStudents);
+            return num >= 10 && num <= 500;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
 }

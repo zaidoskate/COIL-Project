@@ -15,32 +15,48 @@ import logic.LogicException;
 import logic.domain.StartupDocumentation;
 import logic.interfaces.StartupDocumentationManagerInterface;
 
+/**
+ *
+ * @author zaido
+ */
 public class StartupDocumentationDAO implements StartupDocumentationManagerInterface {
-    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
+    private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
     
+    /**
+     *
+     * @param startupDocumentation
+     * @return
+     * @throws LogicException
+     */
     @Override
     public int addStartupDocumentation(StartupDocumentation startupDocumentation) throws LogicException{
         int result = 0;
         String query = "INSERT INTO documentacioninicio(Colaboracion_idColaboracion) VALUES (?)";
         try{
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, startupDocumentation.getIdColaboration());
             result = statement.executeUpdate();
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return result;
     }
 
+    /**
+     *
+     * @param startupDocumentation
+     * @return
+     * @throws LogicException
+     */
     @Override
     public int uploadSyllabus(StartupDocumentation startupDocumentation) throws LogicException {
         int result = 0;
         String query = "UPDATE DocumentacionInicio SET Syllabus = ? WHERE Colaboracion_idColaboracion = ?";
         try {
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             File mirrorStudentsListPdf = new File(startupDocumentation.getSyllabusPath());
             FileInputStream fileInputStream = new FileInputStream(mirrorStudentsListPdf);
@@ -53,17 +69,23 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
         } catch (FileNotFoundException fileNotFoundException) {
             throw new LogicException("No existe tal archivo en la ruta especificada", fileNotFoundException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return result;
     }
 
+    /**
+     *
+     * @param startupDocumentation
+     * @return
+     * @throws LogicException
+     */
     @Override
     public int uploadStudentsList(StartupDocumentation startupDocumentation) throws LogicException {
         int result = 0;
         String query = "UPDATE DocumentacionInicio SET listaEstudiantado = ? WHERE Colaboracion_idColaboracion = ?";
         try {
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             File mirrorStudentsListPdf = new File(startupDocumentation.getStudentsListPath());
             FileInputStream fileInputStream = new FileInputStream(mirrorStudentsListPdf);
@@ -76,17 +98,23 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
         } catch (FileNotFoundException fileNotFoundException) {
             throw new LogicException("No existe tal archivo en la ruta especificada", fileNotFoundException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return result;
     }
 
+    /**
+     *
+     * @param startupDocumentation
+     * @return
+     * @throws LogicException
+     */
     @Override
     public int uploadMirrorStudentsList(StartupDocumentation startupDocumentation) throws LogicException {
         int result = 0;
         String query = "UPDATE DocumentacionInicio SET listaEstudiantadoEspejo = ? WHERE Colaboracion_idColaboracion = ?";
         try {
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             File mirrorStudentsListPdf = new File(startupDocumentation.getMirrorClassStudentsListPath());
             FileInputStream fileInputStream = new FileInputStream(mirrorStudentsListPdf);
@@ -99,16 +127,23 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
         } catch (FileNotFoundException fileNotFoundException) {
             throw new LogicException("No existe tal archivo en la ruta especificada", fileNotFoundException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return result;
     }
 
+    /**
+     *
+     * @param startupDocumentation
+     * @param outputPath
+     * @return
+     * @throws LogicException
+     */
     @Override
     public int obtainSyllabus(StartupDocumentation startupDocumentation, String outputPath) throws LogicException {
         int result =0;
         try {
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement("SELECT syllabus FROM DocumentacionInicio WHERE Colaboracion_idColaboracion = ?");
             statement.setInt(1, startupDocumentation.getIdColaboration());
             ResultSet rs = statement.executeQuery();
@@ -124,16 +159,23 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
         } catch (IOException ioException){
             throw new LogicException("Error de entrada y salida de archivos", ioException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return result;
     }
 
+    /**
+     *
+     * @param startupDocumentation
+     * @param outputPath
+     * @return
+     * @throws LogicException
+     */
     @Override
     public int obtainStudentsList(StartupDocumentation startupDocumentation, String outputPath) throws LogicException {
         int result =0;
         try {
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement("SELECT listaEstudiantado FROM DocumentacionInicio WHERE Colaboracion_idColaboracion = ?");
             statement.setInt(1, startupDocumentation.getIdColaboration());
             ResultSet rs = statement.executeQuery();
@@ -149,16 +191,23 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
         } catch (IOException ioException){
             throw new LogicException("Error de entrada y salida de archivos", ioException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return result;
     }
 
+    /**
+     *
+     * @param startupDocumentation
+     * @param outputPath
+     * @return
+     * @throws LogicException
+     */
     @Override
     public int obtainMirrorStudentsList(StartupDocumentation startupDocumentation, String outputPath) throws LogicException {
         int result =0;
         try {
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement("SELECT listaEstudiantadoEspejo FROM DocumentacionInicio WHERE Colaboracion_idColaboracion = ?");
             statement.setInt(1, startupDocumentation.getIdColaboration());
             ResultSet rs = statement.executeQuery();
@@ -174,17 +223,24 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
         } catch (IOException ioException){
             throw new LogicException("Error de entrada y salida de archivos", ioException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return result;
     }
 
+    /**
+     *
+     * @param fileType
+     * @param idCollaboration
+     * @return
+     * @throws LogicException
+     */
     @Override
     public boolean hasFileUploaded(String fileType, int idCollaboration) throws LogicException {
         boolean hasFileUploaded = false;
         String query = "SELECT " + fileType + " AS file FROM documentacionInicio WHERE colaboracion_idColaboracion = ?";
         try {
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idCollaboration);
             ResultSet resultSet = statement.executeQuery();
@@ -196,35 +252,47 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return hasFileUploaded;
     }
 
+    /**
+     *
+     * @param fileType
+     * @param idCollaboration
+     * @return
+     * @throws LogicException
+     */
     @Override
     public int deleteUploadedFile(String fileType, int idCollaboration) throws LogicException {
         int deleted = 0;
         String query = "UPDATE documentacionInicio SET " + fileType + " = NULL WHERE colaboracion_idcolaboracion = ?";
         try {
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idCollaboration);
             deleted = statement.executeUpdate();
         } catch(SQLException sqlException) {
-            sqlException.printStackTrace();
             throw new LogicException("No hay conexión, inténtelo de nuevo más tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return deleted;
     }
 
+    /**
+     *
+     * @param idCollaboration
+     * @return
+     * @throws LogicException
+     */
     @Override
     public boolean isCollaborationRegistrated(int idCollaboration) throws LogicException {
         boolean registrated = false;
         String query = "SELECT COUNT(*) AS count FROM documentacionInicio WHERE colaboracion_idcolaboracion = ?";
         try {
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idCollaboration);
             ResultSet resultSet = statement.executeQuery();
@@ -235,7 +303,7 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexión, inténtelo de nuevo más tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return registrated;
     }

@@ -16,6 +16,8 @@ public class CollaborationInformation {
     private String language;
     private String topicsOfInterest;
     private String collaborationStatus;
+    private String professorUniversity;
+    private String mirrorProfessorUniversity;
     private int idCollaboration;
     private int idUser;
     private int idMirrorUser;
@@ -96,5 +98,21 @@ public class CollaborationInformation {
 
     public void setIdCollaboration(int idCollaboration) {
         this.idCollaboration = idCollaboration;
+    }
+
+    public String getProfessorUniversity() {
+        return professorUniversity;
+    }
+
+    public void setProfessorUniversity(String professorUniversity) {
+        this.professorUniversity = professorUniversity;
+    }
+    
+    public String getMirrorProfessorUniversity() {
+        return mirrorProfessorUniversity;
+    }
+
+    public void setMirrorProfessorUniversity(String mirrorProfessorUniversity) {
+        this.mirrorProfessorUniversity = mirrorProfessorUniversity;
     }
 }

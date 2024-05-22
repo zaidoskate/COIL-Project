@@ -102,7 +102,7 @@ public class StartupDocumentationDAOTest {
     }
     
     @Test
-    public void testHasFileUploadedSucess() throws LogicException {
+    public void testHasFileUploadedSucess() {
         StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO();
         try {
             boolean result = startupDocumentationDAO.hasFileUploaded("listaEstudiantado", 11);

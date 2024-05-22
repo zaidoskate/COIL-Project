@@ -37,7 +37,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <ComboBox fx:id="comboBoxFileType" layoutX="429.0" layoutY="27.0" onAction="#showHasUploadedFile" prefHeight="25.0" prefWidth="160.0" promptText="Selecciona el archivo" />
+            <ComboBox fx:id="cmbBoxFileType" layoutX="429.0" layoutY="27.0" onAction="#showHasUploadedFile" prefHeight="25.0" prefWidth="160.0" promptText="Selecciona el archivo" />
          </children>
       </AnchorPane>
       <ImageView fitHeight="88.0" fitWidth="118.0" layoutX="256.0" pickOnBounds="true" preserveRatio="true">

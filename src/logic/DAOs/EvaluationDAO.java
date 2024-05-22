@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package logic.DAOs;
 
 import dataaccess.DatabaseConnection;
@@ -22,7 +18,7 @@ import logic.interfaces.EvaluationManagerInterface;
  * @author zaido
  */
 public class EvaluationDAO implements EvaluationManagerInterface {
-    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
+    private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
     
     private String parseDateToString(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -30,12 +26,18 @@ public class EvaluationDAO implements EvaluationManagerInterface {
         return dateString;
     }
     
+    /**
+     *
+     * @param evaluation
+     * @return
+     * @throws LogicException
+     */
     @Override
     public int insertEvaluationForApprovedOffer(Evaluation evaluation) throws LogicException {
         int result = 0;
         String query = "INSERT INTO Evaluacion (idOfertaColaboracion, idCoordinador, fechaEvaluacion) VALUES (?, ?, ?)";
         try {
-            Connection connection = databaseConnection.getConnection();
+            Connection connection = DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, evaluation.getIdOfferCollaboration());
             statement.setInt(2, evaluation.getIdCoordinator());
@@ -44,17 +46,23 @@ public class EvaluationDAO implements EvaluationManagerInterface {
         } catch (SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return result;
     }
     
+    /**
+     *
+     * @param evaluation
+     * @return
+     * @throws LogicException
+     */
     @Override
     public int insertEvaluationForDeclinedOffer(Evaluation evaluation) throws LogicException {
         int result = 0;
         String query = "INSERT INTO Evaluacion (idOfertaColaboracion, idCoordinador, fechaEvaluacion, motivo) VALUES (?, ?, ?, ?)";
         try {
-            Connection connection = databaseConnection.getConnection();
+            Connection connection = DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, evaluation.getIdOfferCollaboration());
             statement.setInt(2, evaluation.getIdCoordinator());
@@ -64,34 +72,46 @@ public class EvaluationDAO implements EvaluationManagerInterface {
         } catch (SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return result;
     }
     
+    /**
+     *
+     * @param idCollaborationOffer
+     * @return
+     * @throws LogicException
+     */
     @Override
     public int deleteEvaluation(int idCollaborationOffer) throws LogicException {
         int result = 0;
         String query = "DELETE FROM Evaluacion WHERE idOfertaColaboracion = ?";
         try {
-            Connection connection = databaseConnection.getConnection();
+            Connection connection = DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idCollaborationOffer);
             result = statement.executeUpdate();
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return result;
     }
 
+    /**
+     *
+     * @param idOfferCollaboration
+     * @return
+     * @throws LogicException
+     */
     @Override
     public Evaluation getEvaluationByIdOfferCollaboration(int idOfferCollaboration) throws LogicException {
         String query = "SELECT * FROM Evaluacion WHERE idOfertaColaboracion = ?";
         Evaluation evaluationResult = new Evaluation();
         try{
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idOfferCollaboration);
             ResultSet result = statement.executeQuery();
@@ -104,17 +124,23 @@ public class EvaluationDAO implements EvaluationManagerInterface {
         } catch (SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return evaluationResult;
     }
     
+    /**
+     *
+     * @param idCoordinator
+     * @return
+     * @throws LogicException
+     */
     @Override
     public ArrayList<Evaluation> getEvaluationByIdCoordinator(int idCoordinator) throws LogicException{
         String query = "SELECT * FROM Evaluacion WHERE idCoordinador = ?";
         ArrayList<Evaluation> evaluationsFromCoordinator = new ArrayList();
         try {
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idCoordinator);
             ResultSet result = statement.executeQuery();
@@ -129,7 +155,7 @@ public class EvaluationDAO implements EvaluationManagerInterface {
         } catch (SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return evaluationsFromCoordinator;
     }

@@ -95,7 +95,6 @@ public class UserDAO implements UserManagerInterface {
                 typeUser = result.getString("tipo");
             }
         } catch(SQLException sqlException) {
-            sqlException.printStackTrace();
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();

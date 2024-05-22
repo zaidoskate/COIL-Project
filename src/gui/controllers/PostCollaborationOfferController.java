@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gui.controllers;
 
 import gui.Alerts;
@@ -14,6 +10,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -22,10 +19,6 @@ import logic.LogicException;
 import logic.domain.CollaborationOffer;
 import org.apache.log4j.Logger;
 
-/**
- *
- * @author zaido
- */
 public class PostCollaborationOfferController implements Initializable {
 
     @FXML
@@ -35,13 +28,13 @@ public class PostCollaborationOfferController implements Initializable {
     private TextArea txtAreaTopicsOfInterest;
     
     @FXML
-    private TextField txtFieldPeriod;
-    
-    @FXML
     private TextArea txtAreaLanguage;
     
     @FXML
     private TextArea txtAreaAditionalInformation;
+    
+    @FXML
+    private TextField txtFieldYear;
     
     @FXML
     private TextField txtFieldNumberStudents;
@@ -50,25 +43,32 @@ public class PostCollaborationOfferController implements Initializable {
     private TextField txtFieldProfile;
     
     @FXML
+    private ComboBox<String> cmbBoxPeriod;
+    
+    @FXML
     private Button btnPost;
     
     @FXML
     private Button btnCancel;
     
-    private static final SessionManager currentSession = SessionManager.getInstance();
-    private static final CollaborationOfferDAO collaborationOfferDAO = new CollaborationOfferDAO();
+    private static final SessionManager CURRENT_SESSION = SessionManager.getInstance();
+    private static final CollaborationOfferDAO COLLABORATION_OFFER_DAO = new CollaborationOfferDAO();
     
-    private static final Logger log = Logger.getLogger(PostCollaborationOfferController.class);
+    private static final Logger LOG = Logger.getLogger(PostCollaborationOfferController.class);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        initializeComboBox();
+    }
+    
+    private void initializeComboBox() {
+        this.cmbBoxPeriod.getItems().addAll("Febrero - Julio", "Agosto - Enero");
     }
     
     private CollaborationOffer createOffer() {
         String objective = this.txtAreaObjective.getText();
         String topicsOfInterest = this.txtAreaTopicsOfInterest.getText();
-        String period = this.txtFieldPeriod.getText();
+        String period = this.cmbBoxPeriod.getSelectionModel().getSelectedItem() + " " +  this.txtFieldYear.getText();
         String language = this.txtAreaLanguage.getText();
         String aditionalInformation = this.txtAreaAditionalInformation.getText();
         String profile = this.txtFieldProfile.getText();
@@ -82,39 +82,65 @@ public class PostCollaborationOfferController implements Initializable {
         currentOffer.setAditionalInfo(aditionalInformation);
         currentOffer.setProfile(profile);
         currentOffer.setNumberOfStudents(numberStudents);
-        currentOffer.setIdUser(currentSession.getUserData().getIdUser());
+        currentOffer.setIdUser(CURRENT_SESSION.getUserData().getIdUser());
         return currentOffer;
     }
-    
-    private boolean validateFields() {
+
+    private boolean validateWords() {
         String[] fields = {
             txtAreaObjective.getText(),
             txtAreaTopicsOfInterest.getText(),
-            txtFieldPeriod.getText(),
+            txtFieldYear.getText(),
             txtAreaLanguage.getText(),
             txtAreaAditionalInformation.getText(),
             txtFieldProfile.getText(),
             txtFieldNumberStudents.getText()
         };
+        String[] fieldNames = {"Objetivo", "Temas de interés", "Año", "Idioma", "Información adicional", "Perfil", "Número de estudiantes"};
 
-        for (String field : fields) {
-            if (!DataValidation.validateWord(field)) {
-                Alerts.showWarningAlert("Datos incorrectos, inténtalo de nuevo");
+        for (int i = 0; i < fields.length; i++) {
+            if (!DataValidation.validateWord(fields[i])) {
+                Alerts.showWarningAlert(fieldNames[i] + " debe constar de palabras válidas, evite el uso de caracteres especiales");
                 return false;
             }
         }
+        return true;
+    }
+    
+    private boolean validateNotEmptyFields() {
+        String[] fields = {
+            txtAreaObjective.getText(),
+            txtAreaTopicsOfInterest.getText(),
+            txtFieldYear.getText(),
+            txtAreaLanguage.getText(),
+            txtAreaAditionalInformation.getText(),
+            txtFieldProfile.getText(),
+            txtFieldNumberStudents.getText()
+        };
+        String[] fieldNames = {"Objetivo", "Temas de interés", "Año", "Idioma", "Información adicional", "Perfil", "Número de estudiantes"};
 
+        for (int i = 0; i < fields.length; i++) {
+            if (!DataValidation.validateNotBlanks(fields[i])) {
+                Alerts.showWarningAlert(fieldNames[i] + " no puede estar vacío");
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    private boolean validateFieldLengths() {
         String[] fieldsToCheckLength = {
             txtAreaObjective.getText(),
             txtAreaTopicsOfInterest.getText(),
-            txtFieldPeriod.getText(),
+            txtFieldYear.getText(),
             txtAreaLanguage.getText(),
             txtAreaAditionalInformation.getText(),
             txtFieldProfile.getText()
         };
 
-        int[] maxLengths = {150, 150, 50, 20, 150, 40};
-        String[] fieldNames = {"Objetivo", "Temas de interés", "Periodo", "Idioma", "Información adicional", "Perfil"};
+        int[] maxLengths = {150, 150, 4, 20, 150, 40};
+        String[] fieldNames = {"Objetivo", "Temas de interés", "Año", "Idioma", "Información adicional", "Perfil"};
 
         for (int i = 0; i < fieldsToCheckLength.length; i++) {
             if (!DataValidation.validateLengthField(fieldsToCheckLength[i], maxLengths[i])) {
@@ -122,55 +148,68 @@ public class PostCollaborationOfferController implements Initializable {
                 return false;
             }
         }
-
-        if (!DataValidation.validateNotBlanks(txtFieldNumberStudents.getText())) {
-            Alerts.showWarningAlert("Número de estudiantes no puede estar en blanco");
-            return false;
-        }
-        
-        if(!DataValidation.validatePeriodFormat(txtFieldPeriod.getText())) {
-            Alerts.showWarningAlert("El periodo tiene que tener el formato MesX - MesY Año");
-            return false;
-        }
-
         return true;
     }
 
+    private boolean validateNumberStudentsField() {
+        if (!DataValidation.validateNumberStudents(txtFieldNumberStudents.getText())) {
+            Alerts.showWarningAlert("Introduzca un número de estudiantes válido");
+            return false;
+        }
+        return true;
+    }
 
+    private boolean validateYearField() {
+        if (!DataValidation.validateYear(this.txtFieldYear.getText())) {
+            Alerts.showWarningAlert("Año no válido, considere el año actual en adelante");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validatePeriodField() {
+        if (!DataValidation.validatePeriodValidity(this.cmbBoxPeriod.getSelectionModel().getSelectedItem(), this.txtFieldYear.getText())) {
+            Alerts.showWarningAlert("Seleccione un periodo próximo a empezar");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateFields() {
+        return validateNotEmptyFields() && validateFieldLengths() && validateWords() && validateNumberStudentsField() && validateYearField() && validatePeriodField();
+    }
     
     @FXML
     public void postCollaborationOffer() {
-        if(validateFields()){
+        if (validateFields()) {
             CollaborationOffer currentOffer = createOffer();
             try {
-                int offerInsertedSuccess = collaborationOfferDAO.insertColaborationOffer(currentOffer);
-                if(offerInsertedSuccess == 1) {
+                int offerInsertedSuccess = COLLABORATION_OFFER_DAO.insertColaborationOffer(currentOffer);
+                if (offerInsertedSuccess == 1) {
                     Alerts.showInformationAlert("Hecho", "Su oferta será evaluada, espere un correo con el resultado");
                     Stage stage = (Stage) this.btnPost.getScene().getWindow();
                     stage.close();
-                    Stage offerStage = new OfferProfessorStage();
+                    OfferProfessorStage offerProfessorStage = new OfferProfessorStage();
                 }
-            } catch(LogicException logicException) {
+            } catch (LogicException logicException) {
                 Alerts.displayAlertLogicException(logicException);
-                log.error(logicException);
+                LOG.error(logicException);
             } catch (IOException ioException) {
                 Alerts.displayAlertIOException();
-                log.error(ioException);
+                LOG.error(ioException);
             }
         }
     }
     
     @FXML
     public void cancelPost() {
-        Alerts.showWarningAlert("¿Está seguro de que desea cancelar la oferta de colaboración?");
         Stage stage = (Stage) this.txtAreaObjective.getScene().getWindow();
         stage.close();
         try {
-            OfferProfessorStage offerStage = new OfferProfessorStage();
+            OfferProfessorStage offerProfessorStage = new OfferProfessorStage();
         } catch (IOException ioException) {
             Alerts.displayAlertIOException();
-            log.error(ioException);
+            LOG.error(ioException);
         }
     }
-    
 }

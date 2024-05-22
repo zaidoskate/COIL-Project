@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gui.controllers;
 
 import gui.Alerts;
@@ -16,16 +12,12 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 
-/**
- *
- * @author zaido
- */
 public class CollaborationController implements Initializable {
     
     @FXML
     private Button btnBack;
 
-    private static final Logger log = Logger.getLogger(CollaborationController.class);
+    private static final Logger LOG = Logger.getLogger(CollaborationController.class);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -40,7 +32,7 @@ public class CollaborationController implements Initializable {
             MyCollaborationsStage myCollaborationsStage = new MyCollaborationsStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
-            log.error(ioException);
+            LOG.error(ioException);
         }
     }
     
@@ -52,7 +44,7 @@ public class CollaborationController implements Initializable {
             ProfesorMenuStage menuStage = new ProfesorMenuStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
-            log.error(ioException);
+            LOG.error(ioException);
         }
     }
 }

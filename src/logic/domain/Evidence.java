@@ -91,5 +91,18 @@ public class Evidence {
         this.file = file;
     }
     
-    
+    @Override
+    public boolean equals(Object object) {
+        Evidence evidenceToCompare = (Evidence) object;
+        if(this.idFolderEvidence != evidenceToCompare.getIdFolderEvidence()) {
+            return false;
+        }
+        if(!this.author.equals(evidenceToCompare.getAuthor())) {
+            return false;
+        }
+        if(!this.name.equals(evidenceToCompare.getName())) {
+            return false;
+        }
+        return true;
+    }
 }

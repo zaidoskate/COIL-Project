@@ -1,33 +1,50 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package logic.domain;
 
 /**
  *
- * @author chima
+ * @author zaido
  */
 public class CollaborationOfferCandidate {
     private int idCollaboration;
     private int idUser;
 
+    /**
+     *
+     * @return
+     */
     public int getIdCollaboration() {
         return idCollaboration;
     }
 
+    /**
+     *
+     * @param idCollaboration
+     */
     public void setIdCollaboration(int idCollaboration) {
         this.idCollaboration = idCollaboration;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getIdUser() {
         return idUser;
     }
 
+    /**
+     *
+     * @param idUser
+     */
     public void setIdUser(int idUser) {
         this.idUser = idUser;
     }
     
+    /**
+     *
+     * @param object
+     * @return
+     */
     @Override 
     public boolean equals (Object object) {
         CollaborationOfferCandidate collaborationOfferCandidatesToCompare = (CollaborationOfferCandidate) object;
