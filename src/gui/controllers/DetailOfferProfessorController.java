@@ -215,7 +215,6 @@ public class DetailOfferProfessorController implements Initializable {
     private void displayDeclineOffer() {
         EmailNotification.getInstance().setEmail(selectedOffer.getProfessorEmail());
         EmailNotification.getInstance().setMessageSuccess("Oferta rechazada");
-        EmailNotification.getInstance().setMessageCancel("Se cancelará el rechazo de la oferta");
         try {
             SendEmailStage sendEmailStage = new SendEmailStage();
             if(EmailNotification.getInstance().getSentStatus()) {
