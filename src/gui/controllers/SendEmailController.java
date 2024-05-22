@@ -14,20 +14,13 @@ import logic.model.EmailNotification;
 import org.apache.log4j.Logger;
 
 public class SendEmailController implements Initializable {
-    private static final Logger log = Logger.getLogger(SendEmailController.class);
+    private static final Logger LOG = Logger.getLogger(SendEmailController.class);
     @FXML
     private TextArea txtAreaMessage;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-    }
-    
-    @FXML
-    private void cancelEmail() {
-        Alerts.showWarningAlert(EmailNotification.getInstance().getMessageCancel());
-        Stage stage = (Stage) txtAreaMessage.getScene().getWindow();
-        stage.close();
     }
     @FXML
     private void sendEmail() {
@@ -38,18 +31,17 @@ public class SendEmailController implements Initializable {
             try{
                 result = MailSender.sendEmail(body, email);
             } catch(LogicException logicException) {
-                log.error(logicException);
-                Alerts.displayAlertLogicException(logicException);
+                LOG.error(logicException);
             }
         }
         if(result == true) {
             EmailNotification.getInstance().emailSent();
             EmailNotification.getInstance().setEmailBody(this.txtAreaMessage.getText());
             Alerts.showInformationAlert("Exito", EmailNotification.getInstance().getMessageSuccess());
-            Stage stage = (Stage) txtAreaMessage.getScene().getWindow();
-            stage.close();
         } else {
-            Alerts.showWarningAlert("Ha ocurrido un error, Intentalo de nuevo mas tarde.");
+            Alerts.showWarningAlert("Ha ocurrido un error al enviar el correo, Intentalo de nuevo mas tarde.");
         }
+        Stage stage = (Stage) txtAreaMessage.getScene().getWindow();
+        stage.close();
     }
 }

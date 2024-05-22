@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gui.controllers;
 
 import gui.Alerts;
@@ -21,10 +17,6 @@ import logic.FileDownloader;
 import logic.LogicException;
 import org.apache.log4j.Logger;
 
-/**
- *
- * @author zaido
- */
 public class GenerateStatisticsController implements Initializable {
 
     @FXML

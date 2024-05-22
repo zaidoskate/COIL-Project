@@ -1,14 +1,27 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package logic.interfaces;
 
 import java.util.ArrayList;
 import logic.LogicException;
 import logic.domain.University;
 
+/**
+ *
+ * @author chuch
+ */
 public interface UniversityManagerInterface {
-    int insertUniversity(University university) throws LogicException;
-    ArrayList<University> getUniversities() throws LogicException;
+
+    /**
+     *
+     * @param university
+     * @return
+     * @throws LogicException
+     */
+    public int insertUniversity(University university) throws LogicException;
+
+    /**
+     *
+     * @return
+     * @throws LogicException
+     */
+    public ArrayList<University> getUniversities() throws LogicException;
 }

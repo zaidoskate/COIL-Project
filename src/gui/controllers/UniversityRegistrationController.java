@@ -17,7 +17,8 @@ import logic.domain.University;
 import org.apache.log4j.Logger;
 
 public class UniversityRegistrationController implements Initializable {
-    private static final Logger log = Logger.getLogger(UniversityRegistrationController.class);
+    private static final UniversityDAO UNIVERSITY_DAO = new UniversityDAO();
+    private static final Logger LOG = Logger.getLogger(UniversityRegistrationController.class);
     @FXML
     private TextField txtFieldName;
     @FXML
@@ -35,7 +36,7 @@ public class UniversityRegistrationController implements Initializable {
         try{
             UniversitiesStage universitiesStage = new UniversitiesStage();
         } catch(IOException ioException) {
-            log.warn(ioException);
+            LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
     }
@@ -54,11 +55,10 @@ public class UniversityRegistrationController implements Initializable {
         university.setCountry(country);
         int result = 0;
         
-        UniversityDAO universityDAO = new UniversityDAO();
         try{
-            result = universityDAO.insertUniversity(university);
+            result = UNIVERSITY_DAO.insertUniversity(university);
         } catch(LogicException logicException) {
-            log.error(logicException);
+            LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
         }
         

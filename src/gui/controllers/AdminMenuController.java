@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 
 public class AdminMenuController implements Initializable {
-    private static final Logger log = Logger.getLogger(AdminMenuController.class);
+    private static final Logger LOG = Logger.getLogger(AdminMenuController.class);
     @FXML
     private Button btnLogOut;
 
@@ -23,14 +23,12 @@ public class AdminMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
     }
-    
-    
     @FXML
     public void createCoordinatorAccount() {
         try {
             CreateCoordinatorAccountStage createCoordinatorAccountStage = new CreateCoordinatorAccountStage();
         } catch(IOException ioexception) {
-            log.warn(ioexception);
+            LOG.warn(ioexception);
             Alerts.displayAlertIOException();
         }
     }
@@ -45,7 +43,7 @@ public class AdminMenuController implements Initializable {
             Stage loginStage = new Stage();
             application.start(loginStage);
         } catch(IOException ioException) {
-            log.warn(ioException);
+            LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
     }
@@ -54,7 +52,7 @@ public class AdminMenuController implements Initializable {
         try {
             PendingMailsStage pendingMailsStage = new PendingMailsStage();
         } catch(IOException ioException) {
-            log.warn(ioException);
+            LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
     }

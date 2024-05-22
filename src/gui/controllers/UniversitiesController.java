@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import logic.DAOs.UniversityDAO;
@@ -18,7 +17,8 @@ import logic.LogicException;
 import org.apache.log4j.Logger;
 
 public class UniversitiesController implements Initializable {
-    private static final Logger log = Logger.getLogger(UniversitiesController.class);
+    private static final UniversityDAO UNIVERSITY_DAO = new UniversityDAO();
+    private static final Logger LOG = Logger.getLogger(UniversitiesController.class);
     @FXML
     private TableView<University> tblViewUniversities;
 
@@ -28,12 +28,11 @@ public class UniversitiesController implements Initializable {
     }
     
     private void loadUniversities() {
-        UniversityDAO universityDAO = new UniversityDAO();
         ArrayList<University> universities = new ArrayList();
         try {
-            universities = universityDAO.getUniversities();            
+            universities = UNIVERSITY_DAO.getUniversities();            
         } catch(LogicException logicException) {
-            log.error(logicException);
+            LOG.error(logicException);
         }
         tblViewUniversities.getItems().addAll(universities);
     }
@@ -45,7 +44,7 @@ public class UniversitiesController implements Initializable {
         try{
             CoordinatorMenuStage coordinatorMenuStage = new CoordinatorMenuStage();
         } catch(IOException ioException) {
-            log.warn(ioException);
+            LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
     }
@@ -57,7 +56,7 @@ public class UniversitiesController implements Initializable {
         try{
             UniversityRegistrationStage universityRegistrationStage = new UniversityRegistrationStage();
         } catch(IOException ioException) {
-            log.warn(ioException);
+            LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
     }

@@ -1,12 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package logic.domain;
 
 /**
  *
- * @author chima
+ * @author chuch
  */
 public class Evidence {
     private int idFolderEvidence;
@@ -15,42 +11,82 @@ public class Evidence {
     private String dateOfCreation;
     private String file;
 
+    /**
+     *
+     * @return
+     */
     public int getIdFolderEvidence() {
         return idFolderEvidence;
     }
 
+    /**
+     *
+     * @param idFolderEvidence
+     */
     public void setIdFolderEvidence(int idFolderEvidence) {
         this.idFolderEvidence = idFolderEvidence;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getAuthor() {
         return author;
     }
 
+    /**
+     *
+     * @param author
+     */
     public void setAuthor(String author) {
         this.author = author;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDateOfCreation() {
         return dateOfCreation;
     }
 
+    /**
+     *
+     * @param dateOfCreation
+     */
     public void setDateOfCreation(String dateOfCreation) {
         this.dateOfCreation = dateOfCreation;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFile() {
         return file;
     }
 
+    /**
+     *
+     * @param file
+     */
     public void setFile(String file) {
         this.file = file;
     }

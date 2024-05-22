@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 
 public class ProfesorMenuController implements Initializable {
-    private static final Logger log = Logger.getLogger(ProfesorMenuController.class);
+    private static final Logger LOG = Logger.getLogger(ProfesorMenuController.class);
     @FXML
     private Text textName;
     
@@ -31,7 +31,7 @@ public class ProfesorMenuController implements Initializable {
         try {
             OfferProfessorStage offerProfessorStage = new OfferProfessorStage();
         } catch(IOException ioException) {
-            log.warn(ioException);
+            LOG.warn(ioException);
         }
     }
     @FXML
@@ -44,7 +44,7 @@ public class ProfesorMenuController implements Initializable {
             Stage loginStage = new Stage();
             application.start(loginStage);
         } catch(IOException ioException) {
-            log.warn(ioException);
+            LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
     }
@@ -56,7 +56,7 @@ public class ProfesorMenuController implements Initializable {
         try {
             CollaborationStage collaborationStage = new CollaborationStage();
         } catch (IOException ioException) {
-            log.warn(ioException);
+            LOG.warn(ioException);
         }
     }
 }

@@ -15,19 +15,19 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 
 public class CoordinatorMenuController implements Initializable {
-    private static final Logger log = Logger.getLogger(CoordinatorMenuController.class);
+    private static final Logger LOG = Logger.getLogger(CoordinatorMenuController.class);
+    private final SessionManager currentSession = SessionManager.getInstance();
     @FXML
     private Text txtName;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        txtName.setText(SessionManager.getInstance().getUserData().getName());
+        txtName.setText(currentSession.getUserData().getName());
     }   
 
     @FXML
@@ -36,7 +36,7 @@ public class CoordinatorMenuController implements Initializable {
         try {
             universitiesStage = new UniversitiesStage();
         } catch(IOException ioException) {
-            log.warn(ioException);
+            LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
         if (universitiesStage != null) {
@@ -52,7 +52,7 @@ public class CoordinatorMenuController implements Initializable {
         try {
             AccountRequestMenuStage accoountRequestMenuStage = new AccountRequestMenuStage();
         } catch(IOException ioException) {
-            log.warn(ioException);
+            LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
     }
@@ -62,7 +62,7 @@ public class CoordinatorMenuController implements Initializable {
         try {
             ExternalAccountCreateStage externalAccountCreateStage = new ExternalAccountCreateStage();
         } catch(IOException ioException) {
-            log.warn(ioException);
+            LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
     }
@@ -71,13 +71,13 @@ public class CoordinatorMenuController implements Initializable {
     private void logout() {
         Stage stage = (Stage) txtName.getScene().getWindow();
         stage.close();
-        SessionManager.getInstance().logout();
+        currentSession.logout();
         try {
             COILVICApplication application = new COILVICApplication();
             Stage loginStage = new Stage();
             application.start(loginStage);
         } catch(IOException ioException) {
-            log.warn(ioException);
+            LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
     }
@@ -89,7 +89,7 @@ public class CoordinatorMenuController implements Initializable {
         try {
             OfferCoordinatorStage offerCoordinatorStage = new OfferCoordinatorStage();
         } catch(IOException ioException) {
-            log.warn(ioException);
+            LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
     }
@@ -101,7 +101,7 @@ public class CoordinatorMenuController implements Initializable {
         try {
             GenerateStatisticsStage generateStatisticsStage = new GenerateStatisticsStage();
         } catch(IOException ioException) {
-            log.warn(ioException);
+            LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
     }
@@ -113,7 +113,7 @@ public class CoordinatorMenuController implements Initializable {
         try {
             CollaborationsCoordinatorMenuStage collaborationsCoordinatorMenuStage = new CollaborationsCoordinatorMenuStage();
         } catch(IOException ioException) {
-            log.warn(ioException);
+            LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
     }
@@ -123,7 +123,7 @@ public class CoordinatorMenuController implements Initializable {
         try {
             PendingMailsStage pendingMailsStage = new PendingMailsStage();
         } catch(IOException ioException) {
-            log.warn(ioException);
+            LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
     }

@@ -6,7 +6,6 @@ import gui.DataValidation;
 import gui.SessionManager;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -25,7 +24,12 @@ import logic.domain.User;
 import org.apache.log4j.Logger;
 
 public class CreateCoordinatorAccountController implements Initializable {
-    private static final Logger log = Logger.getLogger(CreateCoordinatorAccountController.class);
+    private static final Logger LOG = Logger.getLogger(CreateCoordinatorAccountController.class);
+    private final SessionManager currentSession = SessionManager.getInstance();
+    private static final PendingMailDAO PENDING_MAIL_DAO = new PendingMailDAO();
+    private static final CoordinatorDAO COORDINATOR_DAO = new CoordinatorDAO();
+    private static final CredentialDAO CREDENTIAL_DAO = new CredentialDAO();
+    private static final UserDAO USER_DAO = new UserDAO();
     @FXML
     TextField txtFieldName;
     @FXML
@@ -104,7 +108,7 @@ public class CreateCoordinatorAccountController implements Initializable {
                 + "\nTus datos de acceso son los siguientes:"
                 + "\nUsuario: "+credential.getUser()
                 + "\nContrasena: "+credential.getPassword();
-        int currentIdUser = SessionManager.getInstance().getUserData().getIdUser();
+        int currentIdUser = currentSession.getUserData().getIdUser();
         
         PendingMail pendingMail = new PendingMail();
         pendingMail.setIdUser(currentIdUser);
@@ -112,11 +116,10 @@ public class CreateCoordinatorAccountController implements Initializable {
         pendingMail.setSubject("Cuenta de acceso coordinador");
         pendingMail.setDestinationEmail(user.getEmail());
         
-        PendingMailDAO pendingMailDAO = new PendingMailDAO();
         try {
-            pendingMailDAO.insertPendingMail(pendingMail);
+            PENDING_MAIL_DAO.insertPendingMail(pendingMail);
         } catch (LogicException logicException) {
-            log.error(logicException);
+            LOG.error(logicException);
         }
     }
     
@@ -141,10 +144,9 @@ public class CreateCoordinatorAccountController implements Initializable {
         int idUser = -1;
         
         try{
-            UserDAO userDAO = new UserDAO();
-            idUser = userDAO.addUser(user);
+            idUser = USER_DAO.addUser(user);
         } catch(LogicException logicException) {
-            log.error(logicException);
+            LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
             clearFields();
         }
@@ -156,15 +158,12 @@ public class CreateCoordinatorAccountController implements Initializable {
             credential.setPassword(password);
             credential.setUser(username);
             
-            CoordinatorDAO coordinatorDAO = new CoordinatorDAO();
-            CredentialDAO credentialDAO = new CredentialDAO();
-            
             try {
-                result = coordinatorDAO.insertCoordinator(coordinator);
-                result = credentialDAO.insertCredential(credential);
+                result = COORDINATOR_DAO.insertCoordinator(coordinator);
+                result = CREDENTIAL_DAO.insertCredential(credential);
             } catch(LogicException logicException) {
                 clearFields();
-                log.error(logicException);
+                LOG.error(logicException);
                 Alerts.displayAlertLogicException(logicException);
             }
             boolean emailSent = false;
@@ -173,7 +172,7 @@ public class CreateCoordinatorAccountController implements Initializable {
                     emailSent = sendEmail(user,credential);
                 } catch(LogicException logicException) {
                     clearFields();
-                    log.error(logicException);
+                    LOG.error(logicException);
                     Alerts.displayAlertLogicException(logicException);
                 }
             }

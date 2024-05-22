@@ -1,4 +1,3 @@
-
 package logic;
 
 import java.security.SecureRandom;
@@ -6,6 +5,7 @@ import java.text.Normalizer;
 import logic.DAOs.CredentialDAO;
 
 public class CredentialGenerator {
+    private static final CredentialDAO CREDENTIAL_DAO = new CredentialDAO();
     
     public static String generateUser(String name, String lastname) throws LogicException {
         name = removeAccents(name);
@@ -36,8 +36,7 @@ public class CredentialGenerator {
     }
     
     private static int validateUserExistence(String user) throws LogicException{
-        CredentialDAO credentialDAO = new CredentialDAO();
-        return credentialDAO.countCredentialsByUser(user);
+        return CREDENTIAL_DAO.countCredentialsByUser(user);
     }
     
     private static String removeAccents(String word) {

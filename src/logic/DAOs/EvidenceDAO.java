@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package logic.DAOs;
 
 import logic.interfaces.EvidenceManagerInterface;
@@ -18,20 +14,26 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Blob;
+
 /**
  *
- * @author chima
+ * @author chuch
  */
 public class EvidenceDAO implements EvidenceManagerInterface {
-    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
+    private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
 
+    /**
+     *
+     * @param evidence
+     * @return
+     */
     @Override
     public int uploadEvidence(Evidence evidence) {
         Connection connection;
         int result = 1;
         String query = "INSERT INTO evidencia (FolderEvidencia_idFolderEvidencia, nombre, autor, fechacreacion, archivo) VALUES (?, ?, ?, ?, ?)";
         try {
-            connection = this.databaseConnection.getConnection();
+            connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             File evidencePDF = new File(evidence.getFile());
             FileInputStream fileInputStream = new FileInputStream(evidencePDF);
@@ -47,18 +49,24 @@ public class EvidenceDAO implements EvidenceManagerInterface {
         } catch (FileNotFoundException fileNotFoundException) {
             result = -2;
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return result;
     }
 
+    /**
+     *
+     * @param evidence
+     * @param outputPath
+     * @return
+     */
     @Override
     public int obtainEvidence(Evidence evidence, String outputPath) {
         Connection connection;
         PreparedStatement statement = null;
         FileOutputStream fileOutputStream = null;
         try {
-            connection = this.databaseConnection.getConnection();
+            connection = this.DATABASE_CONNECTION.getConnection();
             statement = connection.prepareStatement("SELECT archivo FROM evidencia WHERE folderevidencia_idfolderevidencia = ?");
             statement.setInt(1, evidence.getIdFolderEvidence());
             ResultSet resultSet = statement.executeQuery();
@@ -81,7 +89,7 @@ public class EvidenceDAO implements EvidenceManagerInterface {
         } catch (IOException ioException){
             return -3;
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return -4;
     }

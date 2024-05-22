@@ -10,15 +10,24 @@ import logic.LogicException;
 import logic.domain.Department;
 import logic.interfaces.DepartmentManagerInterface;
 
+/**
+ *
+ * @author chuch
+ */
 public class DepartmentDAO implements DepartmentManagerInterface{
-    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
+    private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
     
+    /**
+     *
+     * @return
+     * @throws LogicException
+     */
     @Override
     public ArrayList<String> getRegionsNames() throws LogicException {
         String query = "SELECT region from facultad group by region";
         ArrayList<String> regionsNames = new ArrayList();
         try{
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet result = statement.executeQuery();
             while(result.next()) {
@@ -29,17 +38,23 @@ public class DepartmentDAO implements DepartmentManagerInterface{
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return regionsNames;
     }
     
+    /**
+     *
+     * @param region
+     * @return
+     * @throws LogicException
+     */
     @Override
     public ArrayList<Department> getDepartmentsByRegion(String region) throws LogicException {
         String query = "SELECT * FROM facultad WHERE region = ?";
         ArrayList<Department> departments = new ArrayList();
         try{
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, region);
             ResultSet result = statement.executeQuery();
@@ -55,7 +70,7 @@ public class DepartmentDAO implements DepartmentManagerInterface{
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return departments;
     }
