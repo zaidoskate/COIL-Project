@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package logic.interfaces;
 
 import java.util.ArrayList;
@@ -10,10 +6,23 @@ import logic.domain.Evidence;
 
 /**
  *
- * @author chima
+ * @author chuch
  */
 public interface EvidenceManagerInterface {
+
+    /**
+     *
+     * @param evidence
+     * @return
+     */
     public int uploadEvidence(Evidence evidence);
+    /**
+     *
+     * @param evidence
+     * @param outputPath
+     * @return
+     */
     public int obtainEvidence(Evidence evidence, String outputPath) throws LogicException;
     public ArrayList<Evidence> getAllEvidencesByIdCollaboration(int idCollaboration) throws LogicException;
+
 }

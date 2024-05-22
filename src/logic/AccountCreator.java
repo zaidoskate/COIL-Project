@@ -20,6 +20,16 @@ import logic.domain.User;
 import logic.domain.UvProfessor;
 
 public class AccountCreator {
+    private static final SessionManager currentSession = SessionManager.getInstance();
+    private static final PendingMailDAO PENDING_MAIL_DAO = new PendingMailDAO();
+    private static final UserDAO USER_DAO = new UserDAO();
+    private static final CredentialDAO CREDENTIAL_DAO = new CredentialDAO();
+    private static final UvAccountRequestDAO UV_ACCOUNT_REQUEST_DAO = new UvAccountRequestDAO();
+    private static final ExternalAccountRequestDAO EXTERNAL_ACCOUNT_REQUEST_DAO = new ExternalAccountRequestDAO();
+    private static final UvProfessorDAO UV_PROFESSOR_DAO = new UvProfessorDAO();
+    private static final ProfessorDAO PROFESSOR_DAO = new ProfessorDAO();
+    private static final ExternalProfessorDAO EXTERNAL_PROFESSOR_DAO = new ExternalProfessorDAO();
+    
     public static boolean createUVAccount(UvAccountRequest uvaccountRequest) throws LogicException {
         String username = CredentialGenerator.generateUser(uvaccountRequest.getName(), uvaccountRequest.getLastName());
         String password = CredentialGenerator.generatePassword();
@@ -71,10 +81,9 @@ public class AccountCreator {
         pendingMail.setContent(body);
         pendingMail.setDestinationEmail(email);
         pendingMail.setSubject("Cuenta de acceso Profesor");
-        pendingMail.setIdUser(SessionManager.getInstance().getUserData().getIdUser());
+        pendingMail.setIdUser(currentSession.getUserData().getIdUser());
         
-        PendingMailDAO pendingMailDAO = new PendingMailDAO();
-        pendingMailDAO.insertPendingMail(pendingMail);
+        PENDING_MAIL_DAO.insertPendingMail(pendingMail);
     }
     
     private static int registerUser(AccountRequest accountRequest) throws LogicException {
@@ -83,9 +92,7 @@ public class AccountCreator {
         user.setLastName(accountRequest.getLastName());
         user.setEmail(accountRequest.getEmail());
         
-        UserDAO userDAO = new UserDAO();
-        
-        int idUser = userDAO.addUser(user);
+        int idUser = USER_DAO.addUser(user);
         return idUser;
     }
 
@@ -95,15 +102,13 @@ public class AccountCreator {
         credential.setUser(username);
         credential.setPassword(password);
         
-        CredentialDAO credentialDAO = new CredentialDAO();
-        credentialDAO.insertCredential(credential);
+        CREDENTIAL_DAO.insertCredential(credential);
     }
 
     private static void registerProfessor(int idUser) throws LogicException {
         Professor professor = new Professor();
         professor.setIdUser(idUser);
-        ProfessorDAO professorDAO = new ProfessorDAO();
-        professorDAO.insertProfessor(professor);
+        PROFESSOR_DAO.insertProfessor(professor);
     }
 
     private static void registerUvProfessor(UvAccountRequest uvaccountRequest, int idUser) throws LogicException {
@@ -112,8 +117,7 @@ public class AccountCreator {
         uvProfessor.setIdDepartment(uvaccountRequest.getIdDepartment());
         uvProfessor.setPersonalNumber(uvaccountRequest.getPersonalNumber());
         
-        UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
-        uvProfessorDAO.insertUvProfessor(uvProfessor);
+        UV_PROFESSOR_DAO.insertUvProfessor(uvProfessor);
     }
     
     private static void registerExternalProfessor(ExternalAccountRequest externalAccountRequest, int idUser) throws LogicException {
@@ -121,17 +125,14 @@ public class AccountCreator {
         externalProfessor.setIdUser(idUser);
         externalProfessor.setIdUniversity(externalAccountRequest.getIdUniversity());
         
-        ExternalProfessorDAO externalProfessorDAO = new ExternalProfessorDAO();
-        externalProfessorDAO.insertExternalProfessor(externalProfessor);
+        EXTERNAL_PROFESSOR_DAO.insertExternalProfessor(externalProfessor);
     }
 
     private static void deleteAccountRequestUv(UvAccountRequest uvaccountRequest) throws LogicException{
-        UvAccountRequestDAO uvAccountRequestDAO = new UvAccountRequestDAO();
-        uvAccountRequestDAO.deleteUvAccountRequest(uvaccountRequest);
+        UV_ACCOUNT_REQUEST_DAO.deleteUvAccountRequest(uvaccountRequest);
     }
     private static void deleteAccountRequestExternal(ExternalAccountRequest externalAccountRequest) throws LogicException{
-        ExternalAccountRequestDAO externalAccountRequestDAO = new ExternalAccountRequestDAO();
-        externalAccountRequestDAO.deleteExternalAccountRequest(externalAccountRequest);
+        EXTERNAL_ACCOUNT_REQUEST_DAO.deleteExternalAccountRequest(externalAccountRequest);
     }
     
 }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package logic.DAOs;
 
 import dataaccess.DatabaseConnection;
@@ -16,28 +12,40 @@ import java.util.ArrayList;
 
 /**
  *
- * @author zaido
+ * @author chuch
  */
 public class ProfessorDAO implements ProfessorManagerInterface {
-    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
+    private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
     
+    /**
+     *
+     * @param professor
+     * @return
+     * @throws LogicException
+     */
     @Override
     public int insertProfessor(Professor professor) throws LogicException {
         int result = 0;
         String query = "INSERT INTO Profesor VALUES (?)";
         try{
-            Connection connection = databaseConnection.getConnection();
+            Connection connection = DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, professor.getIdUser());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return result;
     }
     
+    /**
+     *
+     * @param idUser
+     * @return
+     * @throws LogicException
+     */
     @Override
     public ArrayList<String> getUniversityFromAProfessor(int idUser) throws LogicException {
         ArrayList<String> universityInformation = new ArrayList<>();
@@ -46,7 +54,7 @@ public class ProfessorDAO implements ProfessorManagerInterface {
                 + "JOIN universidad ON profesorExterno.Universidad_idUniversidad"
                 + "= universidad.idUniversidad WHERE profesorExterno.Profesor_Usuario_idUsuario = ?";
         try {
-            Connection connection = databaseConnection.getConnection();
+            Connection connection = DATABASE_CONNECTION.getConnection();
             PreparedStatement statementUv = connection.prepareStatement(queryUv);
             statementUv.setInt(1, idUser);
             ResultSet resultUv = statementUv.executeQuery();
@@ -66,7 +74,7 @@ public class ProfessorDAO implements ProfessorManagerInterface {
         } catch (SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return universityInformation;
     }

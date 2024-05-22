@@ -46,15 +46,5 @@ public class EmailNotification {
 
     public void setMessageSuccess(String messageSuccess) {
         this.messageSuccess = messageSuccess;
-    }
-
-    public String getMessageCancel() {
-        return messageCancel;
-    }
-
-    public void setMessageCancel(String messageCancel) {
-        this.messageCancel = messageCancel;
-    }
-    
-    
+    }    
 }

@@ -1,6 +1,7 @@
 package gui.controllers;
 
 import gui.Alerts;
+import gui.SessionManager;
 import gui.stages.SendEmailStage;
 import java.io.IOException;
 import java.net.URL;
@@ -12,43 +13,63 @@ import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import logic.AccountCreator;
 import logic.DAOs.ExternalAccountRequestDAO;
+import logic.DAOs.PendingMailDAO;
 import logic.LogicException;
 import logic.domain.ExternalAccountRequest;
 import logic.model.EmailNotification;
 import logic.domain.ExternalAccountRequestData;
+import logic.domain.PendingMail;
 import org.apache.log4j.Logger;
 
 public class AccountRequestExternalListController implements Initializable {
-    private static final Logger log = Logger.getLogger(AccountRequestExternalListController.class);
+    private static final Logger LOG = Logger.getLogger(AccountRequestExternalListController.class);
+    private static final ExternalAccountRequestDAO EXTERNAL_ACCOUNT_REQUEST_DAO = new ExternalAccountRequestDAO();
+    private static final PendingMailDAO PENDING_MAIL_DAO = new PendingMailDAO();
+    private final SessionManager currentSession = SessionManager.getInstance();
+
     @FXML
     private TableView<ExternalAccountRequestData> tblViewExternalAccountRequest;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {   
-        loadUvAccountRequest();
+        loadExternalAccountRequest();
     }
     
-    private void loadUvAccountRequest() {
+    private void loadExternalAccountRequest() {
         tblViewExternalAccountRequest.getItems().clear();
-        ExternalAccountRequestDAO externalAccountRequestDAO = new ExternalAccountRequestDAO();
         ArrayList<ExternalAccountRequestData> externalAccountRequestsData = new ArrayList();
         try{
-            externalAccountRequestsData = externalAccountRequestDAO.getExternalAccountRequestsData();
+            externalAccountRequestsData = EXTERNAL_ACCOUNT_REQUEST_DAO.getExternalAccountRequestsData();
         } catch(LogicException logicException) {
-            log.error(logicException);
+            LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
+            Stage stage = (Stage) tblViewExternalAccountRequest.getScene().getWindow();
+            stage.close();
         }
         tblViewExternalAccountRequest.getItems().addAll(externalAccountRequestsData);
     }
     
-    private void deleteUvAccountRequest(ExternalAccountRequest externalAccountRequest) {
-        ExternalAccountRequestDAO externalAccountRequestDAO = new ExternalAccountRequestDAO();
+    private boolean deleteExternalAccountRequest(ExternalAccountRequest externalAccountRequest) {
+        boolean result = false;
         try {
-            externalAccountRequestDAO.deleteExternalAccountRequest(externalAccountRequest);
+            if(EXTERNAL_ACCOUNT_REQUEST_DAO.deleteExternalAccountRequest(externalAccountRequest) == 1) {
+                result = true;
+            }
         } catch(LogicException logicException) {
-            log.error(logicException);
+            LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
         }
+        return result;
+    }
+    
+    public void savePendingMail(ExternalAccountRequest externalAccountRequest) throws LogicException {
+        PendingMail pendingMail = new PendingMail();
+        pendingMail.setContent(EmailNotification.getInstance().getEmailBody());
+        pendingMail.setDestinationEmail(externalAccountRequest.getEmail());
+        pendingMail.setSubject("Rechazo de cuenta de acceso.");
+        pendingMail.setIdUser(currentSession.getUserData().getIdUser());
+
+        PENDING_MAIL_DAO.insertPendingMail(pendingMail);
     }
    
     @FXML
@@ -61,25 +82,21 @@ public class AccountRequestExternalListController implements Initializable {
     private void acceptAccountRequest() {
         if(tblViewExternalAccountRequest.getSelectionModel().getSelectedItem() != null) {
             int idAccountRequestSelected = tblViewExternalAccountRequest.getSelectionModel().getSelectedItem().getIdRequest();
-            ExternalAccountRequestDAO externalAccountRequestDAO = new ExternalAccountRequestDAO();
             ExternalAccountRequest externalAccountRequest;
             boolean result = false;
             try{
-                externalAccountRequest = externalAccountRequestDAO.getExternalAccountRequestById(idAccountRequestSelected);
+                externalAccountRequest = EXTERNAL_ACCOUNT_REQUEST_DAO.getExternalAccountRequestById(idAccountRequestSelected);
                 if(externalAccountRequest.getName() != null && externalAccountRequest.getEmail()!= null){
                     result = AccountCreator.createExternalAccount(externalAccountRequest); 
                 }
             } catch(LogicException logicException) {
-                log.error(logicException);
+                LOG.error(logicException);
                 Alerts.displayAlertLogicException(logicException);
             }
-            
             if(result == true) {
                 Alerts.showInformationAlert("Exito", "El correo se ha enviado a su destino con la clave de acceso");
-                loadUvAccountRequest();
-            } else {
-                Alerts.showWarningAlert("No se ha podido enviar la clave de acceso a su destino, intentelo mas tarde.");
             }
+            loadExternalAccountRequest();
         } else {
             Alerts.showWarningAlert("No se ha seleccionado ninguna solicitud.");
         }
@@ -89,28 +106,34 @@ public class AccountRequestExternalListController implements Initializable {
     private void declineAccountRequest() {
         if(tblViewExternalAccountRequest.getSelectionModel().getSelectedItem() != null) {
             int idAccountRequestSelected = tblViewExternalAccountRequest.getSelectionModel().getSelectedItem().getIdRequest();
-            ExternalAccountRequestDAO externalAccountRequestDAO = new ExternalAccountRequestDAO();
             ExternalAccountRequest externalAccountRequest;
             try{
-                externalAccountRequest = externalAccountRequestDAO.getExternalAccountRequestById(idAccountRequestSelected);
+                externalAccountRequest = EXTERNAL_ACCOUNT_REQUEST_DAO.getExternalAccountRequestById(idAccountRequestSelected);
             } catch(LogicException logicException) {
-                log.error(logicException);
+                LOG.error(logicException);
                 Alerts.displayAlertLogicException(logicException);
                 return;
             }
-            EmailNotification.getInstance().setEmail(externalAccountRequest.getEmail());
-            EmailNotification.getInstance().setMessageCancel("No se ha rechazado esta solicitud de cuenta");
-            EmailNotification.getInstance().setMessageSuccess("Se ha rechazado con exito la solicitud de cuenta");
-            try {
-                SendEmailStage sendEmailStage = new SendEmailStage();
-            } catch(IOException ioexception) {
-                log.warn(ioexception);
-                Alerts.displayAlertIOException();
+            if(deleteExternalAccountRequest(externalAccountRequest)) {
+                loadExternalAccountRequest();
+                EmailNotification.getInstance().setEmail(externalAccountRequest.getEmail());
+                EmailNotification.getInstance().setMessageSuccess("Se ha rechazado con exito la solicitud de cuenta");
+                try {
+                    SendEmailStage sendEmailStage = new SendEmailStage();
+                } catch(IOException ioexception) {
+                    LOG.warn(ioexception);
+                    Alerts.displayAlertIOException();
+                }
+                if(EmailNotification.getInstance().getSentStatus() == false) {
+                    try {
+                        savePendingMail(externalAccountRequest);
+                    } catch(LogicException logicException) {
+                        Alerts.displayAlertLogicException(logicException);
+                    }
+                }
+                loadExternalAccountRequest();
             }
-            if(EmailNotification.getInstance().getSentStatus()) {
-                deleteUvAccountRequest(externalAccountRequest);
-                loadUvAccountRequest();
-            }
+            
         } else {
             Alerts.showWarningAlert("No se ha seleccionado ninguna solicitud.");
         }

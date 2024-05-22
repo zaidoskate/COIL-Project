@@ -10,15 +10,25 @@ import java.sql.ResultSet;
 import logic.LogicException;
 import java.sql.Statement;
 
+/**
+ *
+ * @author chuch
+ */
 public class UserDAO implements UserManagerInterface {
-    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
+    private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
     
+    /**
+     *
+     * @param user
+     * @return
+     * @throws LogicException
+     */
     @Override
     public int addUser(User user)  throws LogicException {
         int result = 0;
         String query = "INSERT INTO Usuario(nombre, apellido,correo) VALUES (?, ?, ?)";
         try{
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getName());
             statement.setString(2, user.getLastName());
@@ -32,17 +42,23 @@ public class UserDAO implements UserManagerInterface {
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return result;
     }
     
+    /**
+     *
+     * @param id
+     * @return
+     * @throws LogicException
+     */
     @Override
     public User getUserById(int id) throws LogicException  {
         String query = "SELECT * FROM Usuario WHERE idUsuario = ?";
         User userResult = new User();
         try{
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             ResultSet result = statement.executeQuery();
@@ -55,17 +71,23 @@ public class UserDAO implements UserManagerInterface {
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return userResult;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws LogicException
+     */
     @Override
     public String getUserTypeById(int id) throws LogicException {
         String query = "CALL encontrarTipoUsuario( ? )";
         String typeUser = null;
         try{
-            Connection connection = this.databaseConnection.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             ResultSet result = statement.executeQuery();
@@ -75,7 +97,7 @@ public class UserDAO implements UserManagerInterface {
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return typeUser;
         

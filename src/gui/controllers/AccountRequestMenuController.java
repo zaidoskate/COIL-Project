@@ -9,13 +9,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 
 public class AccountRequestMenuController implements Initializable {
-    private static final Logger log = Logger.getLogger(AccountRequestMenuController.class);
+    private static final Logger LOG = Logger.getLogger(AccountRequestMenuController.class);
     @FXML
     private Button btnCancel;
     
@@ -28,7 +27,7 @@ public class AccountRequestMenuController implements Initializable {
         try{
             AccountRequestExternalListStage accountRequestExternalListStage = new AccountRequestExternalListStage();
         } catch(IOException ioException) {
-            log.warn(ioException);
+            LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
     }
@@ -37,7 +36,7 @@ public class AccountRequestMenuController implements Initializable {
         try{
             AccountRequestUvListStage accountRequestUvListStage = new AccountRequestUvListStage();
         } catch(IOException ioException) {
-            log.warn(ioException);
+            LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
     }
@@ -48,7 +47,7 @@ public class AccountRequestMenuController implements Initializable {
         try{
             CoordinatorMenuStage coordinatorMenu = new CoordinatorMenuStage();
         } catch(IOException ioException) {
-            log.warn(ioException);
+            LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
     }

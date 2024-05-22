@@ -10,7 +10,7 @@ import org.apache.log4j.spi.LoggingEvent;
 import org.apache.log4j.spi.TriggeringEventEvaluator;
 
 public class LogValidation implements TriggeringEventEvaluator {
-    private static final Logger log = Logger.getLogger(LogValidation.class);
+    private static final Logger LOG = Logger.getLogger(LogValidation.class);
     
     public boolean getConnection() throws IOException {
         URL url;
@@ -20,7 +20,7 @@ public class LogValidation implements TriggeringEventEvaluator {
             connectionURL.connect();
             return connectionURL.getResponseCode() == 200;
         } catch(UnknownHostException unknownHostException){
-            log.warn("No hay conexion a internet", unknownHostException);
+            LOG.warn("No hay conexion a internet", unknownHostException);
             return false;
         }
     }
@@ -35,7 +35,7 @@ public class LogValidation implements TriggeringEventEvaluator {
                 return true;
             }
         } catch(IOException ioexception) {
-            log.warn("No hay conexion a internet", ioexception);
+            LOG.warn("No hay conexion a internet", ioexception);
         }
         return false;
     }

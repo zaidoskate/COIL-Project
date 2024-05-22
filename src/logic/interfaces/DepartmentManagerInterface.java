@@ -4,7 +4,24 @@ import java.util.ArrayList;
 import logic.LogicException;
 import logic.domain.Department;
 
+/**
+ *
+ * @author chuch
+ */
 public interface DepartmentManagerInterface {
-    ArrayList<String> getRegionsNames() throws LogicException;
-    ArrayList<Department> getDepartmentsByRegion(String region) throws LogicException;
+
+    /**
+     *
+     * @return
+     * @throws LogicException
+     */
+    public ArrayList<String> getRegionsNames() throws LogicException;
+
+    /**
+     *
+     * @param region
+     * @return
+     * @throws LogicException
+     */
+    public ArrayList<Department> getDepartmentsByRegion(String region) throws LogicException;
 }

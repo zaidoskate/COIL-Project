@@ -1,20 +1,33 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dataaccess;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 import org.apache.log4j.Logger;
 
 public class DatabaseConnection {
     private Connection databaseConnection;
-    private final String DATABASE_URL = "jdbc:mysql://127.0.0.1/coilProject";
-    private final String DATABASE_USER = "user1";
-    private final String DATABASE_PASSWORD = "ZAMATL";
+    private final String DATABASE_URL;
+    private final String DATABASE_USER;
+    private final String DATABASE_PASSWORD;
+    private static final Properties properties = new Properties();
     private static final Logger log = Logger.getLogger(DatabaseConnection.class);
+
+    public DatabaseConnection() {
+        if(loadPropertyFile()) {
+            DATABASE_URL = properties.getProperty("db.url");
+            DATABASE_USER = properties.getProperty("db.user");
+            DATABASE_PASSWORD = properties.getProperty("db.password");
+        } else {
+            DATABASE_URL = null;
+            DATABASE_USER = null;
+            DATABASE_PASSWORD = null;
+        }
+    }
     
     public Connection getConnection() throws SQLException {
         connect();
@@ -23,6 +36,16 @@ public class DatabaseConnection {
     
     private void connect() throws SQLException {
         databaseConnection = DriverManager.getConnection(DATABASE_URL,DATABASE_USER,DATABASE_PASSWORD);
+    }
+    
+    private boolean loadPropertyFile() {
+        try {
+            InputStream input = new FileInputStream("dbConfig/dbConfig.properties");
+            properties.load(input);
+        } catch (IOException ex) {
+            return false;
+        }
+        return true;
     }
     
     public void closeConnection() {

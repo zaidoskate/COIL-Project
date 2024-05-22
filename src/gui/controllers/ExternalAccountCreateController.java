@@ -19,7 +19,7 @@ import logic.domain.University;
 import org.apache.log4j.Logger;
 
 public class ExternalAccountCreateController implements Initializable {
-    private static final Logger log = Logger.getLogger(ExternalAccountCreateController.class);
+    private static final Logger LOG = Logger.getLogger(ExternalAccountCreateController.class);
 
     private ArrayList<University> universities;
     @FXML
@@ -43,7 +43,7 @@ public class ExternalAccountCreateController implements Initializable {
         try{
             universities = universityDAO.getUniversities();
         } catch(LogicException logicException) {
-            log.error(logicException);
+            LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
             
             Stage stage = (Stage) cmbBoxUniversities.getScene().getWindow();
@@ -117,7 +117,7 @@ public class ExternalAccountCreateController implements Initializable {
         try {
             result = AccountCreator.createExternalAccount(externalAccountRequest);
         } catch(LogicException logicException) {
-            log.error(logicException);
+            LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
         }
         if(result == true) {

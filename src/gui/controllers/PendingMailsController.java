@@ -16,7 +16,9 @@ import logic.domain.PendingMail;
 import org.apache.log4j.Logger;
 
 public class PendingMailsController implements Initializable {
-    private static final Logger log = Logger.getLogger(PendingMailsController.class);
+    private static final Logger LOG = Logger.getLogger(PendingMailsController.class);
+    private static final SessionManager currentSession = SessionManager.getInstance();
+    private static final PendingMailDAO PENDING_MAIL_DAO = new PendingMailDAO();
     @FXML
     private TableView<PendingMail> tblViewPendingMails;
     
@@ -27,25 +29,23 @@ public class PendingMailsController implements Initializable {
     
     private void loadPendingMails() {
         tblViewPendingMails.getItems().clear();
-        int currentUserId = SessionManager.getInstance().getUserData().getIdUser();
-        PendingMailDAO pendingMailDAO = new PendingMailDAO();
+        int currentUserId = currentSession.getUserData().getIdUser();
         ArrayList<PendingMail> pendingMails;
         try{
-            pendingMails = pendingMailDAO.getPendingMailsByIdUser(currentUserId);
+            pendingMails = PENDING_MAIL_DAO.getPendingMailsByIdUser(currentUserId);
             tblViewPendingMails.getItems().addAll(pendingMails);
         } catch(LogicException logicException) {
-            log.error(logicException);
+            LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
             previusMenu();
         }
     }
     
     private void deletePendingMailFromDB(PendingMail pendingMail) {
-        PendingMailDAO pendingMailDAO = new PendingMailDAO();
         try{
-            pendingMailDAO.deletePendingMail(pendingMail);
+            PENDING_MAIL_DAO.deletePendingMail(pendingMail);
         } catch(LogicException logicException) {
-            log.error(logicException);
+            LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
         }
     }
@@ -68,7 +68,7 @@ public class PendingMailsController implements Initializable {
             try {
                 result = MailSender.sendEmail(pendingMailSelected.getContent(), pendingMailSelected.getDestinationEmail());
             } catch(LogicException logicException) {
-                log.error(logicException);
+                LOG.error(logicException);
                 Alerts.displayAlertLogicException(logicException);
             }
             if(result == true) {

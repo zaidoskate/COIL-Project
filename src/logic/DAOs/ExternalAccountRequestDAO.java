@@ -11,15 +11,25 @@ import java.util.ArrayList;
 import logic.LogicException;
 import logic.domain.ExternalAccountRequestData;
 
+/**
+ *
+ * @author chuch
+ */
 public class ExternalAccountRequestDAO implements ExternalAccountRequestManagerInterface {
-    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
+    private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
     
+    /**
+     *
+     * @param externalAccountRequest
+     * @return
+     * @throws LogicException
+     */
     @Override
     public int insertExternalAccountRequest(ExternalAccountRequest externalAccountRequest) throws LogicException {
         int result = 0;
         String query = "INSERT INTO SolicitudCuentaExterno (nombre, apellido, correo, idUniversidad) VALUES (?, ?, ?, ?)";
         try {
-            Connection connection =  databaseConnection.getConnection();
+            Connection connection =  DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, externalAccountRequest.getName());
             statement.setString(2, externalAccountRequest.getLastName());
@@ -29,27 +39,39 @@ public class ExternalAccountRequestDAO implements ExternalAccountRequestManagerI
         } catch (SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return result;
     }
 
+    /**
+     *
+     * @param externalAccountRequest
+     * @return
+     * @throws LogicException
+     */
     @Override
     public int deleteExternalAccountRequest(ExternalAccountRequest externalAccountRequest) throws LogicException {
         int result = 0;
         String query = "DELETE FROM SolicitudCuentaExterno WHERE idSolicitud = ?";
         try {
-            Connection connection = databaseConnection.getConnection();
+            Connection connection = DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, externalAccountRequest.getIdRequest());
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return result;
     }
+
+    /**
+     *
+     * @return
+     * @throws LogicException
+     */
     @Override
     public ArrayList<ExternalAccountRequestData> getExternalAccountRequestsData() throws LogicException  {
         String query = "SELECT solicitudcuentaexterno.nombre AS nombre, solicitudcuentaexterno.idSolicitud "
@@ -59,7 +81,7 @@ public class ExternalAccountRequestDAO implements ExternalAccountRequestManagerI
         ArrayList<ExternalAccountRequestData> externalAccountRequestsData = new ArrayList<>();
         try{
             Connection connection;
-            connection = this.databaseConnection.getConnection();
+            connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement;
             statement = connection.prepareStatement(query);
             ResultSet result;
@@ -77,17 +99,24 @@ public class ExternalAccountRequestDAO implements ExternalAccountRequestManagerI
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return externalAccountRequestsData;
     }
+
+    /**
+     *
+     * @param idExternalAccountRequest
+     * @return
+     * @throws LogicException
+     */
     @Override
     public ExternalAccountRequest getExternalAccountRequestById(int idExternalAccountRequest) throws LogicException{
         String query = "SELECT * from solicitudcuentaexterno WHERE idSolicitud = ?";
         ExternalAccountRequest externalAccountRequest = new ExternalAccountRequest();
         try{
             Connection connection;
-            connection = this.databaseConnection.getConnection();
+            connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement;
             statement = connection.prepareStatement(query);
             statement.setInt(1, idExternalAccountRequest);
@@ -103,7 +132,7 @@ public class ExternalAccountRequestDAO implements ExternalAccountRequestManagerI
         } catch(SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return externalAccountRequest;
     }

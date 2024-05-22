@@ -20,29 +20,27 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import org.apache.log4j.Logger;
 
 public class LoginController implements Initializable {
-    private static final Logger log = Logger.getLogger(LoginController.class);
+    private static final Logger LOG = Logger.getLogger(LoginController.class);
+    private static final UserDAO USER_DAO = new UserDAO();
+    private static final CredentialDAO CREDENTIAL_DAO = new CredentialDAO();
     @FXML
     private TextField txtFieldUser;
-    
     @FXML
     private PasswordField psswdFieldPassword;
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-    }    
-    
+    }
     @FXML
     private void displayAccountRequest() {
         try{
             AccountRequestStage accountRequestStage = new AccountRequestStage();
             
         } catch(IOException ioException) {            
-            log.warn(ioException);
+            LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
         
@@ -55,16 +53,15 @@ public class LoginController implements Initializable {
         Credential credential = new Credential();
         credential.setUser(user);
         credential.setPassword(password);
-        CredentialDAO credentialDAO = new CredentialDAO();
         try {
-            int idUser = credentialDAO.getIdUserByCredential(credential);
+            int idUser = CREDENTIAL_DAO.getIdUserByCredential(credential);
             if(idUser != -1) {
                 createSession(idUser);
             } else {
                 Alerts.showWarningAlert("Usuario y Contraseña incorrectos");
             }
         } catch(LogicException logicException) {
-            log.error(logicException);
+            LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
         } finally {
             txtFieldUser.clear();
@@ -74,9 +71,8 @@ public class LoginController implements Initializable {
     }
     
     private void createSession(int idUser) throws LogicException{
-        UserDAO userDAO = new UserDAO();
-        String typeUser = userDAO.getUserTypeById(idUser);
-        User user = userDAO.getUserById(idUser);
+        String typeUser = USER_DAO.getUserTypeById(idUser);
+        User user = USER_DAO.getUserById(idUser);
         UserData userData = new UserData();
         userData.setIdUser(idUser);
         userData.setName(user.getName());
@@ -90,21 +86,21 @@ public class LoginController implements Initializable {
             try{
                 CoordinatorMenuStage coordinatorMenuStage = new CoordinatorMenuStage();
             } catch(IOException ioException) {
-                log.warn(ioException);
+                LOG.warn(ioException);
                 Alerts.displayAlertIOException();
             }
         } else if(typeUser.equals("Administrador")) {
             try{
                 AdminMenuStage adminMenuStage = new AdminMenuStage();
             } catch(IOException ioException) {
-                log.warn(ioException);
+                LOG.warn(ioException);
                 Alerts.displayAlertIOException();
             }
         } else {
             try{
                 ProfesorMenuStage profesorMenuStage = new ProfesorMenuStage();
             } catch(IOException ioException) {
-                log.warn(ioException);
+                LOG.warn(ioException);
                 Alerts.displayAlertIOException();
             }
         }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package logic.DAOs;
 
 import logic.interfaces.EvidenceManagerInterface;
@@ -21,25 +17,31 @@ import java.util.ArrayList;
 import java.util.Date;
 import logic.FileDownloader;
 import logic.LogicException;
+
 /**
  *
- * @author chima
+ * @author chuch
  */
 public class EvidenceDAO implements EvidenceManagerInterface {
-    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
+    private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
     
     private String parseDateToString(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         return formatter.format(date);
     }
 
+    /**
+     *
+     * @param evidence
+     * @return
+     */
     @Override
     public int uploadEvidence(Evidence evidence) {
         Connection connection;
         int result = 1;
         String query = "INSERT INTO evidencia (FolderEvidencia_idFolderEvidencia, nombre, autor, fechacreacion, archivo) VALUES (?, ?, ?, ?, ?)";
         try {
-            connection = this.databaseConnection.getConnection();
+            connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             File evidencePDF = new File(evidence.getFile());
             FileInputStream fileInputStream = new FileInputStream(evidencePDF);
@@ -55,18 +57,24 @@ public class EvidenceDAO implements EvidenceManagerInterface {
         } catch (FileNotFoundException fileNotFoundException) {
             result = -2;
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return result;
     }
 
+    /**
+     *
+     * @param evidence
+     * @param outputPath
+     * @return
+     */
     @Override
     public int obtainEvidence(Evidence evidence, String outputPath) throws LogicException {
         int downloaded = 0;
         try {
-            Connection connection = this.databaseConnection.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT archivo FROM evidencia WHERE nombre = ?");
-            statement.setString(1, evidence.getName());
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT archivo FROM evidencia WHERE folderevidencia_idfolderevidencia = ?");
+            statement.setInt(1, evidence.getIdFolderEvidence());
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 Blob blob = resultSet.getBlob("archivo");
@@ -80,7 +88,7 @@ public class EvidenceDAO implements EvidenceManagerInterface {
         } catch (IOException ioException){
             throw new LogicException("Hubo un problema al descargar el archivo, inténtelo de nuevo", ioException);
         } finally {
-            databaseConnection.closeConnection();
+            DATABASE_CONNECTION.closeConnection();
         }
         return -4;
     }
@@ -90,7 +98,7 @@ public class EvidenceDAO implements EvidenceManagerInterface {
         ArrayList<Evidence> collaborationEvidences = new ArrayList<>();
         String query = "SELECT e.* FROM evidencia e INNER JOIN folderEvidencia fe ON e.FolderEvidencia_idFolderEvidencia = fe.idFolderEvidencia WHERE fe.Colaboracion_idColaboracion = ?";
         try {
-            Connection connection = databaseConnection.getConnection();
+            Connection connection = DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idCollaboration);
             ResultSet evidences = statement.executeQuery();

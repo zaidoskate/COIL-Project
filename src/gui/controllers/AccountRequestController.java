@@ -24,9 +24,13 @@ import logic.domain.UvAccountRequest;
 import org.apache.log4j.Logger;
 
 public class AccountRequestController implements Initializable {
+    private static final UniversityDAO UNIVERSITY_DAO = new UniversityDAO();
+    private static final DepartmentDAO DEPARTMENT_DAO = new DepartmentDAO();
+    private static final UvAccountRequestDAO UV_ACCOUNT_REQUEST_DAO = new UvAccountRequestDAO();
+    private static final ExternalAccountRequestDAO EXTERNAL_ACCOUNT_REQUEST_DAO = new ExternalAccountRequestDAO();
     private ArrayList<University> universities;
     private ArrayList<Department> departments;
-    private static final Logger log = Logger.getLogger(AccountRequestController.class);
+    private static final Logger LOG = Logger.getLogger(AccountRequestController.class);
     
     @FXML
     private ComboBox<String> cmbBoxUniversities;
@@ -58,13 +62,12 @@ public class AccountRequestController implements Initializable {
         ArrayList<String> universitiesNames = new ArrayList<>();
         universitiesNames.add("Universidad Veracruzana");
         universities = new ArrayList<>();
-        UniversityDAO universityDAO = new UniversityDAO();
         
         try{
-            universities = universityDAO.getUniversities();
+            universities = UNIVERSITY_DAO.getUniversities();
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
-            log.error(logicException);
+            LOG.error(logicException);
             Stage stage = (Stage) vBoxRegion.getScene().getWindow();
             stage.close();
         }
@@ -77,11 +80,10 @@ public class AccountRequestController implements Initializable {
     
     private void loadRegions() {
         ArrayList<String> regions = new ArrayList<>();
-        DepartmentDAO departmentDAO = new DepartmentDAO();
         try{
-            regions = departmentDAO.getRegionsNames();
+            regions = DEPARTMENT_DAO.getRegionsNames();
         } catch(LogicException logicException) {
-            log.error(logicException);
+            LOG.error(logicException);
         }
         cmbBoxRegions.getItems().addAll(regions);
     }
@@ -89,11 +91,10 @@ public class AccountRequestController implements Initializable {
     private void loadDepartments(String region) {
         ArrayList<String> departmentsNames = new ArrayList<>();
         departments = new ArrayList<>();
-        DepartmentDAO departmentDAO = new DepartmentDAO();
         try{
-            departments = departmentDAO.getDepartmentsByRegion(region);
+            departments = DEPARTMENT_DAO.getDepartmentsByRegion(region);
         } catch(LogicException logicException) {
-            log.error(logicException);
+            LOG.error(logicException);
         }
         for(Department department:departments) {
             departmentsNames.add(department.getName());
@@ -203,11 +204,10 @@ public class AccountRequestController implements Initializable {
             uvAccountRequest.setName(name);
             uvAccountRequest.setPersonalNumber(personalNumber);
             
-            UvAccountRequestDAO uvAccountRequestDAO = new UvAccountRequestDAO();
             try {
-                result = uvAccountRequestDAO.insertUvAccountRequest(uvAccountRequest);
+                result = UV_ACCOUNT_REQUEST_DAO.insertUvAccountRequest(uvAccountRequest);
             } catch(LogicException logicException) {
-                log.error(logicException);
+                LOG.error(logicException);
                 Alerts.displayAlertLogicException(logicException);
             }
         } else {
@@ -219,11 +219,10 @@ public class AccountRequestController implements Initializable {
             externalAccountRequest.setName(name);
             externalAccountRequest.setIdUniversity(universitySelected.getUniversityId());
             
-            ExternalAccountRequestDAO externalAccountRequestDAO = new ExternalAccountRequestDAO();
             try {
-                result = externalAccountRequestDAO.insertExternalAccountRequest(externalAccountRequest);
+                result = EXTERNAL_ACCOUNT_REQUEST_DAO.insertExternalAccountRequest(externalAccountRequest);
             } catch(LogicException logicException) {
-                log.error(logicException);
+                LOG.error(logicException);
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setContentText(logicException.getMessage());
                 alert.showAndWait();
