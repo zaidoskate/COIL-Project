@@ -6,6 +6,7 @@ import gui.stages.CollaborationHistoryStage;
 import gui.stages.CollaborationStage;
 import gui.stages.ConcludeCollaborationStage;
 import gui.stages.StartCollaborationStage;
+import gui.stages.UploadEvidencesStage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -134,7 +135,12 @@ public class MyCollaborationsController implements Initializable {
     
     @FXML
     private void displayUploadEvidence() {
-        
+        try {
+            UploadEvidencesStage uploadEvidencesStage = new UploadEvidencesStage();
+        } catch(IOException ioException) {
+            Alerts.displayAlertIOException();
+            LOG.error(ioException);
+        }
     }
     
     @FXML

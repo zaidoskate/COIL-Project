@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import logic.LogicException;
 import logic.domain.ProfessorBelongsToCollaboration;
+import logic.domain.User;
 import logic.interfaces.ProfessorBelongsToCollaborationManagerInterface;
 
 /**
@@ -181,5 +182,90 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
             DATABASE_CONNECTION.closeConnection();
         }
         return collaborations;
+    }
+
+    /**
+     *
+     * @param idCollaboration
+     * @return
+     * @throws LogicException
+     */
+    @Override
+    public String getEmailProfessorByIdCollaboration(int idCollaboration) throws LogicException {
+        String emailResult = null;
+        String query = "select u.correo from usuario u inner join profesorpertenececolaboracion belongs on belongs.Profesor_idUsuario = u.idUsuario where Colaboracion_idColaboracion = ?";
+        try {
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idCollaboration);
+            ResultSet result = statement.executeQuery();
+            if(result.next()) {
+                emailResult = result.getString("correo");
+            }
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexión intentelo de nuevo más tarde", sqlException);
+        } finally {
+            DATABASE_CONNECTION.closeConnection();
+        }
+        return emailResult;
+    }
+    
+    /**
+     *
+     * @param idCollaboration
+     * @return
+     * @throws LogicException
+     */
+    @Override
+    public String getStatusByIdCollaboration(int idCollaboration) throws LogicException {
+        String statusResult = null;
+        String query = "select estadoColaboracion from profesorpertenececolaboracion WHERE Colaboracion_idColaboracion = ?";
+        try {
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idCollaboration);
+            ResultSet result = statement.executeQuery();
+            if(result.next()) {
+                statusResult = result.getString("estadoColaboracion");
+            }
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexión intentelo de nuevo más tarde", sqlException);
+        } finally {
+            DATABASE_CONNECTION.closeConnection();
+        }
+        return statusResult;
+    }
+
+    
+    /**
+     *
+     * @param idCollaboration
+     * @return
+     * @throws LogicException
+     */
+    @Override
+    public ArrayList<User> getProfessorsDataByCollaboration(int idCollaboration) throws LogicException {
+        ArrayList<User> professors = new ArrayList<>();
+        String query = "(select u.idUsuario, u.nombre from profesorpertenececolaboracion p inner join usuario u on u.idUsuario = p.Profesor_idUsuario where p.Colaboracion_idColaboracion = ?)"
+                + "UNION"
+                + "(select u.idUsuario, u.nombre from profesorpertenececolaboracion p inner join usuario u on u.idUsuario = p.Profesor_idUsuarioEspejo where p.Colaboracion_idColaboracion = ?)";
+        try {
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idCollaboration);
+            statement.setInt(2, idCollaboration);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                User professor = new User();
+                professor.setIdUser(result.getInt("idUsuario"));
+                professor.setName(result.getString("nombre"));
+                professors.add(professor);
+            }
+        } catch (SQLException sqlException) {
+            throw new LogicException("No hay conexión intentelo de nuevo más tarde", sqlException);
+        } finally {
+            DATABASE_CONNECTION.closeConnection();
+        }
+        return professors;
     }
 }

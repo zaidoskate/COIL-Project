@@ -65,4 +65,19 @@ public interface ConcludedCollaborationManagerInterface {
      * @throws LogicException
      */
     public ArrayList<ConcludedCollaboration> getConcludedCollaborations() throws LogicException;
+    
+    /**
+     *
+     * @return
+     * @throws LogicException
+     */
+    public ArrayList<ConcludedCollaboration> getConcludedCollaborationsByVisibility() throws LogicException;
+
+    /**
+     *
+     * @param idCollaboration
+     * @return
+     * @throws LogicException
+     */
+    public ConcludedCollaboration getConcludedCollaborationById(int idCollaboration) throws LogicException;
 }

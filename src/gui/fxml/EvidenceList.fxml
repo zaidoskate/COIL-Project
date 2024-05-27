@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.QuadCurve?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #F7116B;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.EvidenceListController">
+   <children>
+      <QuadCurve controlX="263.0" controlY="41.00001525878906" endX="-49.9999885559082" endY="326.60003662109375" fill="WHITE" layoutX="37.0" layoutY="159.0" startX="-50.0" startY="-211.0" stroke="BLACK" strokeType="INSIDE" />
+      <ImageView fitHeight="119.0" fitWidth="124.0" layoutX="5.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/CoilLogo.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="-6.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SISTEMA COIL-VIC" textAlignment="CENTER" wrappingWidth="141.15625">
+         <font>
+            <Font name="Century Gothic" size="25.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="126.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de evidencias">
+         <font>
+            <Font name="Century Schoolbook Bold" size="35.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="79.0" fitWidth="87.0" layoutX="486.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+      <AnchorPane layoutX="166.0" layoutY="100.0" prefHeight="239.0" prefWidth="382.0" style="-fx-background-color: #ccc; -fx-border-radius: 10;">
+         <children>
+            <TableView fx:id="tblViewEvidences" prefHeight="241.0" prefWidth="392.0">
+              <columns>
+                <TableColumn prefWidth="251.1999969482422" text="Nombre" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="name" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn minWidth="0.0" prefWidth="139.99993896484375" text="Fecha" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="dateOfCreation" />
+                    </cellValueFactory>
+                </TableColumn>
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <Button fx:id="btnDownload" layoutX="196.0" layoutY="352.0" mnemonicParsing="false" onAction="#downloadEvidence" styleClass="accept-button" text="Descargar" visible="false">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button layoutX="460.0" layoutY="352.0" mnemonicParsing="false" onAction="#previusMenu" styleClass="cancel-button" text="Regresar" />
+      <ImageView fitHeight="94.0" fitWidth="73.0" layoutX="493.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/file.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnDelete" layoutX="207.0" layoutY="353.0" mnemonicParsing="false" onAction="#deleteEvidence" styleClass="delete-button" text="Eliminar" visible="false">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

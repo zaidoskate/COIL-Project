@@ -169,7 +169,7 @@ public class CollaborationDAO implements CollaborationManagerInterface {
      */
     @Override
     public ArrayList<Collaboration> getActiveCollaborations() throws LogicException{
-        String query = "SELECT * FROM Colaboracion WHERE  fechaCierre = Null";
+        String query = "SELECT * FROM Colaboracion WHERE  fechaCierre IS NULL";
         ArrayList <Collaboration> collaborationsResult = new ArrayList();
         try{
             Connection connection = this.DATABASE_CONNECTION.getConnection();

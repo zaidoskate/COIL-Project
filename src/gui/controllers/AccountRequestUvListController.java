@@ -24,7 +24,7 @@ public class AccountRequestUvListController implements Initializable{
     private static final Logger LOG = Logger.getLogger(AccountRequestUvListController.class);
     private static final UvAccountRequestDAO UV_ACCOUNT_REQUEST_DAO = new UvAccountRequestDAO();
     private static final PendingMailDAO PENDING_MAIL_DAO = new PendingMailDAO();
-    private final SessionManager currentSession = SessionManager.getInstance();
+    private final SessionManager CURRENT_SESSION = SessionManager.getInstance();
     
     @FXML
     private TableView<UvAccountRequest> tblViewUvAccountRequest;
@@ -66,7 +66,7 @@ public class AccountRequestUvListController implements Initializable{
         pendingMail.setContent(EmailNotification.getInstance().getEmailBody());
         pendingMail.setDestinationEmail(uvAccountRequest.getEmail());
         pendingMail.setSubject("Rechazo de cuenta de acceso.");
-        pendingMail.setIdUser(currentSession.getUserData().getIdUser());
+        pendingMail.setIdUser(CURRENT_SESSION.getUserData().getIdUser());
 
         PENDING_MAIL_DAO.insertPendingMail(pendingMail);
     }
@@ -112,10 +112,11 @@ public class AccountRequestUvListController implements Initializable{
                     LOG.warn(ioexception);
                     Alerts.displayAlertIOException();
                 }
-                if(EmailNotification.getInstance().getSentStatus()) {
+                if(EmailNotification.getInstance().getSentStatus() == false) {
                     try {
                         savePendingMail(uvaccountRequest);
                     } catch(LogicException logicException) {
+                        LOG.error(logicException);
                         Alerts.displayAlertLogicException(logicException);
                     }
                 }

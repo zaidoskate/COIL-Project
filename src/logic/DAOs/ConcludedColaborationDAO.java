@@ -211,4 +211,53 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
         }
         return concludedCollaborationsResult;
     }
+    
+    /**
+     *
+     * @return
+     * @throws LogicException
+     */
+    @Override
+    public ArrayList<ConcludedCollaboration> getConcludedCollaborationsByVisibility() throws LogicException {
+        String query = "select Colaboracion_idColaboracion, Usuario_idUsuario from colaboracionconcluida where visibilidad = 'Visible'";
+        ArrayList <ConcludedCollaboration> concludedCollaborationsResult = new ArrayList();
+        try{
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet result = statement.executeQuery();
+            while(result.next()) {
+                ConcludedCollaboration concludedCollaboration = new ConcludedCollaboration();
+                concludedCollaboration.setIdColaboration(result.getInt("Colaboracion_idColaboracion"));
+                concludedCollaboration.setIdUser(result.getInt("Usuario_idUsuario"));
+                concludedCollaborationsResult.add(concludedCollaboration);
+            }
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            DATABASE_CONNECTION.closeConnection();
+        }
+        return concludedCollaborationsResult;
+    }
+    
+    @Override
+    public ConcludedCollaboration getConcludedCollaborationById(int idCollaboration) throws LogicException {
+        String query = "select * from colaboracionconcluida where Colaboracion_idColaboracion = ?";
+        ConcludedCollaboration concludedCollaborationResult = new ConcludedCollaboration();
+        try{
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idCollaboration);
+            ResultSet result = statement.executeQuery();
+            while(result.next()) {
+                concludedCollaborationResult.setConclusion(result.getString("conclusion"));
+                concludedCollaborationResult.setRating(result.getInt("calificacion"));
+                concludedCollaborationResult.setVisibility(result.getString("visibilidad"));
+            }
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            DATABASE_CONNECTION.closeConnection();
+        }
+        return concludedCollaborationResult;
+    }
 }

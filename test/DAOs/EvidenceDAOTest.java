@@ -12,7 +12,7 @@ public class EvidenceDAOTest {
     }
 
     @Test
-    public void testUploadEvidenceSuccess() {
+    public void testUploadEvidenceSuccess() throws LogicException {
         String filePath = "C:\\Users\\chima\\Documents\\4TO SEMESTRE\\PRINCIPIOS DE DISEÑO\\Actividad01_GonzalezMarcio.pdf";
         EvidenceDAO evidenceDAO = new EvidenceDAO();
         Evidence evidence = new Evidence();
@@ -55,4 +55,12 @@ public class EvidenceDAOTest {
         }
     }
     
+    @Test
+    public void testDeleteEvidenceByNameSuccess() throws LogicException {
+        EvidenceDAO evidenceDAO = new EvidenceDAO();
+        String name = "Actividad";
+        int currentResult = evidenceDAO.deleteEvidenceByName(name);
+        int expectedResult = 1;
+        assertEquals(expectedResult, currentResult);
+    }
 }
