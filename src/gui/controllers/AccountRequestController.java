@@ -211,7 +211,7 @@ public class AccountRequestController implements Initializable {
                 Alerts.displayAlertLogicException(logicException);
             }
         } else {
-            University universitySelected = universities.get(cmbBoxUniversities.getSelectionModel().getSelectedIndex());
+            University universitySelected = universities.get(cmbBoxUniversities.getSelectionModel().getSelectedIndex() - 1);
             
             ExternalAccountRequest externalAccountRequest = new ExternalAccountRequest();
             externalAccountRequest.setEmail(email);

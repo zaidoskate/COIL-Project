@@ -112,7 +112,7 @@ public class AccountRequestUvListController implements Initializable{
                     LOG.warn(ioexception);
                     Alerts.displayAlertIOException();
                 }
-                if(EmailNotification.getInstance().getSentStatus()) {
+                if(EmailNotification.getInstance().getSentStatus() == false) {
                     try {
                         savePendingMail(uvaccountRequest);
                     } catch(LogicException logicException) {
