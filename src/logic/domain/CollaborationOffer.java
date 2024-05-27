@@ -15,7 +15,6 @@ public class CollaborationOffer {
     private String aditionalInfo;
     private String offerStatus; 
     private int idUser;
-    private static CollaborationOffer offer;
 
     /**
      *
@@ -175,14 +174,6 @@ public class CollaborationOffer {
      */
     public void setIdUser(int idUser) {
         this.idUser = idUser;
-    }
-    
-    /**
-     *
-     * @return
-     */
-    public static CollaborationOffer getOffer() {
-        return offer;
     }
     
     /**
