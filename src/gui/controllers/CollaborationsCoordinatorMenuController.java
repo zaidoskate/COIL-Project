@@ -3,6 +3,8 @@ package gui.controllers;
 import gui.Alerts;
 import gui.stages.CollaborationsInConclusionStage;
 import gui.stages.CoordinatorMenuStage;
+import gui.stages.ListActiveCollaborationsStage;
+import gui.stages.ListConcludedCollaborationStage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -40,6 +42,30 @@ public class CollaborationsCoordinatorMenuController implements Initializable {
         stage.close();
         try {
             CollaborationsInConclusionStage collaborationsInConclusionStage = new CollaborationsInConclusionStage();
+        } catch(IOException ioException) {
+            Alerts.displayAlertIOException();
+            log.error(ioException);
+        }
+    }
+    
+    @FXML
+    private void displayActiveCollaborations() {
+        Stage stage = (Stage) this.btnClose.getScene().getWindow();
+        stage.close();
+        try {
+            ListActiveCollaborationsStage listActiveCollaborationsStage = new ListActiveCollaborationsStage();
+        } catch(IOException ioException) {
+            Alerts.displayAlertIOException();
+            log.error(ioException);
+        }
+    }
+    
+    @FXML
+    private void displayConcludedCollaborations() {
+        Stage stage = (Stage) this.btnClose.getScene().getWindow();
+        stage.close();
+        try {
+            ListConcludedCollaborationStage listConcludedCollaborationsStage = new ListConcludedCollaborationStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
             log.error(ioException);

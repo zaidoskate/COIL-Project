@@ -34,12 +34,13 @@ public class EvidenceDAO implements EvidenceManagerInterface {
      *
      * @param evidence
      * @return
+     * @throws logic.LogicException
      */
     @Override
-    public int uploadEvidence(Evidence evidence) {
+    public int uploadEvidence(Evidence evidence) throws LogicException {
         Connection connection;
         int result = 1;
-        String query = "INSERT INTO evidencia (FolderEvidencia_idFolderEvidencia, nombre, autor, fechacreacion, archivo) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO evidencia ( FolderEvidencia_idFolderEvidencia, nombre, autor, fechacreacion, archivo) VALUES (?, ?, ?, ?, ?)";
         try {
             connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
@@ -53,9 +54,9 @@ public class EvidenceDAO implements EvidenceManagerInterface {
             result = statement.executeUpdate();
             statement.close();
         } catch (SQLException sqlException) {
-            result = -1;
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } catch (FileNotFoundException fileNotFoundException) {
-            result = -2;
+            throw new LogicException("No existe tal archivo en la ruta especificada", fileNotFoundException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }
@@ -67,14 +68,15 @@ public class EvidenceDAO implements EvidenceManagerInterface {
      * @param evidence
      * @param outputPath
      * @return
+     * @throws logic.LogicException
      */
     @Override
     public int obtainEvidence(Evidence evidence, String outputPath) throws LogicException {
-        int downloaded = 0;
+        int downloaded = -1;
         try {
             Connection connection = this.DATABASE_CONNECTION.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT archivo FROM evidencia WHERE folderevidencia_idfolderevidencia = ?");
-            statement.setInt(1, evidence.getIdFolderEvidence());
+            PreparedStatement statement = connection.prepareStatement("SELECT archivo FROM evidencia WHERE nombre = ?");
+            statement.setString(1, evidence.getName());
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 Blob blob = resultSet.getBlob("archivo");
@@ -90,9 +92,15 @@ public class EvidenceDAO implements EvidenceManagerInterface {
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }
-        return -4;
+        return downloaded;
     }
     
+    /**
+     *
+     * @param idCollaboration
+     * @return
+     * @throws LogicException
+     */
     @Override
     public ArrayList<Evidence> getAllEvidencesByIdCollaboration(int idCollaboration) throws LogicException {
         ArrayList<Evidence> collaborationEvidences = new ArrayList<>();
@@ -116,4 +124,44 @@ public class EvidenceDAO implements EvidenceManagerInterface {
         return collaborationEvidences;
     }
     
+    @Override
+    public ArrayList<Evidence> getEvidencesByIdFolder(int idFolder) throws LogicException {
+        ArrayList<Evidence> evidences = new ArrayList<>();
+        String query = "SELECT e.* FROM evidencia e WHERE e.FolderEvidencia_idFolderEvidencia = ?";
+        try {
+            Connection connection = DATABASE_CONNECTION.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idFolder);
+            ResultSet resultEvidences = statement.executeQuery();
+            while(resultEvidences.next()) {
+                Evidence evidence = new Evidence();
+                evidence.setIdFolderEvidence(resultEvidences.getInt("FolderEvidencia_idFolderEvidencia"));
+                evidence.setName(resultEvidences.getString("nombre"));
+                evidence.setAuthor(resultEvidences.getString("autor"));
+                evidence.setDateOfCreation(parseDateToString(resultEvidences.getDate("fechaCreacion")));
+                evidences.add(evidence);
+            }
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexión, inténtelo de nuevo más tarde", sqlException);
+        }
+        return evidences;
+    }
+    
+    @Override
+    public int deleteEvidenceByName(String name) throws LogicException {
+        int result = 1;
+        String query = "DELETE FROM evidencia WHERE nombre = ?";
+        try {
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, name);
+            result = statement.executeUpdate();
+            statement.close();
+        } catch (SQLException sqlException) {
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            DATABASE_CONNECTION.closeConnection();
+        }
+        return result;
+    }
 }

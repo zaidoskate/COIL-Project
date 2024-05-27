@@ -1,31 +1,28 @@
 package gui.controllers;
 
 import gui.Alerts;
+import gui.stages.CollaborationsCoordinatorMenuStage;
 import gui.stages.DetailCollaborationStage;
-import gui.stages.MyCollaborationsStage;
-import gui.stages.ProfesorMenuStage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import logic.DAOs.CollaborationDAO;
 import logic.DAOs.ConcludedColaborationDAO;
-import logic.domain.ConcludedCollaboration;
-import logic.domain.Collaboration;
 import logic.LogicException;
+import logic.domain.Collaboration;
+import logic.domain.ConcludedCollaboration;
 import logic.model.ConcludedCollaborationInformation;
 import org.apache.log4j.Logger;
 
-public class CollaborationController implements Initializable {
-    @FXML
-    private Button btnBack;
+public class ListConcludedCollaborationsController implements Initializable{
     @FXML
     private TableView<Collaboration> tblViewCollaboration;
+    
     private static final ConcludedColaborationDAO CONCLUDE_COLLABORATION_DAO = new ConcludedColaborationDAO();
     private static final CollaborationDAO COLLABORATION_DAO = new CollaborationDAO();
     private static final Logger LOG = Logger.getLogger(CollaborationController.class);
@@ -53,23 +50,11 @@ public class CollaborationController implements Initializable {
     }
     
     @FXML
-    public void displayMyCollaborations() {
-        Stage stage = (Stage) this.btnBack.getScene().getWindow();
-        stage.close();
-        try {
-            MyCollaborationsStage myCollaborationsStage = new MyCollaborationsStage();
-        } catch(IOException ioException) {
-            Alerts.displayAlertIOException();
-            LOG.error(ioException);
-        }
-    }
-    
-    @FXML
     public void previousMenu() {
-        Stage stage = (Stage) this.btnBack.getScene().getWindow();
+        Stage stage = (Stage) this.tblViewCollaboration.getScene().getWindow();
         stage.close();
         try {
-            ProfesorMenuStage menuStage = new ProfesorMenuStage();
+            CollaborationsCoordinatorMenuStage coordinaorMenuStage = new CollaborationsCoordinatorMenuStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
@@ -80,8 +65,8 @@ public class CollaborationController implements Initializable {
         Collaboration collaborationSelected = tblViewCollaboration.getSelectionModel().getSelectedItem();
         if(collaborationSelected != null) {
             ConcludedCollaborationInformation.getInstance().setIdCollaboration(collaborationSelected.getIdColaboration());
-            ConcludedCollaborationInformation.getInstance().setChangeVisibility(false);
-            ConcludedCollaborationInformation.getInstance().setDownloadEvidences(true);
+            ConcludedCollaborationInformation.getInstance().setChangeVisibility(true);
+            ConcludedCollaborationInformation.getInstance().setDownloadEvidences(false);
             try {
                 DetailCollaborationStage detailCollaborationStage = new DetailCollaborationStage(); 
             } catch(IOException ioException) {

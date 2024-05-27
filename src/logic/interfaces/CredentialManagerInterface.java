@@ -24,4 +24,12 @@ public interface CredentialManagerInterface {
      * @throws LogicException
      */
     public int getIdUserByCredential(Credential credential)  throws LogicException ;
+
+    /**
+     *
+     * @param user
+     * @return
+     * @throws LogicException
+     */
+    public int countCredentialsByUser(String user) throws LogicException ;
 }

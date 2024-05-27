@@ -6,6 +6,7 @@ public class EmailNotification {
     private String messageSuccess;
     private String messageCancel;
     private String emailBody;
+    private boolean sent;
 
     public String getEmailBody() {
         return emailBody;
@@ -14,18 +15,10 @@ public class EmailNotification {
     public void setEmailBody(String emailBody) {
         this.emailBody = emailBody;
     }
-    private boolean sent;
 
     private EmailNotification() {
-    }
     
-    public static EmailNotification getInstance() {
-        if (instance == null) {
-            instance = new EmailNotification();
-        }
-        return instance;
     }
-
     public void setEmail(String email) {
         this.email = email;
         this.sent = false;
@@ -47,4 +40,11 @@ public class EmailNotification {
     public void setMessageSuccess(String messageSuccess) {
         this.messageSuccess = messageSuccess;
     }    
+    
+    public static EmailNotification getInstance() {
+        if (instance == null) {
+            instance = new EmailNotification();
+        }
+        return instance;
+    }
 }

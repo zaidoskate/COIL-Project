@@ -75,6 +75,7 @@ public class CredentialDAO implements CredentialManagerInterface {
      * @return
      * @throws LogicException
      */
+    @Override
     public int countCredentialsByUser(String user) throws LogicException {
         String query = "SELECT count(*) as count from credencial where usuario = ?";
         int count = 0;

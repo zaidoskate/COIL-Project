@@ -21,7 +21,7 @@
                   </Text>
                </children>
             </HBox>
-            <Button layoutX="86.0" layoutY="91.0" mnemonicParsing="false" prefHeight="92.0" prefWidth="310.0" styleClass="button-menu" text="Activas" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+            <Button layoutX="86.0" layoutY="91.0" mnemonicParsing="false" onAction="#displayActiveCollaborations"  prefHeight="92.0" prefWidth="310.0" styleClass="button-menu" text="Activas" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="Century Gothic Bold" size="18.0" />
                </font>
@@ -31,7 +31,7 @@
                   <Font name="Century Gothic Bold" size="18.0" />
                </font>
             </Button>
-            <Button layoutX="86.0" layoutY="361.0" mnemonicParsing="false" prefHeight="92.0" prefWidth="310.0" styleClass="button-menu" text="Archivadas">
+            <Button layoutX="86.0" layoutY="361.0" mnemonicParsing="false" onAction="#displayConcludedCollaborations"  prefHeight="92.0" prefWidth="310.0" styleClass="button-menu" text="Archivadas">
                <font>
                   <Font name="Century Gothic Bold" size="18.0" />
                </font>

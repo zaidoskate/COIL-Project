@@ -12,25 +12,25 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.UploadEvidencesController">
    <children>
-      <ComboBox layoutX="14.0" layoutY="166.0" prefHeight="26.0" prefWidth="505.0" />
-      <Button layoutX="565.0" layoutY="165.0" mnemonicParsing="false" styleClass="delete-button" text="Ver actividades" />
-      <Button layoutX="565.0" layoutY="117.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="97.0" styleClass="button-accion" text="Nuevo folder" />
+      <ComboBox fx:id="cmbBoxFolders" layoutX="14.0" layoutY="166.0" prefHeight="26.0" prefWidth="505.0" />
+      <Button onAction="#viewEvidences" layoutX="565.0" layoutY="165.0" mnemonicParsing="false" styleClass="delete-button" text="Ver actividades" />
+      <Button onAction="#newFolder" layoutX="565.0" layoutY="117.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="97.0" styleClass="button-accion" text="Nuevo folder" />
       <QuadCurve controlX="272.6000061035156" controlY="152.3999786376953" endX="611.0" endY="-90.0" fill="#fc3b56" layoutX="89.0" layoutY="90.0" startX="-89.00000762939453" startY="-90.00000762939453" stroke="BLACK" strokeType="INSIDE" styleClass="red-and-white" />
       <Text fill="WHITE" layoutX="155.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Carga de evidencias">
          <font>
             <Font name="Century Gothic Bold" size="38.0" />
          </font>
       </Text>
-      <TextField layoutX="506.0" layoutY="286.0" styleClass="text-field-accountRequest" />
+      <TextField layoutX="506.0" layoutY="286.0" styleClass="text-field-accountRequest" fx:id="txtFieldEvidenceName"/>
       <Label layoutX="506.0" layoutY="269.0" text="Nombre del archivo:" />
-      <Button layoutX="515.0" layoutY="329.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" styleClass="accept-button" text="Agregar evidencia" />
-      <Button layoutX="515.0" layoutY="384.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" styleClass="button-accion2" text="Eliminar archivo" />
-      <Button layoutX="515.0" layoutY="442.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" styleClass="cancel-button" text="Cancelar" />
-      <AnchorPane layoutX="46.0" layoutY="269.0" prefHeight="200.0" prefWidth="416.0" style="-fx-border-style: dashed; -fx-border-color: gray; -fx-border-width: 4;" styleClass="background-gray">
+      <Button  layoutX="515.0" layoutY="329.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" styleClass="accept-button" text="Agregar evidencia" onAction="#uploadEvidence" />
+      <Button layoutX="515.0" layoutY="384.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" styleClass="button-accion2" text="Eliminar archivo" onAction="#deleteUploadedFile" />
+      <Button layoutX="515.0" layoutY="442.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" styleClass="cancel-button" text="Cancelar" onAction="#previusMenu"/>
+      <AnchorPane fx:id="anchorPaneFile" onDragDropped="#onDragDropped" onDragOver="#onDragOver" layoutX="46.0" layoutY="269.0" prefHeight="200.0" prefWidth="416.0" style="-fx-border-style: dashed; -fx-border-color: gray; -fx-border-width: 4;" styleClass="background-gray">
          <children>
-            <ImageView fitHeight="105.0" fitWidth="108.0" layoutX="154.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imageFile" onDragDropped="#onDragDropped" onDragOver="#onDragOver" fitHeight="105.0" fitWidth="108.0" layoutX="154.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/upload-icon.png" />
                </image>
@@ -47,7 +47,7 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <Text fx:id="fileNameUploaded" layoutX="243.0" layoutY="491.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text fx:id="fileNameUploaded" layoutX="243.0" layoutY="491.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1 Archivo cargado" visible="false"/>
       <ImageView fitHeight="78.0" fitWidth="87.0" layoutX="306.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/iconUploadFiles.png" />
