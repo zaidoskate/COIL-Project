@@ -90,7 +90,7 @@ public class EvidenceDAO implements EvidenceManagerInterface {
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }
-        return -4;
+        return downloaded;
     }
     
     @Override
