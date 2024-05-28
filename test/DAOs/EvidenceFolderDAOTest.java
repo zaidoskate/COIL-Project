@@ -1,5 +1,4 @@
 package DAOs;
-import dataaccess.DatabaseConnection;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import logic.domain.EvidenceFolder;

@@ -9,12 +9,16 @@ public class MailSenderTest {
     }
 
     @Test
-    public void testSendEmail() throws LogicException {
+    public void testSendEmail() {
         String emailBody = "Hola esto es una prueba";
-        String recipient = "chuchitotlapa@hotmail.com";
+        String recipient = "zaidoskate@hotmail.com";
         boolean expResult = true;
-        boolean result = MailSender.sendEmail(emailBody, recipient);
-        assertEquals(expResult, result);
+        try {
+            boolean result = MailSender.sendEmail(emailBody, recipient);
+            assertEquals(expResult, result);
+        } catch(LogicException logicException) {
+            fail("Error al enviar el correo");
+        }
     }
     
 }

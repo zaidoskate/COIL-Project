@@ -6,9 +6,9 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class MailSender {
-    private static final String USERNAME = "coilviczamatl@hotmail.com";
-    private static final String PASSWORD = "zamatl123";
-    private static final String HOST = "smtp-mail.outlook.com";
+    private static final String USERNAME = "coillogs4@gmail.com";
+    private static final String PASSWORD = "fwspilsgfxmeoyna";
+    private static final String HOST = "smtp.gmail.com";
     private static final int PORT = 587;
     
     public static boolean sendEmail(String emailBody, String recipient) throws LogicException {
