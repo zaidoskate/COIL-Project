@@ -53,9 +53,26 @@ public class DeclineOfferController implements Initializable {
         return emailSent;
     }
     
+    private boolean validateReason(String reason) {
+        boolean validReason = true;
+        if (!DataValidation.validateNotBlanks(reason)) {
+            validReason = false;
+            Alerts.showWarningAlert("El motivo no puede estar vacío");
+        }
+        if (!DataValidation.validateWord(reason)) {
+            validReason = false;
+            Alerts.showWarningAlert("El motivo tienen que ser palabras válidas, evite el uso de caracteres especiales");
+        }
+        if(!DataValidation.validateLengthField(reason, 255)) {
+            validReason = false;
+            Alerts.showWarningAlert("Proporcione un motivo de no más de 255 caracteres");
+        }
+        return validReason;
+    }
+    
     @FXML
     private void declineOffer() {
-        if(DataValidation.validateWord(this.txtAreaReason.getText())) {
+        if(validateReason(this.txtAreaReason.getText())) {
             try {
                 Evaluation evaluation = createEvaluationDeclined();
                     if(COLLABORATION_OFFER_DAO.evaluateCollaborationOffer(SELECTED_OFFER.getIdOfferCollaboration(), "Rechazada") == 1) {
@@ -74,8 +91,6 @@ public class DeclineOfferController implements Initializable {
                 Alerts.displayAlertLogicException(logicException);
                 LOG.error(logicException);
             }
-        } else {
-            Alerts.showWarningAlert("Introduzca un motivo válido");
         }
     }
     

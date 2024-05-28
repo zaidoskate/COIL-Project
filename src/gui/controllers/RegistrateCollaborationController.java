@@ -72,7 +72,10 @@ public class RegistrateCollaborationController implements Initializable {
     
     private boolean validateCollaborationName() {
         boolean validName = true;
-        if(!DataValidation.validateNotBlanks(txtFieldCollaborationName.getText()) && !DataValidation.validateWord(txtFieldCollaborationName.getText())) {
+        if(!DataValidation.validateNotBlanks(txtFieldCollaborationName.getText())){
+            validName = false;
+        }
+        if(!DataValidation.validateWord(txtFieldCollaborationName.getText())) {
             validName = false;
         }
         if(!DataValidation.validateLengthField(txtFieldCollaborationName.getText(), 45)) {
