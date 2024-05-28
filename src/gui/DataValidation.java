@@ -19,7 +19,7 @@ public class DataValidation {
     }
     
     public static boolean validateEmail(String email) {
-        String validEmailForm = "^[a-zA-Z0-9._%+-]+@(hotmail|outlook)\\.(com|es|mx|co|ar)$";
+        String validEmailForm = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         return email.matches(validEmailForm);
     }
 

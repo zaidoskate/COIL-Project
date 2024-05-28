@@ -43,7 +43,7 @@ public class DataValidationTest {
     
     @Test
     public void testValidateEmailSuccess() {
-        String email = "zaidskate@hotmail.com";
+        String email = "elrevo@gmail.com";
         boolean expectedResult = true;
         boolean result = DataValidation.validateEmail(email);
         assertEquals(expectedResult, result);
