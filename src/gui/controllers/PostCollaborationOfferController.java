@@ -90,17 +90,28 @@ public class PostCollaborationOfferController implements Initializable {
         String[] fields = {
             txtAreaObjective.getText(),
             txtAreaTopicsOfInterest.getText(),
-            txtFieldYear.getText(),
-            txtAreaLanguage.getText(),
             txtAreaAditionalInformation.getText(),
-            txtFieldProfile.getText(),
-            txtFieldNumberStudents.getText()
         };
-        String[] fieldNames = {"Objetivo", "Temas de interés", "Año", "Idioma", "Información adicional", "Perfil", "Número de estudiantes"};
+        String[] fieldNames = {"Objetivo", "Temas de interés", "Información adicional"};
 
-        for (int i = 0; i < fields.length; i++) {
+        for (int i=0; i<fields.length; i++) {
             if (!DataValidation.validateWord(fields[i])) {
                 Alerts.showWarningAlert(fieldNames[i] + " debe constar de palabras válidas, evite el uso de caracteres especiales");
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private boolean validateOnlyLetters() {
+        String[] fields = {
+            this.txtAreaLanguage.getText(),
+            this.txtFieldProfile.getText(),
+        };
+        String[] fieldNames = {"Idioma preferido", "Perfil del estudiante"};
+        for(int i=0; i<fields.length; i++) {
+            if(!DataValidation.validateOnlyLetters(fields[i])) {
+                Alerts.showWarningAlert(fieldNames[i] + " deben ser únicamente letras, evite el uso de caracteres especiales o números");
                 return false;
             }
         }
@@ -113,11 +124,10 @@ public class PostCollaborationOfferController implements Initializable {
             txtAreaTopicsOfInterest.getText(),
             txtFieldYear.getText(),
             txtAreaLanguage.getText(),
-            txtAreaAditionalInformation.getText(),
             txtFieldProfile.getText(),
             txtFieldNumberStudents.getText()
         };
-        String[] fieldNames = {"Objetivo", "Temas de interés", "Año", "Idioma", "Información adicional", "Perfil", "Número de estudiantes"};
+        String[] fieldNames = {"Objetivo", "Temas de interés", "Año", "Idioma", "Perfil", "Número de estudiantes"};
 
         for (int i = 0; i < fields.length; i++) {
             if (!DataValidation.validateNotBlanks(fields[i])) {
@@ -174,13 +184,24 @@ public class PostCollaborationOfferController implements Initializable {
         }
         return true;
     }
+    
+    private void trimUnnecesaryBlanks() {
+        this.txtAreaObjective.setText(DataValidation.trimUnnecesaryBlanks(this.txtAreaObjective.getText()));
+        this.txtAreaTopicsOfInterest.setText(DataValidation.trimUnnecesaryBlanks(this.txtAreaTopicsOfInterest.getText()));
+        this.txtAreaLanguage.setText(DataValidation.trimUnnecesaryBlanks(this.txtAreaLanguage.getText()));
+        this.txtAreaAditionalInformation.setText(DataValidation.trimUnnecesaryBlanks(this.txtAreaAditionalInformation.getText()));
+        this.txtFieldYear.setText(DataValidation.trimUnnecesaryBlanks(this.txtFieldYear.getText()));
+        this.txtFieldNumberStudents.setText(DataValidation.trimUnnecesaryBlanks(this.txtFieldNumberStudents.getText()));
+        this.txtFieldProfile.setText(DataValidation.trimUnnecesaryBlanks(this.txtFieldProfile.getText()));
+    }
 
     private boolean validateFields() {
-        return validateNotEmptyFields() && validateFieldLengths() && validateWords() && validateNumberStudentsField() && validateYearField() && validatePeriodField();
+        return validateNotEmptyFields() && validateFieldLengths() && validateWords() && validateOnlyLetters() &&validateNumberStudentsField() && validateYearField() && validatePeriodField();
     }
     
     @FXML
     public void postCollaborationOffer() {
+        trimUnnecesaryBlanks();
         if (validateFields()) {
             CollaborationOffer currentOffer = createOffer();
             try {

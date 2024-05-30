@@ -102,6 +102,10 @@ public class UploadCertificatesController implements Initializable {
         this.collaborationConcluded.setConclusion(conclusion);
     }
     
+    private void trimUnnecesaryBlanks() {
+        this.txtAreaConclusion.setText(DataValidation.trimUnnecesaryBlanks(this.txtAreaConclusion.getText()));
+    }
+    
     @FXML
     private void onDragOver(DragEvent event) {
         Stage stage = (Stage) this.regionCertificates.getScene().getWindow();
@@ -130,6 +134,7 @@ public class UploadCertificatesController implements Initializable {
     
     @FXML
     private void approveConclusion() {
+        trimUnnecesaryBlanks();
         try {
             if(validateDeviceDate()) {
                 if(validateFields()) {

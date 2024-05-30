@@ -92,6 +92,7 @@ public class RegistrateCollaborationController implements Initializable {
     
     @FXML
     public void acceptCandidate() {
+        this.txtFieldCollaborationName.setText(DataValidation.trimUnnecesaryBlanks(this.txtFieldCollaborationName.getText()));
         try {
             if(validateCollaborationName()) {
                 Collaboration collaboration = createCollaboration();

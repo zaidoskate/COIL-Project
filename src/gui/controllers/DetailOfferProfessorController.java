@@ -213,7 +213,6 @@ public class DetailOfferProfessorController implements Initializable {
             if(EmailNotification.getInstance().getSentStatus()) {
                 Alerts.showInformationAlert("Mensaje", "Oferta rechazada con éxito");
             } else {
-                Alerts.showWarningAlert("Hubo un problema con el envío del correo");
                 PendingMail pendingMail = new PendingMail();
                 pendingMail.setSubject("Conclusión de colaboración");
                 pendingMail.setContent(EmailNotification.getInstance().getEmailBody());
