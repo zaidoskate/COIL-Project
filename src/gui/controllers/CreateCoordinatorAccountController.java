@@ -126,7 +126,6 @@ public class CreateCoordinatorAccountController implements Initializable {
     @FXML
     public void createAccount() {
         if(!makeValidations()) {
-            clearFields();
             return;
         }
         String name = txtFieldName.getText();
@@ -148,7 +147,6 @@ public class CreateCoordinatorAccountController implements Initializable {
         } catch(LogicException logicException) {
             LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
-            clearFields();
         }
         if(idUser != -1) {
             Coordinator coordinator = new Coordinator();
@@ -162,7 +160,6 @@ public class CreateCoordinatorAccountController implements Initializable {
                 result = COORDINATOR_DAO.insertCoordinator(coordinator);
                 result = CREDENTIAL_DAO.insertCredential(credential);
             } catch(LogicException logicException) {
-                clearFields();
                 LOG.error(logicException);
                 Alerts.displayAlertLogicException(logicException);
             }
@@ -171,7 +168,6 @@ public class CreateCoordinatorAccountController implements Initializable {
                 try {
                     emailSent = sendEmail(user,credential);
                 } catch(LogicException logicException) {
-                    clearFields();
                     LOG.error(logicException);
                     Alerts.displayAlertLogicException(logicException);
                 }
@@ -180,6 +176,7 @@ public class CreateCoordinatorAccountController implements Initializable {
                 clearFields();
                 Alerts.showInformationAlert("Exito", "Se ha enviado el usuario y contraseña al correo.");
             } else if(result > 0) {
+                clearFields();
                 registerPendingMail(user, credential);
                 Alerts.showInformationAlert("Correo pendiente", "El correo queda pendiente por enviarse a su destino.");
             }

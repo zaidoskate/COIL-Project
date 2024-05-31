@@ -27,7 +27,7 @@ public class DataValidationTest {
     
     @Test
     public void testValidateNameSuccess() {
-        String name = "Zaid Alexis Vázquez Ramírez";
+        String name = "ZAid Alexis Vázquez Ramírez";
         boolean expectedResult = true;
         boolean result = DataValidation.validateName(name);
         assertEquals(expectedResult, result);
