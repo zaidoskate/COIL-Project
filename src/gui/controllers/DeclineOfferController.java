@@ -72,6 +72,7 @@ public class DeclineOfferController implements Initializable {
     
     @FXML
     private void declineOffer() {
+        this.txtAreaReason.setText(DataValidation.trimUnnecesaryBlanks(this.txtAreaReason.getText()));
         if(validateReason(this.txtAreaReason.getText())) {
             try {
                 Evaluation evaluation = createEvaluationDeclined();

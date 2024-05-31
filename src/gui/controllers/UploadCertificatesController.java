@@ -70,22 +70,29 @@ public class UploadCertificatesController implements Initializable {
     }
     
     private boolean validateFields() throws LogicException {
-        boolean validFields = false;
-        if(collaborationConcluded.getCertificatesFile() != null) {
-            if(DataValidation.validateLengthField(this.txtAreaConclusion.getText(), 255)) {
-                if(DataValidation.validateNotBlanks(this.txtAreaConclusion.getText()) && DataValidation.validateWord(this.txtAreaConclusion.getText())) {
-                    validFields = true;
-                } else {
-                    Alerts.showWarningAlert("Proporcione un motivo válido");
-                } 
-            } else {
-                Alerts.showWarningAlert("El motivo es muy largo, procure no extenderse más de 255 caracteres");
-            }
-        } else {
+        boolean validFields = true;
+
+        if (collaborationConcluded.getCertificatesFile() == null) {
             Alerts.showWarningAlert("Es necesario cargar un archivo ZIP para las constancias");
+            validFields = false;
+        }
+        if (!DataValidation.validateLengthField(this.txtAreaConclusion.getText(), 255)) {
+            Alerts.showWarningAlert("El motivo es muy largo, procure no extenderse más de 255 caracteres");
+            validFields = false;
+        }
+
+        if (!DataValidation.validateNotBlanks(this.txtAreaConclusion.getText())) {
+            Alerts.showWarningAlert("El motivo no puede estar vacío");
+            validFields = false;
+        }
+
+        if (!DataValidation.validateWord(this.txtAreaConclusion.getText())) {
+            Alerts.showWarningAlert("Proporcione un motivo válido, evite el uso de caracteres especiales");
+            validFields = false;
         }
         return validFields;
     }
+
     
     private void setBasicInformationConcludedCollaboration(double grade, String visible, String conclusion) {
         this.collaborationConcluded.setIdColaboration(COLLABORATION_INFORMATION.getIdCollaboration());
@@ -93,6 +100,10 @@ public class UploadCertificatesController implements Initializable {
         this.collaborationConcluded.setRating((int) grade);
         this.collaborationConcluded.setVisibility(visible);
         this.collaborationConcluded.setConclusion(conclusion);
+    }
+    
+    private void trimUnnecesaryBlanks() {
+        this.txtAreaConclusion.setText(DataValidation.trimUnnecesaryBlanks(this.txtAreaConclusion.getText()));
     }
     
     @FXML
@@ -123,6 +134,7 @@ public class UploadCertificatesController implements Initializable {
     
     @FXML
     private void approveConclusion() {
+        trimUnnecesaryBlanks();
         try {
             if(validateDeviceDate()) {
                 if(validateFields()) {

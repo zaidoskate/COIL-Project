@@ -148,4 +148,20 @@ public class DataValidationTest {
         boolean result = DataValidation.validateNumberStudents(numberStudents);
         assertEquals(expectedResult, result);
     }
+    
+    @Test
+    public void testValidateOnlyLettersSuccess() {
+        String text = "Hola como estas.";
+        boolean expectedResult = true;
+        boolean result = DataValidation.validateOnlyLetters(text);
+        assertEquals(expectedResult, result);
+    }
+    
+    @Test
+    public void testTrimUnnecesaryBlanksSuccess() {
+        String text = "Hola           ";
+        String textExpected = "Hola";
+        String textObtained = DataValidation.trimUnnecesaryBlanks(text);
+        assertEquals(textExpected, textObtained);
+    }
 }

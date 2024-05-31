@@ -10,7 +10,11 @@ public class DataValidation {
     
     public static boolean validateWord(String input) {
         String validWordForm = "^[a-zA-Z0-9. ,\\-ÑñáéíóúÁÉÍÓÚ]*$";
-        return input.matches(validWordForm);
+        if (input.matches(validWordForm)) {
+            String onlyNumbersForm = "^\\d+$";
+            return !input.matches(onlyNumbersForm);
+        }
+        return false;
     }
     
     public static boolean validateName(String name) {
@@ -19,7 +23,7 @@ public class DataValidation {
     }
     
     public static boolean validateEmail(String email) {
-        String validEmailForm = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        String validEmailForm = "^[a-z-0-9._%+-]+@[a-z-0-9.-]+\\.[a-zA-Z]{2,}$";
         return email.matches(validEmailForm);
     }
 
@@ -121,5 +125,14 @@ public class DataValidation {
             return false;
         }
     }
+    
+    public static boolean validateOnlyLetters(String text) {
+        String validLettersForm = "^[a-zA-ZÀ-ÿ\\s.]+$";
+        return text.matches(validLettersForm);
+    }
 
+    
+    public static String trimUnnecesaryBlanks(String input) {
+        return input.trim();
+    }
 }

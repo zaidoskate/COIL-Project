@@ -210,7 +210,7 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
     @Override
     public boolean professorHasOffer(int idUser) throws LogicException {
         boolean result = false;
-        String query = "SELECT COUNT(*) AS total FROM OfertaColaboracion WHERE Profesor_Usuario_idUsuario = ?";
+        String query = "SELECT COUNT(*) AS total FROM OfertaColaboracion WHERE Profesor_Usuario_idUsuario = ? AND estadoOferta IN ('Pendiente', 'Aprobada')";
         try {
             Connection connection = DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
