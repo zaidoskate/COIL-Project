@@ -77,7 +77,7 @@ public class UploadEvidencesController implements Initializable {
     
     private void uploadFile() throws LogicException {
         int folderId = evidenceFolders.get(cmbBoxFolders.getSelectionModel().getSelectedIndex()).getIdEvidenceFolder();
-        String evidenceName = txtFieldEvidenceName.getText();
+        String evidenceName = DataValidation.trimUnnecesaryBlanks(txtFieldEvidenceName.getText());
         String evidenceAutor = CURRENT_SESSION.getUserData().getName();
         
         LocalDate currentDate = LocalDate.now();
@@ -95,13 +95,25 @@ public class UploadEvidencesController implements Initializable {
     }
     
     private boolean makeValidations() {
-        if(txtFieldEvidenceName.getText().length() < 1 || DataValidation.validateLengthField(txtFieldEvidenceName.getText(), 45) == false) {
+        String evidenceName = DataValidation.trimUnnecesaryBlanks(txtFieldEvidenceName.getText());
+        if( !DataValidation.validateNotBlanks(evidenceName)){
+            Alerts.showWarningAlert("El correo es un campo obligatorio.");
+            return false;
+        }
+        if( !DataValidation.validateName(evidenceName)){
+            Alerts.showWarningAlert("Nombre de la evidencia inválido.");
+            return false;
+        }
+        if(!DataValidation.validateLengthField(evidenceName, 45)) {
+            Alerts.showWarningAlert("El nombre de la evidencia es demasiado largo.");
             return false;
         }
         if(cmbBoxFolders.getSelectionModel().getSelectedIndex() < 0) {
+            Alerts.showWarningAlert("Se debe seleccionar un folder.");
             return false;
         }
         if(uploadedFile == null) {
+            Alerts.showWarningAlert("No se ha cargado ningun archivo PDF.");
             return false;
         }
         return true;
@@ -162,8 +174,6 @@ public class UploadEvidencesController implements Initializable {
                 LOG.error(logicException);
                 Alerts.displayAlertLogicException(logicException);
             }
-        } else {
-            Alerts.showWarningAlert("Algun campo es invalido o no se ha seleccionado un folder.");
         }
     }
     @FXML

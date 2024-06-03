@@ -33,13 +33,31 @@ public class NewFolderController implements Initializable{
     }
     
     private boolean makeValidations() {
-        if(DataValidation.validateLengthField(txtFieldName.getText(), 45) == false) {
+        String nameFolder = DataValidation.trimUnnecesaryBlanks(txtFieldName.getText());
+        String description = DataValidation.trimUnnecesaryBlanks(txtAreaDescription.getText());
+        
+        if(DataValidation.validateNotBlanks(nameFolder) == false) {
+            Alerts.showWarningAlert("El nombre del folder es un campo obligatorio.");
             return false;
         }
-        if(DataValidation.validateLengthField(txtAreaDescription.getText(), 255) == false) {
+        if(DataValidation.validateLengthField(nameFolder, 45) == false) {
+            Alerts.showWarningAlert("El nombre del folder es demasiado largo.");
             return false;
         }
-        if(DataValidation.validateWord(txtAreaDescription.getText()) == false) {
+        if(DataValidation.validateWord(nameFolder) == false) {
+            Alerts.showWarningAlert("El nombre del folder tiene un formato incorrecto.");
+            return false;
+        }
+        if(DataValidation.validateNotBlanks(description) == false) {
+            Alerts.showWarningAlert("La descripción del folder es un campo obligatorio.");
+            return false;
+        }
+        if(DataValidation.validateLengthField(description, 255) == false) {
+            Alerts.showWarningAlert("La descripción del folder es demasiado larga.");
+            return false;
+        }
+        if(DataValidation.validateWord(description) == false) {
+            Alerts.showWarningAlert("La descripción del folder tiene formato incorrecto.");
             return false;
         }
         return true;

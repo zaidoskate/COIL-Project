@@ -8,7 +8,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import logic.DAOs.UniversityDAO;
@@ -29,6 +28,52 @@ public class UniversityRegistrationController implements Initializable {
         
     } 
     
+    private boolean validateUniversityName(String universityName) {
+        if( !DataValidation.validateNotBlanks(universityName)){
+            Alerts.showWarningAlert("La universidad es un campo obligatorio.");
+            return false;
+        }
+        if(!DataValidation.validateName(universityName)){
+            Alerts.showWarningAlert("El nombre de la Universidad es inválido, ingresa el nombre completo.");
+            return false;
+        }
+        if(!DataValidation.validateLengthField(universityName, 45)) {
+            Alerts.showWarningAlert("El nombre de la Universidad es demasiado largo.");
+            return false;
+        }
+        return true;
+    }
+    
+    private boolean validateCountryName(String countryName) {
+        if( !DataValidation.validateNotBlanks(countryName)){
+            Alerts.showWarningAlert("El país es un campo obligatorio.");
+            return false;
+        }
+        if(!DataValidation.validateName(countryName)){
+            Alerts.showWarningAlert("El nombre del país es inválido, ingresa el nombre completo.");
+            return false;
+        }
+        if(!DataValidation.validateLengthField(countryName, 45)) {
+            Alerts.showWarningAlert("El nombre del país es demasiado largo.");
+            return false;
+        }
+        return true;
+    }
+    
+    private boolean makeValidations() {
+        String universityName = DataValidation.trimUnnecesaryBlanks(txtFieldName.getText());
+        String country = DataValidation.trimUnnecesaryBlanks(txtFieldCountry.getText());
+        if(!DataValidation.validateName(universityName) || !DataValidation.validateLengthField(universityName, 45)) {
+        }
+        if(!DataValidation.validateName(country) || !DataValidation.validateLengthField(country, 45)) {
+        }
+        return true;
+    }
+    public void clearFields() {
+        txtFieldName.setText("");
+        txtFieldCountry.setText("");
+    }
+    
     @FXML
     private void previusMenu() {
         Stage stage = (Stage) txtFieldName.getScene().getWindow();
@@ -44,11 +89,10 @@ public class UniversityRegistrationController implements Initializable {
     @FXML
     private void saveUniversity() {        
         if(!makeValidations()) {
-            clearFields();
             return;
         }
-        String universityName = txtFieldName.getText();
-        String country = txtFieldCountry.getText();
+        String universityName = DataValidation.trimUnnecesaryBlanks(txtFieldName.getText());
+        String country = DataValidation.trimUnnecesaryBlanks(txtFieldCountry.getText());
         
         University university = new University();
         university.setName(universityName);
@@ -64,36 +108,9 @@ public class UniversityRegistrationController implements Initializable {
         
         if(result==1) {
             Alerts.showInformationAlert("Exito", "Se ha registrado exitosamente la Universidad.");
+            clearFields();
         } else {
             Alerts.showWarningAlert("No se ha podido guardar la informacion de la Universidad.");
         }
-        clearFields();
     }
-    
-    private boolean makeValidations() {
-        String universityName = txtFieldName.getText();
-        String country = txtFieldCountry.getText();
-        boolean result = true;
-        
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        
-        if(!DataValidation.validateName(universityName) || !DataValidation.validateLengthField(universityName, 45)) {
-            result = false;
-            alert.setContentText("Nombre con formato invalido");
-        }
-        if(!DataValidation.validateName(country) || !DataValidation.validateLengthField(country, 45)) {
-            result = false;
-            alert.setContentText("Pais con formato invalido");
-        }
-        if(!result) {
-            alert.showAndWait();
-        }
-        return result;
-    }
-    
-    private void clearFields() {
-        txtFieldName.setText("");
-        txtFieldCountry.setText("");
-    }
-    
 }

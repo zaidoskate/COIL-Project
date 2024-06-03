@@ -8,7 +8,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import logic.DAOs.CoordinatorDAO;
@@ -45,50 +44,108 @@ public class CreateCoordinatorAccountController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
     }
-    
-    private void clearFields() {
-        txtFieldName.setText("");
-        txtFieldLastname.setText("");
-        txtFieldEmail.setText("");
-        txtFieldPassword.setText("");
+    private static boolean validateNameField(String name) {
+        if( !DataValidation.validateNotBlanks(name)){
+            Alerts.showWarningAlert("El nombre es un campo obligatorio.");
+            return false;
+        }
+        if(!DataValidation.validateLengthField(name, 45) ) {
+            Alerts.showWarningAlert("Nombre demasiado largo.");
+            return false;
+        }
+        if (!DataValidation.validateName(name)) {
+            Alerts.showWarningAlert("Nombre(s) invalido.");
+            return false;
+        }
+        return true;
+    }
+
+    private static boolean validateLastNameField(String lastName) {
+        if( !DataValidation.validateNotBlanks(lastName)){
+            Alerts.showWarningAlert("El apellido es un campo obligatorio.");
+            return false;
+        }
+        if(!DataValidation.validateLengthField(lastName, 45) ) {
+            Alerts.showWarningAlert("Apellido demasiado largo.");
+            return false;
+        }
+        if (!DataValidation.validateName(lastName)) {
+            Alerts.showWarningAlert("Apellido invalido.");
+            return false;
+        }
+        return true;
+    }
+
+    private static boolean validateEmailField(String email) {
+        if( !DataValidation.validateNotBlanks(email)){
+            Alerts.showWarningAlert("El correo es un campo obligatorio.");
+            return false;
+        }
+        if(!DataValidation.validateLengthField(email, 45) ) {
+            Alerts.showWarningAlert("El correo demasiado largo.");
+            return false;
+        }
+        if (!DataValidation.validateEmail(email)) {
+            Alerts.showWarningAlert("Formato de correo invalido.");
+            return false;
+        }
+        return true;
+    }
+
+    private static boolean validatePasswordField(String password) {
+        if( !DataValidation.validateNotBlanks(password)){
+            Alerts.showWarningAlert("La contraseña es un campo obligatorio.");
+            return false;
+        }
+        if(!DataValidation.validateLengthField(password, 45) ) {
+            Alerts.showWarningAlert("La contraseña es demasiado.");
+            return false;
+        }
+        if (!DataValidation.validateWord(password)) {
+            Alerts.showWarningAlert("Formato de contraseña invalido. Utiliza solo letras.");
+            return false;
+        }
+        return true;
+    }
+
+    private static boolean validateUsernameField(String username) {
+        if( !DataValidation.validateNotBlanks(username)){
+            Alerts.showWarningAlert("El usuario es un campo obligatorio.");
+            return false;
+        }
+        if(!DataValidation.validateLengthField(username, 45) ) {
+            Alerts.showWarningAlert("El usuario es demasiado.");
+            return false;
+        }
+        if (!DataValidation.validateWord(username)) {
+            Alerts.showWarningAlert("Formato de usuario invalido. No utilce caracteres especiales");
+            return false;
+        }
+        return true;
     }
     
     private boolean makeValidations() {
-        String name = txtFieldName.getText();
-        String lastName = txtFieldLastname.getText();
-        String email = txtFieldEmail.getText(); 
-        String password = txtFieldPassword.getText(); 
-        String username = txtFieldUsername.getText(); 
-        boolean result = true;
-        
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        
-        if(!DataValidation.validateLengthField(name, 50) || !DataValidation.validateLengthField(lastName, 25)) {
-            result = false;
-            alert.setContentText("Nombre(s) o Apellido(s) invalido.");
+        String name = DataValidation.trimUnnecesaryBlanks(txtFieldName.getText());
+        String lastName = DataValidation.trimUnnecesaryBlanks(txtFieldLastname.getText());
+        String email = DataValidation.trimUnnecesaryBlanks(txtFieldEmail.getText()); 
+        String password = DataValidation.trimUnnecesaryBlanks(txtFieldPassword.getText()); 
+        String username = DataValidation.trimUnnecesaryBlanks(txtFieldUsername.getText()); 
+        if(!validateNameField(name)) {
+            return true;
         }
-        if(!DataValidation.validateName(name) || !DataValidation.validateName(lastName)) {
-            result = false;
-            alert.setContentText("Nombre(s) o Apellido(s) invalido.");
+        if(!validateLastNameField(lastName)) {
+            return true;
         }
-        if(!DataValidation.validateEmail(email)) {
-            result = false;
-            alert.setContentText("Formato de correo invalido.");
+        if(!validateEmailField(email)) {
+            return true;
         }
-        if(!DataValidation.validateWord(password)) {
-            result = false;
-            alert.setContentText("Formato de contraseña invalido.");
+        if(!validatePasswordField(password)) {
+            return true;
         }
-        if(!DataValidation.validateWord(username)) {
-            result = false;
-            alert.setContentText("Formato de usuario invalido.");
+        if(!validateUsernameField(username)) {
+            return true;
         }
-        
-        if(!result) {
-            alert.showAndWait();
-        }
-        
-        return result;
+        return true;
     }
     
     private boolean sendEmail(User user, Credential credential) throws LogicException{
@@ -128,11 +185,11 @@ public class CreateCoordinatorAccountController implements Initializable {
         if(!makeValidations()) {
             return;
         }
-        String name = txtFieldName.getText();
-        String lastName = txtFieldLastname.getText();
-        String email = txtFieldEmail.getText(); 
-        String password = txtFieldPassword.getText(); 
-        String username = txtFieldUsername.getText(); 
+        String name = DataValidation.trimUnnecesaryBlanks(txtFieldName.getText());
+        String lastName = DataValidation.trimUnnecesaryBlanks(txtFieldLastname.getText());
+        String email = DataValidation.trimUnnecesaryBlanks(txtFieldEmail.getText()); 
+        String password = DataValidation.trimUnnecesaryBlanks(txtFieldPassword.getText()); 
+        String username = DataValidation.trimUnnecesaryBlanks(txtFieldUsername.getText()); 
         
         User user = new User();
         user.setName(name);
@@ -173,10 +230,8 @@ public class CreateCoordinatorAccountController implements Initializable {
                 }
             }
             if(emailSent == true) {
-                clearFields();
                 Alerts.showInformationAlert("Exito", "Se ha enviado el usuario y contraseña al correo.");
             } else if(result > 0) {
-                clearFields();
                 registerPendingMail(user, credential);
                 Alerts.showInformationAlert("Correo pendiente", "El correo queda pendiente por enviarse a su destino.");
             }

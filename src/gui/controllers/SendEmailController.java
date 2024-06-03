@@ -22,10 +22,25 @@ public class SendEmailController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
     }
+    private boolean validateEmailBody(String body) {
+        if( !DataValidation.validateNotBlanks(body)){
+            Alerts.showWarningAlert("El cuerpo del correo es un campo obligatorio.");
+            return false;
+        }
+        if(DataValidation.validateWord(body)) {
+            Alerts.showWarningAlert("El cuerpo del correo debe contener únicamente palabras y números.");
+            return false;
+        }
+        if(DataValidation.validateLengthField(body, 100)) {
+            Alerts.showWarningAlert("El cuerpo del correo no debe pasar los 100 caracteres.");
+            return false;
+        }
+        return true;
+    }
     @FXML
     private void sendEmail() {
         String email = EmailNotification.getInstance().getEmail();
-        String body = txtAreaMessage.getText();
+        String body = DataValidation.trimUnnecesaryBlanks(txtAreaMessage.getText());
         boolean result = false;
         if(DataValidation.validateWord(body)){
             try{
