@@ -63,9 +63,9 @@ public class DeclineOfferController implements Initializable {
             validReason = false;
             Alerts.showWarningAlert("El motivo tienen que ser palabras válidas, evite el uso de caracteres especiales");
         }
-        if(!DataValidation.validateLengthField(reason, 255)) {
+        if(!DataValidation.validateLengthField(reason, 100)) {
             validReason = false;
-            Alerts.showWarningAlert("Proporcione un motivo de no más de 255 caracteres");
+            Alerts.showWarningAlert("Proporcione un motivo de no más de 100 caracteres");
         }
         return validReason;
     }
