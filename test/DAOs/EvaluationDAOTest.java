@@ -28,11 +28,12 @@ public class EvaluationDAOTest {
     @Test
     public void testInsertEvaluationForDeclinedOfferSuccess() {
         Evaluation evaluation = new Evaluation();
-        evaluation.setIdOfferCollaboration(1);
+        evaluation.setIdOfferCollaboration(2);
         evaluation.setIdCoordinator(1);
         evaluation.setReason("Falta de documentos");
         
         EvaluationDAO evaluationDAO = new EvaluationDAO();
+        
         try{
             int result = evaluationDAO.insertEvaluationForDeclinedOffer(evaluation);
             assertEquals(1, result);
@@ -46,7 +47,7 @@ public class EvaluationDAOTest {
         EvaluationDAO evaluationDAO = new EvaluationDAO();
         int expectedResult = 1;
         try {
-            int result = evaluationDAO.deleteEvaluation(1);
+            int result = evaluationDAO.deleteEvaluation(3);
             assertEquals(expectedResult, result);
         } catch(LogicException logicException) {
             fail("Error al eliminar la evaluacion");
@@ -58,8 +59,7 @@ public class EvaluationDAOTest {
         Evaluation evaluation = new Evaluation();
         evaluation.setIdOfferCollaboration(1);
         evaluation.setIdCoordinator(1);
-        evaluation.setDate("2024-04-12");
-        evaluation.setReason("Falta de documentos");
+        evaluation.setDate("2024-06-10");
         
         EvaluationDAO evaluationDAO = new EvaluationDAO();
         try{
@@ -78,12 +78,11 @@ public class EvaluationDAOTest {
         
         evaluation1.setIdOfferCollaboration(1);
         evaluation1.setIdCoordinator(1);
-        evaluation1.setDate("2024-04-12");
-        evaluation1.setReason("Falta de documentos");
+        evaluation1.setDate("2024-06-10");
         
         evaluation2.setIdOfferCollaboration(2);
         evaluation2.setIdCoordinator(1);
-        evaluation2.setDate("2024-04-13");
+        evaluation2.setDate("2024-06-10");
         
         evaluationsExpected.add(evaluation1);
         evaluationsExpected.add(evaluation2);

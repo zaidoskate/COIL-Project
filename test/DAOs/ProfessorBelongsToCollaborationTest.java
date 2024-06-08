@@ -15,10 +15,10 @@ public class ProfessorBelongsToCollaborationTest {
     public void testAddProfessorBelongsToCollaborationSuccess()  throws LogicException {
         ProfessorBelongsToCollaborationDAO professorBelongsToCollaborationDAO = new ProfessorBelongsToCollaborationDAO();
         ProfessorBelongsToCollaboration professorBelongsToCollaboration = new ProfessorBelongsToCollaboration();
-        professorBelongsToCollaboration.setIdColaboration(1);
-        professorBelongsToCollaboration.setIdUser(1);
-        professorBelongsToCollaboration.setIdUserMirrorClass(2);
-        professorBelongsToCollaboration.setColaborationStatus("Terminada");
+        professorBelongsToCollaboration.setIdColaboration(3);
+        professorBelongsToCollaboration.setIdUser(6);
+        professorBelongsToCollaboration.setIdUserMirrorClass(5);
+        professorBelongsToCollaboration.setColaborationStatus("Concluida");
         
         int expectedResult = 1;
         int currentResult = professorBelongsToCollaborationDAO.addProfessorBelongsToCollaboration(professorBelongsToCollaboration);
@@ -31,7 +31,7 @@ public class ProfessorBelongsToCollaborationTest {
         ProfessorBelongsToCollaborationDAO professorBelongsToCollaborationDAO = new ProfessorBelongsToCollaborationDAO();
         
         int expectedResult = 1;
-        int currentResult = professorBelongsToCollaborationDAO.deleteProfessorBelongsToCollaborationByIdCollaboration(133);
+        int currentResult = professorBelongsToCollaborationDAO.deleteProfessorBelongsToCollaborationByIdCollaboration(1);
         
         assertEquals(expectedResult, currentResult);
     }
@@ -39,10 +39,10 @@ public class ProfessorBelongsToCollaborationTest {
     @Test
     public void testGetProfessorCollaborationIdSuccess() {
         ProfessorBelongsToCollaboration professorBelongsToCollaboration = new ProfessorBelongsToCollaboration();
-        professorBelongsToCollaboration.setIdColaboration(11);
-        professorBelongsToCollaboration.setIdUser(2);
-        professorBelongsToCollaboration.setIdUserMirrorClass(1);
-        professorBelongsToCollaboration.setColaborationStatus("Pendiente");
+        professorBelongsToCollaboration.setIdColaboration(2);
+        professorBelongsToCollaboration.setIdUser(3);
+        professorBelongsToCollaboration.setIdUserMirrorClass(4);
+        professorBelongsToCollaboration.setColaborationStatus("Iniciada");
         
         ProfessorBelongsToCollaborationDAO professorBelongsToCollaborationDAO = new ProfessorBelongsToCollaborationDAO();
         try {

@@ -16,8 +16,8 @@ public class CollaborationOfferCandidateDAOTest {
     public void testInsertCollaborationOfferCandidateSuccess() {
         CollaborationOfferCandidateDAO collaborationOfferCandidateDAO = new CollaborationOfferCandidateDAO();
         CollaborationOfferCandidate collaborationOfferCandidate = new CollaborationOfferCandidate();
-        collaborationOfferCandidate.setIdCollaboration(12345);
-        collaborationOfferCandidate.setIdUser(54321);
+        collaborationOfferCandidate.setIdCollaboration(1);
+        collaborationOfferCandidate.setIdUser(3);
         
         try {
             int currentResult = collaborationOfferCandidateDAO.InsertCollaborationOfferCandidate(collaborationOfferCandidate);
