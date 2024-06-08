@@ -1,6 +1,6 @@
 package DAOs;
 
-
+import java.io.File;
 import java.util.ArrayList;
 import logic.DAOs.ConcludedColaborationDAO;
 import logic.LogicException;
@@ -16,8 +16,8 @@ public class ConcludedCollaborationDAOTest {
     @Test
     public void testAddConcludedCollaborationSuccess() throws LogicException{
         ConcludedCollaboration concludedCollaboration = new ConcludedCollaboration();
-        concludedCollaboration.setIdColaboration(1);
-        concludedCollaboration.setIdUser(1);
+        concludedCollaboration.setIdColaboration(3);
+        concludedCollaboration.setIdUser(6);
         
         ConcludedColaborationDAO concludedColaborationDAO = new ConcludedColaborationDAO();
         int currentResult = concludedColaborationDAO.addConcludedCollaboration(concludedCollaboration);
@@ -28,8 +28,8 @@ public class ConcludedCollaborationDAOTest {
     @Test
     public void testUpdateVisibilitySuccess() throws LogicException {
         ConcludedCollaboration concludedCollaboration = new ConcludedCollaboration();
-        concludedCollaboration.setIdColaboration(1);
-        concludedCollaboration.setVisibility("Destacable");
+        concludedCollaboration.setIdColaboration(4);
+        concludedCollaboration.setVisibility("Visible");
         
         ConcludedColaborationDAO concludedColaborationDAO = new ConcludedColaborationDAO();
         int currentResult = concludedColaborationDAO.updateVisibility(concludedCollaboration);
@@ -40,8 +40,8 @@ public class ConcludedCollaborationDAOTest {
     @Test
     public void testUpdateRatingSuccess() throws LogicException {
         ConcludedCollaboration concludedCollaboration = new ConcludedCollaboration();
-        concludedCollaboration.setIdColaboration(1);
-        concludedCollaboration.setRating(9);
+        concludedCollaboration.setIdColaboration(4);
+        concludedCollaboration.setRating(5);
         
         ConcludedColaborationDAO concludedColaborationDAO = new ConcludedColaborationDAO();
         int currentResult = concludedColaborationDAO.updateRating(concludedCollaboration);
@@ -50,22 +50,26 @@ public class ConcludedCollaborationDAOTest {
     }
     
     @Test
-    public void testUpdateCertificatesSuccess() throws LogicException {
+    public void testUpdateCertificatesSuccess() {
         ConcludedCollaboration concludedCollaboration = new ConcludedCollaboration();
         concludedCollaboration.setIdColaboration(1);
-        concludedCollaboration.setCertificatesPath("C:\\Users\\chuch\\Downloads\\Practica2.pdf");
+        concludedCollaboration.setCertificatesFile(new File("../../constancias.zip"));
         
         ConcludedColaborationDAO concludedColaborationDAO = new ConcludedColaborationDAO();
-        int currentResult = concludedColaborationDAO.uploadCertificates(concludedCollaboration);
-        int expectedResult = 1;
-        assertEquals(expectedResult, currentResult);
+        try {
+            int currentResult = concludedColaborationDAO.uploadCertificates(concludedCollaboration);
+            int expectedResult = 1;
+            assertEquals(expectedResult, currentResult);
+        } catch(LogicException logicException) {
+            fail("no se han podido cargar las constancias");
+        }
     }
     
     @Test
     public void testObtainCertificatesSuccess() throws LogicException {
         ConcludedCollaboration concludedCollaboration = new ConcludedCollaboration();
         concludedCollaboration.setIdColaboration(1);
-        String outputPath = "C:\\Users\\chuch\\OneDrive\\Desktop\\PruebaJava.pdf";
+        String outputPath = "../../constancias_descargadas.zip";
         
         ConcludedColaborationDAO concludedColaborationDAO = new ConcludedColaborationDAO();
         int currentResult = concludedColaborationDAO.obtainCertificates(concludedCollaboration, outputPath);
@@ -82,20 +86,18 @@ public class ConcludedCollaborationDAOTest {
         ArrayList<ConcludedCollaboration> concludedCollaborationsExpected = new ArrayList();
         
         ConcludedCollaboration collaborationExpected = new ConcludedCollaboration();
-        collaborationExpected.setIdColaboration(1);
-        collaborationExpected.setIdUser(1);
+        collaborationExpected.setIdColaboration(4);
+        collaborationExpected.setIdUser(3);
         concludedCollaborationsExpected.add(collaborationExpected);
-        
-        
         assertEquals(concludedCollaborationsExpected, concludedCollaborationsResult);
     }
     
     @Test
     public void testHasCertificatesUploadedSuccess() {
         ConcludedColaborationDAO concludedCollaborationDAO = new ConcludedColaborationDAO();
-        boolean expectedResult = false;
+        boolean expectedResult = true;
         try {
-            boolean result = concludedCollaborationDAO.hasCertificatesUploaded(1);
+            boolean result = concludedCollaborationDAO.hasCertificatesUploaded(4);
             assertEquals(expectedResult, result);
         } catch(LogicException logicException) {
             fail("Error al consultar si la colaboracion tiene constancias cargadas");

@@ -27,7 +27,7 @@ public class StartupDocumentationDAOTest {
     public void testUploadSyllabusSuccess() throws LogicException {
         StartupDocumentation startupDocumentation = new StartupDocumentation();
         startupDocumentation.setIdColaboration(1);
-        startupDocumentation.setSyllabusPath("C:\\Users\\chuch\\Downloads\\Practica2.pdf");
+        startupDocumentation.setSyllabusPath("../../Syllabus.pdf");
         
         StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO(); 
         int currentResult = startupDocumentationDAO.uploadSyllabus(startupDocumentation);
@@ -40,7 +40,7 @@ public class StartupDocumentationDAOTest {
     public void testUploadStudentsListSuccess() throws LogicException {
         StartupDocumentation startupDocumentation = new StartupDocumentation();
         startupDocumentation.setIdColaboration(133);
-        startupDocumentation.setStudentsListPath("C:\\Users\\chuch\\Downloads\\Practica2.pdf");
+        startupDocumentation.setStudentsListPath("../../StudentsList.pdf");
         
         StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO(); 
         int currentResult = startupDocumentationDAO.uploadStudentsList(startupDocumentation);
@@ -53,7 +53,7 @@ public class StartupDocumentationDAOTest {
     public void testUploadMirrorStudentsListSuccess() throws LogicException {
         StartupDocumentation startupDocumentation = new StartupDocumentation();
         startupDocumentation.setIdColaboration(1);
-        startupDocumentation.setMirrorClassStudentsListPath("C:\\Users\\chuch\\Downloads\\Practica2.pdf");
+        startupDocumentation.setMirrorClassStudentsListPath("../../MirrorStudentsList.pdf");
         
         StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO(); 
         int currentResult = startupDocumentationDAO.uploadMirrorStudentsList(startupDocumentation);
@@ -66,7 +66,7 @@ public class StartupDocumentationDAOTest {
     public void testObtainSyllabusSuccess()  throws LogicException{
         StartupDocumentation startupDocumentation = new StartupDocumentation();
         startupDocumentation.setIdColaboration(1);
-        String outputPath = "C:\\Users\\chuch\\OneDrive\\Desktop\\PruebaJava1.pdf";
+        String outputPath = "../../Syllabus_descargado.pdf";
         
         StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO(); 
         int currentResult = startupDocumentationDAO.obtainSyllabus(startupDocumentation, outputPath);
@@ -79,7 +79,7 @@ public class StartupDocumentationDAOTest {
     public void testObtainStudentsListSuccess() throws LogicException {
         StartupDocumentation startupDocumentation = new StartupDocumentation();
         startupDocumentation.setIdColaboration(1);
-        String outputPath = "C:\\Users\\chuch\\OneDrive\\Desktop\\PruebaJava2.pdf";
+        String outputPath = "../../StudentsList_descargado.pdf";
         
         StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO(); 
         int currentResult = startupDocumentationDAO.obtainStudentsList(startupDocumentation, outputPath);
@@ -92,7 +92,7 @@ public class StartupDocumentationDAOTest {
     public void testObtainMirrorStudentsListSuccess() throws LogicException {
         StartupDocumentation startupDocumentation = new StartupDocumentation();
         startupDocumentation.setIdColaboration(1);
-        String outputPath = "C:\\Users\\chuch\\OneDrive\\Desktop\\PruebaJava3.pdf";
+        String outputPath = "../../MirrorStudentsList_descargado.pdf";
         
         StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO(); 
         int currentResult = startupDocumentationDAO.obtainMirrorStudentsList(startupDocumentation, outputPath);
@@ -105,7 +105,7 @@ public class StartupDocumentationDAOTest {
     public void testHasFileUploadedSucess() {
         StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO();
         try {
-            boolean result = startupDocumentationDAO.hasFileUploaded("listaEstudiantado", 11);
+            boolean result = startupDocumentationDAO.hasFileUploaded("listaEstudiantado", 1);
             assertFalse(result);
         } catch(LogicException logicException) {
             fail("No se ha podido obtener si el tipo de archivo ya tiene un archivo cargado");
@@ -117,7 +117,7 @@ public class StartupDocumentationDAOTest {
         int expectedResult = 1;
         StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO();
         try {
-            int result = startupDocumentationDAO.deleteUploadedFile("listaEstudiantado", 11);
+            int result = startupDocumentationDAO.deleteUploadedFile("listaEstudiantado", 1);
             assertEquals(expectedResult, result);
         } catch(LogicException logicException) {
             fail("No se ha podido eliminar el archivo cargado");
@@ -128,7 +128,7 @@ public class StartupDocumentationDAOTest {
     public void testIsCollaborationRegistratedSuccess() {
         StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO();
         try {
-            boolean result = startupDocumentationDAO.isCollaborationRegistrated(11);
+            boolean result = startupDocumentationDAO.isCollaborationRegistrated(2);
             assertTrue(result);
         } catch(LogicException logicException) {
             fail("No se ha podido saber si la colaboracion ya esta registrada con su documentacion de inicio");

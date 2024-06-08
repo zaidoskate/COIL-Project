@@ -3,7 +3,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import logic.domain.FinalDocumentation;
 import logic.DAOs.FinalDocumentationDAO;
-import logic.DAOs.StartupDocumentationDAO;
 import logic.LogicException;
 
 public class FinalDocumentationDAOTest {
@@ -13,7 +12,7 @@ public class FinalDocumentationDAOTest {
     @Test
     public void testAddFinalDocumentationSuccess() {
         FinalDocumentation finalDocumentation = new FinalDocumentation();
-        finalDocumentation.setIdColaboration(1);
+        finalDocumentation.setIdColaboration(3);
         FinalDocumentationDAO finalDocumentationDAO = new FinalDocumentationDAO();
         int expectedResult = 1;
         try {
@@ -26,10 +25,10 @@ public class FinalDocumentationDAOTest {
     
     @Test
     public void testUploadProfessorFeedbackSuccess() {
-        String filePath = "C:\\Users\\zaido\\Desktop\\UV\\4TO\\PRCONSTRUCCION\\Proyecto\\DisenioEnConstruccion.pdf";
+        String filePath = "../../uploadfeedback.pdf";
         FinalDocumentationDAO finalDocumentationDAO = new FinalDocumentationDAO();
         FinalDocumentation finalDocumentation = new FinalDocumentation();
-        finalDocumentation.setIdColaboration(1);
+        finalDocumentation.setIdColaboration(4);
         finalDocumentation.setProfessorFeedback(filePath);
         try {
             int result = finalDocumentationDAO.uploadProfessorFeedback(finalDocumentation);
@@ -41,10 +40,10 @@ public class FinalDocumentationDAOTest {
     
     @Test
     public void testUploadMirrorProfessorFeedbackSuccess() {
-        String filePath = "C:\\Users\\zaido\\Desktop\\UV\\4TO\\PRCONSTRUCCION\\Proyecto\\uploadFeedback.pdf";
+        String filePath = "../../MirrorProfessorFeedback.pdf";
         FinalDocumentationDAO finalDocumentationDAO = new FinalDocumentationDAO();
         FinalDocumentation finalDocumentation = new FinalDocumentation();
-        finalDocumentation.setIdColaboration(1);
+        finalDocumentation.setIdColaboration(4);
         finalDocumentation.setMirrorProfessorFeedback(filePath);
         try {
             int result = finalDocumentationDAO.uploadMirrorProfessorFeedback(finalDocumentation);
@@ -56,10 +55,10 @@ public class FinalDocumentationDAOTest {
     
     @Test
     public void testUploadStudentsFeedbackSuccess() {
-        String filePath = "C:\\Users\\zaido\\Desktop\\UV\\4TO\\PRCONSTRUCCION\\Proyecto\\uploadFeedback.pdf";
+        String filePath = "../../StudentsFeedback.pdf";
         FinalDocumentationDAO finalDocumentationDAO = new FinalDocumentationDAO();
         FinalDocumentation finalDocumentation = new FinalDocumentation();
-        finalDocumentation.setIdColaboration(1);
+        finalDocumentation.setIdColaboration(4);
         finalDocumentation.setStudentsFeedback(filePath);
         try{
             int result = finalDocumentationDAO.uploadStudentsFeedback(finalDocumentation);
@@ -71,10 +70,10 @@ public class FinalDocumentationDAOTest {
     
     @Test
     public void testUploadMirrorStudentsFeedbackSuccess() {
-        String filePath = "C:\\Users\\zaido\\Desktop\\UV\\4TO\\PRCONSTRUCCION\\Proyecto\\uploadFeedback.pdf";
+        String filePath = "../../MirrorStudentsFeedback.pdf";
         FinalDocumentationDAO finalDocumentationDAO = new FinalDocumentationDAO();
         FinalDocumentation finalDocumentation = new FinalDocumentation();
-        finalDocumentation.setIdColaboration(1);
+        finalDocumentation.setIdColaboration(4);
         finalDocumentation.setMirrorStudentsFeedback(filePath);
         try{
             int result = finalDocumentationDAO.uploadMirrorStudentsFeedback(finalDocumentation);
@@ -86,10 +85,10 @@ public class FinalDocumentationDAOTest {
     
     @Test
     public void testObtainProfessorFeedbackSuccess() {
-        String outputPath = "C:\\Users\\zaido\\Desktop\\UV\\4TO\\PRCONSTRUCCION\\Proyecto\\testPdf.pdf";
+        String outputPath = "../../FeedbackProfesor_descargado.pdf";
         FinalDocumentationDAO finalDocumentationDAO = new FinalDocumentationDAO();
         FinalDocumentation finalDocumentation = new FinalDocumentation();
-        finalDocumentation.setIdColaboration(1);
+        finalDocumentation.setIdColaboration(4);
         try{
             int result = finalDocumentationDAO.obtainProfessorFeedback(finalDocumentation, outputPath);
             assertEquals(1, result);
@@ -100,10 +99,10 @@ public class FinalDocumentationDAOTest {
     
     @Test
     public void testObtainMirrorProfessorFeedbackSuccess() {
-        String outputPath = "C:\\Users\\zaido\\Desktop\\UV\\4TO\\PRCONSTRUCCION\\Proyecto\\MirrorProfessorFeedback.pdf";
+        String outputPath = "../../MirrorProfessorFeedback_descargado.pdf";
         FinalDocumentationDAO finalDocumentationDAO = new FinalDocumentationDAO();
         FinalDocumentation finalDocumentation = new FinalDocumentation();
-        finalDocumentation.setIdColaboration(1);
+        finalDocumentation.setIdColaboration(4);
         try {
             int result = finalDocumentationDAO.obtainMirrorProfessorFeedback(finalDocumentation, outputPath);
             assertEquals(1, result);
@@ -114,10 +113,10 @@ public class FinalDocumentationDAOTest {
     
     @Test
     public void testObtainStudentsFeedbackSuccess() {
-        String outputPath = "C:\\Users\\zaido\\Desktop\\UV\\4TO\\PRCONSTRUCCION\\Proyecto\\StudentsFeedback.pdf";
+        String outputPath = "../../StudentsFeedback_descargado.pdf";
         FinalDocumentationDAO finalDocumentationDAO = new FinalDocumentationDAO();
         FinalDocumentation finalDocumentation = new FinalDocumentation();
-        finalDocumentation.setIdColaboration(1);
+        finalDocumentation.setIdColaboration(4);
         try {
             int result = finalDocumentationDAO.obtainStudentsFeedback(finalDocumentation, outputPath);
             assertEquals(1, result);
@@ -128,10 +127,10 @@ public class FinalDocumentationDAOTest {
     
     @Test
     public void testObtainMirrorStudentsFeedbackSuccess() {
-        String outputPath = "C:\\Users\\zaido\\Desktop\\UV\\4TO\\PRCONSTRUCCION\\Proyecto\\MirrorStudentsFeedback.pdf";
+        String outputPath = "../../MirrorStudentsFeedback_descargado.pdf";
         FinalDocumentationDAO finalDocumentationDAO = new FinalDocumentationDAO();
         FinalDocumentation finalDocumentation = new FinalDocumentation();
-        finalDocumentation.setIdColaboration(1);
+        finalDocumentation.setIdColaboration(4);
         try {
             int result = finalDocumentationDAO.obtainMirrorStudentsFeedback(finalDocumentation, outputPath);
             assertEquals(1, result);
@@ -145,7 +144,7 @@ public class FinalDocumentationDAOTest {
         int expectedResult = 1;
         FinalDocumentationDAO finalDocumentationDAO = new FinalDocumentationDAO();
         try {
-            int result = finalDocumentationDAO.deleteUploadedFile("feedbackProfesor", 11);
+            int result = finalDocumentationDAO.deleteUploadedFile("feedbackProfesor", 4);
             assertEquals(expectedResult, result);
         } catch(LogicException logicException) {
             fail("No se ha podido eliminar el archivo cargado");
@@ -156,7 +155,7 @@ public class FinalDocumentationDAOTest {
     public void testIsCollaborationRegistratedSuccess() {
         FinalDocumentationDAO finalDocumentationDAO = new FinalDocumentationDAO();
         try {
-            boolean result = finalDocumentationDAO.isCollaborationRegistrated(1);
+            boolean result = finalDocumentationDAO.isCollaborationRegistrated(4);
             assertTrue(result);
         } catch(LogicException logicException) {
             fail("No se ha podido saber si la colaboracion ya esta registrada con su documentacion final");
@@ -167,8 +166,8 @@ public class FinalDocumentationDAOTest {
     public void testHasFileUploadedSuccess() {
         FinalDocumentationDAO finalDocumentationDAO = new FinalDocumentationDAO();
         try {
-            boolean result = finalDocumentationDAO.hasFileUploaded("feedbackProfesor", 1);
-            assertFalse(result);
+            boolean result = finalDocumentationDAO.hasFileUploaded("feedbackProfesor", 4);
+            assertTrue(result);
         } catch(LogicException logicException) {
             fail("No se ha podido obtener si el tipo de archivo ya tiene un archivo cargado");
         }
