@@ -11,7 +11,7 @@ public class MailSenderTest {
     @Test
     public void testSendEmail() {
         String emailBody = "Hola esto es una prueba";
-        String recipient = "zaidoskate@hotmail.com";
+        String recipient = "zs22013659@estudiantes.uv.mx";
         boolean expResult = true;
         try {
             boolean result = MailSender.sendEmail(emailBody, recipient);

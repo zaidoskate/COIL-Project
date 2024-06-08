@@ -102,62 +102,98 @@ public class AccountRequestController implements Initializable {
         cmbBoxDepartments.getItems().addAll(departmentsNames);
     }
     
-    private boolean makeValidations() {
-        String name = txtFieldName.getText();
-        String lastName = txtFieldLastName.getText();
-        String email = txtFieldEmail.getText(); 
-        String personalNumber = txtFieldPersonalNumber.getText(); 
-        boolean result = true;
-        
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        
-        if(!DataValidation.validateLengthField(name, 50) || !DataValidation.validateLengthField(lastName, 25)) {
-            result = false;
-            alert.setContentText("Nombre(s) o Apellido(s) invalido.");
+    private boolean validateName(String name) {
+        if( !DataValidation.validateNotBlanks(name)){
+            Alerts.showWarningAlert("El nombre es un campo obligatorio.");
+            return false;
         }
-        if(!DataValidation.validateName(name) || !DataValidation.validateName(lastName)) {
-            result = false;
-            alert.setContentText("Nombre(s) o Apellido(s) invalido.");
+        if(!DataValidation.validateLengthField(name, 45)) {
+            Alerts.showWarningAlert("El nombre excede el tamaño de 45 caracteres.");
+            return false;
+        }
+        if(!DataValidation.validateName(name)) {
+            Alerts.showWarningAlert("El nombre tiene formato inválido, escribe con mayúscula cada palabra.");
+            return false;
+        }
+        return true;
+    }
+    private boolean validateLastName(String lastName) {
+        if( !DataValidation.validateNotBlanks(lastName)){
+            Alerts.showWarningAlert("El apellido es un campo obligatorio.");
+            return false;
+        }
+        if(!DataValidation.validateLengthField(lastName, 45)) {
+            Alerts.showWarningAlert("El apellido excede el tamaño de 45 caracteres.");
+            return false;
+        }
+        if(!DataValidation.validateName(lastName)) {
+            Alerts.showWarningAlert("El apellido tiene formato inválido, escribe con mayúscula cada palabra.");
+            return false;
+        }
+        return true;
+    }
+    private boolean validateEmail(String email) {
+        if( !DataValidation.validateNotBlanks(email)){
+            Alerts.showWarningAlert("El correo es un campo obligatorio.");
+            return false;
+        }
+        if(!DataValidation.validateLengthField(email, 45)) {
+            Alerts.showWarningAlert("El nombre excede el tamaño de 45 caracteres.");
+            return false;
         }
         if(!DataValidation.validateEmail(email)) {
-            result = false;
-            alert.setContentText("Formato de correo invalido.");
+            Alerts.showWarningAlert("El correo tiene formato inválido.");
+            return false;
+        }
+        return true;
+    }
+    private boolean validatePersonalNumber(String personalNumber) {
+        if( !DataValidation.validateNotBlanks(personalNumber)){
+            Alerts.showWarningAlert("El numero de personal es un campo obligatorio.");
+            return false;
+        }
+        if(!DataValidation.validatePersonalNumberFormat(personalNumber)) {
+            Alerts.showWarningAlert("Formato de numero de personal invalido.");
+            return false;
+        }
+        if(!DataValidation.validatePersonalNumberExists(personalNumber)) {
+            Alerts.showWarningAlert("Numero de personal existente.");
+            return false;
+        }
+        return true;
+    }
+    
+    private boolean makeValidations() {
+        String name = DataValidation.trimUnnecesaryBlanks(txtFieldName.getText());
+        String lastName = DataValidation.trimUnnecesaryBlanks(txtFieldLastName.getText());
+        String email = DataValidation.trimUnnecesaryBlanks(txtFieldEmail.getText()); 
+        String personalNumber = DataValidation.trimUnnecesaryBlanks(txtFieldPersonalNumber.getText()); 
+        
+        if(validateName(name) == false) {
+            return false;
+        }
+        if(validateLastName(lastName) == false) {
+            return false;
+        }
+        if(validateEmail(email) == false) {
+            return false;
         }
         if(cmbBoxUniversities.getSelectionModel().getSelectedIndex() == -1) {
-            result = false;
-            alert.setContentText("Universidad no seleccionada.");
+            Alerts.showWarningAlert("Universidad no seleccionada.");
+            return false;
         }
         if(cmbBoxUniversities.getSelectionModel().getSelectedIndex() == 0) {
             if(cmbBoxDepartments.getSelectionModel().getSelectedIndex() == -1 || cmbBoxDepartments.getSelectionModel().getSelectedIndex() == -1) {
-                result = false;
-                alert.setContentText("Selecciona region y facultad.");
+                Alerts.showWarningAlert("Selecciona region y facultad.");
+                return false;
             }
-            if(!DataValidation.validatePersonalNumberFormat(personalNumber)) {
-                result = false;
-                alert.setContentText("Formato de numero de personal invalido");
-            }
-            if(!DataValidation.validatePersonalNumberExists(personalNumber)) {
-                result = false;
-                alert.setContentText("Numero de personal existente");
+            if(validatePersonalNumber(personalNumber) == false) {
+                return false;
             }
         }
-        
-        if(!result) {
-            alert.showAndWait();
-        }
-        
-        return result;
+        return true;
     }
     
-    private void clearFields() {
-        txtFieldName.setText("");
-        txtFieldLastName.setText("");
-        txtFieldEmail.setText("");
-        txtFieldPersonalNumber.setText("");
-        cmbBoxUniversities.getSelectionModel().clearSelection();
-        cmbBoxDepartments.getSelectionModel().clearSelection();
-        cmbBoxRegions.getSelectionModel().clearSelection();
-    }
     
     @FXML
     private void universitySelected() {
@@ -183,14 +219,13 @@ public class AccountRequestController implements Initializable {
     
     @FXML
     private void saveAccountRequest() {
-        String name = txtFieldName.getText();
-        String lastName = txtFieldLastName.getText();
-        String email = txtFieldEmail.getText(); 
-        String personalNumber = txtFieldPersonalNumber.getText(); 
+        String name = DataValidation.trimUnnecesaryBlanks(txtFieldName.getText());
+        String lastName = DataValidation.trimUnnecesaryBlanks(txtFieldLastName.getText());
+        String email = DataValidation.trimUnnecesaryBlanks(txtFieldEmail.getText()); 
+        String personalNumber = DataValidation.trimUnnecesaryBlanks(txtFieldPersonalNumber.getText()); 
         int result = 0;
         
         if(!makeValidations()) {
-            clearFields();
             return;
         }
         
@@ -233,7 +268,6 @@ public class AccountRequestController implements Initializable {
             Stage stage = (Stage) vBoxRegion.getScene().getWindow();
             stage.close();
         }
-        clearFields();
     }
     @FXML
     private void cancelAccountRequest() {

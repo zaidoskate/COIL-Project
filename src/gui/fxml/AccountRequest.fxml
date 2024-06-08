@@ -59,7 +59,7 @@
                         <VBox prefHeight="68.0" prefWidth="347.0">
                            <children>
                               <Label text="Nombre(s):" />
-                              <TextField fx:id="txtFieldName" prefHeight="30.0" styleClass="text-field-accountRequest" stylesheets="@../css/styles.css">
+                              <TextField fx:id="txtFieldName" prefHeight="30.0" promptText="Juan Pablo" styleClass="text-field-accountRequest" stylesheets="@../css/styles.css">
                                  <VBox.margin>
                                     <Insets top="10.0" />
                                  </VBox.margin>
@@ -72,7 +72,7 @@
                         <VBox prefHeight="72.0" prefWidth="347.0">
                            <children>
                               <Label text="Apellido(s):" />
-                              <TextField fx:id="txtFieldLastName" prefHeight="30.0" styleClass="text-field-accountRequest" stylesheets="@../css/styles.css">
+                              <TextField fx:id="txtFieldLastName" prefHeight="30.0" promptText="Morales" styleClass="text-field-accountRequest" stylesheets="@../css/styles.css">
                                  <VBox.margin>
                                     <Insets top="10.0" />
                                  </VBox.margin>
@@ -85,7 +85,7 @@
                         <VBox prefHeight="81.0" prefWidth="347.0">
                            <children>
                               <Label text="Correo Institucional:" />
-                              <TextField fx:id="txtFieldEmail" prefHeight="30.0" promptText="Outlook o Hotmail" style="-fx-border-color: #FE3C57; -fx-border-radius: 5;">
+                              <TextField fx:id="txtFieldEmail" prefHeight="30.0" promptText="ejemplo@email.com" style="-fx-border-color: #FE3C57; -fx-border-radius: 5;">
                                  <VBox.margin>
                                     <Insets top="10.0" />
                                  </VBox.margin>
@@ -98,7 +98,7 @@
                         <VBox fx:id="vBoxPersonalNumber" prefHeight="127.0" prefWidth="347.0" visible="false">
                            <children>
                               <Label text="Número de Personal:" />
-                              <TextField fx:id="txtFieldPersonalNumber" styleClass="text-field-accountRequest" stylesheets="@../css/styles.css">
+                              <TextField fx:id="txtFieldPersonalNumber" promptText="Ej: 12345" styleClass="text-field-accountRequest" stylesheets="@../css/styles.css">
                                  <VBox.margin>
                                     <Insets top="10.0" />
                                  </VBox.margin>

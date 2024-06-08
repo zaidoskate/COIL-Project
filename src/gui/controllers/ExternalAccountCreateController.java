@@ -56,54 +56,87 @@ public class ExternalAccountCreateController implements Initializable {
         cmbBoxUniversities.getItems().addAll(universitiesNames);
     }
     
-    private void clearFields() {
-        txtFieldName.setText("");
-        txtFieldLastName.setText("");
-        txtFieldEmail.setText("");
-        cmbBoxUniversities.getSelectionModel().clearSelection();
+    private boolean validateName(String name) {
+        if( !DataValidation.validateNotBlanks(name)){
+            Alerts.showWarningAlert("El nombre es un campo obligatorio.");
+            return false;
+        }
+        if(!DataValidation.validateLengthField(name, 45)) {
+            Alerts.showWarningAlert("El nombre excede el tamaño de 45 caracteres.");
+            return false;
+        }
+        if(!DataValidation.validateName(name)) {
+            Alerts.showWarningAlert("El nombre tiene formato inválido, escribe con mayúscula cada palabra.");
+            return false;
+        }
+        return true;
+    }
+    private boolean validateLastName(String lastName) {
+        if( !DataValidation.validateNotBlanks(lastName)){
+            Alerts.showWarningAlert("El apellido es un campo obligatorio.");
+            return false;
+        }
+        if(!DataValidation.validateLengthField(lastName, 45)) {
+            Alerts.showWarningAlert("El apellido excede el tamaño de 45 caracteres.");
+            return false;
+        }
+        if(!DataValidation.validateName(lastName)) {
+            Alerts.showWarningAlert("El apellido tiene formato inválido, escribe con mayúscula cada palabra.");
+            return false;
+        }
+        return true;
+    }
+    private boolean validateEmail(String email) {
+        if( !DataValidation.validateNotBlanks(email)){
+            Alerts.showWarningAlert("El correo es un campo obligatorio.");
+            return false;
+        }
+        if(!DataValidation.validateLengthField(email, 45)) {
+            Alerts.showWarningAlert("El nombre excede el tamaño de 45 caracteres.");
+            return false;
+        }
+        if(!DataValidation.validateEmail(email)) {
+            Alerts.showWarningAlert("El correo tiene formato inválido.");
+            return false;
+        }
+        return true;
     }
     
     private boolean makeValidations() {
-        String name = txtFieldName.getText();
-        String lastName = txtFieldLastName.getText();
-        String email = txtFieldEmail.getText(); 
-        boolean result = true;
+        String name = DataValidation.trimUnnecesaryBlanks(txtFieldName.getText());
+        String lastName = DataValidation.trimUnnecesaryBlanks(txtFieldLastName.getText());
+        String email = DataValidation.trimUnnecesaryBlanks(txtFieldEmail.getText()); 
         
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        
-        if(!DataValidation.validateLengthField(name, 50) || !DataValidation.validateLengthField(lastName, 25)) {
-            result = false;
-            alert.setContentText("Nombre(s) o Apellido(s) invalido.");
+        if(validateName(name) == false) {
+            return false;
         }
-        if(!DataValidation.validateName(name) || !DataValidation.validateName(lastName)) {
-            result = false;
-            alert.setContentText("Nombre(s) o Apellido(s) invalido.");
+        if(validateLastName(lastName) == false) {
+            return false;
         }
-        if(!DataValidation.validateEmail(email)) {
-            result = false;
-            alert.setContentText("Formato de correo invalido.");
+        if(validateEmail(email) == false) {
+            return false;
         }
         if(cmbBoxUniversities.getSelectionModel().getSelectedIndex() == -1) {
-            result = false;
-            alert.setContentText("Universidad no seleccionada.");
+            Alerts.showWarningAlert("Universidad no seleccionada.");
+            return false;
         }
-        
-        if(!result) {
-            alert.showAndWait();
-        }
-        
-        return result;
+        return true;
+    }
+    public void clearFields() {
+        cmbBoxUniversities.getSelectionModel().clearSelection();
+        txtFieldName.setText("");
+        txtFieldLastName.setText("");
+        txtFieldEmail.setText("");
     }
     
     @FXML
     private void createExternalAccount() {
         if(!makeValidations()) {
-            clearFields();
             return;
         }
-        String name = txtFieldName.getText();
-        String lastName = txtFieldLastName.getText();
-        String email = txtFieldEmail.getText(); 
+        String name = DataValidation.trimUnnecesaryBlanks(txtFieldName.getText());
+        String lastName = DataValidation.trimUnnecesaryBlanks(txtFieldLastName.getText());
+        String email = DataValidation.trimUnnecesaryBlanks(txtFieldEmail.getText()); 
         University universitySelected = universities.get(cmbBoxUniversities.getSelectionModel().getSelectedIndex());
         
         ExternalAccountRequest externalAccountRequest = new ExternalAccountRequest();
@@ -122,15 +155,12 @@ public class ExternalAccountCreateController implements Initializable {
         }
         if(result == true) {
             Alerts.showInformationAlert("Exito", "El correo se ha enviado a su destino con la clave de acceso");
-            Stage stage = (Stage) txtFieldName.getScene().getWindow();
-            stage.close();
         }
         clearFields();
     }
     
     @FXML
     private void cancelExternalAccount() {
-        Alerts.showWarningAlert("No se ha podido registrar ni enviar el correo a su destino, intentelo mas tarde.");
         Stage stage = (Stage) txtFieldName.getScene().getWindow();
         stage.close();
     }
