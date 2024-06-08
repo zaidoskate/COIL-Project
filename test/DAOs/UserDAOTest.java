@@ -13,21 +13,21 @@ public class UserDAOTest {
     public void testAddUserSuccess() throws LogicException{
         UserDAO userDAO = new UserDAO();
         User user = new User();
-        user.setName("Rafael");
-        user.setLastName("Baños");
-        user.setEmail("zaidskate@hotmail.com");
+        user.setName("Miguel");
+        user.setLastName("Soto");
+        user.setEmail("msoto@hotmail.com");
         
         int currentResult = userDAO.addUser(user);
-        int expectedResult = 1;
+        int expectedResult = 7;
         assertEquals(expectedResult, currentResult);
     }
     @Test(expected = LogicException.class)
     public void testAddUserFailed() throws LogicException{
         UserDAO userDAO = new UserDAO();
         User user = new User();
-        user.setName("Lorenzofgjhdsgjdgjdgfjhfgjdgjhdfghddsfhgdhdfghdghsdsfghsfhdfhdfgh");
+        user.setName("Lorenzofgjhdsgjdgjdgfjhfgjdgjhdfghddsfhgdhdfghkhnnjjbkkjbkjdghsdsfghsfhdfhdfgh");
         user.setLastName("Hdezdsfhdghdgfhsazdfhdgshdsfghdfgdsfhdsfghdsghdsfghhfgjdgjhfbbhjdfgjhdszgfhdszh");
-        user.setEmail("tlapa@gmail.com");
+        user.setEmail("kjhvvvvvvvvvvvvvvvvvvvvvvvxggggggggggggggggggggggggggggggggllllllllll");
         
         int currentResult = userDAO.addUser(user);
         int expectedResult = -1;

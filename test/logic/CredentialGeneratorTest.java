@@ -16,10 +16,10 @@ public class CredentialGeneratorTest {
     }
     @Test
     public void testGenerateUserFailed() throws LogicException {
-        String name = "Ángel";
-        String lastname = "Hernández hdez";
+        String name = "José";
+        String lastname = "Tlapa Huerta";
         String currentUser = CredentialGenerator.generateUser(name, lastname);
-        String expectedUser = "áhernández1";
+        String expectedUser = "jtlapa";
         assertNotEquals(expectedUser,currentUser);
     }
     
