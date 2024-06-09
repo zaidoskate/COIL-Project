@@ -130,7 +130,7 @@ public class DetailActiveCollaborationController implements Initializable{
             return;
         }
         EmailNotification.getInstance().setEmail(professorEmail);
-        EmailNotification.getInstance().setMessageSuccess("Se ha enviado con exito el corero de Alerta.");
+        EmailNotification.getInstance().setMessageSuccess("Se ha enviado con éxito el correo de alerta.");
         try {
             SendEmailStage sendEmailStage = new SendEmailStage();
         } catch(IOException ioexception) {

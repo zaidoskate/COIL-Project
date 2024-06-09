@@ -98,11 +98,11 @@ public class CreateCoordinatorAccountController implements Initializable {
             return false;
         }
         if(!DataValidation.validateLengthField(password, 45) ) {
-            Alerts.showWarningAlert("La contraseña es demasiado.");
+            Alerts.showWarningAlert("La contraseña es demasiado larga.");
             return false;
         }
         if (!DataValidation.validateWord(password)) {
-            Alerts.showWarningAlert("Formato de contraseña invalido. Utiliza solo letras.");
+            Alerts.showWarningAlert("Formato de contraseña inválido. Utilice solo letras.");
             return false;
         }
         return true;
@@ -114,11 +114,11 @@ public class CreateCoordinatorAccountController implements Initializable {
             return false;
         }
         if(!DataValidation.validateLengthField(username, 45) ) {
-            Alerts.showWarningAlert("El usuario es demasiado.");
+            Alerts.showWarningAlert("El usuario es demasiado largo.");
             return false;
         }
         if (!DataValidation.validateWord(username)) {
-            Alerts.showWarningAlert("Formato de usuario invalido. No utilce caracteres especiales");
+            Alerts.showWarningAlert("Formato de usuario inválido. No utilice caracteres especiales");
             return false;
         }
         return true;
@@ -230,7 +230,7 @@ public class CreateCoordinatorAccountController implements Initializable {
                 }
             }
             if(emailSent == true) {
-                Alerts.showInformationAlert("Exito", "Se ha enviado el usuario y contraseña al correo.");
+                Alerts.showInformationAlert("Éxito", "Se ha enviado el usuario y contraseña al correo.");
             } else if(result > 0) {
                 registerPendingMail(user, credential);
                 Alerts.showInformationAlert("Correo pendiente", "El correo queda pendiente por enviarse a su destino.");

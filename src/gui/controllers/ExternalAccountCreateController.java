@@ -154,7 +154,7 @@ public class ExternalAccountCreateController implements Initializable {
             Alerts.displayAlertLogicException(logicException);
         }
         if(result == true) {
-            Alerts.showInformationAlert("Exito", "El correo se ha enviado a su destino con la clave de acceso");
+            Alerts.showInformationAlert("Éxito", "El correo se ha enviado a su destino con la clave de acceso");
         }
         clearFields();
     }

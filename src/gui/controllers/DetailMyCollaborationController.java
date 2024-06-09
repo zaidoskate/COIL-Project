@@ -49,6 +49,7 @@ public class DetailMyCollaborationController implements Initializable {
         try {
             if(!CONCLUDED_COLLABORATION_DAO.hasCertificatesUploaded(SELECTED_COLLABORATION.getIdCollaboration())) {
                 this.lblCertificatesAvailable.setText("Constancias no disponibles para descargar");
+                this.imageViewZipFile.setVisible(false);
             }
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);

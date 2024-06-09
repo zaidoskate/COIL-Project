@@ -181,14 +181,12 @@ public class ReviewConclusionCollaborationController implements Initializable {
     @FXML
     private void downloadEvidence() {
         if(this.tblViewEvidence.getSelectionModel().getSelectedItem() != null) {
-            String evidenceName = tblViewEvidence.getSelectionModel().getSelectedItem().toString();
-            File downloadPath = getDownloadPath("Guardar evidencia", evidenceName);
+            Evidence evidenceSelected = tblViewEvidence.getSelectionModel().getSelectedItem();
+            File downloadPath = getDownloadPath("Guardar evidencia", evidenceSelected.getName());
             if(downloadPath != null) {
-                Evidence evidence = new Evidence();
-                evidence.setName(evidenceName);
                 try {
-                    if (EVIDENCE_DAO.obtainEvidence(evidence, downloadPath.toString()) == 1) {
-                        Alerts.showInformationAlert("Mensaje", "Evidencia descargada con exito");
+                    if (EVIDENCE_DAO.obtainEvidence(evidenceSelected, downloadPath.toString()) == 1) {
+                        Alerts.showInformationAlert("Mensaje", "Evidencia descargada con éxito");
                     }
                 } catch(LogicException logicException) {
                     Alerts.displayAlertLogicException(logicException);

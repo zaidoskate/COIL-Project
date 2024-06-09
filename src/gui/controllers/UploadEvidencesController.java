@@ -160,7 +160,7 @@ public class UploadEvidencesController implements Initializable {
             fileNameUploaded.setVisible(false);
             Alerts.showWarningAlert("Se ha eliminado el archivo cargado");
         } else {
-            Alerts.showWarningAlert("No hay ningun archivo cargado");
+            Alerts.showWarningAlert("No hay ningún archivo cargado");
         }
     }
     @FXML
@@ -169,7 +169,7 @@ public class UploadEvidencesController implements Initializable {
             try {
                 uploadFile();
                 clearFields();
-                Alerts.showInformationAlert("Exito", "Se ha cargado con exito la evidencia.");
+                Alerts.showInformationAlert("Éxito", "Se ha cargado con éxito la evidencia.");
             } catch(LogicException logicException) {
                 LOG.error(logicException);
                 Alerts.displayAlertLogicException(logicException);

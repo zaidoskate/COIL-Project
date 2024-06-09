@@ -90,7 +90,7 @@ public class AccountRequestUvListController implements Initializable{
             }
             
             if(result == true) {
-                Alerts.showInformationAlert("Exito", "El correo se ha enviado a su destino con la clave de acceso");
+                Alerts.showInformationAlert("Éxito", "El correo se ha enviado a su destino con la clave de acceso");
                 loadUvAccountRequest();
             }
             loadUvAccountRequest();
@@ -105,7 +105,7 @@ public class AccountRequestUvListController implements Initializable{
             UvAccountRequest uvaccountRequest = tblViewUvAccountRequest.getSelectionModel().getSelectedItem();
             if(deleteUvAccountRequest(uvaccountRequest)){
                 EmailNotification.getInstance().setEmail(uvaccountRequest.getEmail());
-                EmailNotification.getInstance().setMessageSuccess("Se ha rechazado con exito la solicitud de cuenta");
+                EmailNotification.getInstance().setMessageSuccess("Se ha rechazado con éxito la solicitud de cuenta");
                 try {
                     SendEmailStage sendEmailStage = new SendEmailStage();
                 } catch(IOException ioexception) {

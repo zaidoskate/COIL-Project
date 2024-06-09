@@ -77,19 +77,19 @@ public class StartCollaborationController implements Initializable {
                 case "Lista de estudiantes" :
                     startupDocumentation.setStudentsListPath(fileToUpload.getPath());
                     if(STARTUP_DOCUMENTATION_DAO.uploadStudentsList(startupDocumentation) == 1) {
-                        Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito!");
+                        Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito");
                     }
                     break;
                 case "Lista de estudiantes espejo" :
                     startupDocumentation.setMirrorClassStudentsListPath(fileToUpload.getPath());
                     if(STARTUP_DOCUMENTATION_DAO.uploadMirrorStudentsList(startupDocumentation) == 1) {
-                        Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito!");
+                        Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito");
                     }
                     break;
                 case "Syllabus" :
                     startupDocumentation.setSyllabusPath(fileToUpload.getPath());
                     if(STARTUP_DOCUMENTATION_DAO.uploadSyllabus(startupDocumentation) == 1) {
-                        Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito!");
+                        Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito");
                     }
                     break;
                 default:
@@ -164,17 +164,17 @@ public class StartCollaborationController implements Initializable {
                 switch (selectedFileType) {
                     case "Lista de estudiantes" :
                         if(STARTUP_DOCUMENTATION_DAO.deleteUploadedFile("listaEstudiantado", COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
-                            Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito!");
+                            Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito");
                         }
                         break;
                     case "Lista de estudiantes espejo" :
                         if(STARTUP_DOCUMENTATION_DAO.deleteUploadedFile("listaEstudiantadoEspejo", COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
-                            Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito!");
+                            Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito");
                         }
                         break;
                     case "Syllabus" :
                         if(STARTUP_DOCUMENTATION_DAO.deleteUploadedFile("Syllabus", COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
-                            Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito!");
+                            Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito");
                         }
                         break;
                     default:

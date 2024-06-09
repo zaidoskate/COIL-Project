@@ -82,7 +82,7 @@ public class UploadCertificatesController implements Initializable {
         }
 
         if (!DataValidation.validateNotBlanks(this.txtAreaConclusion.getText())) {
-            Alerts.showWarningAlert("El motivo no puede estar vacío");
+            Alerts.showWarningAlert("El motivo es un campo obligatorio");
             validFields = false;
         }
 
@@ -124,7 +124,7 @@ public class UploadCertificatesController implements Initializable {
                 File fileToUpload = event.getDragboard().getFiles().get(0);
                 if(DataValidation.validateFileExtension(fileToUpload.getName(), "zip")) {
                     this.collaborationConcluded.setCertificatesFile(fileToUpload);
-                    Alerts.showInformationAlert("Mensaje", "Archivo zip de constancias cargado, este se perdera si abandona la ventana");
+                    Alerts.showInformationAlert("Mensaje", "Archivo zip de constancias cargado, este se perderá si abandona la ventana");
                 } else {
                     Alerts.showWarningAlert("Solo puede cargar un archivo comprimido ZIP");
                 }

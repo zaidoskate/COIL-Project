@@ -34,11 +34,11 @@ public class UniversityRegistrationController implements Initializable {
             return false;
         }
         if(!DataValidation.validateName(universityName)){
-            Alerts.showWarningAlert("El nombre de la Universidad es inválido, ingresa el nombre completo.");
+            Alerts.showWarningAlert("El nombre de la universidad es inválido, ingresa el nombre completo.");
             return false;
         }
         if(!DataValidation.validateLengthField(universityName, 45)) {
-            Alerts.showWarningAlert("El nombre de la Universidad es demasiado largo.");
+            Alerts.showWarningAlert("El nombre de la universidad es demasiado largo.");
             return false;
         }
         return true;
@@ -107,10 +107,10 @@ public class UniversityRegistrationController implements Initializable {
         }
         
         if(result==1) {
-            Alerts.showInformationAlert("Exito", "Se ha registrado exitosamente la Universidad.");
+            Alerts.showInformationAlert("Éxito", "Se ha registrado exitosamente la Universidad.");
             clearFields();
         } else {
-            Alerts.showWarningAlert("No se ha podido guardar la informacion de la Universidad.");
+            Alerts.showWarningAlert("No se ha podido guardar la información de la universidad.");
         }
     }
 }

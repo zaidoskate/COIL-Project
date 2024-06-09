@@ -130,7 +130,7 @@ public class DetailOfferProfessorController implements Initializable {
         candidate.setIdUser(CURRENT_SESSION.getUserData().getIdUser());
         int appliedSuccess = CANDIDATE_DAO.InsertCollaborationOfferCandidate(candidate);
         if(appliedSuccess == 1) {
-            Alerts.showInformationAlert("Te has postulado", "Se ha postulado a esta oferta, espere la correspondencia del profesor");
+            Alerts.showInformationAlert("Se ha postulado", "Se ha postulado a esta oferta, espere la correspondencia del profesor");
         }
     }
 
@@ -219,6 +219,7 @@ public class DetailOfferProfessorController implements Initializable {
                 pendingMail.setDestinationEmail(SELECTED_OFFER.getProfessorEmail());
                 pendingMail.setIdUser(CURRENT_SESSION.getUserData().getIdUser());
             }
+            previousMenu();
         } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);

@@ -96,7 +96,7 @@ public class PostCollaborationOfferController implements Initializable {
 
         for (int i=0; i<fields.length; i++) {
             if (!DataValidation.validateWord(fields[i])) {
-                Alerts.showWarningAlert(fieldNames[i] + " debe constar de palabras válidas, evite el uso de caracteres especiales");
+                Alerts.showWarningAlert(fieldNames[i] + " debe constar de palabras válidas, evite el uso de caracteres especiales o solo números");
                 return false;
             }
         }
