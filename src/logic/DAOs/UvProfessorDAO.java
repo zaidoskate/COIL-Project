@@ -16,11 +16,11 @@ import logic.LogicException;
 public class UvProfessorDAO implements UvProfessorManagerInterface{
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
     
-    /**
-     *
-     * @param uvProfessor
-     * @return
-     * @throws LogicException
+    /** Inserta un profesor uv en la base de datos con los datos correspondientes
+     * 
+     * @param uvProfessor es una instancia de la clase UvProfessor correspondiente al dominio, contiene los datos del profesor
+     * @return un entero que representa las filas insertadas, 1 en caso de exito o 0 en caso contrario
+     * @throws LogicException cuando no existe conexion con la base de datos
      */
     @Override
     public int insertUvProfessor(UvProfessor uvProfessor) throws LogicException{
@@ -41,11 +41,11 @@ public class UvProfessorDAO implements UvProfessorManagerInterface{
         return result;
     }
 
-    /**
+    /** Regresa los datos correspondientes a un profesor de la UV a partir del id del usuario
      *
-     * @param idUser
-     * @return
-     * @throws LogicException
+     * @param idUser indica el id del usuario registrado en la base de datos
+     * @return una instancia de la clase UvProfessor con los datos correspondientes al Profesor
+     * @throws LogicException cuando no existe conexión con la base de datos
      */
     @Override
     public UvProfessor getUvProfessorByIdUser(int idUser) throws LogicException{
@@ -69,11 +69,11 @@ public class UvProfessorDAO implements UvProfessorManagerInterface{
         return uvProfessorResult;
     }
     
-    /**
+    /** Hace un conteo si ya se ha registrado un numero de personal en la base de datos
      *
-     * @param personalNumber
-     * @return
-     * @throws LogicException
+     * @param personalNumber es el numero de personal que se quiere verificar
+     * @return un entero que indica la cantidad de veces que se encontró ese número de personal en la base de datos
+     * @throws LogicException cuando no existe conexión con la base de datos
      */
     @Override
     public int countUvProfessorByPersonalNumber(String personalNumber) throws LogicException {

@@ -7,18 +7,19 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import logic.AccountCreator;
 import logic.DAOs.UniversityDAO;
+import logic.DAOs.UserDAO;
 import logic.LogicException;
 import logic.domain.ExternalAccountRequest;
 import logic.domain.University;
 import org.apache.log4j.Logger;
 
 public class ExternalAccountCreateController implements Initializable {
+    private static final UserDAO USER_DAO = new UserDAO();
     private static final Logger LOG = Logger.getLogger(ExternalAccountCreateController.class);
 
     private ArrayList<University> universities;
@@ -86,7 +87,7 @@ public class ExternalAccountCreateController implements Initializable {
         }
         return true;
     }
-    private boolean validateEmail(String email) {
+    private boolean validateEmail(String email) throws LogicException {
         if( !DataValidation.validateNotBlanks(email)){
             Alerts.showWarningAlert("El correo es un campo obligatorio.");
             return false;
@@ -99,10 +100,14 @@ public class ExternalAccountCreateController implements Initializable {
             Alerts.showWarningAlert("El correo tiene formato inválido.");
             return false;
         }
+        if(USER_DAO.checkEmailRegistered(email)) {
+            Alerts.showWarningAlert("El correo ingresado es utilizado por otra cuenta");
+            return false;
+        }
         return true;
     }
     
-    private boolean makeValidations() {
+    private boolean makeValidations() throws LogicException {
         String name = DataValidation.trimUnnecesaryBlanks(txtFieldName.getText());
         String lastName = DataValidation.trimUnnecesaryBlanks(txtFieldLastName.getText());
         String email = DataValidation.trimUnnecesaryBlanks(txtFieldEmail.getText()); 
@@ -131,9 +136,15 @@ public class ExternalAccountCreateController implements Initializable {
     
     @FXML
     private void createExternalAccount() {
-        if(!makeValidations()) {
-            return;
+        try {
+            if(!makeValidations()) {
+                return;
+            }
+        } catch(LogicException logicException) {
+            LOG.error(logicException);
+            Alerts.displayAlertLogicException(logicException);
         }
+        
         String name = DataValidation.trimUnnecesaryBlanks(txtFieldName.getText());
         String lastName = DataValidation.trimUnnecesaryBlanks(txtFieldLastName.getText());
         String email = DataValidation.trimUnnecesaryBlanks(txtFieldEmail.getText()); 

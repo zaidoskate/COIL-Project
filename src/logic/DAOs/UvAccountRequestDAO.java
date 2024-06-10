@@ -101,4 +101,62 @@ public class UvAccountRequestDAO implements UvAccountRequestManagerInterface{
         }
         return uvAccountRequestsResult;
     }
+
+    /**
+     *
+     * @param email
+     * @return
+     * @throws LogicException
+     */
+    @Override
+    public boolean checkEmailRegistered(String email) throws LogicException{
+        String query = "SELECT COUNT(*) as cuentas FROM solicitudcuentauv WHERE correo = ?";
+        boolean emailExists = false;
+        try {
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, email);
+            ResultSet accounts = statement.executeQuery();
+            if(accounts.next()) {
+                if(accounts.getInt("cuentas") >= 1) {
+                    emailExists = true;
+                }
+            }
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexión a la base de datos, inténtelo de nuevo más tarde", sqlException);
+        } finally {
+            DATABASE_CONNECTION.closeConnection();
+        }
+        return emailExists;
+    }
+
+    /**
+     *
+     * @param personalNumber
+     * @return
+     * @throws logic.LogicException
+     */
+    
+    @Override
+    public boolean checkPersonalNumberRegistered(String personalNumber) throws LogicException {
+        String query = "SELECT COUNT(*) as numeros FROM solicitudcuentauv WHERE numeropersonal = ?";
+        boolean emailExists = false;
+        try {
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, personalNumber);
+            ResultSet accounts = statement.executeQuery();
+            if(accounts.next()) {
+                if(accounts.getInt("numeros") >= 1) {
+                    emailExists = true;
+                }
+            }
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexión a la base de datos, inténtelo de nuevo más tarde", sqlException);
+        } finally {
+            DATABASE_CONNECTION.closeConnection();
+        }
+        return emailExists;
+    }
+    
 }

@@ -136,4 +136,32 @@ public class ExternalAccountRequestDAO implements ExternalAccountRequestManagerI
         }
         return externalAccountRequest;
     }
+    
+    /**
+     *
+     * @param email
+     * @return
+     * @throws LogicException
+     */
+    @Override
+    public boolean checkEmailRegistered(String email) throws LogicException {
+        String query = "SELECT COUNT(*) as cuentas FROM solicitudcuentaexterno WHERE correo = ?";
+        boolean emailExists = false;
+        try {
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, email);
+            ResultSet accounts = statement.executeQuery();
+            if(accounts.next()) {
+                if(accounts.getInt("cuentas") >= 1) {
+                    emailExists = true;
+                }
+            }
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexión a la base de datos, inténtelo de nuevo más tarde", sqlException);
+        } finally {
+            DATABASE_CONNECTION.closeConnection();
+        }
+        return emailExists;
+    }
 }

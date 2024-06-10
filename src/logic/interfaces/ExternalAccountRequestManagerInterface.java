@@ -41,4 +41,5 @@ public interface ExternalAccountRequestManagerInterface {
      * @throws LogicException
      */
     public ExternalAccountRequest getExternalAccountRequestById(int idExternalAccountRequest) throws LogicException;
+    public boolean checkEmailRegistered(String email) throws LogicException;
 }

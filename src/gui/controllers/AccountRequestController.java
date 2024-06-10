@@ -160,6 +160,14 @@ public class AccountRequestController implements Initializable {
             Alerts.showWarningAlert("El correo ingresado es utilizado por otra cuenta");
             return false;
         }
+        if(UV_ACCOUNT_REQUEST_DAO.checkEmailRegistered(email)) {
+            Alerts.showWarningAlert("El correo ingresado ya se utilizó en una solicitud de cuenta");
+            return false;
+        }
+        if(EXTERNAL_ACCOUNT_REQUEST_DAO.checkEmailRegistered(email)) {
+            Alerts.showWarningAlert("El correo ingresado ya se utilizó en una solicitud de cuenta");
+            return false;
+        }
         return true;
     }
     private boolean validatePersonalNumber(String personalNumber) {
@@ -173,6 +181,10 @@ public class AccountRequestController implements Initializable {
         }
         if(!DataValidation.validatePersonalNumberExists(personalNumber)) {
             Alerts.showWarningAlert("Numero de personal existente.");
+            return false;
+        }
+        if(UV_ACCOUNT_REQUEST_DAO.checkPersonalNumberRegistered(personalNumber)) {
+            Alerts.showWarningAlert("El número de personal ya se utilizó para una solicitud de cuenta");
             return false;
         }
         return true;
