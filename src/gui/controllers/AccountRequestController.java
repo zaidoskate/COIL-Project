@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import logic.DAOs.DepartmentDAO;
@@ -57,7 +58,15 @@ public class AccountRequestController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         loadUniversities();
     }
-
+    
+    @FXML
+    public void handleKeyTyped(KeyEvent event) {
+        if (txtFieldPersonalNumber.getText().length() > 5) {
+            String newPersonalNumber = txtFieldPersonalNumber.getText().substring(0, 5);
+            txtFieldPersonalNumber.setText(newPersonalNumber);
+        }
+    }
+    
     private void loadUniversities() {
         ArrayList<String> universitiesNames = new ArrayList<>();
         universitiesNames.add("Universidad Veracruzana");

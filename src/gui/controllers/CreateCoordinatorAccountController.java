@@ -109,7 +109,17 @@ public class CreateCoordinatorAccountController implements Initializable {
     }
 
     private static boolean validateUsernameField(String username) {
-        if( !DataValidation.validateNotBlanks(username)){
+        try{
+            if(!validateUsernameExistent(username)) {
+                Alerts.showWarningAlert("El nombre de usuario ya existe, prueba con otro.");
+                return false;
+            }
+        } catch(LogicException logicException) {
+            LOG.error(logicException);
+            Alerts.displayAlertLogicException(logicException);
+            return false;
+        }
+        if(!DataValidation.validateNotBlanks(username)){
             Alerts.showWarningAlert("El usuario es un campo obligatorio.");
             return false;
         }
@@ -178,6 +188,13 @@ public class CreateCoordinatorAccountController implements Initializable {
         } catch (LogicException logicException) {
             LOG.error(logicException);
         }
+    }
+    public static boolean validateUsernameExistent(String username) throws LogicException{
+        int usernamesCounter = CREDENTIAL_DAO.countCredentialsByUser(username);
+        if(usernamesCounter >= 1) {
+            return true;
+        }
+        return false;
     }
     
     @FXML
