@@ -18,7 +18,7 @@ public class UserDAOTest {
         user.setEmail("msoto@hotmail.com");
         
         int currentResult = userDAO.addUser(user);
-        int expectedResult = 7;
+        int expectedResult = 9;
         assertEquals(expectedResult, currentResult);
     }
     @Test(expected = LogicException.class)
@@ -38,19 +38,19 @@ public class UserDAOTest {
     public void testGetUserByIdSuccess() throws LogicException{
         UserDAO userDAO = new UserDAO();
         User expectedUser = new User();
-        expectedUser.setIdUser(1);
-        expectedUser.setName("Jesus");
-        expectedUser.setLastName("Tlapa");
-        expectedUser.setEmail("tlapa@gmail.com");
+        expectedUser.setIdUser(3);
+        expectedUser.setName("Jesús");
+        expectedUser.setLastName("Lorenzo");
+        expectedUser.setEmail("jesustlapahernandez@gmail.com");
         
-        User currentUser = userDAO.getUserById(1);
+        User currentUser = userDAO.getUserById(3);
         assertEquals(expectedUser, currentUser);
     }
     
     @Test
     public void testGetTypeUserByIdSuccess() throws LogicException{
         UserDAO userDAO = new UserDAO();
-        int id = 2;
+        int id = 3;
         String typeUserExpected = "ProfesorUV";
         String typeUserCurrent = userDAO.getUserTypeById(id);
         assertEquals(typeUserExpected, typeUserCurrent);

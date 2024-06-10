@@ -13,8 +13,8 @@ public class UvProfessorDAOTest {
     @Test
     public void testInsertUvProfessorSuccess() {
         UvProfessor uvProfessor = new UvProfessor();
-        uvProfessor.setPersonalNumber("7770138");
-        uvProfessor.setIdUser(1);
+        uvProfessor.setPersonalNumber("77138");
+        uvProfessor.setIdUser(5);
         uvProfessor.setIdDepartment("FEIX");
         
         UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
@@ -31,7 +31,7 @@ public class UvProfessorDAOTest {
     @Test(expected = LogicException.class)
     public void testInsertUvProfessorFailed() throws LogicException {
         UvProfessor uvProfessor = new UvProfessor();
-        uvProfessor.setIdUser(2);
+        uvProfessor.setIdUser(11);
         uvProfessor.setIdDepartment("FEIX");
         
         UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
@@ -42,13 +42,13 @@ public class UvProfessorDAOTest {
     @Test
     public void testGetUvProfessorByIdUserSuccess() {
         UvProfessor uvProfessorExpected = new UvProfessor();
-        uvProfessorExpected.setPersonalNumber("7770138");
-        uvProfessorExpected.setIdUser(1);
+        uvProfessorExpected.setPersonalNumber("10924");
+        uvProfessorExpected.setIdUser(3);
         uvProfessorExpected.setIdDepartment("FEIX");
 
         UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
         try {
-            UvProfessor uvProfessorResult = uvProfessorDAO.getUvProfessorByIdUser(1);
+            UvProfessor uvProfessorResult = uvProfessorDAO.getUvProfessorByIdUser(3);
             assertEquals(uvProfessorExpected, uvProfessorResult);
         } catch (LogicException logicException) {
             fail("Error al obtener el profesor UV: " + logicException.getMessage());
@@ -58,8 +58,8 @@ public class UvProfessorDAOTest {
     @Test
     public void testGetInexistentProfessor() throws LogicException{
         UvProfessor uvProfessorWrong = new UvProfessor();
-        uvProfessorWrong.setPersonalNumber("10109090");
-        uvProfessorWrong.setIdUser(4);
+        uvProfessorWrong.setPersonalNumber("11111");
+        uvProfessorWrong.setIdUser(9);
         uvProfessorWrong.setIdDepartment("FEIX");
 
         UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
@@ -73,7 +73,7 @@ public class UvProfessorDAOTest {
         UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
         String departmentNameExpected = "Facultad de Estadistica e Informatica";
         try {
-            String departmentNameObtained = uvProfessorDAO.getDepartmentNameBelonging(1);
+            String departmentNameObtained = uvProfessorDAO.getDepartmentNameBelonging(3);
             assertEquals(departmentNameExpected, departmentNameObtained);
         } catch (LogicException logicException) {
             fail("Error al obtener el nombre del departamento");
@@ -82,7 +82,7 @@ public class UvProfessorDAOTest {
     
     @Test
     public void testGetCollaborationCountByProfessorRegion() {
-        int expectedResult = 1;
+        int expectedResult = 2;
         UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
         try {
             int result = uvProfessorDAO.getCollaborationCountByProfessorRegion("Xalapa");

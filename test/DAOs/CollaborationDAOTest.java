@@ -21,17 +21,17 @@ public class CollaborationDAOTest {
         collaboration.setLanguage("Español");
         collaboration.setInterestTopic("SOLID Principles");
         
-        int unexpectedResult = 0;
+        int expectedResult = 1;
         int currentResult = collaborationDAO.addColaboration(collaboration);
         
-        assertNotEquals(unexpectedResult, currentResult);
+        assertEquals(expectedResult, currentResult);
     }
     
     @Test
     public void testStartCollaborationSuccess() {
         CollaborationDAO collaborationDAO = new CollaborationDAO();
         try {
-            int result = collaborationDAO.startCollaboration(1);
+            int result = collaborationDAO.startCollaboration(5);
             assertEquals(1, result);
         } catch(LogicException logicException) {
             fail("No se ha podido iniciar la colaboracion");
@@ -52,11 +52,11 @@ public class CollaborationDAOTest {
     @Test
     public void testGetCollaborationByIdSuccess() throws LogicException{
         CollaborationDAO collaborationDAO = new CollaborationDAO();
-        Collaboration currentResultCollaboration = collaborationDAO.getColaborationById(2);
+        Collaboration currentResultCollaboration = collaborationDAO.getColaborationById(3);
         Collaboration collaborationExpected = new Collaboration();
-        collaborationExpected.setColaborationName("Colaboracion");
-        collaborationExpected.setEndDate("2024-12-01");
-        collaborationExpected.setIdColaboration(2);
+        collaborationExpected.setColaborationName("Colaboracion Veracruzana");
+        collaborationExpected.setStartDate("2023-08-10");
+        collaborationExpected.setIdColaboration(3);
         
         assertEquals(collaborationExpected, currentResultCollaboration);
     }
@@ -65,7 +65,7 @@ public class CollaborationDAOTest {
     public void testUpdateEndDateByIdCollaboration() throws LogicException{
         CollaborationDAO collaborationDAO = new CollaborationDAO();
         
-        int currentResult = collaborationDAO.updateEndDateByIdCollaboration(1);
+        int currentResult = collaborationDAO.updateEndDateByIdCollaboration(2);
         int expectedResult = 1;
         
         assertEquals(expectedResult, currentResult);
@@ -79,15 +79,33 @@ public class CollaborationDAOTest {
         ArrayList<Collaboration> collaborationsExpected = new ArrayList();
         
         Collaboration collaborationExpected = new Collaboration();
-        collaborationExpected.setColaborationName("Colaboracion4");
-        collaborationExpected.setEndDate("2024-04-12");
+        collaborationExpected.setColaborationName("Colaboracion FEI-UNAM");
+        collaborationExpected.setStartDate("2024-06-07");
         collaborationExpected.setIdColaboration(1);
         collaborationsExpected.add(collaborationExpected);
         
         collaborationExpected = new Collaboration();
-        collaborationExpected.setColaborationName("Colaboracion");
-        collaborationExpected.setEndDate("2024-12-01");
+        collaborationExpected.setColaborationName("Colaboracion computacional");
+        collaborationExpected.setStartDate("2024-01-01");
         collaborationExpected.setIdColaboration(2);
+        collaborationsExpected.add(collaborationExpected);
+        
+        collaborationExpected = new Collaboration();
+        collaborationExpected.setColaborationName("Colaboracion Veracruzana");
+        collaborationExpected.setStartDate("2023-08-10");
+        collaborationExpected.setIdColaboration(3);
+        collaborationsExpected.add(collaborationExpected);
+        
+        collaborationExpected = new Collaboration();
+        collaborationExpected.setColaborationName("La segunda guerra mundial");
+        collaborationExpected.setStartDate("2023-02-10");
+        collaborationExpected.setIdColaboration(4);
+        collaborationsExpected.add(collaborationExpected);
+        
+        collaborationExpected = new Collaboration();
+        collaborationExpected.setColaborationName("Conquista de Brasil");
+        collaborationExpected.setStartDate("Null");
+        collaborationExpected.setIdColaboration(5);
         collaborationsExpected.add(collaborationExpected);
         
         
@@ -102,11 +120,22 @@ public class CollaborationDAOTest {
         ArrayList<Collaboration> collaborationsExpected = new ArrayList();
         
         Collaboration collaborationExpected = new Collaboration();
-        collaborationExpected.setColaborationName("Colaboracion2");
-        collaborationExpected.setEndDate("2024-04-12");
+        collaborationExpected.setColaborationName("Colaboracion FEI-UNAM");
+        collaborationExpected.setStartDate("2024-06-07");
+        collaborationExpected.setIdColaboration(1);
+        collaborationsExpected.add(collaborationExpected);
+        
+        collaborationExpected = new Collaboration();
+        collaborationExpected.setColaborationName("Colaboracion computacional");
+        collaborationExpected.setStartDate("2024-01-01");
         collaborationExpected.setIdColaboration(2);
         collaborationsExpected.add(collaborationExpected);
         
+        collaborationExpected = new Collaboration();
+        collaborationExpected.setColaborationName("Conquista de Brasil");
+        collaborationExpected.setStartDate("Null");
+        collaborationExpected.setIdColaboration(5);
+        collaborationsExpected.add(collaborationExpected);
         
         assertEquals(collaborationsExpected, collaborationsResult);
     }
@@ -117,17 +146,19 @@ public class CollaborationDAOTest {
         ArrayList<ProfessorBelongsToCollaboration> professorBelongs = new ArrayList<>();
         
         ProfessorBelongsToCollaboration professorBelongsToCollaboration = new ProfessorBelongsToCollaboration();
-        professorBelongsToCollaboration.setIdColaboration(1);
+        professorBelongsToCollaboration.setIdColaboration(4);
+        professorBelongs.add(professorBelongsToCollaboration);
         
         ArrayList<Collaboration> collaborationsExpected = new ArrayList<>();
         Collaboration collaborationExpected = new Collaboration();
         
-        collaborationExpected.setIdColaboration(1);
-        collaborationExpected.setColaborationName("Colaboración Tlapa-Zaid");
-        collaborationExpected.setEndDate("2024-05-17");
-        collaborationExpected.setStartDate("2024-05-17");
-        collaborationExpected.setLanguage("Español");
-        collaborationExpected.setInterestTopic("Ciencias de la computación, JavaScript");
+        collaborationExpected.setIdColaboration(4);
+        collaborationExpected.setColaborationName("La segunda guerra mundial");
+        collaborationExpected.setEndDate("2023-15-07");
+        collaborationExpected.setStartDate("2023-02-10");
+        collaborationExpected.setLanguage("Alemán");
+        collaborationExpected.setInterestTopic("Historia universal");
+        collaborationsExpected.add(collaborationExpected);
         
         try {
             ArrayList<Collaboration> collaborationsObtained = collaborationDAO.getProfessorConcludedCollaborations(professorBelongs);

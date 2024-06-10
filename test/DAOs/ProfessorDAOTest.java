@@ -12,7 +12,7 @@ public class ProfessorDAOTest {
     @Test
     public void testInsertProfessorSuccess(){
         Professor professor = new Professor();
-        professor.setIdUser(2);
+        professor.setIdUser(8);
 
         ProfessorDAO professorDAO = new ProfessorDAO();
         try{
@@ -21,7 +21,6 @@ public class ProfessorDAOTest {
         } catch(LogicException sqlException) {
             fail("Error al insertar al profesor" + sqlException.getMessage());
         }
-        
     }
     
     @Test(expected = LogicException.class)
@@ -38,7 +37,7 @@ public class ProfessorDAOTest {
     public void testGetUniversityFromAProfessorSuccess() {
         ProfessorDAO professorDAO = new ProfessorDAO();
             try {
-                ArrayList<String> universityObtained = professorDAO.getUniversityFromAProfessor(1);
+                ArrayList<String> universityObtained = professorDAO.getUniversityFromAProfessor(3);
                 ArrayList<String> expectedUniversity = new ArrayList<>();
                 expectedUniversity.add("Universidad Veracruzana");
                 expectedUniversity.add("Facultad de Estadistica e Informatica");
@@ -52,7 +51,7 @@ public class ProfessorDAOTest {
     public void testGetUniversityFromANonProfessor() {
         ProfessorDAO professorDAO = new ProfessorDAO();
         try {
-            ArrayList<String> universityObtained = professorDAO.getUniversityFromAProfessor(3);
+            ArrayList<String> universityObtained = professorDAO.getUniversityFromAProfessor(1);
             assertTrue(universityObtained.isEmpty());
         } catch(LogicException logicException) {
             fail("Error al obtener la universidad del profesor: " + logicException.getMessage());

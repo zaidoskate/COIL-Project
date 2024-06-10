@@ -41,30 +41,4 @@ public class ExternalProfessorDAO implements ExternalProfessorManagerInterface {
         }
         return result;
     }
-    
-    /**
-     *
-     * @param idUniversity
-     * @return
-     * @throws LogicException
-     */
-    @Override
-    public ExternalProfessor getExternalProfessorByIdUniversity(int idUniversity) throws LogicException {
-        String query = "SELECT * FROM profesorexterno WHERE Universidad_universidad = ?";
-        ExternalProfessor externalProfessorResult = new ExternalProfessor();
-        try{
-            Connection connection = this.DATABASE_CONNECTION.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, idUniversity);
-            ResultSet result = statement.executeQuery();
-            while(result.next()) {
-                externalProfessorResult.setIdUniversity(result.getInt("Universidad_idUniversidad"));
-            }
-        } catch(SQLException sqlException) {
-            throw new LogicException("No hay conexión, inténtelo de nuevo más tarde", sqlException);
-        } finally {
-            DATABASE_CONNECTION.closeConnection();
-        }
-        return externalProfessorResult;
-    }
 }

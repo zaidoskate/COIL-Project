@@ -11,24 +11,24 @@ public class AccountCreatorTest {
     @Test
     public void testCreateUVAccountSuccess() throws LogicException {
         UvAccountRequest uvAccountRequest = new UvAccountRequest();
-        uvAccountRequest.setIdRequest(9);
-        uvAccountRequest.setIdDepartment("FEIX");
-        uvAccountRequest.setPersonalNumber("07061");
-        uvAccountRequest.setEmail("chimalg2001@outlook.com");
-        uvAccountRequest.setName("Marcio Miguel");
-        uvAccountRequest.setLastName("González Chimal");
+        uvAccountRequest.setIdRequest(1);
+        uvAccountRequest.setIdDepartment("FEX");
+        uvAccountRequest.setPersonalNumber("09652");
+        uvAccountRequest.setEmail("jesustlapahernandez@gmail.com");
+        uvAccountRequest.setName("Frida");
+        uvAccountRequest.setLastName("Tlapa Hernandez");
         boolean result = AccountCreator.createUVAccount(uvAccountRequest);
         assertTrue(result);
     }
     
-    @Test
+    @Test(expected=LogicException.class)
     public void testCreateUVAccountFailed() throws LogicException {
         UvAccountRequest uvAccountRequest = new UvAccountRequest();
         uvAccountRequest.setIdRequest(9);
-        uvAccountRequest.setIdDepartment("FEIX");
-        uvAccountRequest.setPersonalNumber("07061");
+        uvAccountRequest.setIdDepartment("FEIdddddddddddddddddddddddddddddddddddddddddddddX");
+        uvAccountRequest.setPersonalNumber("0706ddddddddddddddddddddddddddddddddddddddddddddddddddddddddd1");
         uvAccountRequest.setEmail("chimalg2001@outlook.com");
-        uvAccountRequest.setName("Marcio Miguel");
+        uvAccountRequest.setName("Marciodddddddddddddddddddddddddddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaa Miguel");
         uvAccountRequest.setLastName("González Chimal");
         boolean result = AccountCreator.createUVAccount(uvAccountRequest);
         assertFalse(result);
@@ -37,11 +37,11 @@ public class AccountCreatorTest {
     @Test
     public void testCreateExternalAccountSuccess() throws LogicException {
         ExternalAccountRequest externalAccountRequest = new ExternalAccountRequest();
-        externalAccountRequest.setIdRequest(6);
-        externalAccountRequest.setIdUniversity(4);
-        externalAccountRequest.setName("Jesus");
-        externalAccountRequest.setLastName("Tlapa");
-        externalAccountRequest.setEmail("chuchitotlapa@hotmail.com");
+        externalAccountRequest.setIdRequest(1);
+        externalAccountRequest.setIdUniversity(1);
+        externalAccountRequest.setName("Cristy");
+        externalAccountRequest.setLastName("Rodríguez");
+        externalAccountRequest.setEmail("cristyzarg@gmail.com");
         boolean result = AccountCreator.createExternalAccount(externalAccountRequest);
         assertTrue(result);
     }
@@ -51,8 +51,8 @@ public class AccountCreatorTest {
         ExternalAccountRequest externalAccountRequest = new ExternalAccountRequest();
         externalAccountRequest.setIdRequest(10);
         externalAccountRequest.setIdUniversity(4);
-        externalAccountRequest.setName("Jesus");
-        externalAccountRequest.setLastName("Tlapa");
+        externalAccountRequest.setName("Jessddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddus");
+        externalAccountRequest.setLastName("Tlasssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssapa");
         externalAccountRequest.setEmail("chuchitotlapa@hotmail.com");
         boolean result = AccountCreator.createExternalAccount(externalAccountRequest);
         assertFalse(result);

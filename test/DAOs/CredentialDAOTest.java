@@ -15,9 +15,9 @@ public class CredentialDAOTest {
     public void testInsertCredentialSuccess()  throws LogicException {
         CredentialDAO credentialDAO = new CredentialDAO();
         Credential credential = new Credential();
-        credential.setIdUser(1);
-        credential.setUser("admin1");
-        credential.setPassword("password123");
+        credential.setIdUser(7);
+        credential.setUser("guille");
+        credential.setPassword("zamatl");
         
         int currentResult = credentialDAO.insertCredential(credential);
         int expectedResult = 1;
@@ -28,8 +28,8 @@ public class CredentialDAOTest {
     public void testGetIdUserByCredentialSuccess()  throws LogicException {
         CredentialDAO credentialDAO = new CredentialDAO();
         Credential credential = new Credential();
-        credential.setUser("Usuario13");
-        credential.setPassword("password123");
+        credential.setUser("jtlapa");
+        credential.setPassword("zamatl");
         
         int currentResult = credentialDAO.getIdUserByCredential(credential);
         int expectedResult = 1;
@@ -42,7 +42,7 @@ public class CredentialDAOTest {
         
         CredentialDAO credentialDAO = new CredentialDAO();
         
-        int currentResult = credentialDAO.countCredentialsByUser("Usuario1");
+        int currentResult = credentialDAO.countCredentialsByUser("jtlapa");
         int expectedResult = 1;
         
         assertEquals(expectedResult, currentResult);

@@ -13,7 +13,7 @@ public class PendingMailDAOTest {
     public void testInsertPendingMailSuccess() throws LogicException {
         PendingMail pendingMail = new PendingMail();
         pendingMail.setIdUser(1);
-        pendingMail.setDestinationEmail("destino@hotmail.com");
+        pendingMail.setDestinationEmail("jesustlapahernandez@gmail.com");
         pendingMail.setContent("Hola bienvendio a los coils");
         pendingMail.setSubject("Cuenta de acceso");
         
@@ -25,14 +25,22 @@ public class PendingMailDAOTest {
     
     @Test
     public void testGetPendingMailsByIdSuccess() throws LogicException {
+        ArrayList<PendingMail> expectedResult = new ArrayList();
+        
         PendingMail pendingMail = new PendingMail();
         pendingMail.setIdUser(1);
         pendingMail.setIdEmail(1);
         pendingMail.setDestinationEmail("destino@hotmail.com");
         pendingMail.setContent("Hola bienvendio a los coils");
         pendingMail.setSubject("Cuenta de acceso");
+        expectedResult.add(pendingMail);
         
-        ArrayList<PendingMail> expectedResult = new ArrayList();
+        pendingMail = new PendingMail();
+        pendingMail.setIdUser(1);
+        pendingMail.setIdEmail(2);
+        pendingMail.setDestinationEmail("anacristinazarg@gmail.com");
+        pendingMail.setContent("Hola bienvendio a los coils");
+        pendingMail.setSubject("Cuenta de acceso");
         expectedResult.add(pendingMail);
         
         PendingMailDAO pendingMailDAO = new PendingMailDAO();
@@ -45,8 +53,8 @@ public class PendingMailDAOTest {
     public void testDeletePendingMailSuccess() throws LogicException {
         PendingMail pendingMail = new PendingMail();
         pendingMail.setIdUser(1);
-        pendingMail.setIdEmail(1);
-        pendingMail.setDestinationEmail("destino@hotmail.com");
+        pendingMail.setIdEmail(2);
+        pendingMail.setDestinationEmail("anacristinazarg@gmail.com");
         pendingMail.setContent("Hola bienvendio a los coils");
         pendingMail.setSubject("Cuenta de acceso");
         

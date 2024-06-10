@@ -1,9 +1,11 @@
 package DAOs;
+import java.util.ArrayList;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import logic.domain.EvidenceFolder;
 import logic.DAOs.EvidenceFolderDAO;
 import logic.LogicException;
+import logic.domain.Evidence;
 
 public class EvidenceFolderDAOTest {
     
@@ -13,21 +15,41 @@ public class EvidenceFolderDAOTest {
     @Test
     public void testInsertEvidenceFolderSuccess() throws LogicException{
         EvidenceFolder evidenceFolder = new EvidenceFolder();
-        evidenceFolder.setIdCollaboration(1);
-        evidenceFolder.setName("Evidencias Colaboración Random");
-        evidenceFolder.setDescription("Es una prueba");
-        evidenceFolder.setCreationDate("2024-03-21");
+        evidenceFolder.setIdCollaboration(3);
+        evidenceFolder.setName("Examenes");
+        evidenceFolder.setDescription("Examenes correspondientes al primer parcial");
+        evidenceFolder.setCreationDate("2024-01-01");
        
 
         EvidenceFolderDAO evidenceFolderDAO = new EvidenceFolderDAO();
         int result = evidenceFolderDAO.insertEvidenceFolder(evidenceFolder);
         
-        assertNotEquals(0, result);
+        assertEquals(1, result);
     }
     
     @Test
-    public void testGetEvidenceFolderByIdCollaborationSuccess() throws LogicException {
+    public void testGetEvidenceFoldersByIdCollaborationSuccess() throws LogicException {
+        EvidenceFolderDAO evidenceFolderDAO = new EvidenceFolderDAO();
+        ArrayList<EvidenceFolder> foldersResult = evidenceFolderDAO.getEvidenceFoldersByIdCollaboration(3);
         
+        ArrayList<EvidenceFolder> expectedFolders = new ArrayList<>();
+        EvidenceFolder evidenceFolder = new EvidenceFolder();
+        evidenceFolder.setIdCollaboration(3);
+        evidenceFolder.setIdEvidenceFolder(1);
+        evidenceFolder.setName("Actividades por equipo");
+        evidenceFolder.setDescription("Actividades realizadas por veracruzanos");
+        evidenceFolder.setCreationDate("2024-01-01");
+        expectedFolders.add(evidenceFolder);
+        
+        evidenceFolder = new EvidenceFolder();
+        evidenceFolder.setIdCollaboration(3);
+        evidenceFolder.setIdEvidenceFolder(2);
+        evidenceFolder.setName("Actividades individuales");
+        evidenceFolder.setDescription("Actividades realizadas por veracruzanos");
+        evidenceFolder.setCreationDate("2024-01-01");
+        expectedFolders.add(evidenceFolder);
+        
+        assertEquals(expectedFolders, foldersResult);
     }
     
 }

@@ -14,12 +14,13 @@ public class CoordinatorDAOTest {
     @Test
     public void testInsertCoordinatorSuccess() {
         Coordinator coordinator = new Coordinator();
-        coordinator.setIdUser(54321);
+        coordinator.setIdUser(7);
 
         CoordinatorDAO coordinatorDAO = new CoordinatorDAO();
+        int expectedResult = 1;
         try {
             int result = coordinatorDAO.insertCoordinator(coordinator);
-            assertNotEquals(0, result);
+            assertEquals(expectedResult, result);
         } catch(LogicException logicException) {
             fail("No se ha podido agregar al coordinador");
         }
@@ -31,7 +32,7 @@ public class CoordinatorDAOTest {
         
         CoordinatorDAO coordinatorDAO = new CoordinatorDAO();
         try {
-            int result = coordinatorDAO.getIdCoordinatorByIdUser(3);
+            int result = coordinatorDAO.getIdCoordinatorByIdUser(2);
             assertEquals(expectedResult, result);
         } catch(LogicException logicException) {
             fail("Error al recuperar el id coordinador");

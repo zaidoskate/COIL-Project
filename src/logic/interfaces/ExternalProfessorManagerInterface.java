@@ -16,12 +16,4 @@ public interface ExternalProfessorManagerInterface {
      * @throws LogicException
      */
     int insertExternalProfessor(ExternalProfessor externalProfessor) throws LogicException;
-
-    /**
-     *
-     * @param idUniversity
-     * @return
-     * @throws LogicException
-     */
-    ExternalProfessor getExternalProfessorByIdUniversity(int idUniversity) throws LogicException;
 }

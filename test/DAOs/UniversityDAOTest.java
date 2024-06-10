@@ -15,7 +15,7 @@ public class UniversityDAOTest {
     @Test
     public void testInsertUniversitySuccess() {
         University university = new University();
-        university.setName("Universidad Autonoma de Mexico");
+        university.setName("Universidad Autónoma de Nuevo León");
         university.setCountry("Mexico");
         
         UniversityDAO universityDAO = new UniversityDAO();
@@ -31,8 +31,6 @@ public class UniversityDAOTest {
     @Test(expected = LogicException.class)
     public void testInsertUniversityFailed() throws LogicException {
         University university = new University();
-        university.setUniversityId(2);
-        university.setCountry("Mexico");
         
         UniversityDAO universityDAO = new UniversityDAO();
         int result = universityDAO.insertUniversity(university);
@@ -46,23 +44,28 @@ public class UniversityDAOTest {
         University university;
         university = new University();
         university.setUniversityId(1);
-        university.setName("UNAM");
-        university.setCountry("Mexico");
+        university.setName("Universidad Nacional Autónoma de México");
+        university.setCountry("México");
         universitiesExpected.add(university);
         university = new University();
         university.setUniversityId(2);
-        university.setName("BUAP");
-        university.setCountry("Mexico");
+        university.setName("Instituto Politécnico Nacional");
+        university.setCountry("México");
         universitiesExpected.add(university);
         university = new University();
         university.setUniversityId(3);
-        university.setName("Harvard University");
-        university.setCountry("Estados Unidos");
+        university.setName("Benemerita Universidad Autónoma de Puebla");
+        university.setCountry("México");
         universitiesExpected.add(university);
         university = new University();
         university.setUniversityId(4);
-        university.setName("Universidad Noch");
-        university.setCountry("Nochistlan");
+        university.setName("Universidad de Lima");
+        university.setCountry("Perú");
+        universitiesExpected.add(university);
+        university = new University();
+        university.setUniversityId(5);
+        university.setName("Universidad la Gran Colombia");
+        university.setCountry("Colombia");
         universitiesExpected.add(university);
         
         UniversityDAO universityDAO = new UniversityDAO();

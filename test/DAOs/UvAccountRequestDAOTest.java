@@ -26,9 +26,8 @@ public class UvAccountRequestDAOTest {
     @Test(expected = LogicException.class)
     public void testInsertUvAccountRequestFailed() throws LogicException {
         UvAccountRequest uvAccountRequest = new UvAccountRequest();
-        uvAccountRequest.setIdRequest(1);
-        uvAccountRequest.setName("Juan Carlos");
-        uvAccountRequest.setLastName("Perez Arriaga");
+        uvAccountRequest.setName("Juan Carlosdfhsdgnsdgndgsbdsfsssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
+        uvAccountRequest.setLastName("Perez Arrdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfiaga");
         uvAccountRequest.setEmail("elrevo@gmail.com");
         uvAccountRequest.setPersonalNumber("");
         
@@ -39,11 +38,7 @@ public class UvAccountRequestDAOTest {
     @Test
     public void testDeleteUvAccountRequestSuccess() throws LogicException {
         UvAccountRequest uvAccountRequest = new UvAccountRequest();
-        uvAccountRequest.setIdRequest(1);
-        uvAccountRequest.setName("Juan Carlos");
-        uvAccountRequest.setLastName("Perez Arriaga");
-        uvAccountRequest.setEmail("elrevo@gmail.com");
-        uvAccountRequest.setPersonalNumber("12345");
+        uvAccountRequest.setIdRequest(3);
         uvAccountRequest.setIdDepartment("FEIX");
         
         UvAccountRequestDAO uvAccountRequestDAO = new UvAccountRequestDAO();
@@ -69,21 +64,32 @@ public class UvAccountRequestDAOTest {
     public void testGetUvAccountRequestsSuccess() throws LogicException {
         ArrayList<UvAccountRequest> expectedResult = new ArrayList<>();
         UvAccountRequest uvAccountRequest;
+        
         uvAccountRequest = new UvAccountRequest();
-        uvAccountRequest.setIdDepartment("FEIX");
-        uvAccountRequest.setEmail("chimalg2001@outlook.com");
-        uvAccountRequest.setIdRequest(13);
-        uvAccountRequest.setLastName("González Chimal");
-        uvAccountRequest.setName("Marcio Miguel");
-        uvAccountRequest.setPersonalNumber("16171");
-        expectedResult.add(uvAccountRequest);
-        uvAccountRequest = new UvAccountRequest();
-        uvAccountRequest.setIdDepartment("FEIX");
-        uvAccountRequest.setEmail("chuchitotlapa@hotmail.com");
-        uvAccountRequest.setIdRequest(14);
+        uvAccountRequest.setIdDepartment("FEX");
+        uvAccountRequest.setEmail("jesustlapahernandez@gmail.com");
+        uvAccountRequest.setIdRequest(1);
         uvAccountRequest.setLastName("Tlapa Hernández");
-        uvAccountRequest.setName("Jesús Lorenzo");
-        uvAccountRequest.setPersonalNumber("20984");
+        uvAccountRequest.setName("Frida");
+        uvAccountRequest.setPersonalNumber("09652");
+        expectedResult.add(uvAccountRequest);
+        
+        uvAccountRequest = new UvAccountRequest();
+        uvAccountRequest.setIdDepartment("FEIX");
+        uvAccountRequest.setEmail("mzelox@gmail.com");
+        uvAccountRequest.setIdRequest(2);
+        uvAccountRequest.setLastName("Zapata Elox");
+        uvAccountRequest.setName("Martin");
+        uvAccountRequest.setPersonalNumber("09122");
+        expectedResult.add(uvAccountRequest);   
+        
+        uvAccountRequest = new UvAccountRequest();
+        uvAccountRequest.setIdDepartment("FEX");
+        uvAccountRequest.setEmail("aguslvaz@gmail.com");
+        uvAccountRequest.setIdRequest(3);
+        uvAccountRequest.setLastName("Lopez Vazquez");
+        uvAccountRequest.setName("Agustin");
+        uvAccountRequest.setPersonalNumber("93150");
         expectedResult.add(uvAccountRequest);   
         
         UvAccountRequestDAO uvAccountRequestDAO = new UvAccountRequestDAO();

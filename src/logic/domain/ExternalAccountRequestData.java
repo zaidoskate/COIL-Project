@@ -34,9 +34,6 @@ public class ExternalAccountRequestData extends ExternalAccountRequest {
         if(this.getIdRequest() != accountRequestToCompare.getIdRequest()) { 
             return false;
         }
-        if(this.getIdUniversity() != accountRequestToCompare.getIdUniversity()) {
-            return false;
-        }
         if(!this.getEmail().equals(accountRequestToCompare.getEmail())) {
             return false;
         }

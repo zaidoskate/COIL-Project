@@ -108,9 +108,6 @@ public class PendingMail {
         if(!pendingMailToCompare.getDestinationEmail().equals(this.getDestinationEmail())) {
             return false;
         }
-        if(!pendingMailToCompare.getSubject().equals(this.getSubject())) {
-            return false;
-        }
         return true;
     }
 }
