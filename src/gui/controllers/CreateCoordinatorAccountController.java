@@ -114,7 +114,7 @@ public class CreateCoordinatorAccountController implements Initializable {
 
     private static boolean validateUsernameField(String username) {
         try{
-            if(!validateUsernameExistent(username)) {
+            if(validateUsernameExistent(username)) {
                 Alerts.showWarningAlert("El nombre de usuario ya existe, prueba con otro.");
                 return false;
             }
@@ -145,19 +145,19 @@ public class CreateCoordinatorAccountController implements Initializable {
         String password = DataValidation.trimUnnecesaryBlanks(txtFieldPassword.getText()); 
         String username = DataValidation.trimUnnecesaryBlanks(txtFieldUsername.getText()); 
         if(!validateNameField(name)) {
-            return true;
+            return false;
         }
         if(!validateLastNameField(lastName)) {
-            return true;
+            return false;
         }
         if(!validateEmailField(email)) {
-            return true;
+            return false;
         }
         if(!validatePasswordField(password)) {
-            return true;
+            return false;
         }
         if(!validateUsernameField(username)) {
-            return true;
+            return false;
         }
         return true;
     }
@@ -261,12 +261,12 @@ public class CreateCoordinatorAccountController implements Initializable {
                 registerPendingMail(user, credential);
                 Alerts.showInformationAlert("Correo pendiente", "El correo queda pendiente por enviarse a su destino.");
             }
+            cancel();
         } 
     }
     
     @FXML
     public void cancel() {
-        Alerts.showWarningAlert("No se ha creado la cuenta.");
         Stage stage = (Stage) txtFieldName.getScene().getWindow();
         stage.close();
     }

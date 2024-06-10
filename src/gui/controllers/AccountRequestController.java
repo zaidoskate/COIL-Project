@@ -170,7 +170,7 @@ public class AccountRequestController implements Initializable {
         }
         return true;
     }
-    private boolean validatePersonalNumber(String personalNumber) {
+    private boolean validatePersonalNumber(String personalNumber) throws LogicException{
         if( !DataValidation.validateNotBlanks(personalNumber)){
             Alerts.showWarningAlert("El numero de personal es un campo obligatorio.");
             return false;

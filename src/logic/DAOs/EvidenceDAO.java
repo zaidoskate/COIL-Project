@@ -54,6 +54,11 @@ public class EvidenceDAO implements EvidenceManagerInterface {
             result = statement.executeUpdate();
             statement.close();
         } catch (SQLException sqlException) {
+            if (sqlException.getSQLState().equals("08001")) {
+                throw new LogicException("No hay conexión, inténtelo de nuevo más tarde", sqlException);
+            } else if (sqlException.getSQLState().equals("23505")) { 
+                throw new LogicException("El nombre de la evidencia ya existe, prueba con otro", sqlException);
+            }
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } catch (FileNotFoundException fileNotFoundException) {
             throw new LogicException("No existe tal archivo en la ruta especificada", fileNotFoundException);

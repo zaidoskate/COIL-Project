@@ -17,11 +17,11 @@ import logic.LogicException;
 public class UvAccountRequestDAO implements UvAccountRequestManagerInterface{
    private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
    
-    /**
+    /** Inserta una solicitud de cuenta de acceso UV en la base de datos
      *
-     * @param uvAccountRequest
-     * @return
-     * @throws LogicException
+     * @param uvAccountRequest una instancia de la clase UvAccountRequest que contiene todos los datos de la solicitud
+     * @return un entero con el resultado de las filas agregadas en una tabla
+     * @throws LogicException cuando no existe conexión con la base de datos
      */
     @Override
     public int insertUvAccountRequest(UvAccountRequest uvAccountRequest) throws LogicException{
@@ -45,11 +45,11 @@ public class UvAccountRequestDAO implements UvAccountRequestManagerInterface{
         return result;
     }
 
-    /**
+    /** Borra una solicitud de cuenta de acceso de la base de datos
      *
-     * @param uvAccountRequest
-     * @return
-     * @throws LogicException
+     * @param uvAccountRequest una instancia de la clase UvAccountRequest que contiene todos los datos de la solicitud
+     * @return un entero que indica la cantidad de filas que se borraron de la base de datos
+     * @throws LogicException cuando no existe conexión con la base de datos
      */
     @Override
     public int deleteUvAccountRequest(UvAccountRequest uvAccountRequest) throws LogicException{
@@ -68,10 +68,10 @@ public class UvAccountRequestDAO implements UvAccountRequestManagerInterface{
         return result;
     }
     
-    /**
+    /** Obtiene todas las solicitudes de cuentas de acceso UV
      *
-     * @return
-     * @throws LogicException
+     * @return un ArrayList con todas las solicitudes de cuentas de acceso UV registradas en la base de datos
+     * @throws LogicException cuando no hay conexión con la base de datos
      */
     @Override
     public ArrayList<UvAccountRequest> getUvAccountRequests() throws LogicException {
@@ -102,11 +102,11 @@ public class UvAccountRequestDAO implements UvAccountRequestManagerInterface{
         return uvAccountRequestsResult;
     }
 
-    /**
+    /** Verifica cuantas veces se ha registrado un correo en las solicitudes de cuentas de acceso
      *
-     * @param email
-     * @return
-     * @throws LogicException
+     * @param email la dirección de correo que se desea buscar
+     * @return un booleano que indica si existe algún correo con la misma dirección
+     * @throws LogicException cuando no existe conexión con la base de  datos
      */
     @Override
     public boolean checkEmailRegistered(String email) throws LogicException{
@@ -130,11 +130,11 @@ public class UvAccountRequestDAO implements UvAccountRequestManagerInterface{
         return emailExists;
     }
 
-    /**
+    /** Verifica si se ha registrado un número de personal dado en las solicitudes de cuentas uv
      *
-     * @param personalNumber
-     * @return
-     * @throws logic.LogicException
+     * @param personalNumber un string con el número de personal que se desea buscar
+     * @return un booleano que indica si existe o no un registro en las solicitudes de cuentas uv con el mismo número de personal
+     * @throws LogicException cuando no existe conexión con la base de datos
      */
     
     @Override

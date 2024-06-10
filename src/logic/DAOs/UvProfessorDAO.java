@@ -95,11 +95,11 @@ public class UvProfessorDAO implements UvProfessorManagerInterface{
         return count;
     }
     
-    /**
+    /**Obtiene el nombre de la facultad a la que pertenece un profesor UV basado en el id del usuario
      *
-     * @param idUser
-     * @return
-     * @throws LogicException
+     * @param idUser es el id del usuario correspondiente al Profesor
+     * @return Un String que contiene el nombre de la facultad a la que pertenece
+     * @throws LogicException Cuando no existe conexión con la base de datos
      */
     @Override
     public String getDepartmentNameBelonging(int idUser) throws LogicException {
@@ -121,11 +121,11 @@ public class UvProfessorDAO implements UvProfessorManagerInterface{
         return departmentName; 
     }
 
-    /**
+    /** Realiza el conteo de la cantidad de profesores que han participado en una colaboración por región de la UV
      *
-     * @param region
-     * @return
-     * @throws LogicException
+     * @param region es la región por la cual se filtra la búsqueda
+     * @return un entero que indica la cantidad de profesores que han realizado una colaboración por región
+     * @throws LogicException cuando no existe conexión con la base de datos
      */
     @Override
     public int getCollaborationCountByProfessorRegion(String region) throws LogicException {
@@ -152,11 +152,11 @@ public class UvProfessorDAO implements UvProfessorManagerInterface{
         return collaborationCount;
     }
 
-    /**
+    /** Realiza el conteo de la cantidad de profesores que han participado en una colaboración por área académica de la UV
      *
-     * @param idAcademicArea
-     * @return
-     * @throws LogicException
+     * @param idAcademicArea el id del área académica por la cual se filtrará la busqueda
+     * @return un entero con la cantidad de profesores que han colaborado y pertenecen al área académica
+     * @throws LogicException Cuando no existe conexión con la base de datos
      */
     @Override
     public int getCollaborationCountByProfessorAcademicArea(int idAcademicArea) throws LogicException {

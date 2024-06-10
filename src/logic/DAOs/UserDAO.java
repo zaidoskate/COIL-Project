@@ -17,11 +17,11 @@ import java.sql.Statement;
 public class UserDAO implements UserManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
     
-    /**
+    /** Agrega un usuario a la base de datos
      *
-     * @param user
-     * @return
-     * @throws LogicException
+     * @param user una instancia de la clase User con los datos correspondientes al nuevo usuario
+     * @return un entero que indica la cantidad de filas que se han insertado en la tabla de la base de datos
+     * @throws LogicException cuando no existe conexión con la base de datos
      */
     @Override
     public int addUser(User user)  throws LogicException {
@@ -47,20 +47,20 @@ public class UserDAO implements UserManagerInterface {
         return result;
     }
     
-    /**
+    /** Recupera los datos de un usuario a partir de su propio Id
      *
-     * @param id
-     * @return
-     * @throws LogicException
+     * @param userId el id del usuario que se busca recuperar
+     * @return Una instancia de la clase User con los datos del usuario que se recuperó de la base de datos
+     * @throws LogicException cuando no existe conexión con la base de datos
      */
     @Override
-    public User getUserById(int id) throws LogicException  {
+    public User getUserById(int userId) throws LogicException  {
         String query = "SELECT * FROM Usuario WHERE idUsuario = ?";
         User userResult = new User();
         try{
             Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, id);
+            statement.setInt(1, userId);
             ResultSet result = statement.executeQuery();
             while(result.next()) {
                 userResult.setIdUser(result.getInt("idUsuario"));
