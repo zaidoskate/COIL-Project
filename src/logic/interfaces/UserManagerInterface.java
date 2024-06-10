@@ -32,4 +32,6 @@ public interface UserManagerInterface {
      * @throws LogicException
      */
     public String getUserTypeById(int id) throws LogicException;
+    
+    public boolean checkEmailRegistered(String email) throws LogicException;
 }

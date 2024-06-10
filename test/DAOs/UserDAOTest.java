@@ -55,4 +55,15 @@ public class UserDAOTest {
         String typeUserCurrent = userDAO.getUserTypeById(id);
         assertEquals(typeUserExpected, typeUserCurrent);
     }
+    
+    @Test
+    public void testCheckEmailRegisteredSuccess() throws LogicException {
+        UserDAO userDAO = new UserDAO();
+        try {
+            boolean result = userDAO.checkEmailRegistered("jesustlapahernandez@gmail.com");
+            assertTrue(result);
+        } catch(LogicException logicException) {
+            fail("Error al consultar si el correo ya existe");
+        }
+    }
 }

@@ -16,6 +16,7 @@ import logic.DAOs.DepartmentDAO;
 import logic.DAOs.ExternalAccountRequestDAO;
 import logic.domain.University;
 import logic.DAOs.UniversityDAO;
+import logic.DAOs.UserDAO;
 import logic.DAOs.UvAccountRequestDAO;
 import logic.LogicException;
 import logic.domain.Department;
@@ -28,6 +29,7 @@ public class AccountRequestController implements Initializable {
     private static final DepartmentDAO DEPARTMENT_DAO = new DepartmentDAO();
     private static final UvAccountRequestDAO UV_ACCOUNT_REQUEST_DAO = new UvAccountRequestDAO();
     private static final ExternalAccountRequestDAO EXTERNAL_ACCOUNT_REQUEST_DAO = new ExternalAccountRequestDAO();
+    private static final UserDAO USER_DAO = new UserDAO();
     private ArrayList<University> universities;
     private ArrayList<Department> departments;
     private static final Logger LOG = Logger.getLogger(AccountRequestController.class);
@@ -132,7 +134,7 @@ public class AccountRequestController implements Initializable {
         }
         return true;
     }
-    private boolean validateEmail(String email) {
+    private boolean validateEmail(String email) throws LogicException {
         if( !DataValidation.validateNotBlanks(email)){
             Alerts.showWarningAlert("El correo es un campo obligatorio.");
             return false;
@@ -143,6 +145,10 @@ public class AccountRequestController implements Initializable {
         }
         if(!DataValidation.validateEmail(email)) {
             Alerts.showWarningAlert("El correo tiene formato inválido.");
+            return false;
+        }
+        if(USER_DAO.checkEmailRegistered(email)) {
+            Alerts.showWarningAlert("El correo ingresado es utilizado por otra cuenta");
             return false;
         }
         return true;
@@ -163,7 +169,7 @@ public class AccountRequestController implements Initializable {
         return true;
     }
     
-    private boolean makeValidations() {
+    private boolean makeValidations() throws LogicException{
         String name = DataValidation.trimUnnecesaryBlanks(txtFieldName.getText());
         String lastName = DataValidation.trimUnnecesaryBlanks(txtFieldLastName.getText());
         String email = DataValidation.trimUnnecesaryBlanks(txtFieldEmail.getText()); 
@@ -225,8 +231,13 @@ public class AccountRequestController implements Initializable {
         String personalNumber = DataValidation.trimUnnecesaryBlanks(txtFieldPersonalNumber.getText()); 
         int result = 0;
         
-        if(!makeValidations()) {
-            return;
+        try {
+            if(!makeValidations()) {
+                return;
+            }
+        } catch(LogicException logicException) {
+            LOG.error(logicException);
+            Alerts.displayAlertLogicException(logicException);
         }
         
         if (cmbBoxUniversities.getSelectionModel().getSelectedIndex() == 0) {
