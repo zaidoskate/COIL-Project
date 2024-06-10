@@ -32,4 +32,7 @@ public interface UvAccountRequestManagerInterface {
      * @throws LogicException
      */
     public ArrayList<UvAccountRequest> getUvAccountRequests() throws LogicException;
+    
+    public boolean checkEmailRegistered(String email) throws LogicException;
+    public boolean checkPersonalNumberRegistered(String personalNumber) throws LogicException;
 }
