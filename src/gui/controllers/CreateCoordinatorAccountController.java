@@ -76,7 +76,7 @@ public class CreateCoordinatorAccountController implements Initializable {
         return true;
     }
 
-    private static boolean validateEmailField(String email) {
+    private static boolean validateEmailField(String email) throws LogicException {
         if( !DataValidation.validateNotBlanks(email)){
             Alerts.showWarningAlert("El correo es un campo obligatorio.");
             return false;
@@ -87,6 +87,10 @@ public class CreateCoordinatorAccountController implements Initializable {
         }
         if (!DataValidation.validateEmail(email)) {
             Alerts.showWarningAlert("Formato de correo invalido.");
+            return false;
+        }
+        if (USER_DAO.checkEmailRegistered(email)) {
+            Alerts.showWarningAlert("El correo ingresado pertenece a una cuenta existente");
             return false;
         }
         return true;
@@ -134,7 +138,7 @@ public class CreateCoordinatorAccountController implements Initializable {
         return true;
     }
     
-    private boolean makeValidations() {
+    private boolean makeValidations() throws LogicException {
         String name = DataValidation.trimUnnecesaryBlanks(txtFieldName.getText());
         String lastName = DataValidation.trimUnnecesaryBlanks(txtFieldLastname.getText());
         String email = DataValidation.trimUnnecesaryBlanks(txtFieldEmail.getText()); 
@@ -199,8 +203,13 @@ public class CreateCoordinatorAccountController implements Initializable {
     
     @FXML
     public void createAccount() {
-        if(!makeValidations()) {
-            return;
+        try {
+            if(!makeValidations()) {
+                return;
+            }
+        } catch(LogicException logicException) {
+            LOG.error(logicException);
+            Alerts.displayAlertLogicException(logicException);
         }
         String name = DataValidation.trimUnnecesaryBlanks(txtFieldName.getText());
         String lastName = DataValidation.trimUnnecesaryBlanks(txtFieldLastname.getText());
