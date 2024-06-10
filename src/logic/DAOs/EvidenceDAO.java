@@ -19,28 +19,38 @@ import logic.FileDownloader;
 import logic.LogicException;
 
 /**
- *
- * @author chuch
+ * Objeto de acceso a datos para manejar las operaciones relacionadas con la evidencia en la base de datos.
+ * Implementa la interfaz EvidenceManagerInterface.
+ * Proporciona métodos para subir, descargar y recuperar evidencias.
+ * 
+ * @autor chuch
  */
 public class EvidenceDAO implements EvidenceManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
     
+    /**
+     * Convierte un objeto Date a una cadena con el formato 'yyyy-MM-dd'.
+     * 
+     * @param date la fecha a convertir
+     * @return la cadena de fecha formateada
+     */
     private String parseDateToString(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         return formatter.format(date);
     }
 
     /**
-     *
-     * @param evidence
-     * @return
-     * @throws logic.LogicException
+     * Sube evidencia a la base de datos.
+     * 
+     * @param evidence el objeto Evidence que contiene los detalles de la evidencia a subir
+     * @return el número de filas afectadas por la consulta
+     * @throws LogicException si hay un problema de conexión a la base de datos o si el archivo no se encuentra
      */
     @Override
     public int uploadEvidence(Evidence evidence) throws LogicException {
         Connection connection;
         int result = 1;
-        String query = "INSERT INTO evidencia ( FolderEvidencia_idFolderEvidencia, nombre, autor, fechacreacion, archivo) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO evidencia (FolderEvidencia_idFolderEvidencia, nombre, autor, fechacreacion, archivo) VALUES (?, ?, ?, ?, ?)";
         try {
             connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
@@ -54,7 +64,7 @@ public class EvidenceDAO implements EvidenceManagerInterface {
             result = statement.executeUpdate();
             statement.close();
         } catch (SQLException sqlException) {
-            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+            throw new LogicException("No hay conexión, inténtelo de nuevo más tarde", sqlException);
         } catch (FileNotFoundException fileNotFoundException) {
             throw new LogicException("No existe tal archivo en la ruta especificada", fileNotFoundException);
         } finally {
@@ -64,11 +74,12 @@ public class EvidenceDAO implements EvidenceManagerInterface {
     }
 
     /**
-     *
-     * @param evidence
-     * @param outputPath
-     * @return
-     * @throws logic.LogicException
+     * Obtiene una evidencia de la base de datos y la guarda en la ruta especificada.
+     * 
+     * @param evidence el objeto Evidence que contiene los detalles de la evidencia a obtener
+     * @param outputPath la ruta donde se guardará el archivo descargado
+     * @return 1 si la descarga fue exitosa, -1 en caso contrario
+     * @throws LogicException si hay un problema de conexión a la base de datos, si el archivo no se encuentra, o si hay un problema de E/S
      */
     @Override
     public int obtainEvidence(Evidence evidence, String outputPath) throws LogicException {
@@ -96,10 +107,11 @@ public class EvidenceDAO implements EvidenceManagerInterface {
     }
     
     /**
-     *
-     * @param idCollaboration
-     * @return
-     * @throws LogicException
+     * Obtiene todas las evidencias asociadas a una colaboración específica.
+     * 
+     * @param idCollaboration el ID de la colaboración
+     * @return una lista de objetos Evidence asociados a la colaboración
+     * @throws LogicException si hay un problema de conexión a la base de datos
      */
     @Override
     public ArrayList<Evidence> getAllEvidencesByIdCollaboration(int idCollaboration) throws LogicException {
@@ -124,6 +136,13 @@ public class EvidenceDAO implements EvidenceManagerInterface {
         return collaborationEvidences;
     }
     
+    /**
+     * Obtiene todas las evidencias asociadas a un folder específico.
+     * 
+     * @param idFolder el ID del folder
+     * @return una lista de objetos Evidence asociados al folder
+     * @throws LogicException si hay un problema de conexión a la base de datos
+     */
     @Override
     public ArrayList<Evidence> getEvidencesByIdFolder(int idFolder) throws LogicException {
         ArrayList<Evidence> evidences = new ArrayList<>();
@@ -147,6 +166,13 @@ public class EvidenceDAO implements EvidenceManagerInterface {
         return evidences;
     }
     
+    /**
+     * Elimina una evidencia de la base de datos por su nombre.
+     * 
+     * @param name el nombre de la evidencia a eliminar
+     * @return el número de filas afectadas por la consulta
+     * @throws LogicException si hay un problema de conexión a la base de datos
+     */
     @Override
     public int deleteEvidenceByName(String name) throws LogicException {
         int result = 1;
@@ -158,7 +184,7 @@ public class EvidenceDAO implements EvidenceManagerInterface {
             result = statement.executeUpdate();
             statement.close();
         } catch (SQLException sqlException) {
-            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+            throw new LogicException("No hay conexión, inténtelo de nuevo más tarde", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }

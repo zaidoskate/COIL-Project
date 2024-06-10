@@ -22,10 +22,10 @@ public class CollaborationDAO implements CollaborationManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
     
     /**
-     *
-     * @param colaboration
-     * @return
-     * @throws LogicException
+     * Inserta una nueva colaboración en la base de datos.
+     * @param colaboration una Colaboración de la que se extraen el nombre, idioma y tema de interés.
+     * @return un entero que indica la cantidad de rows de la base de datos modificada, si es 0 falló, si es 1 funcionó.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public int addColaboration(Collaboration colaboration) throws LogicException{
@@ -51,10 +51,10 @@ public class CollaborationDAO implements CollaborationManagerInterface {
     }
     
     /**
-     *
-     * @param idCollaboration
-     * @return
-     * @throws LogicException
+     * Cambia la fecha de inicio de la colaboración en la base de datos.
+     * @param idCollaboration id de la colaboración a cambiar.
+     * @return un entero que indica el número de rows de la base de datos que han sido cambiadas.
+     * @throws LogicException cuando hay un problema de conexión con la base de datos.
      */
     @Override
     public int startCollaboration(int idCollaboration) throws LogicException {
@@ -76,10 +76,10 @@ public class CollaborationDAO implements CollaborationManagerInterface {
     }
     
     /**
-     *
-     * @param idCollaboration
-     * @return
-     * @throws LogicException
+     * Modifica la fecha de cierre de la colaboración.
+     * @param idCollaboration id de la colaboración a modificar en la base de datos.
+     * @return un entero con el número de rows en la base de datos que fueron modificadas. 1 funcionó correctamente.
+     * @throws LogicException cuando hay un problema de conexión con la base de datos.
      */
     @Override
     public int concludeCollaboration(int idCollaboration) throws LogicException {
@@ -101,19 +101,19 @@ public class CollaborationDAO implements CollaborationManagerInterface {
     }
     
     /**
-     *
-     * @param id
-     * @return
-     * @throws LogicException
+     * Obtener la información completa de una colaboración por su id.
+     * @param idCollaboration id de la colaboración a obtener.
+     * @return un objeto Colaboración, en el cuál va toda la información de la Colaboración obtenida.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
-    public Collaboration getColaborationById(int id) throws LogicException{
+    public Collaboration getColaborationById(int idCollaboration) throws LogicException{
         String query = "SELECT * FROM Colaboracion WHERE idColaboracion = ?";
         Collaboration colaboration = new Collaboration();
         try{
             Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, id);
+            statement.setInt(1, idCollaboration);
             ResultSet result = statement.executeQuery();
             while(result.next()) {
                 colaboration.setInterestTopic(result.getString("temaInteres"));
@@ -132,9 +132,9 @@ public class CollaborationDAO implements CollaborationManagerInterface {
     }
     
     /**
-     *
-     * @return
-     * @throws LogicException
+     * Obtener todas las colaboraciones.
+     * @return ArrayList de colaboraciones obtenidas.
+     * @throws LogicException cuando hay un problema con la conexión a la base de datos.
      */
     @Override
     public ArrayList<Collaboration> getAllCollaborations() throws LogicException{
@@ -163,9 +163,9 @@ public class CollaborationDAO implements CollaborationManagerInterface {
     }
     
     /**
-     *
-     * @return
-     * @throws LogicException
+     * Obtener las colaboraciones que no han concluido.
+     * @return ArrayList de colaboraciones activas obtenidas.
+     * @throws LogicException cuando hay un error con la conexión a la base de datos.
      */
     @Override
     public ArrayList<Collaboration> getActiveCollaborations() throws LogicException{
@@ -194,10 +194,10 @@ public class CollaborationDAO implements CollaborationManagerInterface {
     }
     
     /**
-     *
-     * @param idCollaboration
-     * @return
-     * @throws LogicException
+     * Concluir la colaboración modificando la fecha de cierre.
+     * @param idCollaboration id de la colaboración a modificar.
+     * @return  un entero con el número de rows en la base de datos que fueron modificadas. 1 funcionó correctamente.
+     * @throws LogicException cuando hay problema con la conexión a la base de datos.
      */
     @Override
     public int updateEndDateByIdCollaboration(int idCollaboration) throws LogicException {
@@ -218,10 +218,10 @@ public class CollaborationDAO implements CollaborationManagerInterface {
     }
     
     /**
-     *
-     * @param professorCollaborations
-     * @return
-     * @throws LogicException
+     * Obtener las colaboraciones concluidas de un profesor.
+     * @param professorCollaborations array de professorbelongstocollaboration que contiene los ids de colaboracion concluidas.
+     * @return ArrayList de colaboraciones concluidas obtenidas.
+     * @throws LogicException cuando hay un problema con la conexión a la base de datos.
      */
     @Override
     public ArrayList<Collaboration> getProfessorConcludedCollaborations(ArrayList<ProfessorBelongsToCollaboration> professorCollaborations) throws LogicException {

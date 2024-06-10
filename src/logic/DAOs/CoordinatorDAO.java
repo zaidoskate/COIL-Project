@@ -17,10 +17,10 @@ public class CoordinatorDAO implements CoordinatorManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
     
     /**
-     *
-     * @param coordinator
-     * @return
-     * @throws LogicException
+     * Insertar un nuevo coordinador en la base de datos
+     * @param coordinator Coordinador que incluye el id usuario
+     * @return un entero que indica la cantidad de rows de la base de datos modificada, si es 0 falló, si es 1 funcionó.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public int insertCoordinator(Coordinator coordinator) throws LogicException {
@@ -40,10 +40,10 @@ public class CoordinatorDAO implements CoordinatorManagerInterface {
     }
     
     /**
-     *
-     * @param idUser
-     * @return
-     * @throws LogicException
+     * Obtener el id de coordinador apartir del id de usuario.
+     * @param idUser id de usuario a consultar.
+     * @return un entero que indica el id del coordinador obtenido, si es 0 falló, si es mayor o igual a 1 funcionó.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public int getIdCoordinatorByIdUser(int idUser) throws LogicException {

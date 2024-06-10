@@ -18,10 +18,10 @@ public class CollaborationOfferCandidateDAO implements CollaborationOfferCandida
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
     
     /**
-     *
-     * @param collaborationOfferCandidate
-     * @return
-     * @throws LogicException
+     * Insertar un nuevo candidato de oferta de colaboración
+     * @param collaborationOfferCandidate Candidato a insertar
+     * @return  un entero con el número de rows en la base de datos que fueron modificadas. 1 funcionó correctamente.
+     * @throws LogicException cuando hay un problema con la conexión a la base de datos.
      */
     @Override
     public int InsertCollaborationOfferCandidate(CollaborationOfferCandidate collaborationOfferCandidate) throws LogicException {
@@ -43,11 +43,11 @@ public class CollaborationOfferCandidateDAO implements CollaborationOfferCandida
     }
     
     /**
-     *
-     * @param idUser
-     * @param idCollaborationOffer
-     * @return
-     * @throws LogicException
+     * Consultar si un profesor ya es candidato de una oferta.
+     * @param idUser id del profesor a consultar.
+     * @param idCollaborationOffer id de la colaboración a consultar.
+     * @return boolean que retorna true si ya se postuló o false en caso contrario.
+     * @throws LogicException cuando hay un problema con la base de datos.
      */
     @Override
     public boolean professorHasAppliedForOffer(int idUser, int idCollaborationOffer) throws LogicException {
@@ -73,19 +73,19 @@ public class CollaborationOfferCandidateDAO implements CollaborationOfferCandida
     }
     
     /**
-     *
-     * @param idCollaboration
-     * @return
-     * @throws LogicException
+     * Obtener los candidatos de una oferta en especifico.
+     * @param idCollaborationOffer id de la oferta a consultar.
+     * @return ArrayList de candidatos obtenidos.
+     * @throws LogicException cuando hay un problema con la base de datos.
      */
     @Override
-    public ArrayList<CollaborationOfferCandidate> GetCollaborationOfferCandidateByIdCollaborationOffer(int idCollaboration) throws LogicException {
+    public ArrayList<CollaborationOfferCandidate> GetCollaborationOfferCandidateByIdCollaborationOffer(int idCollaborationOffer) throws LogicException {
         String query = "SELECT * FROM candidatosofertacolaboracion WHERE idOfertaColaboracion = ?";
         ArrayList<CollaborationOfferCandidate> candidates = new ArrayList<>();
         try {
             Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, idCollaboration);
+            statement.setInt(1, idCollaborationOffer);
             ResultSet result = statement.executeQuery();
             while(result.next()) {
                 CollaborationOfferCandidate candidate = new CollaborationOfferCandidate();
@@ -102,10 +102,10 @@ public class CollaborationOfferCandidateDAO implements CollaborationOfferCandida
     }
 
     /**
-     *
-     * @param idOfferCollaboration
-     * @return
-     * @throws LogicException
+     * Eliminar una oferta de la base.
+     * @param idOfferCollaboration id de la oferta a eliminar.
+     * @return  un entero con el número de rows en la base de datos que fueron modificadas. 1 funcionó correctamente.
+     * @throws LogicException cuando hay un problema de conexión con la base de datos.
      */
     @Override
     public int deleteCollaborationOffer(int idOfferCollaboration) throws LogicException {

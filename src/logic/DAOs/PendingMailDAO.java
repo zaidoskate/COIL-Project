@@ -18,10 +18,10 @@ public class PendingMailDAO implements PendingMailManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
 
     /**
-     *
-     * @param pendingMail
-     * @return
-     * @throws LogicException
+     * Insertar un nuevo correo pendiente
+     * @param pendingMail contenido del correo, destino, asunto.
+     * @return un entero que indica la cantidad de rows de la base de datos modificada, si es 0 falló, si es 1 funcionó.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public int insertPendingMail(PendingMail pendingMail) throws LogicException {
@@ -44,10 +44,10 @@ public class PendingMailDAO implements PendingMailManagerInterface {
     }
 
     /**
-     *
-     * @param pendingMail
-     * @return
-     * @throws LogicException
+     * Eliminar un correo pendiente.
+     * @param pendingMail id correo a eliminar.
+     * @return un entero que indica la cantidad de rows de la base de datos modificada, si es 0 falló, si es 1 funcionó.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public int deletePendingMail(PendingMail pendingMail) throws LogicException {
@@ -67,10 +67,10 @@ public class PendingMailDAO implements PendingMailManagerInterface {
     }
 
     /**
-     *
-     * @param idUser
-     * @return
-     * @throws LogicException
+     * Obtener todos los correos pendientes que intentó mandar un coordinador.
+     * @param idUser id del coordinador.
+     * @return ArrayList de correos pendientes obtenidos.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public ArrayList<PendingMail> getPendingMailsByIdUser(int idUser) throws LogicException {

@@ -19,10 +19,10 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection(); 
     
     /**
-     *
-     * @param colaborationOffer
-     * @return
-     * @throws LogicException
+     * Insertar una nueva Oferta en la base.
+     * @param colaborationOffer un objeto colaboración que tiene toda la información de la oferta.
+     * @return un entero con el número de rows en la base de datos que fueron modificadas. 1 funcionó correctamente.
+     * @throws LogicException cuando hay un problema de conexión con la base de datos.
      */
     @Override
     public int insertColaborationOffer(CollaborationOffer colaborationOffer) throws LogicException{
@@ -50,10 +50,10 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
     }
 
     /**
-     *
-     * @param idCollaborationOffer
-     * @return
-     * @throws LogicException
+     * Eliminar una oferta de la base.
+     * @param idCollaborationOffer id de la oferta a eliminar.
+     * @return un entero con el número de rows en la base de datos que fueron modificadas. 1 funcionó correctamente.
+     * @throws LogicException cuando hay un problema de conexión con la base de datos.
      */
     @Override
     public int deleteCollaborationOffer(int idCollaborationOffer) throws LogicException {
@@ -73,11 +73,11 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
     }
     
     /**
-     *
-     * @param idCollaborationOffer
-     * @param decision
-     * @return
-     * @throws LogicException
+     * Cambiarle el estado a una Oferta ya sea Aprobada o Rechazada
+     * @param idCollaborationOffer id de la oferta a cambiar
+     * @param decision String que puede ser o Aprobada o Rechazada
+     * @return un entero con el número de rows en la base de datos que fueron modificadas. 1 funcionó correctamente.
+     * @throws LogicException cuando hay un problema de conexión con la base de datos.
      */
     @Override
     public int evaluateCollaborationOffer(int idCollaborationOffer, String decision) throws LogicException {
@@ -97,9 +97,9 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
     }
     
     /**
-     *
-     * @return
-     * @throws LogicException
+     * Obtener todas las ofertas aprobadas
+     * @return ArrayList de ofertas obtenidas
+     * @throws LogicException cuando hay un problema de conexión con la base de datos.
      */
     @Override
     public ArrayList<CollaborationOffer> getApprovedCollaborationOffer() throws LogicException {
@@ -132,9 +132,9 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
     }
     
     /**
-     *
-     * @return
-     * @throws LogicException
+     * Obtener las ofertas con estado Pendiente
+     * @return ArrayList de ofertas obtenidas
+     * @throws LogicException cuando hay un problema de conexión con la base de datos.
      */
     @Override
     public ArrayList<CollaborationOffer> getUnapprovedCollaborationOffer() throws LogicException {
@@ -167,10 +167,10 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
     }
 
     /**
-     *
-     * @param idUser
-     * @return
-     * @throws LogicException
+     * Obtener la oferta aprobada de un profesor en específico
+     * @param idUser id del profesor
+     * @return Una oferta obtenida
+     * @throws LogicException cuando hay un problema de conexión con la base de datos.
      */
     @Override
     public CollaborationOffer getProfessorApprovedOffer(int idUser) throws LogicException {
@@ -202,10 +202,10 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
     }
     
     /**
-     *
-     * @param idUser
-     * @return
-     * @throws LogicException
+     * Consultar si el profesor tiene una oferta con estado Aprobada o Pendiente
+     * @param idUser id del profesor a consultar
+     * @return boolean que devuelve true si el profesor tiene una oferta con esos estados o false en caso contrario
+     * @throws LogicException cuando hay un problema de conexión con la base de datos.
      */
     @Override
     public boolean professorHasOffer(int idUser) throws LogicException {

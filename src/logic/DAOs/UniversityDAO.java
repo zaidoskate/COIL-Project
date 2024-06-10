@@ -68,5 +68,27 @@ public class UniversityDAO implements UniversityManagerInterface {
         }
         return universitiesResult;
     }
+    
+    @Override
+    public boolean checkUniversityRegistered(String universityName) throws LogicException {
+        String query = "SELECT COUNT(*) as universidades FROM Universidad WHERE nombre = ?";
+        boolean universityExists = false;
+        try {
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, universityName);
+            ResultSet universities = statement.executeQuery();
+            if(universities.next()) {
+                if(universities.getInt("universidades") >= 1) {
+                    universityExists = true;
+                } 
+            }
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexión, inténtelo de nuevo más tarde", sqlException);
+        } finally {
+            DATABASE_CONNECTION.closeConnection();
+        }
+        return universityExists;
+    }
 
 }

@@ -49,7 +49,7 @@ public interface CollaborationManagerInterface {
      * @return
      * @throws LogicException
      */
-    Collaboration getColaborationById(int id) throws LogicException;
+    Collaboration getColaborationById(int idCollaboration) throws LogicException;
 
     /**
      *

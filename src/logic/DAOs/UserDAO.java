@@ -103,6 +103,7 @@ public class UserDAO implements UserManagerInterface {
         
     }
     
+    @Override
     public boolean checkEmailRegistered(String email) throws LogicException{
         String query = "SELECT COUNT(*) as cuentas FROM Usuario WHERE correo = ?";
         boolean emailExists = false;

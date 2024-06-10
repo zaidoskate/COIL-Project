@@ -60,12 +60,17 @@ public class UniversityRegistrationController implements Initializable {
         return true;
     }
     
-    private boolean makeValidations() {
+    private boolean makeValidations() throws LogicException {
         String universityName = DataValidation.trimUnnecesaryBlanks(txtFieldName.getText());
         String country = DataValidation.trimUnnecesaryBlanks(txtFieldCountry.getText());
         if(!DataValidation.validateName(universityName) || !DataValidation.validateLengthField(universityName, 45)) {
+            return false;
         }
         if(!DataValidation.validateName(country) || !DataValidation.validateLengthField(country, 45)) {
+            return false;
+        }
+        if(UNIVERSITY_DAO.checkUniversityRegistered(universityName)) {
+            return false;
         }
         return true;
     }
@@ -87,9 +92,14 @@ public class UniversityRegistrationController implements Initializable {
     }
     
     @FXML
-    private void saveUniversity() {        
-        if(!makeValidations()) {
-            return;
+    private void saveUniversity() { 
+        try {
+            if(!makeValidations()) {
+                return;
+            }
+        } catch(LogicException logicException) {
+            LOG.error(logicException);
+            Alerts.displayAlertLogicException(logicException);
         }
         String universityName = DataValidation.trimUnnecesaryBlanks(txtFieldName.getText());
         String country = DataValidation.trimUnnecesaryBlanks(txtFieldCountry.getText());

@@ -23,10 +23,10 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
     
     /**
-     *
-     * @param concludedCollaboration
-     * @return
-     * @throws LogicException
+     * Insertar una nueva colaboración concluida.
+     * @param concludedCollaboration Colaboración concluida que trae la calificación, si es visible o no, etc.
+     * @return un entero que indica la cantidad de rows de la base de datos modificada, si es 0 falló, si es 1 funcionó.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public int addConcludedCollaboration(ConcludedCollaboration concludedCollaboration) throws LogicException{
@@ -50,10 +50,10 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
     }
     
     /**
-     *
-     * @param concludedCollaboration
-     * @return
-     * @throws LogicException
+     * Modificar la visibilidad de la colaboración concluida.
+     * @param concludedCollaboration colaboración concluida que contiene su id.
+     * @return un entero que indica la cantidad de rows de la base de datos modificada, si es 0 falló, si es 1 funcionó.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public int updateVisibility(ConcludedCollaboration concludedCollaboration) throws LogicException{
@@ -74,10 +74,10 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
     }
     
     /**
-     *
-     * @param concludedCollaboration
-     * @return
-     * @throws LogicException
+     * Modificar la calificación de la colaboración concluida.
+     * @param concludedCollaboration colaboración concluida que incluye su id.
+     * @return un entero que indica la cantidad de rows de la base de datos modificada, si es 0 falló, si es 1 funcionó.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public int updateRating(ConcludedCollaboration concludedCollaboration) throws LogicException{
@@ -98,10 +98,10 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
     }
     
     /**
-     *
-     * @param concludedCollaboration
-     * @return
-     * @throws LogicException
+     * Cargar un binary stream como archivo a la base de datos para los certificados.
+     * @param concludedCollaboration colaboracion concluida que incluye su id.
+     * @return un entero que indica la cantidad de rows de la base de datos modificada, si es 0 falló, si es 1 funcionó.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public int uploadCertificates(ConcludedCollaboration concludedCollaboration) throws LogicException{
@@ -126,11 +126,11 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
     }
 
     /**
-     *
-     * @param concludedCollaboration
-     * @param outputPath
-     * @return
-     * @throws LogicException
+     * Descargar el archivo ZIP de constancias cargado.
+     * @param concludedCollaboration colaboración concluida que contiene su ID.
+     * @param outputPath ruta en el dispositivo local donde almacenar el archivo generado.
+     * @return un entero que indica la cantidad de rows de la base de datos modificada, si es 0 falló, si es 1 funcionó.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public int obtainCertificates(ConcludedCollaboration concludedCollaboration, String outputPath) throws LogicException{
@@ -158,10 +158,10 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
     }
     
     /**
-     *
-     * @param idCollaboration
-     * @return
-     * @throws LogicException
+     * Consultar si una colaboración concluida tiene constancias cargadas.
+     * @param idCollaboration id de la colaboracion concluida a consultar.
+     * @return boolean que retorna true si hay constancias cargadas.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public boolean hasCertificatesUploaded(int idCollaboration) throws LogicException {
@@ -186,9 +186,9 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
     }
 
     /**
-     *
-     * @return
-     * @throws LogicException
+     * Obtener todos los id de colaboracion y el usuario.
+     * @return ArrayList de colaboraciones concluidas obtenidas.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public ArrayList<ConcludedCollaboration> getConcludedCollaborations() throws LogicException{
@@ -213,9 +213,9 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
     }
     
     /**
-     *
-     * @return
-     * @throws LogicException
+     * Obtener las colaboraciones concluidas que sean visibles.
+     * @return ArrayList de colaboraciones concluidas obtenidas.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public ArrayList<ConcludedCollaboration> getConcludedCollaborationsByVisibility() throws LogicException {
@@ -239,6 +239,12 @@ public class ConcludedColaborationDAO implements ConcludedCollaborationManagerIn
         return concludedCollaborationsResult;
     }
     
+    /**
+     * Obtener una colaboración concluida por su id colaboración.
+     * @param idCollaboration id de la colaboración a consultar.
+     * @return Colaboración concluida obtenida.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
+     */
     @Override
     public ConcludedCollaboration getConcludedCollaborationById(int idCollaboration) throws LogicException {
         String query = "select * from colaboracionconcluida where Colaboracion_idColaboracion = ?";

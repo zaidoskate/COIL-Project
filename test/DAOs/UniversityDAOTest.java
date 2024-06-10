@@ -74,4 +74,16 @@ public class UniversityDAOTest {
         
         assertEquals(universitiesExpected, universitiesResult);
     }
+    
+    @Test
+    public void testCheckUniversityRegisteredSuccess() {
+        UniversityDAO universityDAO = new UniversityDAO();
+        boolean expectedResult = false;
+        try {
+            boolean result = universityDAO.checkUniversityRegistered("Michigan College");
+            assertEquals(expectedResult,result);
+        } catch(LogicException logicException) {
+            fail("No se ha podido consultar si la universidad ya esta registrada");
+        }
+    }
 }

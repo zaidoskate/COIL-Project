@@ -19,10 +19,10 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
     
     /**
-     *
-     * @param professorBelongsToCollaboration
-     * @return
-     * @throws LogicException
+     * Insertar un profesor perteneciente a una colaboración
+     * @param professorBelongsToCollaboration id colaboración, id profesor, id profesor espejo, estado de la colaboración
+     * @return entero que indica el número de rows afectadas, si es 1 fue exitoso.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public int addProfessorBelongsToCollaboration(ProfessorBelongsToCollaboration professorBelongsToCollaboration) throws LogicException {
@@ -46,10 +46,10 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
     } 
 
     /**
-     *
-     * @param idCollaboration
-     * @return
-     * @throws LogicException
+     * Eliminar profesores que pertenecen a una colaboración
+     * @param idCollaboration id de la colaboración a modificar.
+     * @return  entero que indica el número de rows afectadas, si es 1 fue exitoso.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public int deleteProfessorBelongsToCollaborationByIdCollaboration(int idCollaboration) throws LogicException {
@@ -70,10 +70,10 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
     }
 
     /**
-     *
-     * @param idUser
-     * @return
-     * @throws LogicException
+     * Obtener el professorBelongs donde el estado de la colaboración sea Iniciada o Pendiente y pertenecezca a un usuario.
+     * @param idUser id usuario a consultar.
+     * @return ProfessorBelongs con los ids de los profesores, id de la colaboración y el estado de la misma.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public ProfessorBelongsToCollaboration getProfessorPendingCollaboration(int idUser) throws LogicException {
@@ -99,11 +99,11 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
     }
 
     /**
-     *
-     * @param idCollaboration
-     * @param status
-     * @return
-     * @throws LogicException
+     * Cambiarle el estado a la colaboración
+     * @param idCollaboration id colaboración a modificar
+     * @param status estado a definir.
+     * @return  entero que indica el número de rows afectadas, si es 1 fue exitoso.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public int setStatusToCollaboration(int idCollaboration, String status) throws LogicException {
@@ -124,9 +124,9 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
     }
     
     /**
-     *
-     * @return
-     * @throws LogicException
+     * Obtener todas las colaboraciones (professorBelongs) con estado Espera.
+     * @return ArrayList de professorBelongs con ese estado obtenidos
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public ArrayList<ProfessorBelongsToCollaboration> getOnHoldCollaborations() throws LogicException {
@@ -153,10 +153,10 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
     }
     
     /**
-     *
-     * @param idUser
-     * @return
-     * @throws LogicException
+     * Obtener los professorBelongs de un profesor donde el estado de la colaboración es concluida.
+     * @param idUser id del profesor
+     * @return ArrayList de professorBelongs obtenido.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public ArrayList<ProfessorBelongsToCollaboration> getConcludedCollaborationsByIdUser(int idUser) throws LogicException {
@@ -185,10 +185,10 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
     }
 
     /**
-     *
-     * @param idCollaboration
-     * @return
-     * @throws LogicException
+     * Obtener correo del profesor por su id de colaboración
+     * @param idCollaboration id de colaboración a consultar.
+     * @return email del profesor obtenido.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public String getEmailProfessorByIdCollaboration(int idCollaboration) throws LogicException {
@@ -211,10 +211,10 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
     }
     
     /**
-     *
-     * @param idCollaboration
-     * @return
-     * @throws LogicException
+     * Obtener el estado de una colaboración.
+     * @param idCollaboration id de la colaboración.
+     * @return estado de la colaboración.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public String getStatusByIdCollaboration(int idCollaboration) throws LogicException {
@@ -241,7 +241,7 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
      *
      * @param idCollaboration
      * @return
-     * @throws LogicException
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public ArrayList<User> getProfessorsDataByCollaboration(int idCollaboration) throws LogicException {

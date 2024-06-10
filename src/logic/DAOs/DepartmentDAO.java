@@ -18,9 +18,9 @@ public class DepartmentDAO implements DepartmentManagerInterface{
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
     
     /**
-     *
-     * @return
-     * @throws LogicException
+     * Obtener el nombre de las regiones a las que pertenecen las facultades.
+     * @return ArrayList de regiones obtenidas.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public ArrayList<String> getRegionsNames() throws LogicException {
@@ -44,10 +44,10 @@ public class DepartmentDAO implements DepartmentManagerInterface{
     }
     
     /**
-     *
-     * @param region
-     * @return
-     * @throws LogicException
+     * Obtener facultades por región.
+     * @param region región a consultar.
+     * @return ArrayList de facultades obtenidas.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public ArrayList<Department> getDepartmentsByRegion(String region) throws LogicException {

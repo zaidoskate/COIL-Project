@@ -17,10 +17,10 @@ public class CredentialDAO implements CredentialManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
     
     /**
-     *
-     * @param credential
-     * @return
-     * @throws LogicException
+     * Insertar una nueva credencial de ingreso al sistema.
+     * @param credential credencial que incluye el username y el password.
+     * @return un entero que indica la cantidad de rows de la base de datos modificada, si es 0 falló, si es 1 funcionó.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public int insertCredential(Credential credential)  throws LogicException {
@@ -42,10 +42,10 @@ public class CredentialDAO implements CredentialManagerInterface {
     }
     
     /**
-     *
-     * @param credential
-     * @return
-     * @throws LogicException
+     * Obtener el id del usuario por sus credenciales de ingreso.
+     * @param credential username y password.
+     * @return un entero que indica el id de usuario de la credencial, si es -1 falló, si es mayor o igual a 1 funcionó.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public int getIdUserByCredential(Credential credential) throws LogicException {
@@ -70,10 +70,10 @@ public class CredentialDAO implements CredentialManagerInterface {
     }
     
     /**
-     *
-     * @param user
-     * @return
-     * @throws LogicException
+     * Verficar el número de credenciales con un username.
+     * @param user username a consultar.
+     * @return entero que indica la cantidad de credenciales con un username.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public int countCredentialsByUser(String user) throws LogicException {

@@ -23,10 +23,10 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
     
     /**
-     *
-     * @param finalDocumentation
-     * @return
-     * @throws LogicException
+     * Insertar la documentación final asociada a una colaboración.
+     * @param finalDocumentation id de la colaboración.
+     * @return entero con los rows afectados. Si es 1 fue exitoso.
+     * @throws LogicException cuando hay problemas de conexión con la base de datos.
      */
     @Override
     public int addFinalDocumentation(FinalDocumentation finalDocumentation) throws LogicException {
@@ -46,10 +46,10 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
     }
     
     /**
-     *
-     * @param finalDocumentation
-     * @return
-     * @throws LogicException
+     * Cargar feedback del profesor
+     * @param finalDocumentation id de la colaboración.
+     * @return entero con las rows afectadas. 1 si fue exitoso.
+     * @throws LogicException cuando hay problemas de conexión con la base.
      */
     @Override
     public int uploadProfessorFeedback(FinalDocumentation finalDocumentation) throws LogicException{
@@ -75,10 +75,10 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
     }
 
     /**
-     *
-     * @param finalDocumentation
-     * @return
-     * @throws LogicException
+     * Cargar feedback de profesor espejo.
+     * @param finalDocumentation id de la colaboración.
+     * @return entero con las rows afectadas. 1 si fue exitoso.
+     * @throws LogicException cuando hay problemas de conexión con la base de datos.
      */
     @Override
     public int uploadMirrorProfessorFeedback(FinalDocumentation finalDocumentation) throws LogicException {
@@ -104,10 +104,10 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
     }
 
     /**
-     *
-     * @param finalDocumentation
-     * @return
-     * @throws LogicException
+     * Cargar feedback de estudiantes.
+     * @param finalDocumentation id de la colaboración.
+     * @return entero con las rows afectadas. 1 si fue exitoso.
+     * @throws LogicException cuando hay problemas de conexión con la base de datos.
      */
     @Override
     public int uploadStudentsFeedback(FinalDocumentation finalDocumentation) throws LogicException {
@@ -133,10 +133,10 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
     }
 
     /**
-     *
-     * @param finalDocumentation
-     * @return
-     * @throws LogicException
+     * Cargar archivo de feedback de estudiantes espejo.
+     * @param finalDocumentation id colaboración.
+     * @return entero con las rows afectadas. 1 si fue exitoso.
+     * @throws LogicException cuando hay problemas de conexión con la base de datos.
      */
     @Override
     public int uploadMirrorStudentsFeedback(FinalDocumentation finalDocumentation) throws LogicException {
@@ -162,11 +162,11 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
     }
     
     /**
-     *
-     * @param finalDocumentation
-     * @param outputPath
-     * @return
-     * @throws LogicException
+     * Descargar feedback del profesor.
+     * @param finalDocumentation id de la colaboración.
+     * @param outputPath ruta de descarga del archivo generado.
+     * @return entero que indica si la descarga fue exitosa. 1 si fue exitoso.
+     * @throws LogicException cuando hay problemas de conexión con la base de datos.
      */
     @Override
     public int obtainProfessorFeedback(FinalDocumentation finalDocumentation, String outputPath) throws LogicException {
@@ -196,9 +196,9 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
     /**
      *
      * @param finalDocumentation
-     * @param outputPath
-     * @return
-     * @throws LogicException
+     * @param outputPath ruta de descarga del archivo generado.
+     * @return entero que indica si la descarga fue exitosa. 1 si fue exitoso.
+     * @throws LogicException cuando hay problemas de conexión con la base de datos.
      */
     @Override
     public int obtainMirrorProfessorFeedback(FinalDocumentation finalDocumentation, String outputPath) throws LogicException {
@@ -228,9 +228,9 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
     /**
      *
      * @param finalDocumentation
-     * @param outputPath
-     * @return
-     * @throws LogicException
+     * @param outputPath ruta de descarga del archivo generado.
+     * @return entero que indica si la descarga fue exitosa. 1 si fue exitoso.
+     * @throws LogicException cuando hay problemas de conexión con la base de datos.
      */
     @Override
     public int obtainStudentsFeedback(FinalDocumentation finalDocumentation, String outputPath) throws LogicException {
@@ -258,11 +258,11 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
     }
 
     /**
-     *
-     * @param finalDocumentation
-     * @param outputPath
-     * @return
-     * @throws LogicException
+     * Descargar feedback de estudiantes espejo.
+     * @param finalDocumentation id colaboración a consultar.
+     * @param outputPath ruta de descarga del archivo generado.
+     * @return entero que indica si la descarga fue exitosa. 1 si fue exitoso.
+     * @throws LogicException cuando hay problemas de conexión con la base de datos.
      */
     @Override
     public int obtainMirrorStudentsFeedback(FinalDocumentation finalDocumentation, String outputPath) throws LogicException {
@@ -290,11 +290,11 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
     }
     
     /**
-     *
-     * @param fileType
-     * @param idCollaboration
-     * @return
-     * @throws LogicException
+     * eliminar un archivo cargado de la base de datos.
+     * @param fileType tipo de archivo a eliminar.
+     * @param idCollaboration id colaboración a borrar archivo.
+     * @return entero que indica si la descarga fue exitosa. 1 si fue exitoso.
+     * @throws LogicException cuando hay problemas de conexión con la base de datos.
      */
     @Override
     public int deleteUploadedFile(String fileType, int idCollaboration) throws LogicException {
@@ -314,10 +314,10 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
     }
     
     /**
-     *
-     * @param idCollaboration
-     * @return
-     * @throws LogicException
+     * Consultar si la colaboración está registrada en la tabla de documentación final
+     * @param idCollaboration id de colaboración a consultar.
+     * @return boolean que retorna true si la colaboracion existe en la tabla de documentación final.
+     * @throws LogicException cuando hay problemas de conexión con la base de datos.
      */
     @Override
     public boolean isCollaborationRegistrated(int idCollaboration) throws LogicException {
@@ -341,11 +341,11 @@ public class FinalDocumentationDAO implements FinalDocumentationManagerInterface
     }
     
     /**
-     *
-     * @param fileType
-     * @param idCollaboration
-     * @return
-     * @throws LogicException
+     * Consultar si el tipo de archivo tiene un archivo cargado.
+     * @param fileType tipo de archivo, ya sea Syllabus, listas de estudiantes.
+     * @param idCollaboration id colaboración a consultar.
+     * @return boolean que retorna true si hay un archivo cargado.
+     * @throws LogicException cuando hay problemas de conexión con la base de datos.
      */
     @Override
     public boolean hasFileUploaded(String fileType, int idCollaboration) throws LogicException {

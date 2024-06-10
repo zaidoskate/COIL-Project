@@ -27,10 +27,10 @@ public class EvaluationDAO implements EvaluationManagerInterface {
     }
     
     /**
-     *
-     * @param evaluation
-     * @return
-     * @throws LogicException
+     * Insertar una nueva evaluación para oferta aprobada
+     * @param evaluation datos de la evaluación como id de la oferta, coordinador que evaluó.
+     * @return  un entero que indica la cantidad de rows de la base de datos modificada, si es 0 falló, si es 1 funcionó.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public int insertEvaluationForApprovedOffer(Evaluation evaluation) throws LogicException {
@@ -52,10 +52,10 @@ public class EvaluationDAO implements EvaluationManagerInterface {
     }
     
     /**
-     *
-     * @param evaluation
-     * @return
-     * @throws LogicException
+     * Insertar una evaluación para una oferta rechazada (incluye motivo).
+     * @param evaluation información de la evaluación a insertar.
+     * @return un entero que indica la cantidad de rows de la base de datos modificada, si es 0 falló, si es 1 funcionó.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public int insertEvaluationForDeclinedOffer(Evaluation evaluation) throws LogicException {
@@ -78,10 +78,10 @@ public class EvaluationDAO implements EvaluationManagerInterface {
     }
     
     /**
-     *
-     * @param idCollaborationOffer
-     * @return
-     * @throws LogicException
+     * Eliminar una evaluación.
+     * @param idCollaborationOffer id de la oferta registrada en la evaluación.
+     * @return un entero que indica la cantidad de rows de la base de datos modificada, si es 0 falló, si es 1 funcionó.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public int deleteEvaluation(int idCollaborationOffer) throws LogicException {
@@ -101,10 +101,10 @@ public class EvaluationDAO implements EvaluationManagerInterface {
     }
 
     /**
-     *
-     * @param idOfferCollaboration
-     * @return
-     * @throws LogicException
+     * Obtener la evaluación de una oferta.
+     * @param idOfferCollaboration id de la oferta.
+     * @return Evaluación hecha a la oferta.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public Evaluation getEvaluationByIdOfferCollaboration(int idOfferCollaboration) throws LogicException {
@@ -130,10 +130,10 @@ public class EvaluationDAO implements EvaluationManagerInterface {
     }
     
     /**
-     *
-     * @param idCoordinator
-     * @return
-     * @throws LogicException
+     * Obtener las evaluaciones hechas por un coordinador.
+     * @param idCoordinator id del coordinador a consultar.
+     * @return ArrayList de evaluaciones hechas por el coordinador.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public ArrayList<Evaluation> getEvaluationByIdCoordinator(int idCoordinator) throws LogicException{
