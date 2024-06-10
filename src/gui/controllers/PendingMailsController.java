@@ -73,7 +73,7 @@ public class PendingMailsController implements Initializable {
             }
             if(result == true) {
                 deletePendingMailFromDB(pendingMailSelected);
-                Alerts.showInformationAlert("Correo enviado", "El correo se ha reenviado con exito a su destino.");
+                Alerts.showInformationAlert("Correo enviado", "El correo se ha reenviado con éxito a su destino.");
                 loadPendingMails();
             } else {
                 Alerts.showWarningAlert("El correo no se ha enviado a su destino.");

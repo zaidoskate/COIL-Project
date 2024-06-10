@@ -77,25 +77,25 @@ public class ConcludeCollaborationController implements Initializable {
             case "Feedback profesor":
                 finalDocumentation.setProfessorFeedback(fileToUpload.getPath());
                 if(FINAL_DOCUMENTATION_DAO.uploadProfessorFeedback(finalDocumentation) == 1) {
-                    Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito!");
+                    Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito");
                 }
                 break;
             case "Feedback estudiantado":
                 finalDocumentation.setStudentsFeedback(fileToUpload.getPath());
                 if(FINAL_DOCUMENTATION_DAO.uploadStudentsFeedback(finalDocumentation) == 1) {
-                    Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito!");
+                    Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito");
                 }
                 break;
             case "Feedback profesor espejo":
                 finalDocumentation.setMirrorProfessorFeedback(fileToUpload.getPath());
                 if(FINAL_DOCUMENTATION_DAO.uploadMirrorProfessorFeedback(finalDocumentation) == 1) {
-                    Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito!");
+                    Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito");
                 }
                 break;
             case "Feedback estudiantado espejo":
                 finalDocumentation.setMirrorStudentsFeedback(fileToUpload.getPath());
                 if(FINAL_DOCUMENTATION_DAO.uploadMirrorStudentsFeedback(finalDocumentation) == 1) {
-                    Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito!");
+                    Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito");
                 }
                 break;
             default:
@@ -223,22 +223,22 @@ public class ConcludeCollaborationController implements Initializable {
                 switch (selectedFileType) {
                     case "Feedback profesor":
                         if(FINAL_DOCUMENTATION_DAO.deleteUploadedFile("feedbackProfesor", COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
-                            Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito!");
+                            Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito");
                         }
                         break;
                     case "Feedback estudiantado":
                         if(FINAL_DOCUMENTATION_DAO.deleteUploadedFile("feedbackEstudiantado", COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
-                            Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito!");
+                            Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito");
                         }
                         break;
                     case "Feedback profesor espejo":
                         if(FINAL_DOCUMENTATION_DAO.deleteUploadedFile("feedbackProfesorEspejo", COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
-                            Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito!");
+                            Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito");
                         }
                         break;
                     case "Feedback estudiantado espejo":
                         if(FINAL_DOCUMENTATION_DAO.deleteUploadedFile("feedbackEstudiantadoEspejo", COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
-                            Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito!");
+                            Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito");
                         }
                         break;
                     default:

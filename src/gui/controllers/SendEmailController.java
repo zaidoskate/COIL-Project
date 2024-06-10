@@ -52,9 +52,9 @@ public class SendEmailController implements Initializable {
         if(result == true) {
             EmailNotification.getInstance().emailSent();
             EmailNotification.getInstance().setEmailBody(this.txtAreaMessage.getText());
-            Alerts.showInformationAlert("Exito", EmailNotification.getInstance().getMessageSuccess());
+            Alerts.showInformationAlert("Éxito", EmailNotification.getInstance().getMessageSuccess());
         } else {
-            Alerts.showWarningAlert("Ha ocurrido un error al enviar el correo, Intentalo de nuevo mas tarde.");
+            Alerts.showWarningAlert("Ha ocurrido un error al enviar el correo. Inténtelo de nuevo más tarde.");
         }
         Stage stage = (Stage) txtAreaMessage.getScene().getWindow();
         stage.close();

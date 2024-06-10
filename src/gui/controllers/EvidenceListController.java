@@ -105,7 +105,7 @@ public class EvidenceListController implements Initializable {
                 evidence.setName(evidenceName);
                 try {
                     if (EVIDENCE_DAO.obtainEvidence(evidence, downloadPath.toString()) == 1) {
-                        Alerts.showInformationAlert("Mensaje", "Evidencia descargada con exito");
+                        Alerts.showInformationAlert("Mensaje", "Evidencia descargada con éxito");
                     }
                     else {
                         System.out.println("Hola");

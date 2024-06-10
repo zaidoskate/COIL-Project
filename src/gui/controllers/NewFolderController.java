@@ -83,14 +83,14 @@ public class NewFolderController implements Initializable{
             evidenceFolder.setCreationDate(formattedDate);
             try {
                 EVIDENCE_FOLDER_DAO.insertEvidenceFolder(evidenceFolder);
-                Alerts.showInformationAlert("Exito", "Se ha creado el folder con exito.");
+                Alerts.showInformationAlert("Exito", "Se ha creado el folder con éxito.");
                 previusMenu();
             } catch(LogicException logicException) {
                 LOG.error(logicException);
                 Alerts.displayAlertLogicException(logicException);
             }
         } else {
-            Alerts.showWarningAlert("No se ha podido crear el folder deseado, intentalo mas tarde.");
+            Alerts.showWarningAlert("No se ha podido crear el folder deseado, inténtelo mas tarde.");
         }
     }
     

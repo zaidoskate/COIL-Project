@@ -74,7 +74,7 @@ public class ListConcludedCollaborationsController implements Initializable{
                 Alerts.displayAlertIOException();
             }
         } else {
-            Alerts.showWarningAlert("No se ha seleccionado ninguna colaboracion.");
+            Alerts.showWarningAlert("No se ha seleccionado ninguna colaboración.");
         }
     }
 }

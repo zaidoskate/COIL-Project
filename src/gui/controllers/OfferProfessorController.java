@@ -147,7 +147,7 @@ public class OfferProfessorController implements Initializable {
                 Stage stage = (Stage) node.getScene().getWindow();
                 stage.close();
             } else {
-                Alerts.showInformationAlert("Mensaje", "Actualmente tiene una oferta publicada o en aprobacion");
+                Alerts.showInformationAlert("Mensaje", "Actualmente tiene una oferta publicada o en evaluación");
             }
         } catch(LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);

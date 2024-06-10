@@ -74,12 +74,15 @@ public class RegistrateCollaborationController implements Initializable {
         boolean validName = true;
         if(!DataValidation.validateNotBlanks(txtFieldCollaborationName.getText())){
             validName = false;
+            Alerts.showWarningAlert("El nombre de la colaboración no puede estar vacío");
         }
         if(!DataValidation.validateWord(txtFieldCollaborationName.getText())) {
             validName = false;
+            Alerts.showWarningAlert("El nombre de la colaboración deben ser palabras válidas, evite el uso de caracteres especiales y el uso de solo números");
         }
         if(!DataValidation.validateLengthField(txtFieldCollaborationName.getText(), 45)) {
             validName = false;
+            Alerts.showWarningAlert("El nombre de la colaboración excede la longitud máxima permitida, procure no extenderse más de 45 caracteres");
         }
         return validName;
     }
@@ -122,8 +125,6 @@ public class RegistrateCollaborationController implements Initializable {
                     }
                 }
                 Alerts.showWarningAlert("Ha ocurrido un problema al aceptar al candidato");
-            } else {
-                Alerts.showWarningAlert("Proporcione un nombre válido para la colaboración");
             }
         } catch (LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);

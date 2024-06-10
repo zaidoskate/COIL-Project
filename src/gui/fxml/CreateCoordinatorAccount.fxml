@@ -37,7 +37,7 @@
       </Button>
       <TextField fx:id="txtFieldName" layoutX="73.0" layoutY="140.0" promptText="Jesus" styleClass="text-field-accountRequest" />
       <TextField fx:id="txtFieldLastname" layoutX="73.0" layoutY="213.0" promptText="Hernández" styleClass="text-field-accountRequest" />
-      <TextField fx:id="txtFieldEmail" layoutX="73.0" layoutY="282.0" promptText="ejemplo@email.com" styleClass="text-field-accountRequest" />
+      <TextField fx:id="txtFieldEmail" layoutX="73.0" layoutY="282.0" promptText="example@domain.com" styleClass="text-field-accountRequest" />
       <TextField fx:id="txtFieldUsername" layoutX="371.0" layoutY="177.0" styleClass="text-field-accountRequest" />
       <TextField fx:id="txtFieldPassword" layoutX="371.0" layoutY="247.0" styleClass="text-field-accountRequest" />
       <Label layoutX="73.0" layoutY="114.0" text="Nombre:" />
