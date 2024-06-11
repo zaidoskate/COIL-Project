@@ -238,9 +238,9 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
 
     
     /**
-     *
-     * @param idCollaboration
-     * @return
+     * Obtener la información de un profesor apartir de su colaboración linkeada en ProfessorBelongs
+     * @param idCollaboration id de la colaboración a consultar
+     * @return ArrayList de Usuarios obtenidos
      * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override

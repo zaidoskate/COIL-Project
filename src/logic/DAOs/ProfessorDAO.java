@@ -18,10 +18,10 @@ public class ProfessorDAO implements ProfessorManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
     
     /**
-     *
-     * @param professor
-     * @return
-     * @throws LogicException
+     * Insertar un nuevo profesor en la base de datos.
+     * @param professor id usuario del profesor
+     * @return entero con las rows afectadas en la query, si retorna 1 fue exitoso.
+     * @throws LogicException cuando hay problemas de conexión con la base de datos.
      */
     @Override
     public int insertProfessor(Professor professor) throws LogicException {
@@ -41,10 +41,10 @@ public class ProfessorDAO implements ProfessorManagerInterface {
     }
     
     /**
-     *
-     * @param idUser
-     * @return
-     * @throws LogicException
+     * Obtener la universidad de un profesor, si el profesor es UV le asigna Universidad Veracruzana
+     * @param idUser id usuario para consultar.
+     * @return ArrayList de String que contiene el nombre de la universidad y el pais al que pertenece.
+     * @throws LogicException cuando se presenta un problema de conexión con la base de datos.
      */
     @Override
     public ArrayList<String> getUniversityFromAProfessor(int idUser) throws LogicException {
