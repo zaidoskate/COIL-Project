@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.ResultSet;
 import java.sql.Blob;
 import java.text.SimpleDateFormat;
@@ -63,15 +64,12 @@ public class EvidenceDAO implements EvidenceManagerInterface {
             statement.setBinaryStream(5, fileInputStream, (int) evidencePDF.length());
             result = statement.executeUpdate();
             statement.close();
-        } catch (SQLException sqlException) {
-            if (sqlException.getSQLState().equals("08001")) {
-                throw new LogicException("No hay conexión, inténtelo de nuevo más tarde", sqlException);
-            } else if (sqlException.getSQLState().equals("23505")) { 
-                throw new LogicException("El nombre de la evidencia ya existe, prueba con otro", sqlException);
-            }
-            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } catch (SQLIntegrityConstraintViolationException sqlConstraintException) {
+            throw new LogicException("El nombre de la evidencia ya existe, prueba con otro", sqlConstraintException);
         } catch (FileNotFoundException fileNotFoundException) {
             throw new LogicException("No existe tal archivo en la ruta especificada", fileNotFoundException);
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexión inténtelo de nuevo más tarde", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }

@@ -63,13 +63,14 @@ public class UniversityRegistrationController implements Initializable {
     private boolean makeValidations() throws LogicException {
         String universityName = DataValidation.trimUnnecesaryBlanks(txtFieldName.getText());
         String country = DataValidation.trimUnnecesaryBlanks(txtFieldCountry.getText());
-        if(!DataValidation.validateName(universityName) || !DataValidation.validateLengthField(universityName, 45)) {
+        if(!validateUniversityName(universityName)) {
             return false;
         }
-        if(!DataValidation.validateName(country) || !DataValidation.validateLengthField(country, 45)) {
+        if(!validateCountryName(country)) {
             return false;
         }
         if(UNIVERSITY_DAO.checkUniversityRegistered(universityName)) {
+            Alerts.showWarningAlert("Universidad ya registrada");
             return false;
         }
         return true;

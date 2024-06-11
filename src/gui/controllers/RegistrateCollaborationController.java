@@ -76,7 +76,7 @@ public class RegistrateCollaborationController implements Initializable {
             validName = false;
             Alerts.showWarningAlert("El nombre de la colaboración no puede estar vacío");
         }
-        if(!DataValidation.validateWord(txtFieldCollaborationName.getText())) {
+        if(!DataValidation.validateName(txtFieldCollaborationName.getText())) {
             validName = false;
             Alerts.showWarningAlert("El nombre de la colaboración deben ser palabras válidas, evite el uso de caracteres especiales y el uso de solo números");
         }
