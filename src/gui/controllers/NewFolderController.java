@@ -2,7 +2,6 @@ package gui.controllers;
 
 import gui.Alerts;
 import gui.DataValidation;
-import gui.SessionManager;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -32,7 +31,7 @@ public class NewFolderController implements Initializable{
         
     }
     
-    private boolean makeValidations() {
+    private boolean makeValidations() throws LogicException {
         String nameFolder = DataValidation.trimUnnecesaryBlanks(txtFieldName.getText());
         String description = DataValidation.trimUnnecesaryBlanks(txtAreaDescription.getText());
         
@@ -60,6 +59,10 @@ public class NewFolderController implements Initializable{
             Alerts.showWarningAlert("La descripción del folder tiene formato incorrecto.");
             return false;
         }
+        if(EVIDENCE_FOLDER_DAO.checkEvidenceFolderNameByCollaboration(nameFolder, CURRENT_COLLABORATION.getIdCollaboration()) == 1) {
+            Alerts.showWarningAlert("Ya existe un folder con el mismo nombre, prueba con otro.");
+            return false;
+        }
         return true;
     }
     
@@ -70,28 +73,33 @@ public class NewFolderController implements Initializable{
     }
     @FXML
     private void saveFolder() {
-        if(makeValidations()) {
-            EvidenceFolder evidenceFolder = new EvidenceFolder();
-            evidenceFolder.setDescription(txtAreaDescription.getText());
-            evidenceFolder.setIdCollaboration(CURRENT_COLLABORATION.getIdCollaboration());
-            evidenceFolder.setName(txtFieldName.getText());
-            
-            LocalDate currentDate = LocalDate.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            String formattedDate = currentDate.format(formatter);
-            
-            evidenceFolder.setCreationDate(formattedDate);
-            try {
-                EVIDENCE_FOLDER_DAO.insertEvidenceFolder(evidenceFolder);
-                Alerts.showInformationAlert("Exito", "Se ha creado el folder con éxito.");
-                previusMenu();
-            } catch(LogicException logicException) {
-                LOG.error(logicException);
-                Alerts.displayAlertLogicException(logicException);
+        try {
+            if(!makeValidations()) {
+                return;
             }
-        } else {
-            Alerts.showWarningAlert("No se ha podido crear el folder deseado, inténtelo mas tarde.");
+        } catch(LogicException logicException) {
+            LOG.error(logicException);
+            Alerts.displayAlertLogicException(logicException);
         }
+        EvidenceFolder evidenceFolder = new EvidenceFolder();
+        evidenceFolder.setDescription(txtAreaDescription.getText());
+        evidenceFolder.setIdCollaboration(CURRENT_COLLABORATION.getIdCollaboration());
+        evidenceFolder.setName(txtFieldName.getText());
+            
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = currentDate.format(formatter);
+            
+        evidenceFolder.setCreationDate(formattedDate);
+        try {
+            EVIDENCE_FOLDER_DAO.insertEvidenceFolder(evidenceFolder);
+            Alerts.showInformationAlert("Exito", "Se ha creado el folder con éxito.");
+            previusMenu();
+        } catch(LogicException logicException) {
+            LOG.error(logicException);
+            Alerts.displayAlertLogicException(logicException);
+        }
+        
     }
     
 }

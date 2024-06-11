@@ -81,4 +81,27 @@ public class EvidenceFolderDAO implements EvidenceFolderManagerInterface {
         }
         return evidenceFolders;
     }
+    
+    @Override
+    public int checkEvidenceFolderNameByCollaboration(String nameFolder, int idCollaboration) throws LogicException {
+        String query = "SELECT COUNT(*) as folders FROM folderevidencia  WHERE nombre = ? and Colaboracion_idColaboracion = ?";
+        int folders = 0;
+        try {
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, nameFolder);
+            statement.setInt(2, idCollaboration);
+            ResultSet accounts = statement.executeQuery();
+            if(accounts.next()) {
+                if(accounts.getInt("folders") >= 1) {
+                    folders = 1;
+                }
+            }
+        } catch(SQLException sqlException) {
+            throw new LogicException("No hay conexión a la base de datos, inténtelo de nuevo más tarde", sqlException);
+        } finally {
+            DATABASE_CONNECTION.closeConnection();
+        }
+        return folders;
+    }
 }

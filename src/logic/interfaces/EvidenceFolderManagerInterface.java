@@ -25,4 +25,5 @@ public interface EvidenceFolderManagerInterface {
      * @throws logic.LogicException
      */
     public ArrayList<EvidenceFolder> getEvidenceFoldersByIdCollaboration(int idCollaboration) throws LogicException;
+    public int checkEvidenceFolderNameByCollaboration(String nameFolder, int idCollaboracion) throws LogicException;
 }
