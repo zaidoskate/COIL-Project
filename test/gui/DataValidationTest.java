@@ -116,7 +116,10 @@ public class DataValidationTest {
     
     @Test
     public void testValidateYearSuccess() {
-        
+        String year = "2024";
+        boolean expectedResult = true;
+        boolean result = DataValidation.validateYear(year);
+        assertEquals(expectedResult, result); 
     }
     
     @Test
