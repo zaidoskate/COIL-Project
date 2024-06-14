@@ -22,11 +22,11 @@ import logic.interfaces.StartupDocumentationManagerInterface;
 public class StartupDocumentationDAO implements StartupDocumentationManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
     
-    /**
+    /** Inserta un registro que registra el id de una colaboración para poder subir los demás documentos
      *
-     * @param startupDocumentation
-     * @return
-     * @throws LogicException
+     * @param startupDocumentation una instancia de la clase StartupDocumentation que incluye el id de la colaboración que se va a empezar
+     * @return un entero que indica el total de filas agregadas (0 o 1)
+     * @throws LogicException Cuando no existe conexión con la base de datos
      */
     @Override
     public int addStartupDocumentation(StartupDocumentation startupDocumentation) throws LogicException{
@@ -45,11 +45,11 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
         return result;
     }
 
-    /**
+    /** Carga en la base de datos el syllabus correspondiente a una colaboración
      *
-     * @param startupDocumentation
-     * @return
-     * @throws LogicException
+     * @param startupDocumentation una instancia de la clase StartupDocumentation que incluye el id de la colaboración y la ruta al archivo del syllabus
+     * @return un entero que indica la cantidad de filas que se han registrado en la tabla (0 o 1)
+     * @throws LogicException cuando no existe conexión con la base de datos
      */
     @Override
     public int uploadSyllabus(StartupDocumentation startupDocumentation) throws LogicException {
@@ -74,11 +74,11 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
         return result;
     }
 
-    /**
+    /** Carga en la base de datos la lista de estudiantes correspondiente a una colaboración
      *
-     * @param startupDocumentation
-     * @return
-     * @throws LogicException
+     * @param startupDocumentation una instancia de la clase StartupDocumentation que incluye el id de la colaboración y la ruta al archivo de la lista de estudiantes
+     * @return un entero que indica la cantidad de filas agregadas en la tabla (0 o 1)
+     * @throws LogicException cuando no existe conexión con la base de datos
      */
     @Override
     public int uploadStudentsList(StartupDocumentation startupDocumentation) throws LogicException {
@@ -103,11 +103,11 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
         return result;
     }
 
-    /**
+    /** Carga en la base de datos la lista de estudiantes de la clase espejo correspondiente a una colaboración
      *
-     * @param startupDocumentation
-     * @return
-     * @throws LogicException
+     * @param startupDocumentation una instancia de la clase StartupDocumentation que incluye el id de la colaboración y la ruta al archivo de la lista de estudiantes de la clase espejo
+     * @return un entero que indica la cantidad de filas agregadas en la tabla (0 o 1)
+     * @throws LogicException cuando no existe conexión con la base de datos
      */
     @Override
     public int uploadMirrorStudentsList(StartupDocumentation startupDocumentation) throws LogicException {
@@ -132,12 +132,12 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
         return result;
     }
 
-    /**
+    /** Descarga el syllabus de la base de datos y lo guarda en una ruta especificada en el dispositivo
      *
-     * @param startupDocumentation
-     * @param outputPath
-     * @return
-     * @throws LogicException
+     * @param startupDocumentation una instancia de la clase StartupDocumentation que incluye el id de la colaboración de la cual se quiere descargar el syllabus
+     * @param outputPath la ruta específica en el dispositivo en la cual se va a guardar el archivo
+     * @return un entero que indica 1 si se pudo descargar con éxito el syllabus y 0 si no fue así
+     * @throws LogicException cuando no existe conexión con la base de datos
      */
     @Override
     public int obtainSyllabus(StartupDocumentation startupDocumentation, String outputPath) throws LogicException {
@@ -164,12 +164,12 @@ public class StartupDocumentationDAO implements StartupDocumentationManagerInter
         return result;
     }
 
-    /**
+    /** Descarga la lista de estudiantes de una colaboración de la base de datos y lo guarda en una ruta especificada en el dispositivo
      *
-     * @param startupDocumentation
-     * @param outputPath
-     * @return
-     * @throws LogicException
+     * @param startupDocumentation una instancia de la clase StartupDocumentation que incluye el id de la colaboración de la cual se quiere descargar la lista de estudiantes
+     * @param outputPath la ruta específica en el dispositivo en la cual se va a guardar el archivo
+     * @return un entero que indica 1 si se pudo descargar con éxito la lista de estudiantes y 0 si no fue así
+     * @throws LogicException cuando no existe conexión con la base de datos
      */
     @Override
     public int obtainStudentsList(StartupDocumentation startupDocumentation, String outputPath) throws LogicException {
