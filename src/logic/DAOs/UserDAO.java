@@ -76,20 +76,20 @@ public class UserDAO implements UserManagerInterface {
         return userResult;
     }
 
-    /**
+    /** Llama al procedimiento almacenado en la base de datos para recuperar el tipo de usuario a partir del Id del usuario
      *
-     * @param id
-     * @return
-     * @throws LogicException
+     * @param userId es el id del usuario que se desea saber el tipo
+     * @return un String con el tipo de Usuario (ProfesorUV, ProfesorExterno, Coordinador, Administrador)
+     * @throws LogicException cuando no existe conexión con la base de datos
      */
     @Override
-    public String getUserTypeById(int id) throws LogicException {
+    public String getUserTypeById(int userId) throws LogicException {
         String query = "CALL encontrarTipoUsuario( ? )";
         String typeUser = null;
         try{
             Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, id);
+            statement.setInt(1, userId);
             ResultSet result = statement.executeQuery();
             while(result.next()) {
                 typeUser = result.getString("tipo");
@@ -103,6 +103,12 @@ public class UserDAO implements UserManagerInterface {
         
     }
     
+    /** Verificar si existe un usuario registrado en la base de datos con la misma dirección de correo electrónico
+     *
+     * @param email es la dirección de correo electrónico por la que se va a filtrar la búsqueda
+     * @return un booleano que es true si ya existe un usuario con ese correo y false si no
+     * @throws LogicException cuando no existe conexión con la base de datos
+     */
     @Override
     public boolean checkEmailRegistered(String email) throws LogicException{
         String query = "SELECT COUNT(*) as cuentas FROM Usuario WHERE correo = ?";
