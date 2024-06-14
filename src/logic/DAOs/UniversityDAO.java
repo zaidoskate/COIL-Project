@@ -18,10 +18,10 @@ public class UniversityDAO implements UniversityManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
     
     /**
-     *
-     * @param university
-     * @return
-     * @throws LogicException
+     * Insertar una nueva universidad en la base de datos.
+     * @param university información de la universidad (nombre y país).
+     * @return entero que retorna las rows afectadas en la query, es exitoso si devuelve 1.
+     * @throws LogicException cuando hay un problema de conexión con la base de datos.
      */
     @Override
     public int insertUniversity(University university) throws LogicException {
@@ -42,9 +42,9 @@ public class UniversityDAO implements UniversityManagerInterface {
     }
     
     /**
-     *
-     * @return
-     * @throws LogicException
+     * Obtener todas las universidades.
+     * @return ArrayList de universidades.
+     * @throws LogicException cuando hay un problema de conexión con la base de datos.
      */
     @Override
     public ArrayList<University> getUniversities() throws LogicException {
@@ -69,6 +69,12 @@ public class UniversityDAO implements UniversityManagerInterface {
         return universitiesResult;
     }
     
+    /**
+     * Consultar si el nombre de la universidad ya está registrado en la base de datos.
+     * @param universityName nombre de la universidad a consultar.
+     * @return boolean que devuelve true si ya existe la universidad.
+     * @throws LogicException cuando hay un problema de conexión con la base de datos.
+     */
     @Override
     public boolean checkUniversityRegistered(String universityName) throws LogicException {
         String query = "SELECT COUNT(*) as universidades FROM Universidad WHERE nombre = ?";

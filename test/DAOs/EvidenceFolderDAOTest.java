@@ -52,4 +52,16 @@ public class EvidenceFolderDAOTest {
         assertEquals(expectedFolders, foldersResult);
     }
     
+    @Test
+    public void testCheckEvidenceFolderNameByCollaborationSuccess() {
+        String folderName = "Folder evidencia";
+        EvidenceFolderDAO evidenceFolderDAO = new EvidenceFolderDAO();
+        int resultExpected = 0;
+        try {
+            int foldersObtained = evidenceFolderDAO.checkEvidenceFolderNameByCollaboration(folderName, 1);
+            assertEquals(resultExpected, foldersObtained);
+        } catch(LogicException logicException) {
+            fail("No ha sido posible verificar si el nombre del folder ya existe");
+        }
+    }
 }

@@ -82,6 +82,13 @@ public class EvidenceFolderDAO implements EvidenceFolderManagerInterface {
         return evidenceFolders;
     }
     
+    /**
+     * Consulta si existe un folder de evidencias con un determinado nombre.
+     * @param nameFolder nombre del folder a consultar.
+     * @param idCollaboration id de la colaboracion donde se encuentra el folder.
+     * @return entero que devuelve 1 si existe un folder con ese nombre.
+     * @throws LogicException cuando hay un problema con la conexión a la base de datos.
+     */
     @Override
     public int checkEvidenceFolderNameByCollaboration(String nameFolder, int idCollaboration) throws LogicException {
         String query = "SELECT COUNT(*) as folders FROM folderevidencia  WHERE nombre = ? and Colaboracion_idColaboracion = ?";
