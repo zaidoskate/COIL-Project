@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.CubicCurve?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="275.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(from 0% 0% to 0% 30%, rgb(254, 60, 87), rgb(201, 35, 58));" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.GenerateStatisticsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="275.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(from 0% 0% to 0% 30%, rgb(254, 60, 87), rgb(201, 35, 58));" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.StatisticsGeneratorController">
    <children>
       <CubicCurve controlX1="-6.103515625E-5" controlX2="-6.103515625E-5" controlY1="-60.19999694824219" controlY2="-60.19999694824219" endX="300.00006103515625" endY="-1.52587890625E-5" fill="#f2f2f2" layoutX="300.0" layoutY="151.0" startX="-300.0" startY="-1.52587890625E-5" stroke="#f2f2f2" />
       <AnchorPane layoutX="1.0" layoutY="150.0" prefHeight="125.0" prefWidth="600.0" style="-fx-background-color: #f2f2f2;">

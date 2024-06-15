@@ -4,7 +4,7 @@ import gui.Alerts;
 import gui.SessionManager;
 import gui.stages.CollaborationsInConclusionStage;
 import gui.stages.SendEmailStage;
-import gui.stages.UploadCertificatesStage;
+import gui.stages.CertificatesUploaderStage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -203,7 +203,7 @@ public class ReviewConclusionCollaborationController implements Initializable {
         Stage stage = (Stage) this.lblProfessorName.getScene().getWindow();
         stage.close();
         try {
-            UploadCertificatesStage uploadCertificatesStage = new UploadCertificatesStage();
+            CertificatesUploaderStage uploadCertificatesStage = new CertificatesUploaderStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
             log.error(ioException);

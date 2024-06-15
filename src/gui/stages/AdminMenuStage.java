@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 public class AdminMenuStage extends Stage {
     public AdminMenuStage() throws IOException {
-        Parent root = FXMLLoader.load(COILVICApplication.class.getResource("fxml/AdminMenu.fxml"));
+        Parent root = FXMLLoader.load(COILVICApplication.class.getResource("fxml/AdminMenuFXML.fxml"));
         Scene scene = new Scene(root);
         this.setTitle("Menu Principal");
         this.setScene(scene);  

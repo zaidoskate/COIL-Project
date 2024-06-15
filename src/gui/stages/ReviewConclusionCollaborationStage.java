@@ -19,7 +19,7 @@ public class ReviewConclusionCollaborationStage extends Stage {
     
     
     public ReviewConclusionCollaborationStage() throws IOException {
-        FXMLLoader loader = new FXMLLoader(COILVICApplication.class.getResource("fxml/ReviewConclusionCollaboration.fxml"));
+        FXMLLoader loader = new FXMLLoader(COILVICApplication.class.getResource("fxml/ReviewConclusionCollaborationFXML.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(COILVICApplication.class.getResource("css/OfferProfessor.css").toExternalForm());

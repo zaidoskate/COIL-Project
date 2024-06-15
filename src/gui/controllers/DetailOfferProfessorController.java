@@ -2,7 +2,7 @@ package gui.controllers;
 
 import gui.Alerts;
 import gui.SessionManager;
-import gui.stages.DeclineOfferStage;
+import gui.stages.OfferDeclinationStage;
 import gui.stages.OfferCoordinatorStage;
 import gui.stages.OfferProfessorStage;
 import java.io.IOException;
@@ -209,7 +209,7 @@ public class DetailOfferProfessorController implements Initializable {
         EmailNotification.getInstance().setEmail(SELECTED_OFFER.getProfessorEmail());
         EmailNotification.getInstance().setMessageSuccess("Oferta rechazada");
         try {
-            DeclineOfferStage declineOfferStage = new DeclineOfferStage();
+            OfferDeclinationStage declineOfferStage = new OfferDeclinationStage();
             if(EmailNotification.getInstance().getSentStatus()) {
                 Alerts.showInformationAlert("Mensaje", "Oferta rechazada con éxito");
             } else {

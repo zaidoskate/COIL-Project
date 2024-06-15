@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 public class CollaborationsCoordinatorMenuStage extends Stage{
     public CollaborationsCoordinatorMenuStage() throws IOException {
-        FXMLLoader loader = new FXMLLoader(COILVICApplication.class.getResource("fxml/CollaborationsCoordinatorMenu.fxml"));
+        FXMLLoader loader = new FXMLLoader(COILVICApplication.class.getResource("fxml/CollaborationsCoordinatorMenuFXML.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(COILVICApplication.class.getResource("css/styles.css").toExternalForm());

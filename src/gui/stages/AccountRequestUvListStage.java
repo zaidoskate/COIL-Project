@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 public class AccountRequestUvListStage extends Stage {
     public AccountRequestUvListStage() throws IOException {
-        Parent root = FXMLLoader.load(COILVICApplication.class.getResource("fxml/AccountRequestUvList.fxml"));
+        Parent root = FXMLLoader.load(COILVICApplication.class.getResource("fxml/AccountRequestUvListFXML.fxml"));
         Scene scene = new Scene(root);
         this.initModality(Modality.APPLICATION_MODAL);
         this.setTitle("Solicitudes de cuenta");

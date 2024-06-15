@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.UploadEvidencesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.EvidenceUploaderController">
    <children>
       <ComboBox fx:id="cmbBoxFolders" layoutX="14.0" layoutY="166.0" prefHeight="26.0" prefWidth="505.0" />
       <Button onAction="#viewEvidences" layoutX="565.0" layoutY="165.0" mnemonicParsing="false" styleClass="delete-button" text="Ver actividades" />

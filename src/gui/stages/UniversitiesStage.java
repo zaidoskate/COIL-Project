@@ -17,7 +17,7 @@ import javafx.stage.Stage;
  */
 public class UniversitiesStage extends Stage{
     public UniversitiesStage () throws IOException {
-        Parent root = FXMLLoader.load(COILVICApplication.class.getResource("fxml/Universities.fxml"));
+        Parent root = FXMLLoader.load(COILVICApplication.class.getResource("fxml/UniversitiesFXML.fxml"));
         Scene scene = new Scene(root);
         this.setTitle("Universidades");
         this.setScene(scene);  

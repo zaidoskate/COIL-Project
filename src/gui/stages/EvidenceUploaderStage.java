@@ -8,16 +8,15 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class DeclineOfferStage extends Stage {
-    
-    public DeclineOfferStage() throws IOException {
-        FXMLLoader loader = new FXMLLoader(COILVICApplication.class.getResource("fxml/DeclineOffer.fxml"));
-        Parent root = loader.load();
+public class EvidenceUploaderStage extends Stage {
+    public EvidenceUploaderStage() throws IOException {
+        Parent root = FXMLLoader.load(COILVICApplication.class.getResource("fxml/EvidenceUploaderFXML.fxml"));
         Scene scene = new Scene(root);
         scene.getStylesheets().add(COILVICApplication.class.getResource("css/OfferProfessor.css").toExternalForm());
+        scene.getStylesheets().add(COILVICApplication.class.getResource("css/styles.css").toExternalForm());
         this.initModality(Modality.APPLICATION_MODAL);
-        this.setTitle("Rechazar oferta");
-        this.setScene(scene);
+        this.setTitle("Subir evidencias");
+        this.setScene(scene);  
         this.showAndWait();
     }
 }

@@ -6,7 +6,7 @@ import gui.SessionManager;
 import gui.stages.AccountRequestMenuStage;
 import gui.stages.CollaborationsCoordinatorMenuStage;
 import gui.stages.ExternalAccountCreateStage;
-import gui.stages.GenerateStatisticsStage;
+import gui.stages.StatisticsGeneratorStage;
 import gui.stages.OfferCoordinatorStage;
 import gui.stages.PendingMailsStage;
 import gui.stages.UniversitiesStage;
@@ -99,7 +99,7 @@ public class CoordinatorMenuController implements Initializable {
         Stage stage = (Stage) this.txtName.getScene().getWindow();
         stage.close();
         try {
-            GenerateStatisticsStage generateStatisticsStage = new GenerateStatisticsStage();
+            StatisticsGeneratorStage generateStatisticsStage = new StatisticsGeneratorStage();
         } catch(IOException ioException) {
             LOG.warn(ioException);
             Alerts.displayAlertIOException();

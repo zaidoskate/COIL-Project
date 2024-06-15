@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 public class AccountRequestMenuStage extends Stage{
     public AccountRequestMenuStage() throws IOException {
-        Parent root = FXMLLoader.load(COILVICApplication.class.getResource("fxml/AccountRequestMenu.fxml"));
+        Parent root = FXMLLoader.load(COILVICApplication.class.getResource("fxml/AccountRequestMenuFXML.fxml"));
         Scene scene = new Scene(root);
         this.setTitle("Solicitudes de cuenta");
         this.setScene(scene);  

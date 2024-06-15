@@ -19,7 +19,7 @@ import logic.model.EmailNotification;
 import logic.model.OfferInformation;
 import org.apache.log4j.Logger;
 
-public class DeclineOfferController implements Initializable {
+public class OfferDeclinationController implements Initializable {
     
     private static final OfferInformation SELECTED_OFFER = OfferInformation.getOffer();
     private static final SessionManager CURRENT_SESSION = SessionManager.getInstance();
@@ -27,7 +27,7 @@ public class DeclineOfferController implements Initializable {
     private static final CoordinatorDAO COORDINATOR_DAO = new CoordinatorDAO();
     private static final EvaluationDAO EVALUATION_DAO = new EvaluationDAO();
     
-    private static final Logger LOG = Logger.getLogger(DeclineOfferController.class);
+    private static final Logger LOG = Logger.getLogger(OfferDeclinationController.class);
             
     @FXML
     private TextArea txtAreaReason;

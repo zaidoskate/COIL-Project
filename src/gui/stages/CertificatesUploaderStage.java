@@ -15,10 +15,10 @@ import javafx.stage.Stage;
  *
  * @author zaido
  */
-public class UploadCertificatesStage extends Stage {
+public class CertificatesUploaderStage extends Stage {
     
-    public UploadCertificatesStage() throws IOException {
-        FXMLLoader loader = new FXMLLoader(COILVICApplication.class.getResource("fxml/UploadCertificates.fxml"));
+    public CertificatesUploaderStage() throws IOException {
+        FXMLLoader loader = new FXMLLoader(COILVICApplication.class.getResource("fxml/CertificatesUploaderFXML.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(COILVICApplication.class.getResource("css/OfferProfessor.css").toExternalForm());

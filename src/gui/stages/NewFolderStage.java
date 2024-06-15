@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 public class NewFolderStage extends Stage {
     public NewFolderStage() throws IOException {
-        FXMLLoader loader = new FXMLLoader(COILVICApplication.class.getResource("fxml/NewFolder.fxml"));
+        FXMLLoader loader = new FXMLLoader(COILVICApplication.class.getResource("fxml/NewFolderFXML.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(COILVICApplication.class.getResource("css/styles.css").toExternalForm());

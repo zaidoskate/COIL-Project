@@ -8,13 +8,13 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class RegistrateCollaborationStage extends Stage {
+public class CollaborationRegistrationStage extends Stage {
     
     private Stage professorDetailStage;
     
-    public RegistrateCollaborationStage(Stage professorDetailStage) throws IOException {
+    public CollaborationRegistrationStage(Stage professorDetailStage) throws IOException {
         this.professorDetailStage = professorDetailStage;
-        FXMLLoader loader = new FXMLLoader(COILVICApplication.class.getResource("fxml/RegistrateCollaboration.fxml"));
+        FXMLLoader loader = new FXMLLoader(COILVICApplication.class.getResource("fxml/CollaborationRegistrationFXML.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(COILVICApplication.class.getResource("css/OfferProfessor.css").toExternalForm());

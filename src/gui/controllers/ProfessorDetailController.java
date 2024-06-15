@@ -3,7 +3,7 @@ package gui.controllers;
 import gui.Alerts;
 import gui.SessionManager;
 import gui.stages.CandidatesStage;
-import gui.stages.RegistrateCollaborationStage;
+import gui.stages.CollaborationRegistrationStage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -73,7 +73,7 @@ public class ProfessorDetailController implements Initializable {
     private void acceptCandidate() {
         try {
             Stage currentStage = (Stage) this.btnAccept.getScene().getWindow();
-            RegistrateCollaborationStage registrateCollaborationStage = new RegistrateCollaborationStage(currentStage);
+            CollaborationRegistrationStage registrateCollaborationStage = new CollaborationRegistrationStage(currentStage);
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);

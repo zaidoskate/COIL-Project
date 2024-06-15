@@ -29,7 +29,7 @@ import logic.domain.ConcludedCollaboration;
 import logic.model.CollaborationInformation;
 import org.apache.log4j.Logger;
 
-public class UploadCertificatesController implements Initializable {
+public class CertificatesUploaderController implements Initializable {
     
     private ConcludedCollaboration collaborationConcluded = new ConcludedCollaboration();
     
@@ -54,7 +54,7 @@ public class UploadCertificatesController implements Initializable {
     private static final CollaborationInformation COLLABORATION_INFORMATION = CollaborationInformation.getCollaboration();
     private static final SessionManager CURRENT_SESSION = SessionManager.getInstance();
     
-    private static final Logger LOG = Logger.getLogger(UploadCertificatesController.class);
+    private static final Logger LOG = Logger.getLogger(CertificatesUploaderController.class);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

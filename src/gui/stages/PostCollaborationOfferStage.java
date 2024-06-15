@@ -18,7 +18,7 @@ import javafx.scene.Scene;
 public class PostCollaborationOfferStage extends Stage {
     
     public PostCollaborationOfferStage() throws IOException {
-        FXMLLoader loader = new FXMLLoader(COILVICApplication.class.getResource("fxml/PostCollaborationOffer.fxml"));
+        FXMLLoader loader = new FXMLLoader(COILVICApplication.class.getResource("fxml/PostCollaborationOfferFXML.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(COILVICApplication.class.getResource("css/OfferProfessor.css").toExternalForm());

@@ -4,7 +4,7 @@ import gui.Alerts;
 import gui.SessionManager;
 import gui.DataValidation;
 import gui.stages.OfferProfessorStage;
-import gui.stages.RegistrateCollaborationStage;
+import gui.stages.CollaborationRegistrationStage;
 import java.io.IOException;
 import logic.LogicException;
 import logic.domain.Collaboration;
@@ -25,7 +25,7 @@ import logic.model.CandidateInformation;
 import logic.model.OfferInformation;
 import org.apache.log4j.Logger;
 
-public class RegistrateCollaborationController implements Initializable {
+public class CollaborationRegistrationController implements Initializable {
     
     @FXML
     private TextField txtFieldCollaborationName;
@@ -46,7 +46,7 @@ public class RegistrateCollaborationController implements Initializable {
     private static final SessionManager CURRENT_SESSION = SessionManager.getInstance();
     private static final CandidateInformation CURRENT_CANDIDATE = CandidateInformation.getCandidateInformation();
     
-    private static final Logger LOG = Logger.getLogger(RegistrateCollaborationController.class);
+    private static final Logger LOG = Logger.getLogger(CollaborationRegistrationController.class);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -110,7 +110,7 @@ public class RegistrateCollaborationController implements Initializable {
                             int offerDeleted = COLLABORATION_OFFER_DAO.deleteCollaborationOffer(PROFESSOR_OFFER.getIdOfferCollaboration());
                             if(offerDeleted == 1) {
                                 Alerts.showInformationAlert("Mensaje", "Has aceptado esta colaboración ponte en contacto con el profesor");
-                                Stage professorDetailStage = ((RegistrateCollaborationStage)this.btnAccept.getScene().getWindow()).getProfessorDetailStage();
+                                Stage professorDetailStage = ((CollaborationRegistrationStage)this.btnAccept.getScene().getWindow()).getProfessorDetailStage();
                                 professorDetailStage.close();
                                 previousMenu();
                                 try {

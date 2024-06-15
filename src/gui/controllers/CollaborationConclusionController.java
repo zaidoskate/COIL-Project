@@ -23,7 +23,7 @@ import logic.domain.FinalDocumentation;
 import logic.model.CollaborationInformation;
 import org.apache.log4j.Logger;
 
-public class ConcludeCollaborationController implements Initializable {
+public class CollaborationConclusionController implements Initializable {
 
     @FXML
     private ComboBox cmbBoxFileType;
@@ -40,7 +40,7 @@ public class ConcludeCollaborationController implements Initializable {
     private static final CollaborationInformation COLLABORATION_INFORMATION = CollaborationInformation.getCollaboration();
     private static final CollaborationDAO COLLABORATION_DAO = new CollaborationDAO();
     
-    private static final Logger LOG = Logger.getLogger(ConcludeCollaborationController.class);
+    private static final Logger LOG = Logger.getLogger(CollaborationConclusionController.class);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {

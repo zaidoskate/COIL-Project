@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 public class ListConcludedCollaborationStage extends Stage{
     public ListConcludedCollaborationStage() throws IOException {
-        FXMLLoader loader = new FXMLLoader(COILVICApplication.class.getResource("fxml/ListConcludedCollaborations.fxml"));
+        FXMLLoader loader = new FXMLLoader(COILVICApplication.class.getResource("fxml/ListConcludedCollaborationsFXML.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(COILVICApplication.class.getResource("css/OfferProfessor.css").toExternalForm());

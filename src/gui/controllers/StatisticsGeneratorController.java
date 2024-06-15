@@ -17,7 +17,7 @@ import logic.FileDownloader;
 import logic.LogicException;
 import org.apache.log4j.Logger;
 
-public class GenerateStatisticsController implements Initializable {
+public class StatisticsGeneratorController implements Initializable {
 
     @FXML
     private Button btnContinue;
@@ -33,7 +33,7 @@ public class GenerateStatisticsController implements Initializable {
     
     private static final UvProfessorDAO UV_PROFESSOR_DAO = new UvProfessorDAO();
     
-    private static final Logger LOG = Logger.getLogger(GenerateStatisticsController.class);
+    private static final Logger LOG = Logger.getLogger(StatisticsGeneratorController.class);
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {

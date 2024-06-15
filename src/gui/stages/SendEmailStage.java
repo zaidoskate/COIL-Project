@@ -18,7 +18,7 @@ import javafx.stage.Stage;
  */
 public class SendEmailStage extends Stage{
     public SendEmailStage() throws IOException {
-        Parent root = FXMLLoader.load(COILVICApplication.class.getResource("fxml/SendEmail.fxml"));
+        Parent root = FXMLLoader.load(COILVICApplication.class.getResource("fxml/SendEmailFXML.fxml"));
         Scene scene = new Scene(root);
         scene.getStylesheets().add(COILVICApplication.class.getResource("css/styles.css").toExternalForm());
         this.initModality(Modality.APPLICATION_MODAL);

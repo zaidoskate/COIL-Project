@@ -22,8 +22,8 @@ import logic.domain.PendingMail;
 import logic.domain.User;
 import org.apache.log4j.Logger;
 
-public class CreateCoordinatorAccountController implements Initializable {
-    private static final Logger LOG = Logger.getLogger(CreateCoordinatorAccountController.class);
+public class CoordinatorAccountCreatorController implements Initializable {
+    private static final Logger LOG = Logger.getLogger(CoordinatorAccountCreatorController.class);
     private final SessionManager currentSession = SessionManager.getInstance();
     private static final PendingMailDAO PENDING_MAIL_DAO = new PendingMailDAO();
     private static final CoordinatorDAO COORDINATOR_DAO = new CoordinatorDAO();

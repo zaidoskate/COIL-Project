@@ -19,7 +19,7 @@ import logic.model.EvidenceListInformation;
 import org.apache.log4j.Logger;
 
 public class EvidenceListController implements Initializable {
-    private static final Logger LOG = Logger.getLogger(UploadEvidencesController.class);
+    private static final Logger LOG = Logger.getLogger(EvidenceUploaderController.class);
     private static final SessionManager CURRENT_SESSION = SessionManager.getInstance();
     private static final EvidenceListInformation EVIDENCE_LIST_INFORMATION = EvidenceListInformation.getInstance();
     private static final EvidenceDAO EVIDENCE_DAO = new EvidenceDAO();

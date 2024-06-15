@@ -4,9 +4,9 @@ import gui.Alerts;
 import gui.SessionManager;
 import gui.stages.CollaborationHistoryStage;
 import gui.stages.CollaborationStage;
-import gui.stages.ConcludeCollaborationStage;
+import gui.stages.CollaborationConclusionStage;
 import gui.stages.StartCollaborationStage;
-import gui.stages.UploadEvidencesStage;
+import gui.stages.EvidenceUploaderStage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -126,7 +126,7 @@ public class MyCollaborationsController implements Initializable {
         Stage stage = (Stage) this.btnConcludeCollaboration.getScene().getWindow();
         stage.close();
         try {
-            ConcludeCollaborationStage concludeCollaborationStage = new ConcludeCollaborationStage();
+            CollaborationConclusionStage concludeCollaborationStage = new CollaborationConclusionStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
@@ -136,7 +136,7 @@ public class MyCollaborationsController implements Initializable {
     @FXML
     private void displayUploadEvidence() {
         try {
-            UploadEvidencesStage uploadEvidencesStage = new UploadEvidencesStage();
+            EvidenceUploaderStage uploadEvidencesStage = new EvidenceUploaderStage();
         } catch(IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);

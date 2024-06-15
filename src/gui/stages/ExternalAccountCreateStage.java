@@ -18,7 +18,7 @@ import javafx.stage.Stage;
  */
 public class ExternalAccountCreateStage extends Stage {
     public ExternalAccountCreateStage() throws IOException {
-        Parent root = FXMLLoader.load(COILVICApplication.class.getResource("fxml/ExternalAccountCreate.fxml"));
+        Parent root = FXMLLoader.load(COILVICApplication.class.getResource("fxml/ExternalAccountCreateFXML.fxml"));
         Scene scene = new Scene(root);
         this.initModality(Modality.APPLICATION_MODAL);
         this.setTitle("Solicitudes de cuenta");

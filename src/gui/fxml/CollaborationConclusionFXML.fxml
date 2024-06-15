@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.CubicCurve?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(from 0% 0% to 0% 30%, rgb(254, 60, 87), rgb(201, 35, 58));" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ConcludeCollaborationController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(from 0% 0% to 0% 30%, rgb(254, 60, 87), rgb(201, 35, 58));" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.CollaborationConclusionController">
    <children>
       <CubicCurve controlX1="-32.20216369628906" controlX2="178.8270263671875" controlY1="-45.0" controlY2="-45.0" endX="371.0" endY="55.82025909423828" fill="#f2f2f2" layoutX="228.0" layoutY="101.0" startX="-229.0" startY="55.82026672363281" stroke="#f2f2f2" />
       <AnchorPane layoutY="156.0" prefHeight="246.0" prefWidth="600.0" style="-fx-background-color: #f2f2f2;">

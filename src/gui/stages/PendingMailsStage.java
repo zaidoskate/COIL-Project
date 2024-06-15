@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 public class PendingMailsStage extends Stage{
     public PendingMailsStage() throws IOException {
-        Parent root = FXMLLoader.load(COILVICApplication.class.getResource("fxml/PendingMails.fxml"));
+        Parent root = FXMLLoader.load(COILVICApplication.class.getResource("fxml/PendingMailsFXML.fxml"));
         Scene scene = new Scene(root);
         scene.getStylesheets().add(COILVICApplication.class.getResource("css/styles.css").toExternalForm());
         this.initModality(Modality.APPLICATION_MODAL);

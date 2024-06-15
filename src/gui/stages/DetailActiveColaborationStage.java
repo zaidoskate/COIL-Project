@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 public class DetailActiveColaborationStage extends Stage {
     public DetailActiveColaborationStage() throws IOException {
-        FXMLLoader loader = new FXMLLoader(COILVICApplication.class.getResource("fxml/DetailActiveCollaboration.fxml"));
+        FXMLLoader loader = new FXMLLoader(COILVICApplication.class.getResource("fxml/DetailActiveCollaborationFXML.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(COILVICApplication.class.getResource("css/OfferProfessor.css").toExternalForm());

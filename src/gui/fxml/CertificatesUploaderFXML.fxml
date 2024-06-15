@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.CubicCurve?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(from 0% 0% to 0% 30%, rgb(254, 60, 87), rgb(201, 35, 58));" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.UploadCertificatesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(from 0% 0% to 0% 30%, rgb(254, 60, 87), rgb(201, 35, 58));" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.CertificatesUploaderController">
    <children>
       <CubicCurve controlX1="-104.17100524902344" controlX2="107.01596069335938" controlY1="-100.0" controlY2="-100.0" endX="304.4000244140625" endY="9.0" fill="#f2f2f2" layoutX="296.0" layoutY="108.0" startX="-298.0" startY="9.0" stroke="#fe3c57" />
       <AnchorPane layoutY="116.0" prefHeight="285.0" prefWidth="600.0" style="-fx-background-color: F2F2F2;">

@@ -31,8 +31,8 @@ import logic.model.CollaborationInformation;
 import logic.model.EvidenceListInformation;
 import org.apache.log4j.Logger;
 
-public class UploadEvidencesController implements Initializable {
-    private static final Logger LOG = Logger.getLogger(UploadEvidencesController.class);
+public class EvidenceUploaderController implements Initializable {
+    private static final Logger LOG = Logger.getLogger(EvidenceUploaderController.class);
     private static final SessionManager CURRENT_SESSION = SessionManager.getInstance();
     private static final CollaborationInformation CURRENT_COLLABORATION = CollaborationInformation.getCollaboration();
     private static final EvidenceListInformation EVIDENCE_LIST_INFORMATION = EvidenceListInformation.getInstance();

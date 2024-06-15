@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 public class OfferCoordinatorStage extends Stage {
     
     public OfferCoordinatorStage() throws IOException {
-        FXMLLoader loader = new FXMLLoader(COILVICApplication.class.getResource("fxml/OfferCoordinator.fxml"));
+        FXMLLoader loader = new FXMLLoader(COILVICApplication.class.getResource("fxml/OfferCoordinatorFXML.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(COILVICApplication.class.getResource("css/OfferProfessor.css").toExternalForm());

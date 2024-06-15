@@ -3,7 +3,7 @@ package gui.controllers;
 import gui.Alerts;
 import gui.COILVICApplication;
 import gui.SessionManager;
-import gui.stages.CreateCoordinatorAccountStage;
+import gui.stages.CoordinatorAccountCreatorStage;
 import gui.stages.PendingMailsStage;
 import java.io.IOException;
 import java.net.URL;
@@ -26,7 +26,7 @@ public class AdminMenuController implements Initializable {
     @FXML
     public void createCoordinatorAccount() {
         try {
-            CreateCoordinatorAccountStage createCoordinatorAccountStage = new CreateCoordinatorAccountStage();
+            CoordinatorAccountCreatorStage createCoordinatorAccountStage = new CoordinatorAccountCreatorStage();
         } catch(IOException ioexception) {
             LOG.warn(ioexception);
             Alerts.displayAlertIOException();

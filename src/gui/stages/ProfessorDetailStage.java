@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 public class ProfessorDetailStage extends Stage {
     
     public ProfessorDetailStage() throws IOException {
-        FXMLLoader loader = new FXMLLoader(COILVICApplication.class.getResource("fxml/ProfessorDetail.fxml"));
+        FXMLLoader loader = new FXMLLoader(COILVICApplication.class.getResource("fxml/ProfessorDetailFXML.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(COILVICApplication.class.getResource("css/OfferProfessor.css").toExternalForm());

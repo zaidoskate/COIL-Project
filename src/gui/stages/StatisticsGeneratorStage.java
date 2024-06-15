@@ -9,21 +9,22 @@ import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
  *
  * @author zaido
  */
-public class ConcludeCollaborationStage extends Stage {
+public class StatisticsGeneratorStage extends Stage {
     
-    public ConcludeCollaborationStage() throws IOException {
-        FXMLLoader loader = new FXMLLoader(COILVICApplication.class.getResource("fxml/ConcludeCollaboration.fxml"));
-        Parent root = loader.load();
+    public StatisticsGeneratorStage() throws IOException {
+        Parent root = FXMLLoader.load(COILVICApplication.class.getResource("fxml/StatisticsGeneratorFXML.fxml"));
         Scene scene = new Scene(root);
         scene.getStylesheets().add(COILVICApplication.class.getResource("css/OfferProfessor.css").toExternalForm());
-        this.setTitle("Concluir colaboración");
-        this.setScene(scene);
-        this.show();
+        this.initModality(Modality.APPLICATION_MODAL);
+        this.setTitle("Descargar Numeralia");
+        this.setScene(scene);  
+        this.showAndWait(); 
     }
 }
