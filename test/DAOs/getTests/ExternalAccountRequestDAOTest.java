@@ -1,57 +1,15 @@
-package DAOs;
+package DAOs.getTests;
 
 import java.util.ArrayList;
 import logic.DAOs.ExternalAccountRequestDAO;
 import logic.LogicException;
 import logic.domain.ExternalAccountRequest;
 import logic.domain.ExternalAccountRequestData;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class ExternalAccountRequestDAOTest {
-    public ExternalAccountRequestDAOTest() {
-    }
-    
-    @Test
-    public void testInsertExternalAccountRequestSuccess() throws LogicException {
-        ExternalAccountRequest externalAccountRequest = new ExternalAccountRequest();
-        externalAccountRequest.setName("Luis");
-        externalAccountRequest.setLastName("Vargas");
-        externalAccountRequest.setEmail("luis33@gmail.com");
-        externalAccountRequest.setIdUniversity(3);
-        
-        ExternalAccountRequestDAO externalAccountRequestDAO = new ExternalAccountRequestDAO();
-        
-        int result = externalAccountRequestDAO.insertExternalAccountRequest(externalAccountRequest);
-        assertEquals(1, result);
-        
-    }
-    
-    @Test(expected = LogicException.class)
-    public void testInsertExternalAccountRequestFailed() throws LogicException {
-        ExternalAccountRequest externalAccountRequest = new ExternalAccountRequest();
-        externalAccountRequest.setName("Luissssssssssssssssssssssssssssssssssssssssssssss");
-        externalAccountRequest.setLastName("Vargsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssas");
-        externalAccountRequest.setEmail("luisssssssssssssssssssssssssssssssssssssssssssssssssssssssss33@gmail.com");
-        
-        ExternalAccountRequestDAO externalAccountRequestDAO = new ExternalAccountRequestDAO();
-        int result = externalAccountRequestDAO.insertExternalAccountRequest(externalAccountRequest);
-        assertEquals(0, result);
-    }
-    
-    @Test
-    public void testDeleteExternalAccountRequestSuccess() throws LogicException {
-        ExternalAccountRequest externalAccountRequest = new ExternalAccountRequest();
-        externalAccountRequest.setIdRequest(3);
-        externalAccountRequest.setName("Magdalena");
-        externalAccountRequest.setLastName("Gonzalez Pérez");
-        externalAccountRequest.setEmail("magperez@gmail.com");
-        externalAccountRequest.setIdUniversity(5);
-        
-        ExternalAccountRequestDAO externalAccountRequestDAO = new ExternalAccountRequestDAO();
-        int result = externalAccountRequestDAO.deleteExternalAccountRequest(externalAccountRequest);
-        assertEquals(1, result);
-    }
     
     @Test
     public void testGetExternalAccountRequestsDataSuccess() throws LogicException {
@@ -117,5 +75,4 @@ public class ExternalAccountRequestDAOTest {
         
         assertNotEquals(externalAccountRequestExpected, currentExternalAccountRequest);
     }
-
 }

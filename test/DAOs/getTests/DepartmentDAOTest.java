@@ -1,4 +1,4 @@
-package DAOs;
+package DAOs.getTests;
 
 import java.util.ArrayList;
 import logic.DAOs.DepartmentDAO;

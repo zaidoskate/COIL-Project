@@ -1,32 +1,14 @@
-package DAOs;
+package DAOs.getTests;
+
 import java.util.ArrayList;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import logic.domain.EvidenceFolder;
 import logic.DAOs.EvidenceFolderDAO;
+import logic.domain.EvidenceFolder;
 import logic.LogicException;
-import logic.domain.Evidence;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import org.junit.Test;
 
 public class EvidenceFolderDAOTest {
-    
-    public EvidenceFolderDAOTest() {
-    }
-
-    @Test
-    public void testInsertEvidenceFolderSuccess() throws LogicException{
-        EvidenceFolder evidenceFolder = new EvidenceFolder();
-        evidenceFolder.setIdCollaboration(3);
-        evidenceFolder.setName("Examenes");
-        evidenceFolder.setDescription("Examenes correspondientes al primer parcial");
-        evidenceFolder.setCreationDate("2024-01-01");
-       
-
-        EvidenceFolderDAO evidenceFolderDAO = new EvidenceFolderDAO();
-        int result = evidenceFolderDAO.insertEvidenceFolder(evidenceFolder);
-        
-        assertEquals(1, result);
-    }
-    
     @Test
     public void testGetEvidenceFoldersByIdCollaborationSuccess() throws LogicException {
         EvidenceFolderDAO evidenceFolderDAO = new EvidenceFolderDAO();
@@ -38,7 +20,7 @@ public class EvidenceFolderDAOTest {
         evidenceFolder.setIdEvidenceFolder(1);
         evidenceFolder.setName("Actividades por equipo");
         evidenceFolder.setDescription("Actividades realizadas por veracruzanos");
-        evidenceFolder.setCreationDate("2024-01-01");
+        evidenceFolder.setCreationDate("2024-06-10");
         expectedFolders.add(evidenceFolder);
         
         evidenceFolder = new EvidenceFolder();
@@ -46,7 +28,7 @@ public class EvidenceFolderDAOTest {
         evidenceFolder.setIdEvidenceFolder(2);
         evidenceFolder.setName("Actividades individuales");
         evidenceFolder.setDescription("Actividades realizadas por veracruzanos");
-        evidenceFolder.setCreationDate("2024-01-01");
+        evidenceFolder.setCreationDate("2024-06-10");
         expectedFolders.add(evidenceFolder);
         
         assertEquals(expectedFolders, foldersResult);

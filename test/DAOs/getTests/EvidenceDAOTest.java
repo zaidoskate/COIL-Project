@@ -1,32 +1,32 @@
-package DAOs;
+package DAOs.getTests;
 
 import java.util.ArrayList;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import logic.domain.Evidence;
 import logic.DAOs.EvidenceDAO;
 import logic.LogicException;
+import logic.domain.Evidence;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import org.junit.Before;
+import org.junit.Test;
 
 public class EvidenceDAOTest {
-    public EvidenceDAOTest() {
-    }
-
-    @Test
-    public void testUploadEvidenceSuccess() throws LogicException {
+    
+    @Before
+    public void setUp() throws LogicException {
         String filePath = "../../EVIDENCIA1.pdf";
         EvidenceDAO evidenceDAO = new EvidenceDAO();
         Evidence evidence = new Evidence();
         evidence.setIdFolderEvidence(1);
-        evidence.setName("EVIDENCIA 2");
+        evidence.setName("EVIDENCIA 1");
         evidence.setAuthor("Marcio");
-        evidence.setDateOfCreation("2024-01-01");
+        evidence.setDateOfCreation("2024-07-01");
         evidence.setFile(filePath);
         int result = evidenceDAO.uploadEvidence(evidence);
         assertEquals(1, result);
     }
     
     @Test
-    public void testObtainEvidence(){
+    public void testObtainEvidence() {
         String outputPath = "../../evidence1_descargado.pdf";
         EvidenceDAO evidenceDAO = new EvidenceDAO();
         Evidence evidence = new Evidence();
@@ -37,7 +37,7 @@ public class EvidenceDAOTest {
         try {
             int result = evidenceDAO.obtainEvidence(evidence, outputPath);
             assertEquals(1, result);
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             fail("Error al descargar la evidencia");
         }
     }
@@ -55,17 +55,8 @@ public class EvidenceDAOTest {
         try {
             ArrayList<Evidence> evidencesObtained = evidenceDAO.getAllEvidencesByIdCollaboration(3);
             assertEquals(evidencesExpected, evidencesObtained);
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             fail("Error al obtener todas las evidencias de la colaboracion");
         }
-    }
-    
-    @Test
-    public void testDeleteEvidenceByNameSuccess() throws LogicException {
-        EvidenceDAO evidenceDAO = new EvidenceDAO();
-        String name = "EVIDENCIA 1";
-        int currentResult = evidenceDAO.deleteEvidenceByName(name);
-        int expectedResult = 1;
-        assertEquals(expectedResult, currentResult);
     }
 }

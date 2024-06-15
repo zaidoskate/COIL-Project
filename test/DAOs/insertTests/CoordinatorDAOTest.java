@@ -1,16 +1,14 @@
-package DAOs;
+package DAOs.insertTests;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
-import logic.domain.Coordinator;
 import logic.DAOs.CoordinatorDAO;
+import logic.domain.Coordinator;
 import logic.LogicException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import org.junit.Test;
 
 public class CoordinatorDAOTest {
     
-    public CoordinatorDAOTest() {
-    }
-
     @Test
     public void testInsertCoordinatorSuccess() {
         Coordinator coordinator = new Coordinator();
@@ -25,19 +23,4 @@ public class CoordinatorDAOTest {
             fail("No se ha podido agregar al coordinador");
         }
     }
-    
-    @Test
-    public void testGetIdCoordinatorByIdUserSuccess() {
-        int expectedResult = 1;
-        
-        CoordinatorDAO coordinatorDAO = new CoordinatorDAO();
-        try {
-            int result = coordinatorDAO.getIdCoordinatorByIdUser(2);
-            assertEquals(expectedResult, result);
-        } catch(LogicException logicException) {
-            fail("Error al recuperar el id coordinador");
-        }
-    }
-    
 }
-    

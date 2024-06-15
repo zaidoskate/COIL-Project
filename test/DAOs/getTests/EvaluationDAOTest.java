@@ -1,58 +1,14 @@
-package DAOs;
-import static org.junit.Assert.*;
-import org.junit.Test;
+package DAOs.getTests;
+
 import java.util.ArrayList;
-import logic.domain.Evaluation;
 import logic.DAOs.EvaluationDAO;
 import logic.LogicException;
+import logic.domain.Evaluation;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import org.junit.Test;
 
 public class EvaluationDAOTest {
-    public EvaluationDAOTest(){
-    }
-    
-    @Test
-    public void testInsertEvaluationForApprovedOfferSuccess() {
-        Evaluation evaluation = new Evaluation();
-        evaluation.setIdOfferCollaboration(1);
-        evaluation.setIdCoordinator(1);
-        
-        EvaluationDAO evaluationDAO = new EvaluationDAO();
-        try{
-            int result = evaluationDAO.insertEvaluationForApprovedOffer(evaluation);
-            assertEquals(1, result);
-        } catch(LogicException logicException) {
-            fail("No se ha registrado correctamente la evaluacion" + logicException.getMessage());
-        }
-    }
-    
-    @Test
-    public void testInsertEvaluationForDeclinedOfferSuccess() {
-        Evaluation evaluation = new Evaluation();
-        evaluation.setIdOfferCollaboration(2);
-        evaluation.setIdCoordinator(1);
-        evaluation.setReason("Falta de documentos");
-        
-        EvaluationDAO evaluationDAO = new EvaluationDAO();
-        
-        try{
-            int result = evaluationDAO.insertEvaluationForDeclinedOffer(evaluation);
-            assertEquals(1, result);
-        } catch(LogicException logicException) {
-            fail("No se ha registrado correctamente la evaluacion" + logicException.getMessage());
-        }
-    }
-    
-    @Test
-    public void testDeleteEvaluationSuccess() {
-        EvaluationDAO evaluationDAO = new EvaluationDAO();
-        int expectedResult = 1;
-        try {
-            int result = evaluationDAO.deleteEvaluation(3);
-            assertEquals(expectedResult, result);
-        } catch(LogicException logicException) {
-            fail("Error al eliminar la evaluacion");
-        }
-    }
     
     @Test
     public void testGetEvaluationByIdOfferCollaborationSuccess() {
@@ -75,6 +31,7 @@ public class EvaluationDAOTest {
         ArrayList<Evaluation> evaluationsExpected = new ArrayList<>();
         Evaluation evaluation1 = new Evaluation();
         Evaluation evaluation2 = new Evaluation();
+        Evaluation evaluation3 = new Evaluation();
         
         evaluation1.setIdOfferCollaboration(1);
         evaluation1.setIdCoordinator(1);
@@ -84,8 +41,14 @@ public class EvaluationDAOTest {
         evaluation2.setIdCoordinator(1);
         evaluation2.setDate("2024-06-10");
         
+        evaluation3.setIdOfferCollaboration(3);
+        evaluation3.setIdCoordinator(1);
+        evaluation3.setDate("2024-06-10");
+        evaluation3.setReason("Rechazada por incumplimiento de normas");
+        
         evaluationsExpected.add(evaluation1);
         evaluationsExpected.add(evaluation2);
+        evaluationsExpected.add(evaluation3);
         
         EvaluationDAO evaluationDAO = new EvaluationDAO();
         
@@ -96,5 +59,4 @@ public class EvaluationDAOTest {
             fail("No se han podido obtener las evaluaciones del coordinador" + logicException.getMessage());
         }
     }
-    
 }

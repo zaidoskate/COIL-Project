@@ -1,16 +1,13 @@
-package DAOs;
+package DAOs.insertTests;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
-import logic.domain.ExternalProfessor;
 import logic.DAOs.ExternalProfessorDAO;
 import logic.LogicException;
+import logic.domain.ExternalProfessor;
+import static org.junit.Assert.assertNotEquals;
+import org.junit.Test;
 
 public class ExternalProfessorDAOTest {
     
-    public ExternalProfessorDAOTest() {
-    }
-
     @Test
     public void testInsertExternalProfessorSuccess() throws LogicException{
         ExternalProfessor externalProfessor = new ExternalProfessor();
