@@ -6,18 +6,18 @@ import logic.LogicException;
 import logic.domain.Evidence;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class EvidenceDAOTest {
     
-    @Before
+    @BeforeClass
     public void setUp() throws LogicException {
         String filePath = "../../EVIDENCIA1.pdf";
         EvidenceDAO evidenceDAO = new EvidenceDAO();
         Evidence evidence = new Evidence();
         evidence.setIdFolderEvidence(1);
-        evidence.setName("EVIDENCIA 1");
+        evidence.setName("EVIDENCIA 11");
         evidence.setAuthor("Marcio");
         evidence.setDateOfCreation("2024-07-01");
         evidence.setFile(filePath);
@@ -31,7 +31,7 @@ public class EvidenceDAOTest {
         EvidenceDAO evidenceDAO = new EvidenceDAO();
         Evidence evidence = new Evidence();
         evidence.setIdFolderEvidence(1);
-        evidence.setName("EVIDENCIA 1");
+        evidence.setName("EVIDENCIA 11");
         evidence.setAuthor("Marcio");
         evidence.setDateOfCreation("2024-01-01");
         try {
@@ -47,7 +47,7 @@ public class EvidenceDAOTest {
         ArrayList<Evidence> evidencesExpected = new ArrayList<>();
         Evidence evidence = new Evidence();
         evidence.setAuthor("Marcio");
-        evidence.setName("EVIDENCIA 1");
+        evidence.setName("EVIDENCIA 11");
         evidence.setIdFolderEvidence(1);
         evidencesExpected.add(evidence);
         

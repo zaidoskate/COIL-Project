@@ -12,11 +12,11 @@ public class AccountCreatorTest {
     public void testCreateUVAccountSuccess() throws LogicException {
         UvAccountRequest uvAccountRequest = new UvAccountRequest();
         uvAccountRequest.setIdRequest(1);
-        uvAccountRequest.setIdDepartment("FEX");
-        uvAccountRequest.setPersonalNumber("09652");
-        uvAccountRequest.setEmail("jesustlapahernandez@gmail.com");
         uvAccountRequest.setName("Frida");
         uvAccountRequest.setLastName("Tlapa Hernandez");
+        uvAccountRequest.setEmail("jesustlapahernandez@gmail.com");
+        uvAccountRequest.setPersonalNumber("09652");
+        uvAccountRequest.setIdDepartment("FEX");
         boolean result = AccountCreator.createUVAccount(uvAccountRequest);
         assertTrue(result);
     }
@@ -24,7 +24,7 @@ public class AccountCreatorTest {
     @Test(expected=LogicException.class)
     public void testCreateUVAccountFailed() throws LogicException {
         UvAccountRequest uvAccountRequest = new UvAccountRequest();
-        uvAccountRequest.setIdRequest(9);
+        uvAccountRequest.setIdRequest(11);
         uvAccountRequest.setIdDepartment("FEIdddddddddddddddddddddddddddddddddddddddddddddX");
         uvAccountRequest.setPersonalNumber("0706ddddddddddddddddddddddddddddddddddddddddddddddddddddddddd1");
         uvAccountRequest.setEmail("chimalg2001@outlook.com");
@@ -46,7 +46,7 @@ public class AccountCreatorTest {
         assertTrue(result);
     }
     
-    @Test
+    @Test(expected=LogicException.class)
     public void testCreateExternalAccountFailed() throws LogicException {
         ExternalAccountRequest externalAccountRequest = new ExternalAccountRequest();
         externalAccountRequest.setIdRequest(10);

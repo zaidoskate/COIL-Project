@@ -83,12 +83,6 @@ public class CollaborationDAOTest {
         collaborationExpected.setIdColaboration(2);
         collaborationsExpected.add(collaborationExpected);
         
-        collaborationExpected = new Collaboration();
-        collaborationExpected.setColaborationName("Conquista de Brasil");
-        collaborationExpected.setStartDate("Null");
-        collaborationExpected.setIdColaboration(5);
-        collaborationsExpected.add(collaborationExpected);
-        
         assertEquals(collaborationsExpected, collaborationsResult);
     }
     

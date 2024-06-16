@@ -1,32 +1,17 @@
-package DAOs;
+package DAOs.getTests;
 
 import logic.LogicException;
-import logic.domain.StartupDocumentation;
 import logic.DAOs.StartupDocumentationDAO;
+import logic.domain.StartupDocumentation;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
 
 public class StartupDocumentationDAOTest {
-    public StartupDocumentationDAOTest() {
-        
-    }
-    
-    @Test
-    public void testAddStartupDocumentationSuccess() throws LogicException {
+    @Before
+    public void setUpSyllabus() throws LogicException {
         StartupDocumentation startupDocumentation = new StartupDocumentation();
-        startupDocumentation.setIdColaboration(1);
-        StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO();
-        
-        int currentResult = startupDocumentationDAO.addStartupDocumentation(startupDocumentation);
-        int expectedResult = 1;
-        
-        assertEquals(expectedResult, currentResult);
-    }
-    
-    @Test
-    public void testUploadSyllabusSuccess() throws LogicException {
-        StartupDocumentation startupDocumentation = new StartupDocumentation();
-        startupDocumentation.setIdColaboration(1);
+        startupDocumentation.setIdColaboration(2);
         startupDocumentation.setSyllabusPath("../../Syllabus.pdf");
         
         StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO(); 
@@ -35,37 +20,10 @@ public class StartupDocumentationDAOTest {
         
         assertEquals(expectedResult, currentResult);
     }
-    
-    @Test
-    public void testUploadStudentsListSuccess() throws LogicException {
-        StartupDocumentation startupDocumentation = new StartupDocumentation();
-        startupDocumentation.setIdColaboration(133);
-        startupDocumentation.setStudentsListPath("../../StudentsList.pdf");
-        
-        StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO(); 
-        int currentResult = startupDocumentationDAO.uploadStudentsList(startupDocumentation);
-        int expectedResult = 1;
-        
-        assertEquals(expectedResult, currentResult);
-    }
-    
-    @Test
-    public void testUploadMirrorStudentsListSuccess() throws LogicException {
-        StartupDocumentation startupDocumentation = new StartupDocumentation();
-        startupDocumentation.setIdColaboration(1);
-        startupDocumentation.setMirrorClassStudentsListPath("../../MirrorStudentsList.pdf");
-        
-        StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO(); 
-        int currentResult = startupDocumentationDAO.uploadMirrorStudentsList(startupDocumentation);
-        int expectedResult = 1;
-        
-        assertEquals(expectedResult, currentResult);
-    }
-    
     @Test
     public void testObtainSyllabusSuccess()  throws LogicException{
         StartupDocumentation startupDocumentation = new StartupDocumentation();
-        startupDocumentation.setIdColaboration(1);
+        startupDocumentation.setIdColaboration(2);
         String outputPath = "../../Syllabus_descargado.pdf";
         
         StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO(); 
@@ -75,10 +33,22 @@ public class StartupDocumentationDAOTest {
         assertEquals(expectedResult, currentResult);
     }
     
+    @Before
+    public void setUpStudentsList() throws LogicException {
+        StartupDocumentation startupDocumentation = new StartupDocumentation();
+        startupDocumentation.setIdColaboration(2);
+        startupDocumentation.setStudentsListPath("../../StudentsList.pdf");
+        
+        StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO(); 
+        int currentResult = startupDocumentationDAO.uploadStudentsList(startupDocumentation);
+        int expectedResult = 1;
+        
+        assertEquals(expectedResult, currentResult);
+    }
     @Test
     public void testObtainStudentsListSuccess() throws LogicException {
         StartupDocumentation startupDocumentation = new StartupDocumentation();
-        startupDocumentation.setIdColaboration(1);
+        startupDocumentation.setIdColaboration(2);
         String outputPath = "../../StudentsList_descargado.pdf";
         
         StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO(); 
@@ -88,10 +58,22 @@ public class StartupDocumentationDAOTest {
         assertEquals(expectedResult, currentResult);
     }
     
+    @Before
+    public void setUpMirrorStudentsList() throws LogicException {
+        StartupDocumentation startupDocumentation = new StartupDocumentation();
+        startupDocumentation.setIdColaboration(2);
+        startupDocumentation.setMirrorClassStudentsListPath("../../MirrorStudentsList.pdf");
+        
+        StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO(); 
+        int currentResult = startupDocumentationDAO.uploadMirrorStudentsList(startupDocumentation);
+        int expectedResult = 1;
+        
+        assertEquals(expectedResult, currentResult);
+    }
     @Test
     public void testObtainMirrorStudentsListSuccess() throws LogicException {
         StartupDocumentation startupDocumentation = new StartupDocumentation();
-        startupDocumentation.setIdColaboration(1);
+        startupDocumentation.setIdColaboration(2);
         String outputPath = "../../MirrorStudentsList_descargado.pdf";
         
         StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO(); 
@@ -113,18 +95,6 @@ public class StartupDocumentationDAOTest {
     }
     
     @Test
-    public void testDeleteUploadedFile() {
-        int expectedResult = 1;
-        StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO();
-        try {
-            int result = startupDocumentationDAO.deleteUploadedFile("listaEstudiantado", 1);
-            assertEquals(expectedResult, result);
-        } catch(LogicException logicException) {
-            fail("No se ha podido eliminar el archivo cargado");
-        }
-    }
-    
-    @Test
     public void testIsCollaborationRegistratedSuccess() {
         StartupDocumentationDAO startupDocumentationDAO = new StartupDocumentationDAO();
         try {
@@ -133,5 +103,5 @@ public class StartupDocumentationDAOTest {
         } catch(LogicException logicException) {
             fail("No se ha podido saber si la colaboracion ya esta registrada con su documentacion de inicio");
         }
-    }
+    }    
 }

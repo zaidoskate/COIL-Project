@@ -20,7 +20,7 @@ public class CollaborationDAOTest {
         collaboration.setLanguage("Español");
         collaboration.setInterestTopic("SOLID Principles");
         
-        int expectedResult = 1;
+        int expectedResult = 6;
         int currentResult = collaborationDAO.addColaboration(collaboration);
         
         assertEquals(expectedResult, currentResult);

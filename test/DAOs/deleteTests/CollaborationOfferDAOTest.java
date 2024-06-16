@@ -13,7 +13,7 @@ public class CollaborationOfferDAOTest {
     @Before
     public void setUp() {
         CollaborationOffer collaborationOffer = new CollaborationOffer();
-        collaborationOffer.setIdUser(8);
+        collaborationOffer.setIdUser(3);
         collaborationOffer.setObjective("Investigación");
         collaborationOffer.setTopicsOfInterest("Inteligencia Artificial");
         collaborationOffer.setNumberOfStudents(20);
@@ -26,6 +26,7 @@ public class CollaborationOfferDAOTest {
             int result = collaborationOfferDAO.insertColaborationOffer(collaborationOffer);
             assertEquals(1, result);
         } catch(LogicException logicException) {
+            logicException.printStackTrace();
             fail("No se ha insertado la oferta de colaboración: " + logicException.getMessage());
         }
     }

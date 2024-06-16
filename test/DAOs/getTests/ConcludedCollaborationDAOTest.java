@@ -15,7 +15,7 @@ public class ConcludedCollaborationDAOTest {
     @Before
     public void setUp() {
         ConcludedCollaboration concludedCollaboration = new ConcludedCollaboration();
-        concludedCollaboration.setIdColaboration(1);
+        concludedCollaboration.setIdColaboration(4);
         concludedCollaboration.setCertificatesFile(new File("../../constancias.zip"));
         
         ConcludedColaborationDAO concludedColaborationDAO = new ConcludedColaborationDAO();
@@ -51,6 +51,7 @@ public class ConcludedCollaborationDAOTest {
         collaborationExpected.setIdColaboration(4);
         collaborationExpected.setIdUser(3);
         concludedCollaborationsExpected.add(collaborationExpected);
+        
         assertEquals(concludedCollaborationsExpected, concludedCollaborationsResult);
     }
     
