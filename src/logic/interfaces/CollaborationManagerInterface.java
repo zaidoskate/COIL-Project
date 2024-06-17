@@ -45,7 +45,7 @@ public interface CollaborationManagerInterface {
 
     /**
      *
-     * @param id
+     * @param idCollaboration
      * @return
      * @throws LogicException
      */

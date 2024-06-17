@@ -15,7 +15,7 @@ import logic.LogicException;
  * Implementa la interfaz EvidenceFolderManagerInterface.
  * Proporciona métodos para insertar y recuperar folders de evidencia.
  * 
- * @autor chuch
+ * @author chuch
  */
 public class EvidenceFolderDAO implements EvidenceFolderManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();

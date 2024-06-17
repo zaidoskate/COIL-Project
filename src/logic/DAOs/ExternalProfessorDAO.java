@@ -13,7 +13,7 @@ import logic.LogicException;
  * Implementa la interfaz ExternalProfessorManagerInterface.
  * Proporciona métodos para insertar profesores externos.
  * 
- * @autor zaido
+ * @author zaido
  */
 public class ExternalProfessorDAO implements ExternalProfessorManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();

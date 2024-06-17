@@ -13,7 +13,7 @@ import logic.LogicException;
  * Data Access Object (DAO) para gestionar las operaciones CRUD relacionadas con los profesores de la UV en la base de datos.
  * Implementa la interfaz UvProfessorManagerInterface.
  * 
- * @autor zaido
+ * @author zaido
  */
 public class UvProfessorDAO implements UvProfessorManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();

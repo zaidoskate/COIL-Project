@@ -15,7 +15,7 @@ import logic.LogicException;
  * Implementa la interfaz CollaborationOfferCandidateManagerInterface.
  * Proporciona métodos para insertar, eliminar y recuperar candidatos de oferta de colaboración.
  * 
- * @autor zaido
+ * @author zaido
  */
 public class CollaborationOfferCandidateDAO implements CollaborationOfferCandidateManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();

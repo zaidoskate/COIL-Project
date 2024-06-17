@@ -19,7 +19,7 @@ import logic.FileDownloader;
  * Data Access Object (DAO) para gestionar las operaciones relacionadas con la documentación final de las colaboraciones en la base de datos.
  * Implementa la interfaz FinalDocumentationManagerInterface.
  * 
- * @autor zaido
+ * @author zaido
  */
 public class FinalDocumentationDAO implements FinalDocumentationManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();

@@ -15,7 +15,7 @@ import logic.LogicException;
  * Implementa la interfaz DepartmentManagerInterface.
  * Proporciona métodos para obtener los nombres de las regiones y los departamentos por región.
  * 
- * @autor chuch
+ * @author chuch
  */
 public class DepartmentDAO implements DepartmentManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();

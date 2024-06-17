@@ -19,7 +19,7 @@ import logic.interfaces.StartupDocumentationManagerInterface;
  * Data Access Object (DAO) para gestionar las operaciones relacionadas con la documentación de inicio en la base de datos.
  * Implementa la interfaz StartupDocumentationManagerInterface.
  * 
- * @autor zaido
+ * @author zaido
  */
 public class StartupDocumentationDAO implements StartupDocumentationManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();

@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * Implementa la interfaz ExternalAccountRequestManagerInterface.
  * Proporciona métodos para insertar, eliminar y recuperar solicitudes de cuentas externas.
  * 
- * @autor chuch
+ * @author chuch
  */
 public class ExternalAccountRequestDAO implements ExternalAccountRequestManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();

@@ -14,7 +14,7 @@ import logic.LogicException;
  * Data Access Object (DAO) para gestionar las operaciones CRUD relacionadas con las solicitudes de cuentas UV en la base de datos.
  * Implementa la interfaz UvAccountRequestManagerInterface.
  * 
- * @autor chuch
+ * @author chuch
  */
 public class UvAccountRequestDAO implements UvAccountRequestManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();

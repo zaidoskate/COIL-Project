@@ -24,7 +24,7 @@ import logic.LogicException;
  * Implementa la interfaz EvidenceManagerInterface.
  * Proporciona métodos para subir, descargar y recuperar evidencias.
  * 
- * @autor chuch
+ * @author chuch
  */
 public class EvidenceDAO implements EvidenceManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
