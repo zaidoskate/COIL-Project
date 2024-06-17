@@ -1,33 +1,15 @@
 package logic.domain;
 
-/**
- *
- * @author chuch
- */
 public class ExternalAccountRequestData extends ExternalAccountRequest {
     private String university;
 
-    /**
-     *
-     * @return
-     */
     public String getUniversity() {
         return university;
     }
-
-    /**
-     *
-     * @param university
-     */
     public void setUniversity(String university) {
         this.university = university;
     }
     
-    /**
-     *
-     * @param object
-     * @return
-     */
     @Override
     public boolean equals(Object object) {
         ExternalAccountRequestData accountRequestToCompare = (ExternalAccountRequestData) object;
