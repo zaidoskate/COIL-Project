@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Data Access Object (DAO) para gestionar las operaciones relacionadas con la pertenencia de profesores a colaboraciones en la base de datos.
  * Implementa la interfaz ProfessorBelongsToCollaborationManagerInterface.
  * 
- * @autor zaido
+ * @author zaido
  */
 public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCollaborationManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
