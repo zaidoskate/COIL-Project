@@ -24,18 +24,18 @@ public class AccountRequestMenuController implements Initializable {
     }
     @FXML
     public void displayExternalAccountRequestList() {
-        try{
+        try {
             AccountRequestExternalListStage accountRequestExternalListStage = new AccountRequestExternalListStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
     }
     @FXML
     public void displayUvAccountRequestList() {
-        try{
+        try {
             AccountRequestUvListStage accountRequestUvListStage = new AccountRequestUvListStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
@@ -44,9 +44,9 @@ public class AccountRequestMenuController implements Initializable {
     public void previusMenu() {
         Stage stage = (Stage) btnCancel.getScene().getWindow();
         stage.close();
-        try{
+        try {
             CoordinatorMenuStage coordinatorMenu = new CoordinatorMenuStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }

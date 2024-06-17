@@ -29,15 +29,15 @@ public class UniversityRegistrationController implements Initializable {
     } 
     
     private boolean validateUniversityName(String universityName) {
-        if( !DataValidation.validateNotBlanks(universityName)){
+        if ( !DataValidation.validateNotBlanks(universityName)){
             Alerts.showWarningAlert("La universidad es un campo obligatorio.");
             return false;
         }
-        if(!DataValidation.validateName(universityName)){
+        if (!DataValidation.validateName(universityName)){
             Alerts.showWarningAlert("El nombre de la universidad es inválido, ingresa el nombre completo.");
             return false;
         }
-        if(!DataValidation.validateLengthField(universityName, 45)) {
+        if (!DataValidation.validateLengthField(universityName, 45)) {
             Alerts.showWarningAlert("El nombre de la universidad es demasiado largo.");
             return false;
         }
@@ -45,15 +45,15 @@ public class UniversityRegistrationController implements Initializable {
     }
     
     private boolean validateCountryName(String countryName) {
-        if( !DataValidation.validateNotBlanks(countryName)){
+        if ( !DataValidation.validateNotBlanks(countryName)){
             Alerts.showWarningAlert("El país es un campo obligatorio.");
             return false;
         }
-        if(!DataValidation.validateName(countryName)){
+        if (!DataValidation.validateName(countryName)){
             Alerts.showWarningAlert("El nombre del país es inválido, ingresa el nombre completo.");
             return false;
         }
-        if(!DataValidation.validateLengthField(countryName, 45)) {
+        if (!DataValidation.validateLengthField(countryName, 45)) {
             Alerts.showWarningAlert("El nombre del país es demasiado largo.");
             return false;
         }
@@ -63,13 +63,13 @@ public class UniversityRegistrationController implements Initializable {
     private boolean makeValidations() throws LogicException {
         String universityName = DataValidation.trimUnnecesaryBlanks(txtFieldName.getText());
         String country = DataValidation.trimUnnecesaryBlanks(txtFieldCountry.getText());
-        if(!validateUniversityName(universityName)) {
+        if (!validateUniversityName(universityName)) {
             return false;
         }
-        if(!validateCountryName(country)) {
+        if (!validateCountryName(country)) {
             return false;
         }
-        if(UNIVERSITY_DAO.checkUniversityRegistered(universityName)) {
+        if (UNIVERSITY_DAO.checkUniversityRegistered(universityName)) {
             Alerts.showWarningAlert("Universidad ya registrada");
             return false;
         }
@@ -84,9 +84,9 @@ public class UniversityRegistrationController implements Initializable {
     private void previusMenu() {
         Stage stage = (Stage) txtFieldName.getScene().getWindow();
         stage.close();
-        try{
+        try {
             UniversitiesStage universitiesStage = new UniversitiesStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
@@ -95,10 +95,10 @@ public class UniversityRegistrationController implements Initializable {
     @FXML
     private void saveUniversity() { 
         try {
-            if(!makeValidations()) {
+            if (!makeValidations()) {
                 return;
             }
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
         }
@@ -110,14 +110,14 @@ public class UniversityRegistrationController implements Initializable {
         university.setCountry(country);
         int result = 0;
         
-        try{
+        try {
             result = UNIVERSITY_DAO.insertUniversity(university);
         } catch(LogicException logicException) {
             LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
         }
         
-        if(result==1) {
+        if (result==1) {
             Alerts.showInformationAlert("Éxito", "Se ha registrado exitosamente la Universidad.");
             clearFields();
         } else {

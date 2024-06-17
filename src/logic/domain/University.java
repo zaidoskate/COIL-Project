@@ -65,13 +65,13 @@ public class University {
     @Override
     public boolean equals(Object object) {
         University universityToCompare = (University) object;
-        if(this.getUniversityId() != universityToCompare.getUniversityId()) {
+        if (this.getUniversityId() != universityToCompare.getUniversityId()) {
             return false;
         }
-        if(!this.getName().equals(universityToCompare.getName())) {
+        if (!this.getName().equals(universityToCompare.getName())) {
             return false;
         }
-        if(!this.getCountry().equals(universityToCompare.getCountry())) {
+        if (!this.getCountry().equals(universityToCompare.getCountry())) {
             return false;
         }
         return true;

@@ -15,7 +15,7 @@ public class CredentialGenerator {
         
         String user = ("" + firstLetter + firstLastname).toLowerCase();
         
-        while(validateUserExistence(user) == 1) {
+        while (validateUserExistence(user) == 1) {
             user += "1";
         }
         
@@ -28,7 +28,7 @@ public class CredentialGenerator {
         SecureRandom random = new SecureRandom();
         StringBuilder password = new StringBuilder(length);
 
-        for (int i = 0; i < length; i++) {
+        for (int i=0; i<length; i++) {
             int index = random.nextInt(characters.length());
             password.append(characters.charAt(index));
         }

@@ -43,7 +43,7 @@ public class DataValidation {
     public static boolean validatePersonalNumberExists(String personalNumber) {
         UvProfessorDAO uvProfessorDAO = new UvProfessorDAO();
         try {
-            if(uvProfessorDAO.countUvProfessorByPersonalNumber(personalNumber) == 0) {
+            if (uvProfessorDAO.countUvProfessorByPersonalNumber(personalNumber) == 0) {
                 return true;
             }
         } catch(LogicException logicException) {
@@ -111,7 +111,7 @@ public class DataValidation {
             LocalDate start = LocalDate.parse(startDate, dateFormatter);
             LocalDate end = LocalDate.parse(endDate, dateFormatter);
             validRange = !end.isBefore(start);
-        } catch(DateTimeParseException dateTimeParseException) {
+        } catch (DateTimeParseException dateTimeParseException) {
             throw new LogicException("Fecha recibida no tiene el formato válido", dateTimeParseException);
         }
         return validRange;

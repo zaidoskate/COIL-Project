@@ -11,23 +11,26 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 /**
- *
- * @author chuch
+ * Data Access Object (DAO) para gestionar las operaciones CRUD relacionadas con los profesores en la base de datos.
+ * Implementa la interfaz ProfessorManagerInterface.
+ * 
+ * @autor chuch
  */
 public class ProfessorDAO implements ProfessorManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
-    
+
     /**
-     * Insertar un nuevo profesor en la base de datos.
-     * @param professor id usuario del profesor
-     * @return entero con las rows afectadas en la query, si retorna 1 fue exitoso.
-     * @throws LogicException cuando hay problemas de conexión con la base de datos.
+     * Inserta un nuevo profesor en la base de datos.
+     * 
+     * @param professor una instancia de la clase Professor que contiene el ID del usuario del profesor.
+     * @return un entero que indica el número de filas afectadas en la consulta, si retorna 1 fue exitoso.
+     * @throws LogicException cuando hay problemas de conexión con la base de datos o ocurre un error de SQL.
      */
     @Override
     public int insertProfessor(Professor professor) throws LogicException {
         int result = 0;
         String query = "INSERT INTO Profesor VALUES (?)";
-        try{
+        try {
             Connection connection = DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, professor.getIdUser());
@@ -39,12 +42,14 @@ public class ProfessorDAO implements ProfessorManagerInterface {
         }
         return result;
     }
-    
+
     /**
-     * Obtener la universidad de un profesor, si el profesor es UV le asigna Universidad Veracruzana
-     * @param idUser id usuario para consultar.
-     * @return ArrayList de String que contiene el nombre de la universidad y el pais al que pertenece.
-     * @throws LogicException cuando se presenta un problema de conexión con la base de datos.
+     * Obtiene la universidad de un profesor. Si el profesor es UV, le asigna "Universidad Veracruzana" y la facultad a la que pertenece. 
+     * Si el profesor es externo, le asigna el nombre de la universidad y el país de esa universidad.
+     * 
+     * @param idUser el ID del usuario para consultar su universidad en la base de datos.
+     * @return un ArrayList de String que contiene el nombre de la universidad y la ubicación a la que pertenece.
+     * @throws LogicException cuando se presenta un problema de conexión con la base de datos o ocurre un error de SQL.
      */
     @Override
     public ArrayList<String> getUniversityFromAProfessor(int idUser) throws LogicException {
@@ -78,5 +83,4 @@ public class ProfessorDAO implements ProfessorManagerInterface {
         }
         return universityInformation;
     }
-
 }

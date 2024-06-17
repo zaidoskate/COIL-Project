@@ -63,7 +63,7 @@ public class ProfessorDetailController implements Initializable {
         stage.close();
         try {
             CandidatesStage candidatesStage = new CandidatesStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
         }
@@ -74,7 +74,7 @@ public class ProfessorDetailController implements Initializable {
         try {
             Stage currentStage = (Stage) this.btnAccept.getScene().getWindow();
             CollaborationRegistrationStage registrateCollaborationStage = new CollaborationRegistrationStage(currentStage);
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
         }

@@ -63,7 +63,7 @@ public class OfferDeclinationController implements Initializable {
             validReason = false;
             Alerts.showWarningAlert("El motivo tienen que ser palabras válidas, evite el uso de caracteres especiales");
         }
-        if(!DataValidation.validateLengthField(reason, 100)) {
+        if (!DataValidation.validateLengthField(reason, 100)) {
             validReason = false;
             Alerts.showWarningAlert("Proporcione un motivo de no más de 100 caracteres");
         }
@@ -73,11 +73,11 @@ public class OfferDeclinationController implements Initializable {
     @FXML
     private void declineOffer() {
         this.txtAreaReason.setText(DataValidation.trimUnnecesaryBlanks(this.txtAreaReason.getText()));
-        if(validateReason(this.txtAreaReason.getText())) {
+        if (validateReason(this.txtAreaReason.getText())) {
             try {
                 Evaluation evaluation = createEvaluationDeclined();
-                    if(COLLABORATION_OFFER_DAO.evaluateCollaborationOffer(SELECTED_OFFER.getIdOfferCollaboration(), "Rechazada") == 1) {
-                        if(EVALUATION_DAO.insertEvaluationForDeclinedOffer(evaluation) == 1) {
+                    if (COLLABORATION_OFFER_DAO.evaluateCollaborationOffer(SELECTED_OFFER.getIdOfferCollaboration(), "Rechazada") == 1) {
+                        if (EVALUATION_DAO.insertEvaluationForDeclinedOffer(evaluation) == 1) {
                             if (sendDeclinedOfferEmail()) {
                                 EmailNotification.getInstance().emailSent();
                                 EmailNotification.getInstance().setEmailBody(this.txtAreaReason.getText());
@@ -88,7 +88,7 @@ public class OfferDeclinationController implements Initializable {
                             }
                         }
                     }
-            } catch(LogicException logicException) {
+            } catch (LogicException logicException) {
                 Alerts.displayAlertLogicException(logicException);
                 LOG.error(logicException);
             }

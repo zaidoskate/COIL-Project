@@ -10,23 +10,26 @@ import java.sql.ResultSet;
 import logic.LogicException;
 
 /**
- *
- * @author zaido
+ * Data Access Object (DAO) para gestionar las operaciones CRUD relacionadas con los profesores de la UV en la base de datos.
+ * Implementa la interfaz UvProfessorManagerInterface.
+ * 
+ * @autor zaido
  */
-public class UvProfessorDAO implements UvProfessorManagerInterface{
+public class UvProfessorDAO implements UvProfessorManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
-    
-    /** Inserta un profesor uv en la base de datos con los datos correspondientes
+
+    /**
+     * Inserta un profesor UV en la base de datos.
      * 
-     * @param uvProfessor es una instancia de la clase UvProfessor correspondiente al dominio, contiene los datos del profesor
-     * @return un entero que representa las filas insertadas, 1 en caso de exito o 0 en caso contrario
-     * @throws LogicException cuando no existe conexion con la base de datos
+     * @param uvProfessor una instancia de UvProfessor que contiene los datos del profesor.
+     * @return un entero que representa el número de filas insertadas, 1 en caso de éxito o 0 en caso contrario.
+     * @throws LogicException cuando no existe conexión con la base de datos o ocurre un error de SQL.
      */
     @Override
-    public int insertUvProfessor(UvProfessor uvProfessor) throws LogicException{
+    public int insertUvProfessor(UvProfessor uvProfessor) throws LogicException {
         int result = 0;
         String query = "INSERT INTO Profesoruv (numeroPersonal, Profesor_Usuario_idUsuario, idFacultad) VALUES (?, ?, ?)";
-        try{
+        try {
             Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, uvProfessor.getPersonalNumber());
@@ -41,65 +44,68 @@ public class UvProfessorDAO implements UvProfessorManagerInterface{
         return result;
     }
 
-    /** Regresa los datos correspondientes a un profesor de la UV a partir del id del usuario
-     *
-     * @param idUser indica el id del usuario registrado en la base de datos
-     * @return una instancia de la clase UvProfessor con los datos correspondientes al Profesor
-     * @throws LogicException cuando no existe conexión con la base de datos
+    /**
+     * Obtiene los datos de un profesor de la UV a partir del ID del usuario.
+     * 
+     * @param idUser el ID del usuario registrado en la base de datos.
+     * @return una instancia de UvProfessor con los datos correspondientes al profesor.
+     * @throws LogicException cuando no existe conexión con la base de datos o ocurre un error de SQL.
      */
     @Override
-    public UvProfessor getUvProfessorByIdUser(int idUser) throws LogicException{
+    public UvProfessor getUvProfessorByIdUser(int idUser) throws LogicException {
         String query = "SELECT * FROM ProfesorUv WHERE Profesor_Usuario_idUsuario = ?";
         UvProfessor uvProfessorResult = new UvProfessor();
-        try{
+        try {
             Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idUser);
             ResultSet result = statement.executeQuery();
-            while(result.next()) {
+            while (result.next()) {
                 uvProfessorResult.setPersonalNumber(result.getString("numeroPersonal"));
                 uvProfessorResult.setIdUser(result.getInt("Profesor_Usuario_idUsuario"));
                 uvProfessorResult.setIdDepartment(result.getString("idFacultad"));
             }
         } catch (SQLException sqlException) {
-            throw new LogicException("Error al obtener el profesor: ", sqlException);
+            throw new LogicException("Error al obtener el profesor", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }
         return uvProfessorResult;
     }
-    
-    /** Hace un conteo si ya se ha registrado un numero de personal en la base de datos
-     *
-     * @param personalNumber es el numero de personal que se quiere verificar
-     * @return un entero que indica la cantidad de veces que se encontró ese número de personal en la base de datos
-     * @throws LogicException cuando no existe conexión con la base de datos
+
+    /**
+     * Verifica si un número de personal ya ha sido registrado en la base de datos.
+     * 
+     * @param personalNumber el número de personal que se quiere verificar.
+     * @return un entero que indica la cantidad de veces que se encontró ese número de personal en la base de datos.
+     * @throws LogicException cuando no existe conexión con la base de datos o ocurre un error de SQL.
      */
     @Override
     public int countUvProfessorByPersonalNumber(String personalNumber) throws LogicException {
         String query = "SELECT count(*) as count from ProfesorUv WHERE numeroPersonal = ?";
         int count = 0;
-        try{
+        try {
             Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, personalNumber);
             ResultSet result = statement.executeQuery();
-            while(result.next()) {
+            while (result.next()) {
                 count = result.getInt("count");
             }
         } catch (SQLException sqlException) {
-            throw new LogicException("Error al obtener el profesor: ", sqlException);
+            throw new LogicException("Error al obtener el conteo de profesores", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }
         return count;
     }
-    
-    /**Obtiene el nombre de la facultad a la que pertenece un profesor UV basado en el id del usuario
-     *
-     * @param idUser es el id del usuario correspondiente al Profesor
-     * @return Un String que contiene el nombre de la facultad a la que pertenece
-     * @throws LogicException Cuando no existe conexión con la base de datos
+
+    /**
+     * Obtiene el nombre de la facultad a la que pertenece un profesor UV basado en el ID del usuario.
+     * 
+     * @param idUser el ID del usuario correspondiente al profesor.
+     * @return un String que contiene el nombre de la facultad a la que pertenece.
+     * @throws LogicException cuando no existe conexión con la base de datos o ocurre un error de SQL.
      */
     @Override
     public String getDepartmentNameBelonging(int idUser) throws LogicException {
@@ -114,18 +120,19 @@ public class UvProfessorDAO implements UvProfessorManagerInterface{
                 departmentName = result.getString("nombre");
             }
         } catch (SQLException sqlException) {
-            throw new LogicException("Error al obtener el nombre del departamento: ", sqlException);
+            throw new LogicException("Error al obtener el nombre del departamento", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }
-        return departmentName; 
+        return departmentName;
     }
 
-    /** Realiza el conteo de la cantidad de profesores que han participado en una colaboración por región de la UV
-     *
-     * @param region es la región por la cual se filtra la búsqueda
-     * @return un entero que indica la cantidad de profesores que han realizado una colaboración por región
-     * @throws LogicException cuando no existe conexión con la base de datos
+    /**
+     * Realiza el conteo de la cantidad de profesores que han participado en una colaboración por región de la UV.
+     * 
+     * @param region la región por la cual se filtra la búsqueda.
+     * @return un entero que indica la cantidad de profesores que han realizado una colaboración por región.
+     * @throws LogicException cuando no existe conexión con la base de datos o ocurre un error de SQL.
      */
     @Override
     public int getCollaborationCountByProfessorRegion(String region) throws LogicException {
@@ -141,43 +148,43 @@ public class UvProfessorDAO implements UvProfessorManagerInterface{
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, region);
             ResultSet countResult = statement.executeQuery();
-            if(countResult.next()) {
+            if (countResult.next()) {
                 collaborationCount = countResult.getInt("count");
             }
-        } catch(SQLException sqlException) {
-            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } catch (SQLException sqlException) {
+            throw new LogicException("Error al obtener el conteo de colaboraciones por región", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }
         return collaborationCount;
     }
 
-    /** Realiza el conteo de la cantidad de profesores que han participado en una colaboración por área académica de la UV
-     *
-     * @param idAcademicArea el id del área académica por la cual se filtrará la busqueda
-     * @return un entero con la cantidad de profesores que han colaborado y pertenecen al área académica
-     * @throws LogicException Cuando no existe conexión con la base de datos
+    /**
+     * Realiza el conteo de la cantidad de profesores que han participado en una colaboración por área académica de la UV.
+     * 
+     * @param idAcademicArea el ID del área académica por la cual se filtrará la búsqueda.
+     * @return un entero con la cantidad de profesores que han colaborado y pertenecen al área académica.
+     * @throws LogicException cuando no existe conexión con la base de datos o ocurre un error de SQL.
      */
     @Override
     public int getCollaborationCountByProfessorAcademicArea(int idAcademicArea) throws LogicException {
         String query = "SELECT COUNT(DISTINCT pu.Profesor_Usuario_idUsuario) AS count " +
-                   "FROM profesorUv pu " +
-                   "JOIN facultad f ON pu.idFacultad = f.idFacultad " +
-                   "JOIN profesorPerteneceColaboracion pc ON pu.Profesor_Usuario_idUsuario = pc.Profesor_idUsuario " +
-                   "OR pu.Profesor_Usuario_idUsuario = pc.Profesor_idUsuarioEspejo " +
-                   "WHERE f.idAreaAcademica = ?";
+                "FROM profesorUv pu " +
+                "JOIN facultad f ON pu.idFacultad = f.idFacultad " +
+                "JOIN profesorPerteneceColaboracion pc ON pu.Profesor_Usuario_idUsuario = pc.Profesor_idUsuario " +
+                "OR pu.Profesor_Usuario_idUsuario = pc.Profesor_idUsuarioEspejo " +
+                "WHERE f.idAreaAcademica = ?";
         int count = 0;
         try {
             Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idAcademicArea);
             ResultSet result = statement.executeQuery();
-
             if (result.next()) {
                 count = result.getInt("count");
             }
         } catch (SQLException sqlException) {
-            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+            throw new LogicException("Error al obtener el conteo de colaboraciones por área académica", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }

@@ -105,14 +105,14 @@ public class DetailOfferProfessorController implements Initializable {
             ArrayList<String> universityInfo = PROFESSOR_DAO.getUniversityFromAProfessor(SELECTED_OFFER.getIdUser());
             this.universityName.setText(universityInfo.get(0));
             this.universityCountry.setText(universityInfo.get(1));
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
             LOG.error(logicException);
         }
     }
     
     private void checkVisibleButtons() throws LogicException {
-        if(getTypeUser().equals("Coordinador")) {
+        if (getTypeUser().equals("Coordinador")) {
             this.btnApprove.setVisible(true);
             this.btnDecline.setVisible(true);
         } else {
@@ -129,7 +129,7 @@ public class DetailOfferProfessorController implements Initializable {
         candidate.setIdCollaboration(SELECTED_OFFER.getIdOfferCollaboration());
         candidate.setIdUser(CURRENT_SESSION.getUserData().getIdUser());
         int appliedSuccess = CANDIDATE_DAO.InsertCollaborationOfferCandidate(candidate);
-        if(appliedSuccess == 1) {
+        if (appliedSuccess == 1) {
             Alerts.showInformationAlert("Se ha postulado", "Se ha postulado a esta oferta, espere la correspondencia del profesor");
         }
     }
@@ -154,13 +154,13 @@ public class DetailOfferProfessorController implements Initializable {
     public void previousMenu() {
         Stage stage = (Stage) this.objective.getScene().getWindow();
         stage.close();
-        try{
-            if(getTypeUser().equals("Coordinador")) {
+        try {
+            if (getTypeUser().equals("Coordinador")) {
                 OfferCoordinatorStage offerCoordinatorStage =  new OfferCoordinatorStage();
             } else {
                 OfferProfessorStage offerProfessorStage = new OfferProfessorStage();
             }
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
             LOG.error(logicException);
         } catch (IOException ioException) {
@@ -191,14 +191,14 @@ public class DetailOfferProfessorController implements Initializable {
     @FXML
     private void approveOffer() {
         try {
-            if(COLLABORATION_OFFER_DAO.evaluateCollaborationOffer(SELECTED_OFFER.getIdOfferCollaboration(), "Aprobada") == 1) {
+            if (COLLABORATION_OFFER_DAO.evaluateCollaborationOffer(SELECTED_OFFER.getIdOfferCollaboration(), "Aprobada") == 1) {
                 Evaluation evaluation = createEvaluationApproved();
-                if(EVALUATION_DAO.insertEvaluationForApprovedOffer(evaluation) == 1) {
+                if (EVALUATION_DAO.insertEvaluationForApprovedOffer(evaluation) == 1) {
                     Alerts.showInformationAlert("Mensaje", "Ha aprobado esta oferta de colaboración");
                     previousMenu();
                 }
             }
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
             LOG.error(logicException);
         }
@@ -210,7 +210,7 @@ public class DetailOfferProfessorController implements Initializable {
         EmailNotification.getInstance().setMessageSuccess("Oferta rechazada");
         try {
             OfferDeclinationStage declineOfferStage = new OfferDeclinationStage();
-            if(EmailNotification.getInstance().getSentStatus()) {
+            if (EmailNotification.getInstance().getSentStatus()) {
                 Alerts.showInformationAlert("Mensaje", "Oferta rechazada con éxito");
             } else {
                 PendingMail pendingMail = new PendingMail();

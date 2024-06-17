@@ -109,8 +109,8 @@ public class PostCollaborationOfferController implements Initializable {
             this.txtFieldProfile.getText(),
         };
         String[] fieldNames = {"Idioma preferido", "Perfil del estudiante"};
-        for(int i=0; i<fields.length; i++) {
-            if(!DataValidation.validateOnlyLetters(fields[i])) {
+        for (int i=0; i<fields.length; i++) {
+            if (!DataValidation.validateOnlyLetters(fields[i])) {
                 Alerts.showWarningAlert(fieldNames[i] + " deben ser únicamente letras, evite el uso de caracteres especiales o números");
                 return false;
             }
@@ -152,7 +152,7 @@ public class PostCollaborationOfferController implements Initializable {
         int[] maxLengths = {150, 150, 4, 20, 150, 40};
         String[] fieldNames = {"Objetivo", "Temas de interés", "Año", "Idioma", "Información adicional", "Perfil"};
 
-        for (int i = 0; i < fieldsToCheckLength.length; i++) {
+        for (int i=0; i<fieldsToCheckLength.length; i++) {
             if (!DataValidation.validateLengthField(fieldsToCheckLength[i], maxLengths[i])) {
                 Alerts.showWarningAlert(fieldNames[i] + " excede la longitud máxima permitida");
                 return false;

@@ -74,8 +74,8 @@ public class CandidatesController implements Initializable {
     private void setOfferCandidates() {
         try {
             ArrayList<CollaborationOfferCandidate> candidatesObtained = COLLABORATION_OFFER_CANDIDATE_DAO.GetCollaborationOfferCandidateByIdCollaborationOffer(PROFESSOR_OFFER.getIdOfferCollaboration());
-            if(candidatesObtained != null) {
-                for(CollaborationOfferCandidate candidate : candidatesObtained) {
+            if (candidatesObtained != null) {
+                for (CollaborationOfferCandidate candidate : candidatesObtained) {
                     User candidateUser = USER_DAO.getUserById(candidate.getIdUser());
                     String professorName = candidateUser.getName() + " " + candidateUser.getLastName();
                     String professorEmail = candidateUser.getEmail();
@@ -93,7 +93,7 @@ public class CandidatesController implements Initializable {
                     this.tblViewCandidates.setItems(candidates);
                 }
             }
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
             LOG.error(logicException);
         }
@@ -108,7 +108,7 @@ public class CandidatesController implements Initializable {
     }
     
     private void checkEmptyTable() {
-        if(candidates.isEmpty()) {
+        if (candidates.isEmpty()) {
             this.tblViewCandidates.setPlaceholder(new Label ("Aún no hay candidatos para su oferta"));
         }
     }
@@ -119,7 +119,7 @@ public class CandidatesController implements Initializable {
         stage.close();
         try {
             MyOffersStage myOffersStage = new MyOffersStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
         }
@@ -127,13 +127,13 @@ public class CandidatesController implements Initializable {
     
     @FXML
     public void showProfessorDetail() {
-        if(this.tblViewCandidates.getSelectionModel().getSelectedItem() != null) {
+        if (this.tblViewCandidates.getSelectionModel().getSelectedItem() != null) {
             setSelectedCandidate();
             Stage stage = (Stage) this.btnDetail.getScene().getWindow();
             stage.close();
             try {
                 ProfessorDetailStage professorDetailStage = new ProfessorDetailStage();
-            } catch(IOException ioException) {
+            } catch (IOException ioException) {
                 Alerts.displayAlertIOException();
                 LOG.error(ioException);
             }

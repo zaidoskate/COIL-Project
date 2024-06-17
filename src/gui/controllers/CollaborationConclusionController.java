@@ -51,10 +51,10 @@ public class CollaborationConclusionController implements Initializable {
     
     private void checkCollaborationRegistrated() {
         try {
-            if(!FINAL_DOCUMENTATION_DAO.isCollaborationRegistrated(COLLABORATION_INFORMATION.getIdCollaboration())) {
+            if (!FINAL_DOCUMENTATION_DAO.isCollaborationRegistrated(COLLABORATION_INFORMATION.getIdCollaboration())) {
                 createFinalDocumentation();
             }
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
             LOG.error(logicException);
         }
@@ -76,25 +76,25 @@ public class CollaborationConclusionController implements Initializable {
         switch (selectedFileType) {
             case "Feedback profesor":
                 finalDocumentation.setProfessorFeedback(fileToUpload.getPath());
-                if(FINAL_DOCUMENTATION_DAO.uploadProfessorFeedback(finalDocumentation) == 1) {
+                if (FINAL_DOCUMENTATION_DAO.uploadProfessorFeedback(finalDocumentation) == 1) {
                     Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito");
                 }
                 break;
             case "Feedback estudiantado":
                 finalDocumentation.setStudentsFeedback(fileToUpload.getPath());
-                if(FINAL_DOCUMENTATION_DAO.uploadStudentsFeedback(finalDocumentation) == 1) {
+                if (FINAL_DOCUMENTATION_DAO.uploadStudentsFeedback(finalDocumentation) == 1) {
                     Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito");
                 }
                 break;
             case "Feedback profesor espejo":
                 finalDocumentation.setMirrorProfessorFeedback(fileToUpload.getPath());
-                if(FINAL_DOCUMENTATION_DAO.uploadMirrorProfessorFeedback(finalDocumentation) == 1) {
+                if (FINAL_DOCUMENTATION_DAO.uploadMirrorProfessorFeedback(finalDocumentation) == 1) {
                     Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito");
                 }
                 break;
             case "Feedback estudiantado espejo":
                 finalDocumentation.setMirrorStudentsFeedback(fileToUpload.getPath());
-                if(FINAL_DOCUMENTATION_DAO.uploadMirrorStudentsFeedback(finalDocumentation) == 1) {
+                if (FINAL_DOCUMENTATION_DAO.uploadMirrorStudentsFeedback(finalDocumentation) == 1) {
                     Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito");
                 }
                 break;
@@ -127,9 +127,9 @@ public class CollaborationConclusionController implements Initializable {
     private void onDragOver(DragEvent event) {
         Stage stage = (Stage) this.regionFile.getScene().getWindow();
         stage.requestFocus();
-        if(cmbBoxFileType.getSelectionModel().getSelectedItem() != null) {
-            if(event.getGestureSource() != this.regionFile || event.getGestureSource() != imageViewFile) {
-                if(event.getDragboard().hasFiles()) {
+        if (cmbBoxFileType.getSelectionModel().getSelectedItem() != null) {
+            if (event.getGestureSource() != this.regionFile || event.getGestureSource() != imageViewFile) {
+                if (event.getDragboard().hasFiles()) {
                     event.acceptTransferModes(TransferMode.COPY);
                 }
             }
@@ -138,16 +138,16 @@ public class CollaborationConclusionController implements Initializable {
     
     @FXML
     private void onDragDropped(DragEvent event) {
-        if(cmbBoxFileType.getSelectionModel().getSelectedItem() != null) {
-            if(event.getGestureSource() != regionFile || event.getGestureSource() != imageViewFile) {
-                if(event.getDragboard().hasFiles()) {
+        if (cmbBoxFileType.getSelectionModel().getSelectedItem() != null) {
+            if (event.getGestureSource() != regionFile || event.getGestureSource() != imageViewFile) {
+                if (event.getDragboard().hasFiles()) {
                     File fileToUpload = event.getDragboard().getFiles().get(0);
                     String selectedFileType = (String) cmbBoxFileType.getSelectionModel().getSelectedItem().toString();
-                    if(DataValidation.validateFileExtension(fileToUpload.getName(), "pdf")) {
+                    if (DataValidation.validateFileExtension(fileToUpload.getName(), "pdf")) {
                         try {
                             uploadFile(selectedFileType, fileToUpload);
                             event.setDropCompleted(true);
-                        } catch(LogicException logicException) {
+                        } catch (LogicException logicException) {
                             Alerts.displayAlertLogicException(logicException);
                             LOG.error(logicException);
                         }
@@ -162,27 +162,27 @@ public class CollaborationConclusionController implements Initializable {
     
     @FXML
     private void showHasUploadedFile() {
-        if(cmbBoxFileType.getSelectionModel().getSelectedItem() != null) {
+        if (cmbBoxFileType.getSelectionModel().getSelectedItem() != null) {
             String selectedFileType = (String) cmbBoxFileType.getSelectionModel().getSelectedItem().toString();
             try {
                 switch (selectedFileType) {
                     case "Feedback profesor" :
-                        if(FINAL_DOCUMENTATION_DAO.hasFileUploaded("feedbackProfesor", COLLABORATION_INFORMATION.getIdCollaboration())) {
+                        if (FINAL_DOCUMENTATION_DAO.hasFileUploaded("feedbackProfesor", COLLABORATION_INFORMATION.getIdCollaboration())) {
                             Alerts.showInformationAlert("Mensaje", selectedFileType + " tiene un archivo cargado");
                         }
                         break;
                     case "Feedback estudiantado" :
-                        if(FINAL_DOCUMENTATION_DAO.hasFileUploaded("feedbackEstudiantado", COLLABORATION_INFORMATION.getIdCollaboration())) {
+                        if (FINAL_DOCUMENTATION_DAO.hasFileUploaded("feedbackEstudiantado", COLLABORATION_INFORMATION.getIdCollaboration())) {
                             Alerts.showInformationAlert("Mensaje", selectedFileType + " tiene un archivo cargado");
                         }
                         break;
                     case "Feedback profesor espejo" :
-                        if(FINAL_DOCUMENTATION_DAO.hasFileUploaded("feedbackProfesorEspejo", COLLABORATION_INFORMATION.getIdCollaboration())) {
+                        if (FINAL_DOCUMENTATION_DAO.hasFileUploaded("feedbackProfesorEspejo", COLLABORATION_INFORMATION.getIdCollaboration())) {
                             Alerts.showInformationAlert("Mensaje", selectedFileType + " tiene un archivo cargado");
                         }
                         break;
                     case "Feedback estudiantado espejo":
-                        if(FINAL_DOCUMENTATION_DAO.hasFileUploaded("feedbackEstudiantadoEspejo", COLLABORATION_INFORMATION.getIdCollaboration())) {
+                        if (FINAL_DOCUMENTATION_DAO.hasFileUploaded("feedbackEstudiantadoEspejo", COLLABORATION_INFORMATION.getIdCollaboration())) {
                             Alerts.showInformationAlert("Mensaje", selectedFileType + " tiene un archivo cargado");
                         }
                         break;
@@ -198,14 +198,14 @@ public class CollaborationConclusionController implements Initializable {
     
     @FXML
     private void concludeCollaboration() {
-        if(validateAllFilesUploaded()) {
+        if (validateAllFilesUploaded()) {
             try {
-                if(PROFESSOR_BELONGS_TO_COLLABORATION_DAO.setStatusToCollaboration(COLLABORATION_INFORMATION.getIdCollaboration(), "Espera") == 1) {
-                    if(COLLABORATION_DAO.concludeCollaboration(COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
+                if (PROFESSOR_BELONGS_TO_COLLABORATION_DAO.setStatusToCollaboration(COLLABORATION_INFORMATION.getIdCollaboration(), "Espera") == 1) {
+                    if (COLLABORATION_DAO.concludeCollaboration(COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
                         Alerts.showInformationAlert("Hecho", "Ha solicitado finalizar esta colaboración, el coordinador evaluará su petición");
                     }
                 }
-            } catch(LogicException logicException) {
+            } catch (LogicException logicException) {
                 Alerts.displayAlertLogicException(logicException);
                 LOG.error(logicException);
             }
@@ -217,34 +217,34 @@ public class CollaborationConclusionController implements Initializable {
     
     @FXML
     private void deleteFile() {
-        if(cmbBoxFileType.getSelectionModel().getSelectedItem() != null) {
+        if (cmbBoxFileType.getSelectionModel().getSelectedItem() != null) {
             String selectedFileType = (String) cmbBoxFileType.getSelectionModel().getSelectedItem().toString();
             try {
                 switch (selectedFileType) {
                     case "Feedback profesor":
-                        if(FINAL_DOCUMENTATION_DAO.deleteUploadedFile("feedbackProfesor", COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
+                        if (FINAL_DOCUMENTATION_DAO.deleteUploadedFile("feedbackProfesor", COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
                             Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito");
                         }
                         break;
                     case "Feedback estudiantado":
-                        if(FINAL_DOCUMENTATION_DAO.deleteUploadedFile("feedbackEstudiantado", COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
+                        if (FINAL_DOCUMENTATION_DAO.deleteUploadedFile("feedbackEstudiantado", COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
                             Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito");
                         }
                         break;
                     case "Feedback profesor espejo":
-                        if(FINAL_DOCUMENTATION_DAO.deleteUploadedFile("feedbackProfesorEspejo", COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
+                        if (FINAL_DOCUMENTATION_DAO.deleteUploadedFile("feedbackProfesorEspejo", COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
                             Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito");
                         }
                         break;
                     case "Feedback estudiantado espejo":
-                        if(FINAL_DOCUMENTATION_DAO.deleteUploadedFile("feedbackEstudiantadoEspejo", COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
+                        if (FINAL_DOCUMENTATION_DAO.deleteUploadedFile("feedbackEstudiantadoEspejo", COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
                             Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito");
                         }
                         break;
                     default:
                         break;
                 }
-            } catch(LogicException logicException) {
+            } catch (LogicException logicException) {
                 Alerts.displayAlertLogicException(logicException);
                 LOG.error(logicException);
             }
@@ -257,7 +257,7 @@ public class CollaborationConclusionController implements Initializable {
         stage.close();
         try {
             MyCollaborationsStage myCollaborationsStage = new MyCollaborationsStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
         }

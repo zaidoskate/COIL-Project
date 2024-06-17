@@ -34,13 +34,13 @@ public class EvidenceListController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try{
-            if(EVIDENCE_LIST_INFORMATION.getAllFolders()) {
+        try {
+            if (EVIDENCE_LIST_INFORMATION.getAllFolders()) {
                 loadAllEvidences();
             } else {
                 loadEvidencesByFolder();
             }
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
             Stage stage = (Stage) this.btnDelete.getScene().getWindow();
@@ -79,14 +79,14 @@ public class EvidenceListController implements Initializable {
     @FXML
     private void deleteEvidence() {
         Evidence evidenceSelected = this.tblViewEvidences.getSelectionModel().getSelectedItem();
-        if(evidenceSelected != null) {
-            try{
+        if (evidenceSelected != null) {
+            try {
                 int result = EVIDENCE_DAO.deleteEvidenceByName(evidenceSelected.getName());
                 loadEvidencesByFolder();
-                if(result == 1) {
+                if (result == 1) {
                     Alerts.showInformationAlert("Exito", "Evidencia eliminada.");
                 }
-            } catch(LogicException logicException) {
+            } catch (LogicException logicException) {
                 LOG.error(logicException);
                 Alerts.displayAlertLogicException(logicException);
             }
@@ -97,20 +97,19 @@ public class EvidenceListController implements Initializable {
     
     @FXML
     private void downloadEvidence() {
-        if(this.tblViewEvidences.getSelectionModel().getSelectedItem() != null) {
+        if (this.tblViewEvidences.getSelectionModel().getSelectedItem() != null) {
             String evidenceName = tblViewEvidences.getSelectionModel().getSelectedItem().getName();
             File downloadPath = getDownloadPath("Guardar evidencia", evidenceName);
-            if(downloadPath != null) {
+            if (downloadPath != null) {
                 Evidence evidence = new Evidence();
                 evidence.setName(evidenceName);
                 try {
                     if (EVIDENCE_DAO.obtainEvidence(evidence, downloadPath.toString()) == 1) {
                         Alerts.showInformationAlert("Mensaje", "Evidencia descargada con éxito");
-                    }
-                    else {
+                    } else {
                         System.out.println("Hola");
                     }
-                } catch(LogicException logicException) {
+                } catch (LogicException logicException) {
                     Alerts.displayAlertLogicException(logicException);
                     LOG.error(logicException);
                 }

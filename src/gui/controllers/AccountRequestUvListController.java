@@ -37,9 +37,9 @@ public class AccountRequestUvListController implements Initializable{
     private void loadUvAccountRequest() {
         tblViewUvAccountRequest.getItems().clear();
         ArrayList<UvAccountRequest> uvAccountRequests = new ArrayList();
-        try{
+        try {
             uvAccountRequests = UV_ACCOUNT_REQUEST_DAO.getUvAccountRequests();
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
             Stage stage = (Stage) tblViewUvAccountRequest.getScene().getWindow();
@@ -51,10 +51,10 @@ public class AccountRequestUvListController implements Initializable{
     private boolean deleteUvAccountRequest(UvAccountRequest uvAccountRequest) {
         boolean result = false;
         try {
-            if(UV_ACCOUNT_REQUEST_DAO.deleteUvAccountRequest(uvAccountRequest) == 1) {
+            if (UV_ACCOUNT_REQUEST_DAO.deleteUvAccountRequest(uvAccountRequest) == 1) {
                 result = true;
             }
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
         }
@@ -79,17 +79,17 @@ public class AccountRequestUvListController implements Initializable{
     
     @FXML
     private void acceptAccountRequest() {
-        if(tblViewUvAccountRequest.getSelectionModel().getSelectedItem() != null) {
+        if (tblViewUvAccountRequest.getSelectionModel().getSelectedItem() != null) {
             UvAccountRequest uvaccountRequestSelected = tblViewUvAccountRequest.getSelectionModel().getSelectedItem();
             boolean result = false;
-            try{
+            try {
                 result = AccountCreator.createUVAccount(uvaccountRequestSelected);   
-            } catch(LogicException logicException) {
+            } catch (LogicException logicException) {
                 LOG.error(logicException);
                 Alerts.displayAlertLogicException(logicException);
             }
             
-            if(result == true) {
+            if (result == true) {
                 Alerts.showInformationAlert("Éxito", "El correo se ha enviado a su destino con la clave de acceso");
                 loadUvAccountRequest();
             }
@@ -101,21 +101,21 @@ public class AccountRequestUvListController implements Initializable{
     
     @FXML
     private void declineAccountRequest() {
-        if(tblViewUvAccountRequest.getSelectionModel().getSelectedItem() != null) {
+        if (tblViewUvAccountRequest.getSelectionModel().getSelectedItem() != null) {
             UvAccountRequest uvaccountRequest = tblViewUvAccountRequest.getSelectionModel().getSelectedItem();
-            if(deleteUvAccountRequest(uvaccountRequest)){
+            if (deleteUvAccountRequest(uvaccountRequest)){
                 EmailNotification.getInstance().setEmail(uvaccountRequest.getEmail());
                 EmailNotification.getInstance().setMessageSuccess("Se ha rechazado con éxito la solicitud de cuenta");
                 try {
                     SendEmailStage sendEmailStage = new SendEmailStage();
-                } catch(IOException ioexception) {
+                } catch (IOException ioexception) {
                     LOG.warn(ioexception);
                     Alerts.displayAlertIOException();
                 }
-                if(EmailNotification.getInstance().getSentStatus() == false) {
+                if (EmailNotification.getInstance().getSentStatus() == false) {
                     try {
                         savePendingMail(uvaccountRequest);
-                    } catch(LogicException logicException) {
+                    } catch (LogicException logicException) {
                         LOG.error(logicException);
                         Alerts.displayAlertLogicException(logicException);
                     }

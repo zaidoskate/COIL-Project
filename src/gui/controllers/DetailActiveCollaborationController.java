@@ -64,7 +64,7 @@ public class DetailActiveCollaborationController implements Initializable{
         try {
             loadProfessorsData(idCollaboration);
             loadCollaborationData(idCollaboration);
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
             previousMenu();
@@ -111,9 +111,9 @@ public class DetailActiveCollaborationController implements Initializable{
     private void downloadEvidences() {
         EvidenceListInformation.getInstance().setAllFolders(true);
         EvidenceListInformation.getInstance().setIdCollaboration(CURRENT_COLLABORATION.getIdCollaboration());
-        try{
+        try {
             EvidenceListStage evidenceListStage = new EvidenceListStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
         }
@@ -122,9 +122,9 @@ public class DetailActiveCollaborationController implements Initializable{
     @FXML
     private void sendAlert() {
         String professorEmail;
-        try{
+        try {
             professorEmail = PROFESSOR_BELONGS_DAO.getEmailProfessorByIdCollaboration(CURRENT_COLLABORATION.getIdCollaboration());
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
             return;
@@ -133,14 +133,14 @@ public class DetailActiveCollaborationController implements Initializable{
         EmailNotification.getInstance().setMessageSuccess("Se ha enviado con éxito el correo de alerta.");
         try {
             SendEmailStage sendEmailStage = new SendEmailStage();
-        } catch(IOException ioexception) {
+        } catch (IOException ioexception) {
             LOG.warn(ioexception);
             Alerts.displayAlertIOException();
         }
-        if(EmailNotification.getInstance().getSentStatus() == false) {
+        if (EmailNotification.getInstance().getSentStatus() == false) {
             try {
                 savePendingMail(professorEmail);
-            } catch(LogicException logicException) {
+            } catch (LogicException logicException) {
                 LOG.error(logicException);
                 Alerts.displayAlertLogicException(logicException);
             }

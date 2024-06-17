@@ -31,10 +31,10 @@ public class PendingMailsController implements Initializable {
         tblViewPendingMails.getItems().clear();
         int currentUserId = currentSession.getUserData().getIdUser();
         ArrayList<PendingMail> pendingMails;
-        try{
+        try {
             pendingMails = PENDING_MAIL_DAO.getPendingMailsByIdUser(currentUserId);
             tblViewPendingMails.getItems().addAll(pendingMails);
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
             previusMenu();
@@ -42,9 +42,9 @@ public class PendingMailsController implements Initializable {
     }
     
     private void deletePendingMailFromDB(PendingMail pendingMail) {
-        try{
+        try {
             PENDING_MAIL_DAO.deletePendingMail(pendingMail);
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
         }
@@ -53,7 +53,7 @@ public class PendingMailsController implements Initializable {
     @FXML
     private void deletePendingMail() {
         PendingMail pendingMailSelected = tblViewPendingMails.getSelectionModel().getSelectedItem();
-        if(pendingMailSelected != null) {
+        if (pendingMailSelected != null) {
             deletePendingMailFromDB(pendingMailSelected);
             loadPendingMails();
         } else {
@@ -63,15 +63,15 @@ public class PendingMailsController implements Initializable {
     @FXML
     private void sendPendingMail() {
         PendingMail pendingMailSelected = tblViewPendingMails.getSelectionModel().getSelectedItem();
-        if(pendingMailSelected != null) {
+        if (pendingMailSelected != null) {
             boolean result = false;
             try {
                 result = MailSender.sendEmail(pendingMailSelected.getContent(), pendingMailSelected.getDestinationEmail());
-            } catch(LogicException logicException) {
+            } catch (LogicException logicException) {
                 LOG.error(logicException);
                 Alerts.displayAlertLogicException(logicException);
             }
-            if(result == true) {
+            if (result == true) {
                 deletePendingMailFromDB(pendingMailSelected);
                 Alerts.showInformationAlert("Correo enviado", "El correo se ha reenviado con éxito a su destino.");
                 loadPendingMails();

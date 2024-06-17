@@ -18,7 +18,7 @@ public class DatabaseConnection {
     private static final Logger log = Logger.getLogger(DatabaseConnection.class);
 
     public DatabaseConnection() {
-        if(loadPropertyFile()) {
+        if (loadPropertyFile()) {
             DATABASE_URL = properties.getProperty("db.url");
             DATABASE_USER = properties.getProperty("db.user");
             DATABASE_PASSWORD = properties.getProperty("db.password");
@@ -49,9 +49,9 @@ public class DatabaseConnection {
     }
     
     public void closeConnection() {
-        if(databaseConnection != null) {
+        if (databaseConnection != null) {
             try {
-                if(!databaseConnection.isClosed()) {
+                if (!databaseConnection.isClosed()) {
                     databaseConnection.close();
                 }
             } catch (SQLException exception) {

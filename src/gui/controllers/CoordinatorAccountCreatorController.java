@@ -45,11 +45,11 @@ public class CoordinatorAccountCreatorController implements Initializable {
         
     }
     private static boolean validateNameField(String name) {
-        if( !DataValidation.validateNotBlanks(name)){
+        if ( !DataValidation.validateNotBlanks(name)){
             Alerts.showWarningAlert("El nombre es un campo obligatorio.");
             return false;
         }
-        if(!DataValidation.validateLengthField(name, 45) ) {
+        if (!DataValidation.validateLengthField(name, 45) ) {
             Alerts.showWarningAlert("Nombre demasiado largo.");
             return false;
         }
@@ -61,11 +61,11 @@ public class CoordinatorAccountCreatorController implements Initializable {
     }
 
     private static boolean validateLastNameField(String lastName) {
-        if( !DataValidation.validateNotBlanks(lastName)){
+        if ( !DataValidation.validateNotBlanks(lastName)){
             Alerts.showWarningAlert("El apellido es un campo obligatorio.");
             return false;
         }
-        if(!DataValidation.validateLengthField(lastName, 45) ) {
+        if (!DataValidation.validateLengthField(lastName, 45) ) {
             Alerts.showWarningAlert("Apellido demasiado largo.");
             return false;
         }
@@ -77,11 +77,11 @@ public class CoordinatorAccountCreatorController implements Initializable {
     }
 
     private static boolean validateEmailField(String email) throws LogicException {
-        if( !DataValidation.validateNotBlanks(email)){
+        if ( !DataValidation.validateNotBlanks(email)){
             Alerts.showWarningAlert("El correo es un campo obligatorio.");
             return false;
         }
-        if(!DataValidation.validateLengthField(email, 45) ) {
+        if (!DataValidation.validateLengthField(email, 45) ) {
             Alerts.showWarningAlert("El correo demasiado largo.");
             return false;
         }
@@ -97,11 +97,11 @@ public class CoordinatorAccountCreatorController implements Initializable {
     }
 
     private static boolean validatePasswordField(String password) {
-        if( !DataValidation.validateNotBlanks(password)){
+        if ( !DataValidation.validateNotBlanks(password)){
             Alerts.showWarningAlert("La contraseña es un campo obligatorio.");
             return false;
         }
-        if(!DataValidation.validateLengthField(password, 45) ) {
+        if (!DataValidation.validateLengthField(password, 45) ) {
             Alerts.showWarningAlert("La contraseña es demasiado larga.");
             return false;
         }
@@ -113,21 +113,21 @@ public class CoordinatorAccountCreatorController implements Initializable {
     }
 
     private static boolean validateUsernameField(String username) {
-        try{
-            if(validateUsernameExistent(username)) {
+        try {
+            if (validateUsernameExistent(username)) {
                 Alerts.showWarningAlert("El nombre de usuario ya existe, prueba con otro.");
                 return false;
             }
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
             return false;
         }
-        if(!DataValidation.validateNotBlanks(username)){
+        if (!DataValidation.validateNotBlanks(username)){
             Alerts.showWarningAlert("El usuario es un campo obligatorio.");
             return false;
         }
-        if(!DataValidation.validateLengthField(username, 45) ) {
+        if (!DataValidation.validateLengthField(username, 45) ) {
             Alerts.showWarningAlert("El usuario es demasiado largo.");
             return false;
         }
@@ -144,19 +144,19 @@ public class CoordinatorAccountCreatorController implements Initializable {
         String email = DataValidation.trimUnnecesaryBlanks(txtFieldEmail.getText()); 
         String password = DataValidation.trimUnnecesaryBlanks(txtFieldPassword.getText()); 
         String username = DataValidation.trimUnnecesaryBlanks(txtFieldUsername.getText()); 
-        if(!validateNameField(name)) {
+        if (!validateNameField(name)) {
             return false;
         }
-        if(!validateLastNameField(lastName)) {
+        if (!validateLastNameField(lastName)) {
             return false;
         }
-        if(!validateEmailField(email)) {
+        if (!validateEmailField(email)) {
             return false;
         }
-        if(!validatePasswordField(password)) {
+        if (!validatePasswordField(password)) {
             return false;
         }
-        if(!validateUsernameField(username)) {
+        if (!validateUsernameField(username)) {
             return false;
         }
         return true;
@@ -195,7 +195,7 @@ public class CoordinatorAccountCreatorController implements Initializable {
     }
     public static boolean validateUsernameExistent(String username) throws LogicException{
         int usernamesCounter = CREDENTIAL_DAO.countCredentialsByUser(username);
-        if(usernamesCounter >= 1) {
+        if (usernamesCounter >= 1) {
             return true;
         }
         return false;
@@ -204,10 +204,10 @@ public class CoordinatorAccountCreatorController implements Initializable {
     @FXML
     public void createAccount() {
         try {
-            if(!makeValidations()) {
+            if (!makeValidations()) {
                 return;
             }
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
         }
@@ -225,13 +225,13 @@ public class CoordinatorAccountCreatorController implements Initializable {
         int result = 0;
         int idUser = -1;
         
-        try{
+        try {
             idUser = USER_DAO.addUser(user);
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
         }
-        if(idUser != -1) {
+        if (idUser != -1) {
             Coordinator coordinator = new Coordinator();
             coordinator.setIdUser(idUser);
             Credential credential = new Credential();
@@ -242,22 +242,22 @@ public class CoordinatorAccountCreatorController implements Initializable {
             try {
                 result = COORDINATOR_DAO.insertCoordinator(coordinator);
                 result = CREDENTIAL_DAO.insertCredential(credential);
-            } catch(LogicException logicException) {
+            } catch (LogicException logicException) {
                 LOG.error(logicException);
                 Alerts.displayAlertLogicException(logicException);
             }
             boolean emailSent = false;
-            if(result > 0) {
+            if (result > 0) {
                 try {
                     emailSent = sendEmail(user,credential);
-                } catch(LogicException logicException) {
+                } catch (LogicException logicException) {
                     LOG.error(logicException);
                     Alerts.displayAlertLogicException(logicException);
                 }
             }
-            if(emailSent == true) {
+            if (emailSent == true) {
                 Alerts.showInformationAlert("Éxito", "Se ha enviado el usuario y contraseña al correo.");
-            } else if(result > 0) {
+            } else if (result > 0) {
                 registerPendingMail(user, credential);
                 Alerts.showInformationAlert("Correo pendiente", "El correo queda pendiente por enviarse a su destino.");
             }

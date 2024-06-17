@@ -50,10 +50,10 @@ public class StartCollaborationController implements Initializable {
     
     private void checkCollaborationRegistrated() {
         try {
-            if(!STARTUP_DOCUMENTATION_DAO.isCollaborationRegistrated(COLLABORATION_INFORMATION.getIdCollaboration())) {
+            if (!STARTUP_DOCUMENTATION_DAO.isCollaborationRegistrated(COLLABORATION_INFORMATION.getIdCollaboration())) {
                 createStartupDocumentation();
             }
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
             log.error(logicException);
         }
@@ -76,26 +76,26 @@ public class StartCollaborationController implements Initializable {
             switch (selectedFileType) {
                 case "Lista de estudiantes" :
                     startupDocumentation.setStudentsListPath(fileToUpload.getPath());
-                    if(STARTUP_DOCUMENTATION_DAO.uploadStudentsList(startupDocumentation) == 1) {
+                    if (STARTUP_DOCUMENTATION_DAO.uploadStudentsList(startupDocumentation) == 1) {
                         Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito");
                     }
                     break;
                 case "Lista de estudiantes espejo" :
                     startupDocumentation.setMirrorClassStudentsListPath(fileToUpload.getPath());
-                    if(STARTUP_DOCUMENTATION_DAO.uploadMirrorStudentsList(startupDocumentation) == 1) {
+                    if (STARTUP_DOCUMENTATION_DAO.uploadMirrorStudentsList(startupDocumentation) == 1) {
                         Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito");
                     }
                     break;
                 case "Syllabus" :
                     startupDocumentation.setSyllabusPath(fileToUpload.getPath());
-                    if(STARTUP_DOCUMENTATION_DAO.uploadSyllabus(startupDocumentation) == 1) {
+                    if (STARTUP_DOCUMENTATION_DAO.uploadSyllabus(startupDocumentation) == 1) {
                         Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido cargado con éxito");
                     }
                     break;
                 default:
                     break;
             }
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
             log.error(logicException);
         }
@@ -104,14 +104,14 @@ public class StartCollaborationController implements Initializable {
     private boolean validateAllFilesUploaded() {
         boolean allFilesUploaded = false;
         try {
-            if(STARTUP_DOCUMENTATION_DAO.hasFileUploaded("listaEstudiantado", COLLABORATION_INFORMATION.getIdCollaboration())) {
+            if (STARTUP_DOCUMENTATION_DAO.hasFileUploaded("listaEstudiantado", COLLABORATION_INFORMATION.getIdCollaboration())) {
                 if (STARTUP_DOCUMENTATION_DAO.hasFileUploaded("listaEstudiantadoEspejo", COLLABORATION_INFORMATION.getIdCollaboration())) {
                     if (STARTUP_DOCUMENTATION_DAO.hasFileUploaded("Syllabus", COLLABORATION_INFORMATION.getIdCollaboration())) {
                         allFilesUploaded = true;
                     }
                 }
             }
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
             log.error(logicException);
         }
@@ -122,9 +122,9 @@ public class StartCollaborationController implements Initializable {
     public void onDragOver(DragEvent event) {
         Stage stage = (Stage) this.regionFile.getScene().getWindow();
         stage.requestFocus();
-        if(cmbBoxFileType.getSelectionModel().getSelectedItem() != null) {
-            if(event.getGestureSource() != this.regionFile || event.getGestureSource() != imageViewFile) {
-                if(event.getDragboard().hasFiles()) {
+        if (cmbBoxFileType.getSelectionModel().getSelectedItem() != null) {
+            if (event.getGestureSource() != this.regionFile || event.getGestureSource() != imageViewFile) {
+                if (event.getDragboard().hasFiles()) {
                     event.acceptTransferModes(TransferMode.COPY);
                 }
             }
@@ -134,16 +134,16 @@ public class StartCollaborationController implements Initializable {
     
     @FXML
     public void onDragDropped(DragEvent event) {
-        if(cmbBoxFileType.getSelectionModel().getSelectedItem() != null) {
-            if(event.getGestureSource() != regionFile || event.getGestureSource() != imageViewFile){
-                if(event.getDragboard().hasFiles()) {
+        if (cmbBoxFileType.getSelectionModel().getSelectedItem() != null) {
+            if (event.getGestureSource() != regionFile || event.getGestureSource() != imageViewFile){
+                if (event.getDragboard().hasFiles()) {
                     File fileToUpload = event.getDragboard().getFiles().get(0);
                     String selectedFileType = (String) cmbBoxFileType.getSelectionModel().getSelectedItem().toString();
-                    if(DataValidation.validateFileExtension(fileToUpload.getName(), "pdf")) {
+                    if (DataValidation.validateFileExtension(fileToUpload.getName(), "pdf")) {
                         try {
                             uploadFile(selectedFileType, fileToUpload);
                             event.setDropCompleted(true);
-                        } catch(LogicException logicException) {
+                        } catch (LogicException logicException) {
                             Alerts.displayAlertLogicException(logicException);
                             log.error(logicException);
                         }
@@ -158,29 +158,29 @@ public class StartCollaborationController implements Initializable {
     
     @FXML
     public void deleteFile() {
-        if(cmbBoxFileType.getSelectionModel().getSelectedItem() != null) {
+        if (cmbBoxFileType.getSelectionModel().getSelectedItem() != null) {
             String selectedFileType = (String) cmbBoxFileType.getSelectionModel().getSelectedItem().toString();
             try {
                 switch (selectedFileType) {
                     case "Lista de estudiantes" :
-                        if(STARTUP_DOCUMENTATION_DAO.deleteUploadedFile("listaEstudiantado", COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
+                        if (STARTUP_DOCUMENTATION_DAO.deleteUploadedFile("listaEstudiantado", COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
                             Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito");
                         }
                         break;
                     case "Lista de estudiantes espejo" :
-                        if(STARTUP_DOCUMENTATION_DAO.deleteUploadedFile("listaEstudiantadoEspejo", COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
+                        if (STARTUP_DOCUMENTATION_DAO.deleteUploadedFile("listaEstudiantadoEspejo", COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
                             Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito");
                         }
                         break;
                     case "Syllabus" :
-                        if(STARTUP_DOCUMENTATION_DAO.deleteUploadedFile("Syllabus", COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
+                        if (STARTUP_DOCUMENTATION_DAO.deleteUploadedFile("Syllabus", COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
                             Alerts.showInformationAlert("Mensaje", "El archivo para " + selectedFileType + " ha sido eliminado con éxito");
                         }
                         break;
                     default:
                         break;
                 }
-            } catch(LogicException logicException) {
+            } catch (LogicException logicException) {
                 Alerts.displayAlertLogicException(logicException);
                 log.error(logicException);
             }
@@ -189,29 +189,29 @@ public class StartCollaborationController implements Initializable {
     
     @FXML
     public void showHasUploadedFile() {
-        if(cmbBoxFileType.getSelectionModel().getSelectedItem() != null) {
+        if (cmbBoxFileType.getSelectionModel().getSelectedItem() != null) {
             String selectedFileType = (String) cmbBoxFileType.getSelectionModel().getSelectedItem().toString();
             try {
                 switch (selectedFileType) {
                     case "Lista de estudiantes" :
-                        if(STARTUP_DOCUMENTATION_DAO.hasFileUploaded("listaEstudiantado", COLLABORATION_INFORMATION.getIdCollaboration())) {
+                        if (STARTUP_DOCUMENTATION_DAO.hasFileUploaded("listaEstudiantado", COLLABORATION_INFORMATION.getIdCollaboration())) {
                             Alerts.showInformationAlert("Mensaje", selectedFileType + " tiene un archivo cargado");
                         }
                         break;
                     case "Lista de estudiantes espejo" :
-                        if(STARTUP_DOCUMENTATION_DAO.hasFileUploaded("listaEstudiantadoEspejo", COLLABORATION_INFORMATION.getIdCollaboration())) {
+                        if (STARTUP_DOCUMENTATION_DAO.hasFileUploaded("listaEstudiantadoEspejo", COLLABORATION_INFORMATION.getIdCollaboration())) {
                             Alerts.showInformationAlert("Mensaje", selectedFileType + " tiene un archivo cargado");
                         }
                         break;
                     case "Syllabus" :
-                        if(STARTUP_DOCUMENTATION_DAO.hasFileUploaded("Syllabus", COLLABORATION_INFORMATION.getIdCollaboration())) {
+                        if (STARTUP_DOCUMENTATION_DAO.hasFileUploaded("Syllabus", COLLABORATION_INFORMATION.getIdCollaboration())) {
                             Alerts.showInformationAlert("Mensaje", selectedFileType + " tiene un archivo cargado");
                         }
                         break;
                     default:
                         break;
                 }
-            } catch(LogicException logicException) {
+            } catch (LogicException logicException) {
                 Alerts.displayAlertLogicException(logicException);
                 log.error(logicException);
             }
@@ -224,7 +224,7 @@ public class StartCollaborationController implements Initializable {
         stage.close();
         try {
             MyCollaborationsStage myCollaborationsStage = new MyCollaborationsStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             log.error(ioException);
         }
@@ -234,12 +234,12 @@ public class StartCollaborationController implements Initializable {
     public void startCollaboration() {
         if(validateAllFilesUploaded()) {
             try {
-                if(PROFESSOR_BELONGS_TO_COLLABORATION_DAO.setStatusToCollaboration(COLLABORATION_INFORMATION.getIdCollaboration(), "Iniciada") == 1) {
-                    if(COLLABORATION_DAO.startCollaboration(COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
+                if (PROFESSOR_BELONGS_TO_COLLABORATION_DAO.setStatusToCollaboration(COLLABORATION_INFORMATION.getIdCollaboration(), "Iniciada") == 1) {
+                    if (COLLABORATION_DAO.startCollaboration(COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
                         Alerts.showInformationAlert("Hecho", "Ha iniciado esta colaboración");
                     }
                 }
-            } catch(LogicException logicException) {
+            } catch (LogicException logicException) {
                 Alerts.displayAlertLogicException(logicException);
                 log.error(logicException);
             }

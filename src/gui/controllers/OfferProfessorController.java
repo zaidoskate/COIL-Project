@@ -64,7 +64,7 @@ public class OfferProfessorController implements Initializable {
     }
     
     private void checkEmptyTable() {
-        if(this.displayableOffers.isEmpty()) {
+        if (this.displayableOffers.isEmpty()) {
             this.tblViewOffersAvailable.setPlaceholder(new Label("Aún no hay ofertas para colaborar"));
         }
     }
@@ -122,14 +122,14 @@ public class OfferProfessorController implements Initializable {
     
     @FXML
     public void showDetail(ActionEvent event) {
-        if(tblViewOffersAvailable.getSelectionModel().getSelectedItem() != null) {
+        if (tblViewOffersAvailable.getSelectionModel().getSelectedItem() != null) {
             setSelectedOffer();
             Node node = (Node) event.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
             stage.close();
             try {
                 DetailOfferProfessorStage detailStage = new DetailOfferProfessorStage();
-            } catch(IOException ioException) {
+            } catch (IOException ioException) {
                 Alerts.displayAlertIOException();
                 LOG.error(ioException);
             }
@@ -141,7 +141,7 @@ public class OfferProfessorController implements Initializable {
     @FXML
     public void showPostOffer(ActionEvent event) {
         try {
-            if(!COLLABORATION_OFFER_DAO.professorHasOffer(CURRENT_SESSION.getUserData().getIdUser())) {
+            if (!COLLABORATION_OFFER_DAO.professorHasOffer(CURRENT_SESSION.getUserData().getIdUser())) {
                 PostCollaborationOfferStage postStage = new PostCollaborationOfferStage();
                 Node node = (Node) event.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
@@ -149,7 +149,7 @@ public class OfferProfessorController implements Initializable {
             } else {
                 Alerts.showInformationAlert("Mensaje", "Actualmente tiene una oferta publicada o en evaluación");
             }
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
             LOG.error(logicException);
         } catch (IOException ioException) {
@@ -164,7 +164,7 @@ public class OfferProfessorController implements Initializable {
         stage.close();
         try {
             ProfesorMenuStage menuStage = new ProfesorMenuStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
         }
@@ -176,7 +176,7 @@ public class OfferProfessorController implements Initializable {
         stage.close();
         try {
             MyOffersStage myOffersStage = new MyOffersStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
         }

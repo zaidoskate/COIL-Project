@@ -1,34 +1,38 @@
 package logic.DAOs;
 
 import dataaccess.DatabaseConnection;
+import logic.domain.ProfessorBelongsToCollaboration;
+import logic.domain.User;
+import logic.interfaces.ProfessorBelongsToCollaborationManagerInterface;
+import logic.LogicException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import logic.LogicException;
-import logic.domain.ProfessorBelongsToCollaboration;
-import logic.domain.User;
-import logic.interfaces.ProfessorBelongsToCollaborationManagerInterface;
 
 /**
- *
- * @author zaido
+ * Data Access Object (DAO) para gestionar las operaciones relacionadas con la pertenencia de profesores a colaboraciones en la base de datos.
+ * Implementa la interfaz ProfessorBelongsToCollaborationManagerInterface.
+ * 
+ * @autor zaido
  */
 public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCollaborationManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
-    
+
     /**
-     * Insertar un profesor perteneciente a una colaboración
-     * @param professorBelongsToCollaboration id colaboración, id profesor, id profesor espejo, estado de la colaboración
-     * @return entero que indica el número de rows afectadas, si es 1 fue exitoso.
-     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
+     * Inserta un profesor perteneciente a una colaboración.
+     * 
+     * @param professorBelongsToCollaboration una instancia de la clase ProfessorBelongsToCollaboration que contiene el ID de la colaboración, 
+     *                                         el ID del profesor, el ID del profesor espejo y el estado de la colaboración.
+     * @return un entero que indica el número de filas afectadas, si es 1 fue exitoso.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos o ocurre un error de SQL.
      */
     @Override
     public int addProfessorBelongsToCollaboration(ProfessorBelongsToCollaboration professorBelongsToCollaboration) throws LogicException {
         int result = 0;
         String query = "INSERT INTO profesorpertenececolaboracion VALUES (?, ?, ?, ?)";
-        try{
+        try {
             Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, professorBelongsToCollaboration.getIdColaboration());
@@ -36,32 +40,7 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
             statement.setInt(3, professorBelongsToCollaboration.getIdUserMirrorClass());
             statement.setString(4, professorBelongsToCollaboration.getColaborationStatus());
             result = statement.executeUpdate();
-            
-        } catch(SQLException sqlException) {
-            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
-        } finally {
-            DATABASE_CONNECTION.closeConnection();
-        }
-        return result;
-    } 
-
-    /**
-     * Eliminar profesores que pertenecen a una colaboración
-     * @param idCollaboration id de la colaboración a modificar.
-     * @return  entero que indica el número de rows afectadas, si es 1 fue exitoso.
-     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
-     */
-    @Override
-    public int deleteProfessorBelongsToCollaborationByIdCollaboration(int idCollaboration) throws LogicException {
-        int result = 0;
-        String query = "DELETE FROM profesorpertenececolaboracion WHERE Colaboracion_idColaboracion = ?";
-        try{
-            Connection connection = this.DATABASE_CONNECTION.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, idCollaboration);
-            result = statement.executeUpdate();
-            
-        } catch(SQLException sqlException) {
+        } catch (SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
@@ -70,10 +49,35 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
     }
 
     /**
-     * Obtener el professorBelongs donde el estado de la colaboración sea Iniciada o Pendiente y pertenecezca a un usuario.
-     * @param idUser id usuario a consultar.
-     * @return ProfessorBelongs con los ids de los profesores, id de la colaboración y el estado de la misma.
-     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
+     * Elimina profesores que pertenecen a una colaboración.
+     * 
+     * @param idCollaboration el ID de la colaboración a modificar.
+     * @return un entero que indica el número de filas afectadas, si es 1 fue exitoso.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos o ocurre un error de SQL.
+     */
+    @Override
+    public int deleteProfessorBelongsToCollaborationByIdCollaboration(int idCollaboration) throws LogicException {
+        int result = 0;
+        String query = "DELETE FROM profesorpertenececolaboracion WHERE Colaboracion_idColaboracion = ?";
+        try {
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idCollaboration);
+            result = statement.executeUpdate();
+        } catch (SQLException sqlException) {
+            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } finally {
+            DATABASE_CONNECTION.closeConnection();
+        }
+        return result;
+    }
+
+    /**
+     * Obtiene la colaboración pendiente o iniciada de un profesor.
+     * 
+     * @param idUser el ID del usuario a consultar.
+     * @return una instancia de la clase ProfessorBelongsToCollaboration con los IDs de los profesores, ID de la colaboración y el estado de la misma.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos o ocurre un error de SQL.
      */
     @Override
     public ProfessorBelongsToCollaboration getProfessorPendingCollaboration(int idUser) throws LogicException {
@@ -84,13 +88,13 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idUser);
             ResultSet idObtained = statement.executeQuery();
-            if(idObtained.next()) {
+            if (idObtained.next()) {
                 professorBelongsToCollaboration.setIdColaboration(idObtained.getInt("Colaboracion_idColaboracion"));
                 professorBelongsToCollaboration.setIdUser(idObtained.getInt("Profesor_idUsuario"));
                 professorBelongsToCollaboration.setIdUserMirrorClass(idObtained.getInt("Profesor_idUsuarioEspejo"));
                 professorBelongsToCollaboration.setColaborationStatus(idObtained.getString("estadoColaboracion"));
             }
-        } catch(SQLException sqlException) {
+        } catch (SQLException sqlException) {
             throw new LogicException("No hay conexión intentelo de nuevo más tarde", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
@@ -99,34 +103,36 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
     }
 
     /**
-     * Cambiarle el estado a la colaboración
-     * @param idCollaboration id colaboración a modificar
-     * @param status estado a definir.
-     * @return  entero que indica el número de rows afectadas, si es 1 fue exitoso.
-     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
+     * Cambia el estado de una colaboración.
+     * 
+     * @param idCollaboration el ID de la colaboración a modificar.
+     * @param status el nuevo estado a definir.
+     * @return un entero que indica el número de filas afectadas, si es 1 fue exitoso.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos o ocurre un error de SQL.
      */
     @Override
     public int setStatusToCollaboration(int idCollaboration, String status) throws LogicException {
         int result = 0;
         String query = "UPDATE profesorPerteneceColaboracion SET estadoColaboracion = ? WHERE Colaboracion_idColaboracion = ?";
-        try{
+        try {
             Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, status);
             statement.setInt(2, idCollaboration);
             result = statement.executeUpdate();
-        } catch(SQLException sqlException) {
+        } catch (SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }
         return result;
     }
-    
+
     /**
-     * Obtener todas las colaboraciones (professorBelongs) con estado Espera.
-     * @return ArrayList de professorBelongs con ese estado obtenidos
-     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
+     * Obtiene todas las colaboraciones con estado "Espera".
+     * 
+     * @return un ArrayList de ProfessorBelongsToCollaboration con las colaboraciones en estado "Espera".
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos o ocurre un error de SQL.
      */
     @Override
     public ArrayList<ProfessorBelongsToCollaboration> getOnHoldCollaborations() throws LogicException {
@@ -151,12 +157,13 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
         }
         return collaborations;
     }
-    
+
     /**
-     * Obtener los professorBelongs de un profesor donde el estado de la colaboración es concluida.
-     * @param idUser id del profesor
-     * @return ArrayList de professorBelongs obtenido.
-     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
+     * Obtiene las colaboraciones concluidas de un profesor.
+     * 
+     * @param idUser el ID del profesor.
+     * @return un ArrayList de ProfessorBelongsToCollaboration con las colaboraciones concluidas del profesor.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos o ocurre un error de SQL.
      */
     @Override
     public ArrayList<ProfessorBelongsToCollaboration> getConcludedCollaborationsByIdUser(int idUser) throws LogicException {
@@ -185,10 +192,11 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
     }
 
     /**
-     * Obtener correo del profesor por su id de colaboración
-     * @param idCollaboration id de colaboración a consultar.
-     * @return email del profesor obtenido.
-     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
+     * Obtiene el correo del profesor por su ID de colaboración.
+     * 
+     * @param idCollaboration el ID de la colaboración a consultar.
+     * @return el correo del profesor.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos o ocurre un error de SQL.
      */
     @Override
     public String getEmailProfessorByIdCollaboration(int idCollaboration) throws LogicException {
@@ -199,22 +207,23 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idCollaboration);
             ResultSet result = statement.executeQuery();
-            if(result.next()) {
+            if (result.next()) {
                 emailResult = result.getString("correo");
             }
-        } catch(SQLException sqlException) {
+        } catch (SQLException sqlException) {
             throw new LogicException("No hay conexión intentelo de nuevo más tarde", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }
         return emailResult;
     }
-    
+
     /**
-     * Obtener el estado de una colaboración.
-     * @param idCollaboration id de la colaboración.
-     * @return estado de la colaboración.
-     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
+     * Obtiene el estado de una colaboración.
+     * 
+     * @param idCollaboration el ID de la colaboración.
+     * @return el estado de la colaboración.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos o ocurre un error de SQL.
      */
     @Override
     public String getStatusByIdCollaboration(int idCollaboration) throws LogicException {
@@ -225,10 +234,10 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idCollaboration);
             ResultSet result = statement.executeQuery();
-            if(result.next()) {
+            if (result.next()) {
                 statusResult = result.getString("estadoColaboracion");
             }
-        } catch(SQLException sqlException) {
+        } catch (SQLException sqlException) {
             throw new LogicException("No hay conexión intentelo de nuevo más tarde", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
@@ -236,12 +245,12 @@ public class ProfessorBelongsToCollaborationDAO implements ProfessorBelongsToCol
         return statusResult;
     }
 
-    
     /**
-     * Obtener la información de un profesor apartir de su colaboración linkeada en ProfessorBelongs
-     * @param idCollaboration id de la colaboración a consultar
-     * @return ArrayList de Usuarios obtenidos
-     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
+     * Obtiene la información de un profesor a partir de su colaboración vinculada en ProfessorBelongsToCollaboration.
+     * 
+     * @param idCollaboration el ID de la colaboración a consultar.
+     * @return un ArrayList de User con los datos de los profesores.
+     * @throws LogicException cuando hay un problema con la conexión de la base de datos o ocurre un error de SQL.
      */
     @Override
     public ArrayList<User> getProfessorsDataByCollaboration(int idCollaboration) throws LogicException {

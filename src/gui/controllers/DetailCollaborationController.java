@@ -15,7 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import logic.DAOs.CollaborationDAO;
-import logic.DAOs.ConcludedColaborationDAO;
+import logic.DAOs.ConcludedCollaborationDAO;
 import logic.DAOs.ProfessorBelongsToCollaborationDAO;
 import logic.DAOs.ProfessorDAO;
 import logic.LogicException;
@@ -54,7 +54,7 @@ public class DetailCollaborationController {
     private ConcludedCollaborationInformation CURRENT_CONCLUDED_COLLABORATION = ConcludedCollaborationInformation.getInstance();
     private static final ProfessorDAO PROFESSOR_DAO = new ProfessorDAO();
     private static final ProfessorBelongsToCollaborationDAO PROFESSOR_BELONGS_DAO = new ProfessorBelongsToCollaborationDAO();
-    private static final ConcludedColaborationDAO CONCLUDED_COLLABORATION_DAO = new ConcludedColaborationDAO();
+    private static final ConcludedCollaborationDAO CONCLUDED_COLLABORATION_DAO = new ConcludedCollaborationDAO();
     private static final CollaborationDAO COLLABORATION_DAO = new CollaborationDAO();
     
     @FXML
@@ -69,7 +69,7 @@ public class DetailCollaborationController {
         try {
             loadProfessorsData(idCollaboration);
             loadCollaborationData(idCollaboration);
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
             previousMenu();
@@ -99,7 +99,7 @@ public class DetailCollaborationController {
     }
     private void loadStars(int rating) throws LogicException {
         String imagePath = "gui/images/star.png";
-        for (int i = 1; i <= rating; i++) {
+        for (int i=1; i<=rating; i++) {
             Image image = new Image(imagePath);
             ImageView imageView = new ImageView(image);
             imageView.setFitWidth(40); 
@@ -109,7 +109,7 @@ public class DetailCollaborationController {
     }
     private void loadComboBox(String visibility) throws LogicException {
         cmbBoxVisibility.getItems().addAll("Visible", "Invisible");
-        if(visibility.equals("Visible")) {
+        if (visibility.equals("Visible")) {
             cmbBoxVisibility.getSelectionModel().select(0);
         } else {
             cmbBoxVisibility.getSelectionModel().select(1);
@@ -132,7 +132,7 @@ public class DetailCollaborationController {
         try {
             CONCLUDED_COLLABORATION_DAO.updateVisibility(concludedCollaboration);
             Alerts.showInformationAlert("Exito", "Se ha modificado la visibilidad.");
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
         }
@@ -142,9 +142,9 @@ public class DetailCollaborationController {
     void downloadEvidences() {
         EvidenceListInformation.getInstance().setAllFolders(true);
         EvidenceListInformation.getInstance().setIdCollaboration(CURRENT_CONCLUDED_COLLABORATION.getIdCollaboration());
-        try{
+        try {
             EvidenceListStage evidenceListStage = new EvidenceListStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
         }

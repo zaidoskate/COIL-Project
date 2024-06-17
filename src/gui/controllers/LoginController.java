@@ -36,10 +36,10 @@ public class LoginController implements Initializable {
     }
     @FXML
     private void displayAccountRequest() {
-        try{
+        try {
             AccountRequestStage accountRequestStage = new AccountRequestStage();
             
-        } catch(IOException ioException) {            
+        } catch (IOException ioException) {            
             LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
@@ -55,12 +55,12 @@ public class LoginController implements Initializable {
         credential.setPassword(password);
         try {
             int idUser = CREDENTIAL_DAO.getIdUserByCredential(credential);
-            if(idUser != -1) {
+            if (idUser != -1) {
                 createSession(idUser);
             } else {
                 Alerts.showWarningAlert("Usuario y Contraseña incorrectos");
             }
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
         } finally {
@@ -82,24 +82,24 @@ public class LoginController implements Initializable {
     }
     
     private void displayMenu(String typeUser) {
-        if(typeUser.equals("Coordinador")) {
+        if (typeUser.equals("Coordinador")) {
             try{
                 CoordinatorMenuStage coordinatorMenuStage = new CoordinatorMenuStage();
             } catch(IOException ioException) {
                 LOG.warn(ioException);
                 Alerts.displayAlertIOException();
             }
-        } else if(typeUser.equals("Administrador")) {
-            try{
+        } else if (typeUser.equals("Administrador")) {
+            try {
                 AdminMenuStage adminMenuStage = new AdminMenuStage();
-            } catch(IOException ioException) {
+            } catch (IOException ioException) {
                 LOG.warn(ioException);
                 Alerts.displayAlertIOException();
             }
         } else {
-            try{
+            try {
                 ProfesorMenuStage profesorMenuStage = new ProfesorMenuStage();
-            } catch(IOException ioException) {
+            } catch (IOException ioException) {
                 LOG.warn(ioException);
                 Alerts.displayAlertIOException();
             }

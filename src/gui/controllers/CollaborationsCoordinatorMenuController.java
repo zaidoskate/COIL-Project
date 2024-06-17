@@ -28,9 +28,9 @@ public class CollaborationsCoordinatorMenuController implements Initializable {
     private void previusMenu() {
         Stage stage = (Stage) btnClose.getScene().getWindow();
         stage.close();
-        try{
+        try {
             CoordinatorMenuStage coordinatorMenu = new CoordinatorMenuStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             log.warn(ioException);
             Alerts.displayAlertIOException();
         }
@@ -42,7 +42,7 @@ public class CollaborationsCoordinatorMenuController implements Initializable {
         stage.close();
         try {
             CollaborationsInConclusionStage collaborationsInConclusionStage = new CollaborationsInConclusionStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             log.error(ioException);
         }
@@ -54,7 +54,7 @@ public class CollaborationsCoordinatorMenuController implements Initializable {
         stage.close();
         try {
             ListActiveCollaborationsStage listActiveCollaborationsStage = new ListActiveCollaborationsStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             log.error(ioException);
         }
@@ -66,7 +66,7 @@ public class CollaborationsCoordinatorMenuController implements Initializable {
         stage.close();
         try {
             ListConcludedCollaborationStage listConcludedCollaborationsStage = new ListConcludedCollaborationStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             log.error(ioException);
         }

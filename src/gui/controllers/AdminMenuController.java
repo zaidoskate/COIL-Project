@@ -27,7 +27,7 @@ public class AdminMenuController implements Initializable {
     public void createCoordinatorAccount() {
         try {
             CoordinatorAccountCreatorStage createCoordinatorAccountStage = new CoordinatorAccountCreatorStage();
-        } catch(IOException ioexception) {
+        } catch (IOException ioexception) {
             LOG.warn(ioexception);
             Alerts.displayAlertIOException();
         }
@@ -42,7 +42,7 @@ public class AdminMenuController implements Initializable {
             COILVICApplication application = new COILVICApplication();
             Stage loginStage = new Stage();
             application.start(loginStage);
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
@@ -51,7 +51,7 @@ public class AdminMenuController implements Initializable {
     private void openPendingMails() {
         try {
             PendingMailsStage pendingMailsStage = new PendingMailsStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }

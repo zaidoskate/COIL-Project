@@ -65,13 +65,13 @@ public class Credential {
     @Override
     public boolean equals(Object object) {
         Credential credentialToCompare = (Credential) object;
-        if(this.getIdUser() != credentialToCompare.getIdUser()) {
+        if (this.getIdUser() != credentialToCompare.getIdUser()) {
             return false;
         }
-        if(!this.getUser().equals(credentialToCompare.getUser())) {
+        if (!this.getUser().equals(credentialToCompare.getUser())) {
             return false;
         }
-        if(!this.getPassword().equals(credentialToCompare.getPassword())) {
+        if (!this.getPassword().equals(credentialToCompare.getPassword())) {
             return false;
         }
         return true;

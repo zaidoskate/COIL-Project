@@ -72,15 +72,15 @@ public class CollaborationRegistrationController implements Initializable {
     
     private boolean validateCollaborationName() {
         boolean validName = true;
-        if(!DataValidation.validateNotBlanks(txtFieldCollaborationName.getText())){
+        if (!DataValidation.validateNotBlanks(txtFieldCollaborationName.getText())){
             validName = false;
             Alerts.showWarningAlert("El nombre de la colaboración no puede estar vacío");
         }
-        if(!DataValidation.validateName(txtFieldCollaborationName.getText())) {
+        if (!DataValidation.validateName(txtFieldCollaborationName.getText())) {
             validName = false;
             Alerts.showWarningAlert("El nombre de la colaboración deben ser palabras válidas, evite el uso de caracteres especiales y el uso de solo números");
         }
-        if(!DataValidation.validateLengthField(txtFieldCollaborationName.getText(), 45)) {
+        if (!DataValidation.validateLengthField(txtFieldCollaborationName.getText(), 45)) {
             validName = false;
             Alerts.showWarningAlert("El nombre de la colaboración excede la longitud máxima permitida, procure no extenderse más de 45 caracteres");
         }
@@ -97,25 +97,25 @@ public class CollaborationRegistrationController implements Initializable {
     public void acceptCandidate() {
         this.txtFieldCollaborationName.setText(DataValidation.trimUnnecesaryBlanks(this.txtFieldCollaborationName.getText()));
         try {
-            if(validateCollaborationName()) {
+            if (validateCollaborationName()) {
                 Collaboration collaboration = createCollaboration();
                 int idCollaborationInserted = COLLABORATION_DAO.addColaboration(collaboration);
-                if(idCollaborationInserted > 0) {
+                if (idCollaborationInserted > 0) {
                     ProfessorBelongsToCollaboration professorBelongsToCollaboration = createProfessorBelongsToCollaboration(idCollaborationInserted);
                     int added = PROFESSOR_BELONGS_TO_COLLABORATION_DAO.addProfessorBelongsToCollaboration(professorBelongsToCollaboration);
-                    if(added == 1) {
+                    if (added == 1) {
                         int candidatesDeleted = COLLABORATION_OFFER_CANDIDATE_DAO.deleteCollaborationOffer(PROFESSOR_OFFER.getIdOfferCollaboration());
                         int evaluationDeleted = EVALUATION_DAO.deleteEvaluation(PROFESSOR_OFFER.getIdOfferCollaboration());
-                        if(candidatesDeleted > 0 && evaluationDeleted == 1) {
+                        if (candidatesDeleted > 0 && evaluationDeleted == 1) {
                             int offerDeleted = COLLABORATION_OFFER_DAO.deleteCollaborationOffer(PROFESSOR_OFFER.getIdOfferCollaboration());
-                            if(offerDeleted == 1) {
+                            if (offerDeleted == 1) {
                                 Alerts.showInformationAlert("Mensaje", "Has aceptado esta colaboración ponte en contacto con el profesor");
                                 Stage professorDetailStage = ((CollaborationRegistrationStage)this.btnAccept.getScene().getWindow()).getProfessorDetailStage();
                                 professorDetailStage.close();
                                 previousMenu();
                                 try {
                                     OfferProfessorStage offerStage = new OfferProfessorStage();
-                                } catch(IOException ioException) {
+                                } catch (IOException ioException) {
                                     Alerts.displayAlertIOException();
                                     LOG.error(ioException);
                                 }

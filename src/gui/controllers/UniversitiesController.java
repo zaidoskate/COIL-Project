@@ -31,7 +31,7 @@ public class UniversitiesController implements Initializable {
         ArrayList<University> universities = new ArrayList();
         try {
             universities = UNIVERSITY_DAO.getUniversities();            
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             LOG.error(logicException);
         }
         tblViewUniversities.getItems().addAll(universities);
@@ -41,9 +41,9 @@ public class UniversitiesController implements Initializable {
     private void previusMenu() {
         Stage stage = (Stage) tblViewUniversities.getScene().getWindow();
         stage.close();
-        try{
+        try {
             CoordinatorMenuStage coordinatorMenuStage = new CoordinatorMenuStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
@@ -53,9 +53,9 @@ public class UniversitiesController implements Initializable {
     private void newUniversity() {
         Stage stage = (Stage) tblViewUniversities.getScene().getWindow();
         stage.close();
-        try{
+        try {
             UniversityRegistrationStage universityRegistrationStage = new UniversityRegistrationStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }

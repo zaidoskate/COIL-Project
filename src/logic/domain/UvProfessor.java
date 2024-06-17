@@ -49,10 +49,10 @@ public class UvProfessor extends Professor {
     @Override
     public boolean equals (Object object) {
         UvProfessor uvProfessorToCompare = (UvProfessor) object;
-        if(! this.personalNumber.equals(uvProfessorToCompare.getPersonalNumber())) {
+        if (! this.personalNumber.equals(uvProfessorToCompare.getPersonalNumber())) {
             return false;
         }
-        if(! this.idDepartment.equals(uvProfessorToCompare.getIdDepartment())) {
+        if (! this.idDepartment.equals(uvProfessorToCompare.getIdDepartment())) {
             return false;
         }
         return true;

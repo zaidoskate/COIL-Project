@@ -38,7 +38,7 @@ public class AccountCreator {
         registerProfessor(idUser);
         registerUvProfessor(uvaccountRequest, idUser);
         deleteAccountRequestUv(uvaccountRequest);
-        if(sendCredential(username, password, uvaccountRequest.getEmail())) {
+        if (sendCredential(username, password, uvaccountRequest.getEmail())) {
             return true;
         } else {
             return false;
@@ -52,7 +52,7 @@ public class AccountCreator {
         registerProfessor(idUser);
         registerExternalProfessor(externalAccountRequest, idUser);
         deleteAccountRequestExternal(externalAccountRequest);
-        if(sendCredential(username, password, externalAccountRequest.getEmail())) {
+        if (sendCredential(username, password, externalAccountRequest.getEmail())) {
             return true;
         } else {
             return false;
@@ -67,9 +67,9 @@ public class AccountCreator {
                 + "\nContrasena: "+password;
         
         boolean result = false;
-        try{
+        try {
             result = MailSender.sendEmail(body, email);
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             savePendingMail(body, email);
             throw new LogicException(logicException.getMessage(), logicException);
         }

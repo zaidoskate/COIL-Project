@@ -38,12 +38,12 @@ public class StatisticsGeneratorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            if(checkCollaborationsAvailable()) {
+            if (checkCollaborationsAvailable()) {
                 this.btnDownloadStatistics.setVisible(true);
             } else {
                 this.lblGenerated.setText("No se pudo generar la numeralia");
             }
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             this.btnDownloadStatistics.setVisible(false);
             this.lblGenerated.setText("No se pudo generar la numeralia");
             Alerts.displayAlertLogicException(logicException);
@@ -54,14 +54,14 @@ public class StatisticsGeneratorController implements Initializable {
     private boolean checkCollaborationsAvailable() throws LogicException {
         boolean available = false;
         String[] regions = {"Xalapa", "Veracruz", "Coatzacoalcos", "Orizaba", "Tuxpan"};
-        for(int i = 0; i < regions.length; i++) {
+        for (int i=0; i<regions.length; i++) {
             regionCollaborationCounts[i] = UV_PROFESSOR_DAO.getCollaborationCountByProfessorRegion(regions[i]);
             if (regionCollaborationCounts[i] != 0) {
                 available = true;
                 break;
             }
         }
-        for(int i = 1; i < 7; i++) {
+        for (int i=1; i<7; i++) {
             academicAreaCollaborationCounts[i-1] = UV_PROFESSOR_DAO.getCollaborationCountByProfessorAcademicArea(i);
             if (academicAreaCollaborationCounts[i-1] != 0) {
                 available = true;
@@ -92,7 +92,7 @@ public class StatisticsGeneratorController implements Initializable {
         
         File selectedPath = fileChooser.showSaveDialog(btnContinue.getScene().getWindow());
         
-        if(selectedPath != null) {
+        if (selectedPath != null) {
             try {
                 FileDownloader.exportToExcel(selectedPath.getAbsolutePath(), regionCollaborationCounts, academicAreaCollaborationCounts);
             } catch (IOException ioException) {

@@ -99,13 +99,13 @@ public class PendingMail {
     @Override
     public boolean equals(Object object) {
         PendingMail pendingMailToCompare = (PendingMail) object;
-        if(pendingMailToCompare.getIdEmail()!= this.getIdEmail()) {
+        if (pendingMailToCompare.getIdEmail()!= this.getIdEmail()) {
             return false;
         }
-        if(pendingMailToCompare.getIdUser()!= this.getIdUser()) {
+        if (pendingMailToCompare.getIdUser()!= this.getIdUser()) {
             return false;
         }
-        if(!pendingMailToCompare.getDestinationEmail().equals(this.getDestinationEmail())) {
+        if (!pendingMailToCompare.getDestinationEmail().equals(this.getDestinationEmail())) {
             return false;
         }
         return true;

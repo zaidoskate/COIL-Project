@@ -22,7 +22,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import logic.DAOs.CollaborationDAO;
-import logic.DAOs.ConcludedColaborationDAO;
+import logic.DAOs.ConcludedCollaborationDAO;
 import logic.DAOs.ProfessorBelongsToCollaborationDAO;
 import logic.LogicException;
 import logic.domain.ConcludedCollaboration;
@@ -48,7 +48,7 @@ public class CertificatesUploaderController implements Initializable {
     @FXML
     private TextArea txtAreaConclusion;
     
-    private static final ConcludedColaborationDAO CONCLUDED_COLLABORATION_DAO = new ConcludedColaborationDAO();
+    private static final ConcludedCollaborationDAO CONCLUDED_COLLABORATION_DAO = new ConcludedCollaborationDAO();
     private static final CollaborationDAO COLLABORATION_DAO = new CollaborationDAO();
     private static final ProfessorBelongsToCollaborationDAO PROFESSOR_BELONGS_TO_COLLABORATION_DAO = new ProfessorBelongsToCollaborationDAO();
     private static final CollaborationInformation COLLABORATION_INFORMATION = CollaborationInformation.getCollaboration();
@@ -110,8 +110,8 @@ public class CertificatesUploaderController implements Initializable {
     private void onDragOver(DragEvent event) {
         Stage stage = (Stage) this.regionCertificates.getScene().getWindow();
         stage.requestFocus();
-        if(event.getGestureSource() != this.regionCertificates || event.getGestureSource() != this.imageViewCertificates) {
-            if(event.getDragboard().hasFiles()) {
+        if (event.getGestureSource() != this.regionCertificates || event.getGestureSource() != this.imageViewCertificates) {
+            if (event.getDragboard().hasFiles()) {
                 event.acceptTransferModes(TransferMode.COPY);
             }
         }
@@ -119,10 +119,10 @@ public class CertificatesUploaderController implements Initializable {
     
     @FXML
     private void onDragDropped(DragEvent event) {
-        if(event.getGestureSource() != this.regionCertificates || event.getGestureSource() != this.imageViewCertificates) {
-            if(event.getDragboard().hasFiles()) {
+        if (event.getGestureSource() != this.regionCertificates || event.getGestureSource() != this.imageViewCertificates) {
+            if (event.getDragboard().hasFiles()) {
                 File fileToUpload = event.getDragboard().getFiles().get(0);
-                if(DataValidation.validateFileExtension(fileToUpload.getName(), "zip")) {
+                if (DataValidation.validateFileExtension(fileToUpload.getName(), "zip")) {
                     this.collaborationConcluded.setCertificatesFile(fileToUpload);
                     Alerts.showInformationAlert("Mensaje", "Archivo zip de constancias cargado, este se perderá si abandona la ventana");
                 } else {
@@ -136,19 +136,19 @@ public class CertificatesUploaderController implements Initializable {
     private void approveConclusion() {
         trimUnnecesaryBlanks();
         try {
-            if(validateDeviceDate()) {
-                if(validateFields()) {
+            if (validateDeviceDate()) {
+                if (validateFields()) {
                     double collaborationGrade = this.sliderGrade.getValue();
                     String collaborationVisible = "Invisible";
-                    if(this.checkBoxVisible.isSelected()) {
+                    if (this.checkBoxVisible.isSelected()) {
                         collaborationVisible = "Visible";
                     }
                     String conclusion = this.txtAreaConclusion.getText();
                     setBasicInformationConcludedCollaboration(collaborationGrade, collaborationVisible, conclusion);
-                    if(CONCLUDED_COLLABORATION_DAO.addConcludedCollaboration(collaborationConcluded) == 1) {
-                        if(CONCLUDED_COLLABORATION_DAO.uploadCertificates(collaborationConcluded) == 1) {
-                            if(PROFESSOR_BELONGS_TO_COLLABORATION_DAO.setStatusToCollaboration(COLLABORATION_INFORMATION.getIdCollaboration(), "Concluida") == 1) {
-                                if(COLLABORATION_DAO.updateEndDateByIdCollaboration(COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
+                    if (CONCLUDED_COLLABORATION_DAO.addConcludedCollaboration(collaborationConcluded) == 1) {
+                        if (CONCLUDED_COLLABORATION_DAO.uploadCertificates(collaborationConcluded) == 1) {
+                            if (PROFESSOR_BELONGS_TO_COLLABORATION_DAO.setStatusToCollaboration(COLLABORATION_INFORMATION.getIdCollaboration(), "Concluida") == 1) {
+                                if (COLLABORATION_DAO.updateEndDateByIdCollaboration(COLLABORATION_INFORMATION.getIdCollaboration()) == 1) {
                                     Alerts.showInformationAlert("Mensaje", "Colaboracion concluida con éxito");
                                     Stage currentStage =(Stage) this.regionCertificates.getScene().getWindow();
                                     currentStage.close();
@@ -161,10 +161,10 @@ public class CertificatesUploaderController implements Initializable {
             } else {
                 Alerts.showWarningAlert("No es posible concluir esta colaboración, la fecha programada en su dispositivo es anterior a la de inicio de la colaboración. Verifique su configuración e inténtelo nuevamente");
             }
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
             LOG.error(logicException);
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
         }
@@ -177,7 +177,7 @@ public class CertificatesUploaderController implements Initializable {
         stage.close();
         try {
             ReviewConclusionCollaborationStage reviewStage = new ReviewConclusionCollaborationStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
         }

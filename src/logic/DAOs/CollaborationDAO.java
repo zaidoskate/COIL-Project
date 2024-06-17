@@ -15,23 +15,27 @@ import logic.domain.ProfessorBelongsToCollaboration;
 import logic.interfaces.CollaborationManagerInterface;
 
 /**
- *
- * @author zaido
+ * Objeto de acceso a datos para manejar las operaciones relacionadas con las colaboraciones en la base de datos.
+ * Implementa la interfaz CollaborationManagerInterface.
+ * Proporciona métodos para insertar, modificar y recuperar colaboraciones.
+ * 
+ * @autor zaido
  */
 public class CollaborationDAO implements CollaborationManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
     
     /**
      * Inserta una nueva colaboración en la base de datos.
+     * 
      * @param colaboration una Colaboración de la que se extraen el nombre, idioma y tema de interés.
-     * @return un entero que indica la cantidad de rows de la base de datos modificada, si es 0 falló, si es 1 funcionó.
-     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
+     * @return Un entero que indica la cantidad de filas de la base de datos modificadas. Si es 0, falló; si es 1, funcionó.
+     * @throws LogicException Cuando hay un problema con la conexión de la base de datos.
      */
     @Override
-    public int addColaboration(Collaboration colaboration) throws LogicException{
+    public int addColaboration(Collaboration colaboration) throws LogicException {
         int result = 0;
         String query = "INSERT INTO Colaboracion(nombrecolaboracion, idioma, temainteres) VALUES (?, ?, ?)";
-        try{
+        try {
             Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, colaboration.getColaborationName());
@@ -39,11 +43,11 @@ public class CollaborationDAO implements CollaborationManagerInterface {
             statement.setString(3, colaboration.getInterestTopic());
             statement.executeUpdate();
             ResultSet idCollaborationInserted = statement.getGeneratedKeys();
-            if(idCollaborationInserted.next()) {
+            if (idCollaborationInserted.next()) {
                 result = idCollaborationInserted.getInt(1);
             }
-        } catch(SQLException sqlException) {
-            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } catch (SQLException sqlException) {
+            throw new LogicException("No hay conexión, inténtelo de nuevo más tarde", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }
@@ -52,23 +56,24 @@ public class CollaborationDAO implements CollaborationManagerInterface {
     
     /**
      * Cambia la fecha de inicio de la colaboración en la base de datos.
-     * @param idCollaboration id de la colaboración a cambiar.
-     * @return un entero que indica el número de rows de la base de datos que han sido cambiadas.
-     * @throws LogicException cuando hay un problema de conexión con la base de datos.
+     * 
+     * @param idCollaboration ID de la colaboración a cambiar.
+     * @return Un entero que indica el número de filas de la base de datos modificadas.
+     * @throws LogicException Cuando hay un problema de conexión con la base de datos.
      */
     @Override
     public int startCollaboration(int idCollaboration) throws LogicException {
         int result = 0;
         String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String query = "UPDATE Colaboracion SET fechaInicio = ? WHERE idColaboracion = ?";
-        try{
+        try {
             Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, currentDate);
             statement.setInt(2, idCollaboration);
             result = statement.executeUpdate();
-        } catch(SQLException sqlException) {
-            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } catch (SQLException sqlException) {
+            throw new LogicException("No hay conexión, inténtelo de nuevo más tarde", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }
@@ -77,23 +82,24 @@ public class CollaborationDAO implements CollaborationManagerInterface {
     
     /**
      * Modifica la fecha de cierre de la colaboración.
-     * @param idCollaboration id de la colaboración a modificar en la base de datos.
-     * @return un entero con el número de rows en la base de datos que fueron modificadas. 1 funcionó correctamente.
-     * @throws LogicException cuando hay un problema de conexión con la base de datos.
+     * 
+     * @param idCollaboration ID de la colaboración a modificar en la base de datos.
+     * @return Un entero que indica el número de filas de la base de datos modificadas. 1 si funcionó correctamente.
+     * @throws LogicException Cuando hay un problema de conexión con la base de datos.
      */
     @Override
     public int concludeCollaboration(int idCollaboration) throws LogicException {
         int result = 0;
         String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String query = "UPDATE Colaboracion SET fechaCierre = ? WHERE idColaboracion = ?";
-        try{
+        try {
             Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, currentDate);
             statement.setInt(2, idCollaboration);
             result = statement.executeUpdate();
-        } catch(SQLException sqlException) {
-            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } catch (SQLException sqlException) {
+            throw new LogicException("No hay conexión, inténtelo de nuevo más tarde", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }
@@ -101,21 +107,22 @@ public class CollaborationDAO implements CollaborationManagerInterface {
     }
     
     /**
-     * Obtener la información completa de una colaboración por su id.
-     * @param idCollaboration id de la colaboración a obtener.
-     * @return un objeto Colaboración, en el cuál va toda la información de la Colaboración obtenida.
-     * @throws LogicException cuando hay un problema con la conexión de la base de datos.
+     * Obtener la información completa de una colaboración por su ID.
+     * 
+     * @param idCollaboration ID de la colaboración a obtener.
+     * @return Un objeto Colaboración que contiene toda la información de la colaboración obtenida.
+     * @throws LogicException Cuando hay un problema con la conexión de la base de datos.
      */
     @Override
-    public Collaboration getColaborationById(int idCollaboration) throws LogicException{
+    public Collaboration getColaborationById(int idCollaboration) throws LogicException {
         String query = "SELECT * FROM Colaboracion WHERE idColaboracion = ?";
         Collaboration colaboration = new Collaboration();
-        try{
+        try {
             Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idCollaboration);
             ResultSet result = statement.executeQuery();
-            while(result.next()) {
+            while (result.next()) {
                 colaboration.setInterestTopic(result.getString("temaInteres"));
                 colaboration.setColaborationName(result.getString("nombreColaboracion"));
                 colaboration.setEndDate(result.getString("fechaCierre"));
@@ -123,8 +130,8 @@ public class CollaborationDAO implements CollaborationManagerInterface {
                 colaboration.setLanguage(result.getString("idioma"));
                 colaboration.setStartDate(result.getString("fechaInicio"));
             }
-        } catch(SQLException sqlException) {
-            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } catch (SQLException sqlException) {
+            throw new LogicException("No hay conexión, inténtelo de nuevo más tarde", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }
@@ -133,18 +140,19 @@ public class CollaborationDAO implements CollaborationManagerInterface {
     
     /**
      * Obtener todas las colaboraciones.
+     * 
      * @return ArrayList de colaboraciones obtenidas.
-     * @throws LogicException cuando hay un problema con la conexión a la base de datos.
+     * @throws LogicException Cuando hay un problema con la conexión a la base de datos.
      */
     @Override
-    public ArrayList<Collaboration> getAllCollaborations() throws LogicException{
+    public ArrayList<Collaboration> getAllCollaborations() throws LogicException {
         String query = "SELECT * FROM Colaboracion";
-        ArrayList <Collaboration> collaborationsResult = new ArrayList();
-        try{
+        ArrayList<Collaboration> collaborationsResult = new ArrayList<>();
+        try {
             Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet result = statement.executeQuery();
-            while(result.next()) {
+            while (result.next()) {
                 Collaboration colaboration = new Collaboration();
                 colaboration.setInterestTopic(result.getString("temaInteres"));
                 colaboration.setColaborationName(result.getString("nombreColaboracion"));
@@ -154,8 +162,8 @@ public class CollaborationDAO implements CollaborationManagerInterface {
                 colaboration.setStartDate(result.getString("fechaInicio"));
                 collaborationsResult.add(colaboration);
             }
-        } catch(SQLException sqlException) {
-            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } catch (SQLException sqlException) {
+            throw new LogicException("No hay conexión, inténtelo de nuevo más tarde", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }
@@ -164,18 +172,19 @@ public class CollaborationDAO implements CollaborationManagerInterface {
     
     /**
      * Obtener las colaboraciones que no han concluido.
+     * 
      * @return ArrayList de colaboraciones activas obtenidas.
-     * @throws LogicException cuando hay un error con la conexión a la base de datos.
+     * @throws LogicException Cuando hay un problema con la conexión a la base de datos.
      */
     @Override
-    public ArrayList<Collaboration> getActiveCollaborations() throws LogicException{
-        String query = "SELECT * FROM Colaboracion WHERE  fechaCierre IS NULL";
-        ArrayList <Collaboration> collaborationsResult = new ArrayList();
-        try{
+    public ArrayList<Collaboration> getActiveCollaborations() throws LogicException {
+        String query = "SELECT * FROM Colaboracion WHERE fechaCierre IS NULL";
+        ArrayList<Collaboration> collaborationsResult = new ArrayList<>();
+        try {
             Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet result = statement.executeQuery();
-            while(result.next()) {
+            while (result.next()) {
                 Collaboration colaboration = new Collaboration();
                 colaboration.setInterestTopic(result.getString("temaInteres"));
                 colaboration.setColaborationName(result.getString("nombreColaboracion"));
@@ -185,8 +194,8 @@ public class CollaborationDAO implements CollaborationManagerInterface {
                 colaboration.setStartDate(result.getString("fechaInicio"));
                 collaborationsResult.add(colaboration);
             }
-        } catch(SQLException sqlException) {
-            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } catch (SQLException sqlException) {
+            throw new LogicException("No hay conexión, inténtelo de nuevo más tarde", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }
@@ -195,22 +204,23 @@ public class CollaborationDAO implements CollaborationManagerInterface {
     
     /**
      * Concluir la colaboración modificando la fecha de cierre.
-     * @param idCollaboration id de la colaboración a modificar.
-     * @return  un entero con el número de rows en la base de datos que fueron modificadas. 1 funcionó correctamente.
-     * @throws LogicException cuando hay problema con la conexión a la base de datos.
+     * 
+     * @param idCollaboration ID de la colaboración a modificar.
+     * @return Un entero que indica el número de filas de la base de datos modificadas. 1 si funcionó correctamente.
+     * @throws LogicException Cuando hay un problema con la conexión a la base de datos.
      */
     @Override
     public int updateEndDateByIdCollaboration(int idCollaboration) throws LogicException {
         int result = 0;
         String query = "UPDATE Colaboracion SET fechaCierre = ? WHERE idColaboracion = ?";
-        try{
+        try {
             Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             statement.setInt(2, idCollaboration);
             result = statement.executeUpdate();
-        } catch(SQLException sqlException) {
-            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } catch (SQLException sqlException) {
+            throw new LogicException("No hay conexión, inténtelo de nuevo más tarde", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }
@@ -219,9 +229,10 @@ public class CollaborationDAO implements CollaborationManagerInterface {
     
     /**
      * Obtener las colaboraciones concluidas de un profesor.
-     * @param professorCollaborations array de professorbelongstocollaboration que contiene los ids de colaboracion concluidas.
+     * 
+     * @param professorCollaborations Array de ProfessorBelongsToCollaboration que contiene los IDs de colaboraciones concluidas.
      * @return ArrayList de colaboraciones concluidas obtenidas.
-     * @throws LogicException cuando hay un problema con la conexión a la base de datos.
+     * @throws LogicException Cuando hay un problema con la conexión a la base de datos.
      */
     @Override
     public ArrayList<Collaboration> getProfessorConcludedCollaborations(ArrayList<ProfessorBelongsToCollaboration> professorCollaborations) throws LogicException {

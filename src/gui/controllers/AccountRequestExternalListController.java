@@ -38,9 +38,9 @@ public class AccountRequestExternalListController implements Initializable {
     private void loadExternalAccountRequest() {
         tblViewExternalAccountRequest.getItems().clear();
         ArrayList<ExternalAccountRequestData> externalAccountRequestsData = new ArrayList();
-        try{
+        try {
             externalAccountRequestsData = EXTERNAL_ACCOUNT_REQUEST_DAO.getExternalAccountRequestsData();
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
             Stage stage = (Stage) tblViewExternalAccountRequest.getScene().getWindow();
@@ -52,10 +52,10 @@ public class AccountRequestExternalListController implements Initializable {
     private boolean deleteExternalAccountRequest(ExternalAccountRequest externalAccountRequest) {
         boolean result = false;
         try {
-            if(EXTERNAL_ACCOUNT_REQUEST_DAO.deleteExternalAccountRequest(externalAccountRequest) == 1) {
+            if (EXTERNAL_ACCOUNT_REQUEST_DAO.deleteExternalAccountRequest(externalAccountRequest) == 1) {
                 result = true;
             }
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
         }
@@ -80,20 +80,20 @@ public class AccountRequestExternalListController implements Initializable {
     
     @FXML
     private void acceptAccountRequest() {
-        if(tblViewExternalAccountRequest.getSelectionModel().getSelectedItem() != null) {
+        if (tblViewExternalAccountRequest.getSelectionModel().getSelectedItem() != null) {
             int idAccountRequestSelected = tblViewExternalAccountRequest.getSelectionModel().getSelectedItem().getIdRequest();
             ExternalAccountRequest externalAccountRequest;
             boolean result = false;
-            try{
+            try {
                 externalAccountRequest = EXTERNAL_ACCOUNT_REQUEST_DAO.getExternalAccountRequestById(idAccountRequestSelected);
-                if(externalAccountRequest.getName() != null && externalAccountRequest.getEmail()!= null){
+                if (externalAccountRequest.getName() != null && externalAccountRequest.getEmail()!= null){
                     result = AccountCreator.createExternalAccount(externalAccountRequest); 
                 }
-            } catch(LogicException logicException) {
+            } catch (LogicException logicException) {
                 LOG.error(logicException);
                 Alerts.displayAlertLogicException(logicException);
             }
-            if(result == true) {
+            if (result == true) {
                 Alerts.showInformationAlert("Éxito", "El correo se ha enviado a su destino con la clave de acceso");
             }
             loadExternalAccountRequest();
@@ -104,30 +104,30 @@ public class AccountRequestExternalListController implements Initializable {
     
     @FXML
     private void declineAccountRequest() {
-        if(tblViewExternalAccountRequest.getSelectionModel().getSelectedItem() != null) {
+        if (tblViewExternalAccountRequest.getSelectionModel().getSelectedItem() != null) {
             int idAccountRequestSelected = tblViewExternalAccountRequest.getSelectionModel().getSelectedItem().getIdRequest();
             ExternalAccountRequest externalAccountRequest;
-            try{
+            try {
                 externalAccountRequest = EXTERNAL_ACCOUNT_REQUEST_DAO.getExternalAccountRequestById(idAccountRequestSelected);
-            } catch(LogicException logicException) {
+            } catch (LogicException logicException) {
                 LOG.error(logicException);
                 Alerts.displayAlertLogicException(logicException);
                 return;
             }
-            if(deleteExternalAccountRequest(externalAccountRequest)) {
+            if (deleteExternalAccountRequest(externalAccountRequest)) {
                 loadExternalAccountRequest();
                 EmailNotification.getInstance().setEmail(externalAccountRequest.getEmail());
                 EmailNotification.getInstance().setMessageSuccess("Se ha rechazado con exito la solicitud de cuenta");
                 try {
                     SendEmailStage sendEmailStage = new SendEmailStage();
-                } catch(IOException ioexception) {
+                } catch (IOException ioexception) {
                     LOG.warn(ioexception);
                     Alerts.displayAlertIOException();
                 }
-                if(EmailNotification.getInstance().getSentStatus() == false) {
+                if (EmailNotification.getInstance().getSentStatus() == false) {
                     try {
                         savePendingMail(externalAccountRequest);
-                    } catch(LogicException logicException) {
+                    } catch (LogicException logicException) {
                         Alerts.displayAlertLogicException(logicException);
                     }
                 }

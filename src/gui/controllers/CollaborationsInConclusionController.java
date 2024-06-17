@@ -121,7 +121,7 @@ public class CollaborationsInConclusionController implements Initializable {
     }
 
     private void checkEmptyTable() {
-        if(this.collaborationsToDisplay.isEmpty()) {
+        if (this.collaborationsToDisplay.isEmpty()) {
             this.tblViewPendingCollaborations.setPlaceholder(new Label("No hay colaboraciones por concluir"));
         }
     }
@@ -142,7 +142,7 @@ public class CollaborationsInConclusionController implements Initializable {
     
     @FXML
     private void displayReviewConclusionCollaboration() {
-        if(this.tblViewPendingCollaborations.getSelectionModel().getSelectedItem() != null) {
+        if (this.tblViewPendingCollaborations.getSelectionModel().getSelectedItem() != null) {
             setSelectedCollaboration();
             Stage stage = (Stage) this.tblViewPendingCollaborations.getScene().getWindow();
             stage.close();
@@ -163,7 +163,7 @@ public class CollaborationsInConclusionController implements Initializable {
         stage.close();
         try {
             CollaborationsCoordinatorMenuStage collaborationsCoordinatorStage = new CollaborationsCoordinatorMenuStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
         }

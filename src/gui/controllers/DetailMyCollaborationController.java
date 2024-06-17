@@ -12,7 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import logic.DAOs.ConcludedColaborationDAO;
+import logic.DAOs.ConcludedCollaborationDAO;
 import logic.LogicException;
 import logic.domain.ConcludedCollaboration;
 import logic.model.CollaborationInformation;
@@ -32,7 +32,7 @@ public class DetailMyCollaborationController implements Initializable {
     @FXML
     private Label lblCertificatesAvailable;
     
-    private static final ConcludedColaborationDAO CONCLUDED_COLLABORATION_DAO = new ConcludedColaborationDAO();
+    private static final ConcludedCollaborationDAO CONCLUDED_COLLABORATION_DAO = new ConcludedCollaborationDAO();
     
     private static final CollaborationInformation SELECTED_COLLABORATION = CollaborationInformation.getCollaboration();
     
@@ -47,11 +47,11 @@ public class DetailMyCollaborationController implements Initializable {
         this.lblCollaborationName.setText(SELECTED_COLLABORATION.getCollaborationName());
         this.lblStartDate.setText(SELECTED_COLLABORATION.getStartDate());
         try {
-            if(!CONCLUDED_COLLABORATION_DAO.hasCertificatesUploaded(SELECTED_COLLABORATION.getIdCollaboration())) {
+            if (!CONCLUDED_COLLABORATION_DAO.hasCertificatesUploaded(SELECTED_COLLABORATION.getIdCollaboration())) {
                 this.lblCertificatesAvailable.setText("Constancias no disponibles para descargar");
                 this.imageViewZipFile.setVisible(false);
             }
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
             LOG.error(logicException);
         }
@@ -68,14 +68,14 @@ public class DetailMyCollaborationController implements Initializable {
     @FXML
     private void downloadCertificates() {
         File downloadPath = getDownloadPath("Guardar constancias", "Constancias");
-        if(downloadPath != null) {
+        if (downloadPath != null) {
             ConcludedCollaboration concludedCollaboration = new ConcludedCollaboration();
             concludedCollaboration.setIdColaboration(SELECTED_COLLABORATION.getIdCollaboration());
             try {
-                if(CONCLUDED_COLLABORATION_DAO.obtainCertificates(concludedCollaboration, downloadPath.toString()) == 1) {
+                if (CONCLUDED_COLLABORATION_DAO.obtainCertificates(concludedCollaboration, downloadPath.toString()) == 1) {
                     Alerts.showInformationAlert("Mensaje", "Constancias descargadas con éxito");
                 }
-            } catch(LogicException logicException) {
+            } catch (LogicException logicException) {
                 Alerts.displayAlertLogicException(logicException);
                 LOG.error(logicException);
             }
@@ -88,7 +88,7 @@ public class DetailMyCollaborationController implements Initializable {
         stage.close();
         try {
             CollaborationHistoryStage historyStage = new CollaborationHistoryStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
         }

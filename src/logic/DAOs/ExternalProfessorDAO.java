@@ -2,11 +2,10 @@ package logic.DAOs;
 
 import dataaccess.DatabaseConnection;
 import logic.domain.ExternalProfessor;
+import logic.interfaces.ExternalProfessorManagerInterface;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import logic.interfaces.ExternalProfessorManagerInterface;
-import java.sql.ResultSet;
 import logic.LogicException;
 
 /**
@@ -22,9 +21,9 @@ public class ExternalProfessorDAO implements ExternalProfessorManagerInterface {
     /**
      * Inserta un nuevo profesor externo en la base de datos.
      * 
-     * @param externalProfessor el objeto ExternalProfessor que contiene los detalles del profesor externo a insertar
-     * @return el número de filas afectadas por la consulta
-     * @throws LogicException si hay un problema de conexión a la base de datos o un error al crear la cuenta
+     * @param externalProfessor el objeto ExternalProfessor que contiene los detalles del profesor externo a insertar.
+     * @return el número de filas afectadas por la consulta.
+     * @throws LogicException si hay un problema de conexión a la base de datos o un error al crear la cuenta.
      */
     @Override
     public int insertExternalProfessor(ExternalProfessor externalProfessor) throws LogicException {
@@ -33,7 +32,7 @@ public class ExternalProfessorDAO implements ExternalProfessorManagerInterface {
         Connection connection;
         PreparedStatement statement;
         try {
-            connection = this.DATABASE_CONNECTION.getConnection();
+            connection = DATABASE_CONNECTION.getConnection();
             statement = connection.prepareStatement(query);
             statement.setInt(1, externalProfessor.getIdUser());
             statement.setInt(2, externalProfessor.getIdUniversity());

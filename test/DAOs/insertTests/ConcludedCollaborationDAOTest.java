@@ -1,7 +1,7 @@
 package DAOs.insertTests;
 
 import java.io.File;
-import logic.DAOs.ConcludedColaborationDAO;
+import logic.DAOs.ConcludedCollaborationDAO;
 import logic.LogicException;
 import logic.domain.ConcludedCollaboration;
 import static org.junit.Assert.assertEquals;
@@ -16,7 +16,7 @@ public class ConcludedCollaborationDAOTest {
         concludedCollaboration.setIdColaboration(3);
         concludedCollaboration.setIdUser(6);
         
-        ConcludedColaborationDAO concludedColaborationDAO = new ConcludedColaborationDAO();
+        ConcludedCollaborationDAO concludedColaborationDAO = new ConcludedCollaborationDAO();
         int currentResult = concludedColaborationDAO.addConcludedCollaboration(concludedCollaboration);
         int expectedResult = 1;
         assertEquals(expectedResult, currentResult);
@@ -28,7 +28,7 @@ public class ConcludedCollaborationDAOTest {
         concludedCollaboration.setIdColaboration(4);
         concludedCollaboration.setVisibility("Visible");
         
-        ConcludedColaborationDAO concludedColaborationDAO = new ConcludedColaborationDAO();
+        ConcludedCollaborationDAO concludedColaborationDAO = new ConcludedCollaborationDAO();
         int currentResult = concludedColaborationDAO.updateVisibility(concludedCollaboration);
         int expectedResult = 1;
         assertEquals(expectedResult, currentResult);
@@ -40,7 +40,7 @@ public class ConcludedCollaborationDAOTest {
         concludedCollaboration.setIdColaboration(4);
         concludedCollaboration.setRating(5);
         
-        ConcludedColaborationDAO concludedColaborationDAO = new ConcludedColaborationDAO();
+        ConcludedCollaborationDAO concludedColaborationDAO = new ConcludedCollaborationDAO();
         int currentResult = concludedColaborationDAO.updateRating(concludedCollaboration);
         int expectedResult = 1;
         assertEquals(expectedResult, currentResult);
@@ -52,7 +52,7 @@ public class ConcludedCollaborationDAOTest {
         concludedCollaboration.setIdColaboration(4);
         concludedCollaboration.setCertificatesFile(new File("../../constancias.zip"));
         
-        ConcludedColaborationDAO concludedColaborationDAO = new ConcludedColaborationDAO();
+        ConcludedCollaborationDAO concludedColaborationDAO = new ConcludedCollaborationDAO();
         try {
             int currentResult = concludedColaborationDAO.uploadCertificates(concludedCollaboration);
             int expectedResult = 1;

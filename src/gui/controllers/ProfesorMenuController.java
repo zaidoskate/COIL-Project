@@ -30,7 +30,7 @@ public class ProfesorMenuController implements Initializable {
         menuStage.close();
         try {
             OfferProfessorStage offerProfessorStage = new OfferProfessorStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             LOG.warn(ioException);
         }
     }
@@ -43,7 +43,7 @@ public class ProfesorMenuController implements Initializable {
             COILVICApplication application = new COILVICApplication();
             Stage loginStage = new Stage();
             application.start(loginStage);
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }

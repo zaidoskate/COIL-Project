@@ -12,7 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import logic.DAOs.CollaborationDAO;
-import logic.DAOs.ConcludedColaborationDAO;
+import logic.DAOs.ConcludedCollaborationDAO;
 import logic.LogicException;
 import logic.domain.Collaboration;
 import logic.domain.ConcludedCollaboration;
@@ -23,7 +23,7 @@ public class ListConcludedCollaborationsController implements Initializable{
     @FXML
     private TableView<Collaboration> tblViewCollaboration;
     
-    private static final ConcludedColaborationDAO CONCLUDE_COLLABORATION_DAO = new ConcludedColaborationDAO();
+    private static final ConcludedCollaborationDAO CONCLUDE_COLLABORATION_DAO = new ConcludedCollaborationDAO();
     private static final CollaborationDAO COLLABORATION_DAO = new CollaborationDAO();
     private static final Logger LOG = Logger.getLogger(CollaborationController.class);
     
@@ -37,11 +37,11 @@ public class ListConcludedCollaborationsController implements Initializable{
         ArrayList<ConcludedCollaboration> concludedCollaborations = new ArrayList();
         try {
             concludedCollaborations = CONCLUDE_COLLABORATION_DAO.getConcludedCollaborationsByVisibility();
-            for(ConcludedCollaboration concludedCollaboration:concludedCollaborations) {
+            for (ConcludedCollaboration concludedCollaboration : concludedCollaborations) {
                 Collaboration collaboration = COLLABORATION_DAO.getColaborationById(concludedCollaboration.getIdColaboration());
                 collaborations.add(collaboration);
             }
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
             previousMenu();
@@ -55,7 +55,7 @@ public class ListConcludedCollaborationsController implements Initializable{
         stage.close();
         try {
             CollaborationsCoordinatorMenuStage coordinaorMenuStage = new CollaborationsCoordinatorMenuStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
         }
@@ -63,13 +63,13 @@ public class ListConcludedCollaborationsController implements Initializable{
     
     @FXML void detailCollaboration() {
         Collaboration collaborationSelected = tblViewCollaboration.getSelectionModel().getSelectedItem();
-        if(collaborationSelected != null) {
+        if (collaborationSelected != null) {
             ConcludedCollaborationInformation.getInstance().setIdCollaboration(collaborationSelected.getIdColaboration());
             ConcludedCollaborationInformation.getInstance().setChangeVisibility(true);
             ConcludedCollaborationInformation.getInstance().setDownloadEvidences(false);
             try {
                 DetailCollaborationStage detailCollaborationStage = new DetailCollaborationStage(); 
-            } catch(IOException ioException) {
+            } catch (IOException ioException) {
                 LOG.warn(ioException);
                 Alerts.displayAlertIOException();
             }

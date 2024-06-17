@@ -23,15 +23,15 @@ public class SendEmailController implements Initializable {
         
     }
     private boolean validateEmailBody(String body) {
-        if( !DataValidation.validateNotBlanks(body)){
+        if ( !DataValidation.validateNotBlanks(body)){
             Alerts.showWarningAlert("El cuerpo del correo es un campo obligatorio.");
             return false;
         }
-        if(DataValidation.validateWord(body)) {
+        if (DataValidation.validateWord(body)) {
             Alerts.showWarningAlert("El cuerpo del correo debe contener únicamente palabras y números.");
             return false;
         }
-        if(DataValidation.validateLengthField(body, 100)) {
+        if (DataValidation.validateLengthField(body, 100)) {
             Alerts.showWarningAlert("El cuerpo del correo no debe pasar los 100 caracteres.");
             return false;
         }
@@ -42,14 +42,14 @@ public class SendEmailController implements Initializable {
         String email = EmailNotification.getInstance().getEmail();
         String body = DataValidation.trimUnnecesaryBlanks(txtAreaMessage.getText());
         boolean result = false;
-        if(DataValidation.validateWord(body)){
-            try{
+        if (DataValidation.validateWord(body)){
+            try {
                 result = MailSender.sendEmail(body, email);
-            } catch(LogicException logicException) {
+            } catch (LogicException logicException) {
                 LOG.error(logicException);
             }
         }
-        if(result == true) {
+        if (result == true) {
             EmailNotification.getInstance().emailSent();
             EmailNotification.getInstance().setEmailBody(this.txtAreaMessage.getText());
             Alerts.showInformationAlert("Éxito", EmailNotification.getInstance().getMessageSuccess());

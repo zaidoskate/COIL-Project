@@ -59,9 +59,9 @@ public class EvidenceUploaderController implements Initializable {
     }
     
     private void loadFolders() {
-        try{
+        try {
             evidenceFolders = EVIDENCE_FOLDER_DAO.getEvidenceFoldersByIdCollaboration(CURRENT_COLLABORATION.getIdCollaboration());
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
             Stage stage = (Stage) this.anchorPaneFile.getScene().getWindow();
@@ -96,23 +96,23 @@ public class EvidenceUploaderController implements Initializable {
     
     private boolean makeValidations() {
         String evidenceName = DataValidation.trimUnnecesaryBlanks(txtFieldEvidenceName.getText());
-        if( !DataValidation.validateNotBlanks(evidenceName)){
+        if ( !DataValidation.validateNotBlanks(evidenceName)){
             Alerts.showWarningAlert("El correo es un campo obligatorio.");
             return false;
         }
-        if( !DataValidation.validateName(evidenceName)){
+        if ( !DataValidation.validateName(evidenceName)){
             Alerts.showWarningAlert("Nombre de la evidencia inválido.");
             return false;
         }
-        if(!DataValidation.validateLengthField(evidenceName, 45)) {
+        if (!DataValidation.validateLengthField(evidenceName, 45)) {
             Alerts.showWarningAlert("El nombre de la evidencia es demasiado largo.");
             return false;
         }
-        if(cmbBoxFolders.getSelectionModel().getSelectedIndex() < 0) {
+        if (cmbBoxFolders.getSelectionModel().getSelectedIndex() < 0) {
             Alerts.showWarningAlert("Se debe seleccionar un folder.");
             return false;
         }
-        if(uploadedFile == null) {
+        if (uploadedFile == null) {
             Alerts.showWarningAlert("No se ha cargado ningun archivo PDF.");
             return false;
         }
@@ -130,7 +130,7 @@ public class EvidenceUploaderController implements Initializable {
     private void newFolder() {
         try { 
             NewFolderStage newFolderStage = new NewFolderStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
         }
@@ -139,13 +139,13 @@ public class EvidenceUploaderController implements Initializable {
     @FXML
     private void viewEvidences() {
         int indexFolderSelected = cmbBoxFolders.getSelectionModel().getSelectedIndex();
-        if(indexFolderSelected >= 0) {
+        if (indexFolderSelected >= 0) {
             try { 
                 EVIDENCE_LIST_INFORMATION.setAllFolders(false);
                 EVIDENCE_LIST_INFORMATION.setIdCollaboration(CURRENT_COLLABORATION.getIdCollaboration());
                 EVIDENCE_LIST_INFORMATION.setIdFolder(evidenceFolders.get(indexFolderSelected).getIdEvidenceFolder());
                 EvidenceListStage evidenceListStage = new EvidenceListStage();
-            } catch(IOException ioException) {
+            } catch (IOException ioException) {
                 Alerts.displayAlertIOException();
                 LOG.error(ioException);
             }
@@ -155,7 +155,7 @@ public class EvidenceUploaderController implements Initializable {
     }
     @FXML
     private void deleteUploadedFile() {
-        if(uploadedFile != null) {
+        if (uploadedFile != null) {
             uploadedFile = null;
             fileNameUploaded.setVisible(false);
             Alerts.showWarningAlert("Se ha eliminado el archivo cargado");
@@ -165,12 +165,12 @@ public class EvidenceUploaderController implements Initializable {
     }
     @FXML
     private void uploadEvidence() {
-        if(makeValidations()) {
+        if (makeValidations()) {
             try {
                 uploadFile();
                 clearFields();
                 Alerts.showInformationAlert("Éxito", "Se ha cargado con éxito la evidencia.");
-            } catch(LogicException logicException) {
+            } catch (LogicException logicException) {
                 LOG.error(logicException);
                 Alerts.displayAlertLogicException(logicException);
             }
@@ -186,8 +186,8 @@ public class EvidenceUploaderController implements Initializable {
     private void onDragOver(DragEvent event) {
         Stage stage = (Stage) this.anchorPaneFile.getScene().getWindow();
         stage.requestFocus();
-        if(event.getGestureSource() != this.anchorPaneFile || event.getGestureSource() != imageFile) {
-            if(event.getDragboard().hasFiles()) {
+        if (event.getGestureSource() != this.anchorPaneFile || event.getGestureSource() != imageFile) {
+            if (event.getDragboard().hasFiles()) {
                 event.acceptTransferModes(TransferMode.COPY);
             }
         }
@@ -196,10 +196,10 @@ public class EvidenceUploaderController implements Initializable {
     
     @FXML
     private void onDragDropped(DragEvent event) {
-            if(event.getGestureSource() != anchorPaneFile || event.getGestureSource() != imageFile) {
-                if(event.getDragboard().hasFiles()) {
+            if (event.getGestureSource() != anchorPaneFile || event.getGestureSource() != imageFile) {
+                if (event.getDragboard().hasFiles()) {
                     File fileToUpload = event.getDragboard().getFiles().get(0);
-                    if(DataValidation.validateFileExtension(fileToUpload.getName(), "pdf")) {
+                    if (DataValidation.validateFileExtension(fileToUpload.getName(), "pdf")) {
                         uploadedFile = fileToUpload;
                         fileNameUploaded.setVisible(true);
                         event.setDropCompleted(true);

@@ -1,6 +1,8 @@
 package logic.DAOs;
 
 import dataaccess.DatabaseConnection;
+import logic.domain.Evaluation;
+import logic.interfaces.EvaluationManagerInterface;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -10,26 +12,33 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import logic.LogicException;
-import logic.domain.Evaluation;
-import logic.interfaces.EvaluationManagerInterface;
 
 /**
- *
- * @author zaido
+ * Objeto de acceso a datos para manejar las operaciones relacionadas con las evaluaciones en la base de datos.
+ * Implementa la interfaz EvaluationManagerInterface.
+ * Proporciona métodos para insertar, eliminar y recuperar evaluaciones.
+ * 
+ * @autor zaido
  */
 public class EvaluationDAO implements EvaluationManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
-    
+
+    /**
+     * Convierte un objeto Date a una cadena con el formato 'yyyy-MM-dd'.
+     * 
+     * @param date la fecha a convertir.
+     * @return la cadena de fecha formateada.
+     */
     private String parseDateToString(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String dateString = dateFormat.format(date);
-        return dateString;
+        return dateFormat.format(date);
     }
-    
+
     /**
-     * Insertar una nueva evaluación para oferta aprobada
-     * @param evaluation datos de la evaluación como id de la oferta, coordinador que evaluó.
-     * @return  un entero que indica la cantidad de rows de la base de datos modificada, si es 0 falló, si es 1 funcionó.
+     * Inserta una nueva evaluación para una oferta aprobada.
+     * 
+     * @param evaluation el objeto Evaluation que contiene los datos de la evaluación, como id de la oferta y el coordinador que evaluó.
+     * @return un entero que indica la cantidad de filas afectadas por la consulta, si es 0 falló, si es 1 funcionó.
      * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
@@ -50,11 +59,12 @@ public class EvaluationDAO implements EvaluationManagerInterface {
         }
         return result;
     }
-    
+
     /**
-     * Insertar una evaluación para una oferta rechazada (incluye motivo).
-     * @param evaluation información de la evaluación a insertar.
-     * @return un entero que indica la cantidad de rows de la base de datos modificada, si es 0 falló, si es 1 funcionó.
+     * Inserta una evaluación para una oferta rechazada, incluyendo el motivo.
+     * 
+     * @param evaluation el objeto Evaluation que contiene los datos de la evaluación.
+     * @return un entero que indica la cantidad de filas afectadas por la consulta, si es 0 falló, si es 1 funcionó.
      * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
@@ -76,11 +86,12 @@ public class EvaluationDAO implements EvaluationManagerInterface {
         }
         return result;
     }
-    
+
     /**
-     * Eliminar una evaluación.
-     * @param idCollaborationOffer id de la oferta registrada en la evaluación.
-     * @return un entero que indica la cantidad de rows de la base de datos modificada, si es 0 falló, si es 1 funcionó.
+     * Elimina una evaluación de la base de datos.
+     * 
+     * @param idCollaborationOffer el ID de la oferta registrada en la evaluación.
+     * @return un entero que indica la cantidad de filas afectadas por la consulta, si es 0 falló, si es 1 funcionó.
      * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
@@ -92,7 +103,7 @@ public class EvaluationDAO implements EvaluationManagerInterface {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idCollaborationOffer);
             result = statement.executeUpdate();
-        } catch(SQLException sqlException) {
+        } catch (SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
@@ -101,21 +112,22 @@ public class EvaluationDAO implements EvaluationManagerInterface {
     }
 
     /**
-     * Obtener la evaluación de una oferta.
-     * @param idOfferCollaboration id de la oferta.
-     * @return Evaluación hecha a la oferta.
+     * Obtiene la evaluación de una oferta específica.
+     * 
+     * @param idOfferCollaboration el ID de la oferta.
+     * @return el objeto Evaluation que contiene los datos de la evaluación.
      * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
     public Evaluation getEvaluationByIdOfferCollaboration(int idOfferCollaboration) throws LogicException {
         String query = "SELECT * FROM Evaluacion WHERE idOfertaColaboracion = ?";
         Evaluation evaluationResult = new Evaluation();
-        try{
-            Connection connection = this.DATABASE_CONNECTION.getConnection();
+        try {
+            Connection connection = DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idOfferCollaboration);
             ResultSet result = statement.executeQuery();
-            while(result.next()) {
+            while (result.next()) {
                 evaluationResult.setIdOfferCollaboration(result.getInt("idOfertaColaboracion"));
                 evaluationResult.setIdCoordinator(result.getInt("idCoordinador"));
                 evaluationResult.setDate(result.getString("fechaEvaluacion"));
@@ -128,23 +140,24 @@ public class EvaluationDAO implements EvaluationManagerInterface {
         }
         return evaluationResult;
     }
-    
+
     /**
-     * Obtener las evaluaciones hechas por un coordinador.
-     * @param idCoordinator id del coordinador a consultar.
-     * @return ArrayList de evaluaciones hechas por el coordinador.
+     * Obtiene las evaluaciones hechas por un coordinador específico.
+     * 
+     * @param idCoordinator el ID del coordinador.
+     * @return una lista de objetos Evaluation que contiene las evaluaciones hechas por el coordinador.
      * @throws LogicException cuando hay un problema con la conexión de la base de datos.
      */
     @Override
-    public ArrayList<Evaluation> getEvaluationByIdCoordinator(int idCoordinator) throws LogicException{
+    public ArrayList<Evaluation> getEvaluationByIdCoordinator(int idCoordinator) throws LogicException {
         String query = "SELECT * FROM Evaluacion WHERE idCoordinador = ?";
-        ArrayList<Evaluation> evaluationsFromCoordinator = new ArrayList();
+        ArrayList<Evaluation> evaluationsFromCoordinator = new ArrayList<>();
         try {
-            Connection connection = this.DATABASE_CONNECTION.getConnection();
+            Connection connection = DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idCoordinator);
             ResultSet result = statement.executeQuery();
-            while(result.next()) {
+            while (result.next()) {
                 Evaluation evaluationObtained = new Evaluation();
                 evaluationObtained.setIdOfferCollaboration(result.getInt("idOfertaColaboracion"));
                 evaluationObtained.setIdCoordinator(result.getInt("idCoordinador"));

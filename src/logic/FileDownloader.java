@@ -33,7 +33,7 @@ public class FileDownloader {
         regionHeader.createCell(0).setCellValue("Región");
         regionHeader.createCell(1).setCellValue("Profesores");
         String[] regions = {"Xalapa", "Veracruz", "Coatzacoalcos", "Orizaba", "Tuxpan"};
-        for (int i = 0; i < regions.length; i++) {
+        for (int i=0; i<regions.length; i++) {
             Row regionData = regionSheet.createRow(i + 1);
             regionData.createCell(0).setCellValue(regions[i]);
             regionData.createCell(1).setCellValue(regionCollaborationCounts[i]);

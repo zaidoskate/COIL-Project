@@ -58,7 +58,7 @@ public class MyCollaborationsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setProfessorCollaboration();
-        if(CURRENT_COLLABORATION.getIdUser() == CURRENT_SESSION.getUserData().getIdUser()) {
+        if (CURRENT_COLLABORATION.getIdUser() == CURRENT_SESSION.getUserData().getIdUser()) {
             showCollaborationAvailable();
         } else {
             showNoCollaborationAvailable();
@@ -76,7 +76,7 @@ public class MyCollaborationsController implements Initializable {
             CURRENT_COLLABORATION.setCollaborationName(collaborationObtained.getColaborationName());
             CURRENT_COLLABORATION.setTopicsOfInterest(collaborationObtained.getInterestTopic());
             CURRENT_COLLABORATION.setLanguage(collaborationObtained.getLanguage());
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
             LOG.error(logicException);
         }
@@ -103,7 +103,7 @@ public class MyCollaborationsController implements Initializable {
         stage.close();
         try {
             CollaborationStage collaborationStage = new CollaborationStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
         }
@@ -115,7 +115,7 @@ public class MyCollaborationsController implements Initializable {
         stage.close();
         try {
             StartCollaborationStage startCollaborationStage = new StartCollaborationStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
         }
@@ -127,7 +127,7 @@ public class MyCollaborationsController implements Initializable {
         stage.close();
         try {
             CollaborationConclusionStage concludeCollaborationStage = new CollaborationConclusionStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
         }
@@ -137,7 +137,7 @@ public class MyCollaborationsController implements Initializable {
     private void displayUploadEvidence() {
         try {
             EvidenceUploaderStage uploadEvidencesStage = new EvidenceUploaderStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
         }
@@ -149,7 +149,7 @@ public class MyCollaborationsController implements Initializable {
         stage.close();
         try {
             CollaborationHistoryStage collaborationHistoryStage = new CollaborationHistoryStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
         }

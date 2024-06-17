@@ -32,19 +32,19 @@ public class ExternalAccountRequest extends AccountRequest{
     @Override
     public boolean equals(Object object) {
         ExternalAccountRequest accountRequestToCompare = (ExternalAccountRequest) object;
-        if(this.getIdRequest() != accountRequestToCompare.getIdRequest()) { 
+        if (this.getIdRequest() != accountRequestToCompare.getIdRequest()) { 
             return false;
         }
-        if(this.getIdUniversity() != accountRequestToCompare.getIdUniversity()) {
+        if (this.getIdUniversity() != accountRequestToCompare.getIdUniversity()) {
             return false;
         }
-        if(!this.getEmail().equals(accountRequestToCompare.getEmail())) {
+        if (!this.getEmail().equals(accountRequestToCompare.getEmail())) {
             return false;
         }
-        if(!this.getName().equals(accountRequestToCompare.getName())) {
+        if (!this.getName().equals(accountRequestToCompare.getName())) {
             return false;
         }
-        if(!this.getLastName().equals(accountRequestToCompare.getLastName())) {
+        if (!this.getLastName().equals(accountRequestToCompare.getLastName())) {
             return false;
         }
         return true;

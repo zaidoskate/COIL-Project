@@ -2,7 +2,7 @@ package DAOs.getTests;
 
 import java.io.File;
 import java.util.ArrayList;
-import logic.DAOs.ConcludedColaborationDAO;
+import logic.DAOs.ConcludedCollaborationDAO;
 import logic.LogicException;
 import logic.domain.ConcludedCollaboration;
 import static org.junit.Assert.assertEquals;
@@ -18,7 +18,7 @@ public class ConcludedCollaborationDAOTest {
         concludedCollaboration.setIdColaboration(4);
         concludedCollaboration.setCertificatesFile(new File("../../constancias.zip"));
         
-        ConcludedColaborationDAO concludedColaborationDAO = new ConcludedColaborationDAO();
+        ConcludedCollaborationDAO concludedColaborationDAO = new ConcludedCollaborationDAO();
         try {
             int currentResult = concludedColaborationDAO.uploadCertificates(concludedCollaboration);
             int expectedResult = 1;
@@ -34,7 +34,7 @@ public class ConcludedCollaborationDAOTest {
         concludedCollaboration.setIdColaboration(4);
         String outputPath = "../../constancias_descargadas.zip";
         
-        ConcludedColaborationDAO concludedColaborationDAO = new ConcludedColaborationDAO();
+        ConcludedCollaborationDAO concludedColaborationDAO = new ConcludedCollaborationDAO();
         int currentResult = concludedColaborationDAO.obtainCertificates(concludedCollaboration, outputPath);
         int expectedResult = 1;
         assertEquals(expectedResult, currentResult);
@@ -42,7 +42,7 @@ public class ConcludedCollaborationDAOTest {
     
     @Test
     public void testGetConcludedCollaborations() throws LogicException {
-        ConcludedColaborationDAO concludedCollaborationDAO = new ConcludedColaborationDAO();
+        ConcludedCollaborationDAO concludedCollaborationDAO = new ConcludedCollaborationDAO();
         ArrayList<ConcludedCollaboration> concludedCollaborationsResult = concludedCollaborationDAO.getConcludedCollaborations();
         
         ArrayList<ConcludedCollaboration> concludedCollaborationsExpected = new ArrayList<>();
@@ -57,7 +57,7 @@ public class ConcludedCollaborationDAOTest {
     
     @Test
     public void testHasCertificatesUploadedSuccess() {
-        ConcludedColaborationDAO concludedCollaborationDAO = new ConcludedColaborationDAO();
+        ConcludedCollaborationDAO concludedCollaborationDAO = new ConcludedCollaborationDAO();
         boolean expectedResult = true;
         try {
             boolean result = concludedCollaborationDAO.hasCertificatesUploaded(4);

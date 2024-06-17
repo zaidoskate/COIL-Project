@@ -41,9 +41,9 @@ public class ExternalAccountCreateController implements Initializable {
         universities = new ArrayList<>();
         UniversityDAO universityDAO = new UniversityDAO();
         
-        try{
+        try {
             universities = universityDAO.getUniversities();
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
             
@@ -51,56 +51,56 @@ public class ExternalAccountCreateController implements Initializable {
             stage.close();
         }
         
-        for(University university:universities) {
+        for (University university : universities) {
             universitiesNames.add(university.getName());
         }
         cmbBoxUniversities.getItems().addAll(universitiesNames);
     }
     
     private boolean validateName(String name) {
-        if( !DataValidation.validateNotBlanks(name)){
+        if ( !DataValidation.validateNotBlanks(name)){
             Alerts.showWarningAlert("El nombre es un campo obligatorio.");
             return false;
         }
-        if(!DataValidation.validateLengthField(name, 45)) {
+        if (!DataValidation.validateLengthField(name, 45)) {
             Alerts.showWarningAlert("El nombre excede el tamaño de 45 caracteres.");
             return false;
         }
-        if(!DataValidation.validateName(name)) {
+        if (!DataValidation.validateName(name)) {
             Alerts.showWarningAlert("El nombre tiene formato inválido, escribe con mayúscula cada palabra.");
             return false;
         }
         return true;
     }
     private boolean validateLastName(String lastName) {
-        if( !DataValidation.validateNotBlanks(lastName)){
+        if ( !DataValidation.validateNotBlanks(lastName)){
             Alerts.showWarningAlert("El apellido es un campo obligatorio.");
             return false;
         }
-        if(!DataValidation.validateLengthField(lastName, 45)) {
+        if (!DataValidation.validateLengthField(lastName, 45)) {
             Alerts.showWarningAlert("El apellido excede el tamaño de 45 caracteres.");
             return false;
         }
-        if(!DataValidation.validateName(lastName)) {
+        if (!DataValidation.validateName(lastName)) {
             Alerts.showWarningAlert("El apellido tiene formato inválido, escribe con mayúscula cada palabra.");
             return false;
         }
         return true;
     }
     private boolean validateEmail(String email) throws LogicException {
-        if( !DataValidation.validateNotBlanks(email)){
+        if ( !DataValidation.validateNotBlanks(email)){
             Alerts.showWarningAlert("El correo es un campo obligatorio.");
             return false;
         }
-        if(!DataValidation.validateLengthField(email, 45)) {
+        if (!DataValidation.validateLengthField(email, 45)) {
             Alerts.showWarningAlert("El nombre excede el tamaño de 45 caracteres.");
             return false;
         }
-        if(!DataValidation.validateEmail(email)) {
+        if (!DataValidation.validateEmail(email)) {
             Alerts.showWarningAlert("El correo tiene formato inválido.");
             return false;
         }
-        if(USER_DAO.checkEmailRegistered(email)) {
+        if (USER_DAO.checkEmailRegistered(email)) {
             Alerts.showWarningAlert("El correo ingresado es utilizado por otra cuenta");
             return false;
         }
@@ -112,16 +112,16 @@ public class ExternalAccountCreateController implements Initializable {
         String lastName = DataValidation.trimUnnecesaryBlanks(txtFieldLastName.getText());
         String email = DataValidation.trimUnnecesaryBlanks(txtFieldEmail.getText()); 
         
-        if(validateName(name) == false) {
+        if (validateName(name) == false) {
             return false;
         }
-        if(validateLastName(lastName) == false) {
+        if (validateLastName(lastName) == false) {
             return false;
         }
-        if(validateEmail(email) == false) {
+        if (validateEmail(email) == false) {
             return false;
         }
-        if(cmbBoxUniversities.getSelectionModel().getSelectedIndex() == -1) {
+        if (cmbBoxUniversities.getSelectionModel().getSelectedIndex() == -1) {
             Alerts.showWarningAlert("Universidad no seleccionada.");
             return false;
         }
@@ -137,10 +137,10 @@ public class ExternalAccountCreateController implements Initializable {
     @FXML
     private void createExternalAccount() {
         try {
-            if(!makeValidations()) {
+            if (!makeValidations()) {
                 return;
             }
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
         }
@@ -160,11 +160,11 @@ public class ExternalAccountCreateController implements Initializable {
         
         try {
             result = AccountCreator.createExternalAccount(externalAccountRequest);
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             LOG.error(logicException);
             Alerts.displayAlertLogicException(logicException);
         }
-        if(result == true) {
+        if (result == true) {
             Alerts.showInformationAlert("Éxito", "El correo se ha enviado a su destino con la clave de acceso");
         }
         clearFields();

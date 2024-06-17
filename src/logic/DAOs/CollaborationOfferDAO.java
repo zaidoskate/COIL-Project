@@ -1,4 +1,3 @@
-
 package logic.DAOs;
 
 import dataaccess.DatabaseConnection;
@@ -12,33 +11,37 @@ import logic.LogicException;
 import logic.interfaces.CollaborationOfferManagerInterface;
 
 /**
- *
- * @author zaido
+ * Objeto de acceso a datos para manejar las operaciones relacionadas con las ofertas de colaboración en la base de datos.
+ * Implementa la interfaz CollaborationOfferManagerInterface.
+ * Proporciona métodos para insertar, eliminar, evaluar y recuperar ofertas de colaboración.
+ * 
+ * @autor zaido
  */
 public class CollaborationOfferDAO implements CollaborationOfferManagerInterface {
-    private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection(); 
-    
+    private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
+
     /**
-     * Insertar una nueva Oferta en la base.
-     * @param colaborationOffer un objeto colaboración que tiene toda la información de la oferta.
-     * @return un entero con el número de rows en la base de datos que fueron modificadas. 1 funcionó correctamente.
-     * @throws LogicException cuando hay un problema de conexión con la base de datos.
+     * Insertar una nueva oferta de colaboración en la base de datos.
+     * 
+     * @param collaborationOffer Un objeto CollaborationOffer que tiene toda la información de la oferta.
+     * @return Un entero con el número de filas en la base de datos que fueron modificadas. 1 si funcionó correctamente.
+     * @throws LogicException Cuando hay un problema de conexión con la base de datos.
      */
     @Override
-    public int insertColaborationOffer(CollaborationOffer colaborationOffer) throws LogicException{
+    public int insertColaborationOffer(CollaborationOffer collaborationOffer) throws LogicException {
         int result = 0;
         String query = "INSERT INTO OfertaColaboracion (Profesor_Usuario_idUsuario, objetivo, temasInteres, cantidadEstudiantes, perfil, idioma, periodo, informacionAdcional, estadoOferta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try{
+        try {
             Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, colaborationOffer.getIdUser());
-            statement.setString(2, colaborationOffer.getObjective());
-            statement.setString(3, colaborationOffer.getTopicsOfInterest());
-            statement.setInt(4, colaborationOffer.getNumberOfStudents());
-            statement.setString(5, colaborationOffer.getProfile());
-            statement.setString(6, colaborationOffer.getLanguage());
-            statement.setString(7, colaborationOffer.getPeriod());
-            statement.setString(8, colaborationOffer.getAditionalInfo());
+            statement.setInt(1, collaborationOffer.getIdUser());
+            statement.setString(2, collaborationOffer.getObjective());
+            statement.setString(3, collaborationOffer.getTopicsOfInterest());
+            statement.setInt(4, collaborationOffer.getNumberOfStudents());
+            statement.setString(5, collaborationOffer.getProfile());
+            statement.setString(6, collaborationOffer.getLanguage());
+            statement.setString(7, collaborationOffer.getPeriod());
+            statement.setString(8, collaborationOffer.getAditionalInfo());
             statement.setString(9, "Pendiente");
             result = statement.executeUpdate();
         } catch (SQLException sqlException) {
@@ -50,10 +53,11 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
     }
 
     /**
-     * Eliminar una oferta de la base.
-     * @param idCollaborationOffer id de la oferta a eliminar.
-     * @return un entero con el número de rows en la base de datos que fueron modificadas. 1 funcionó correctamente.
-     * @throws LogicException cuando hay un problema de conexión con la base de datos.
+     * Eliminar una oferta de colaboración de la base de datos.
+     * 
+     * @param idCollaborationOffer ID de la oferta a eliminar.
+     * @return Un entero con el número de filas en la base de datos que fueron modificadas. 1 si funcionó correctamente.
+     * @throws LogicException Cuando hay un problema de conexión con la base de datos.
      */
     @Override
     public int deleteCollaborationOffer(int idCollaborationOffer) throws LogicException {
@@ -71,46 +75,48 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
         }
         return result;
     }
-    
+
     /**
-     * Cambiarle el estado a una Oferta ya sea Aprobada o Rechazada
-     * @param idCollaborationOffer id de la oferta a cambiar
-     * @param decision String que puede ser o Aprobada o Rechazada
-     * @return un entero con el número de rows en la base de datos que fueron modificadas. 1 funcionó correctamente.
-     * @throws LogicException cuando hay un problema de conexión con la base de datos.
+     * Cambiar el estado de una oferta de colaboración a Aprobada o Rechazada.
+     * 
+     * @param idCollaborationOffer ID de la oferta a cambiar.
+     * @param decision Cadena que puede ser "Aprobada" o "Rechazada".
+     * @return Un entero con el número de filas en la base de datos que fueron modificadas. 1 si funcionó correctamente.
+     * @throws LogicException Cuando hay un problema de conexión con la base de datos.
      */
     @Override
     public int evaluateCollaborationOffer(int idCollaborationOffer, String decision) throws LogicException {
         int evaluationResult = 0;
-        String query = "UPDATE ofertaColaboracion SET estadoOferta = '" + decision + "' WHERE idOfertaColaboracion = ?";
+        String query = "UPDATE ofertaColaboracion SET estadoOferta = ? WHERE idOfertaColaboracion = ?";
         try {
-            Connection connection = DATABASE_CONNECTION.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, idCollaborationOffer);
+            statement.setString(1, decision);
+            statement.setInt(2, idCollaborationOffer);
             evaluationResult = statement.executeUpdate();
-        } catch(SQLException sqlException) {
+        } catch (SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }
         return evaluationResult;
     }
-    
+
     /**
-     * Obtener todas las ofertas aprobadas
-     * @return ArrayList de ofertas obtenidas
-     * @throws LogicException cuando hay un problema de conexión con la base de datos.
+     * Obtener todas las ofertas de colaboración aprobadas.
+     * 
+     * @return ArrayList de ofertas de colaboración aprobadas.
+     * @throws LogicException Cuando hay un problema de conexión con la base de datos.
      */
     @Override
     public ArrayList<CollaborationOffer> getApprovedCollaborationOffer() throws LogicException {
         ArrayList<CollaborationOffer> approvedOffers = new ArrayList<>();
-        String query = "SELECT * FROM OfertaColaboracion WHERE estadoOferta = ?";
+        String query = "SELECT * FROM OfertaColaboracion WHERE estadoOferta = 'Aprobada'";
         try {
-            Connection connection = DATABASE_CONNECTION.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, "Aprobada");
             ResultSet offersObtained = statement.executeQuery();
-            while(offersObtained.next()) {
+            while (offersObtained.next()) {
                 CollaborationOffer offer = new CollaborationOffer();
                 offer.setIdCollaboration(offersObtained.getInt("idOfertaColaboracion"));
                 offer.setIdUser(offersObtained.getInt("Profesor_Usuario_idUsuario"));
@@ -123,29 +129,29 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
                 offer.setAditionalInfo(offersObtained.getString("informacionAdcional"));
                 approvedOffers.add(offer);
             }
-        } catch(SQLException sqlException) {
+        } catch (SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }
         return approvedOffers;
     }
-    
+
     /**
-     * Obtener las ofertas con estado Pendiente
-     * @return ArrayList de ofertas obtenidas
-     * @throws LogicException cuando hay un problema de conexión con la base de datos.
+     * Obtener todas las ofertas de colaboración pendientes.
+     * 
+     * @return ArrayList de ofertas de colaboración pendientes.
+     * @throws LogicException Cuando hay un problema de conexión con la base de datos.
      */
     @Override
     public ArrayList<CollaborationOffer> getUnapprovedCollaborationOffer() throws LogicException {
         ArrayList<CollaborationOffer> unapprovedOffers = new ArrayList<>();
-        String query = "SELECT * FROM OfertaColaboracion WHERE estadoOferta = ?";
+        String query = "SELECT * FROM OfertaColaboracion WHERE estadoOferta = 'Pendiente'";
         try {
-            Connection connection = DATABASE_CONNECTION.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, "Pendiente");
             ResultSet offersObtained = statement.executeQuery();
-            while(offersObtained.next()) {
+            while (offersObtained.next()) {
                 CollaborationOffer offer = new CollaborationOffer();
                 offer.setIdCollaboration(offersObtained.getInt("idOfertaColaboracion"));
                 offer.setIdUser(offersObtained.getInt("Profesor_Usuario_idUsuario"));
@@ -158,7 +164,7 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
                 offer.setAditionalInfo(offersObtained.getString("informacionAdcional"));
                 unapprovedOffers.add(offer);
             }
-        } catch(SQLException sqlException) {
+        } catch (SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
@@ -167,21 +173,22 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
     }
 
     /**
-     * Obtener la oferta aprobada de un profesor en específico
-     * @param idUser id del profesor
-     * @return Una oferta obtenida
-     * @throws LogicException cuando hay un problema de conexión con la base de datos.
+     * Obtener la oferta de colaboración aprobada de un profesor en específico.
+     * 
+     * @param idUser ID del profesor.
+     * @return Una oferta de colaboración aprobada.
+     * @throws LogicException Cuando hay un problema de conexión con la base de datos.
      */
     @Override
     public CollaborationOffer getProfessorApprovedOffer(int idUser) throws LogicException {
         CollaborationOffer offer = new CollaborationOffer();
         String query = "SELECT * FROM OfertaColaboracion WHERE Profesor_Usuario_idUsuario = ? AND estadoOferta = 'Aprobada'";
         try {
-            Connection connection = DATABASE_CONNECTION.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, String.valueOf(idUser));
+            statement.setInt(1, idUser);
             ResultSet offerObtained = statement.executeQuery();
-            while(offerObtained.next()) {
+            if (offerObtained.next()) {
                 offer.setIdCollaboration(offerObtained.getInt("idOfertaColaboracion"));
                 offer.setIdUser(offerObtained.getInt("Profesor_Usuario_idUsuario"));
                 offer.setObjective(offerObtained.getString("objetivo"));
@@ -192,35 +199,35 @@ public class CollaborationOfferDAO implements CollaborationOfferManagerInterface
                 offer.setPeriod(offerObtained.getString("periodo"));
                 offer.setAditionalInfo(offerObtained.getString("informacionAdcional"));
             }
-            
-        } catch(SQLException sqlException) {
+        } catch (SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }
         return offer;
     }
-    
+
     /**
-     * Consultar si el profesor tiene una oferta con estado Aprobada o Pendiente
-     * @param idUser id del profesor a consultar
-     * @return boolean que devuelve true si el profesor tiene una oferta con esos estados o false en caso contrario
-     * @throws LogicException cuando hay un problema de conexión con la base de datos.
+     * Consultar si el profesor tiene una oferta de colaboración con estado Aprobada o Pendiente.
+     * 
+     * @param idUser ID del profesor a consultar.
+     * @return Boolean que devuelve true si el profesor tiene una oferta con esos estados, false en caso contrario.
+     * @throws LogicException Cuando hay un problema de conexión con la base de datos.
      */
     @Override
     public boolean professorHasOffer(int idUser) throws LogicException {
         boolean result = false;
         String query = "SELECT COUNT(*) AS total FROM OfertaColaboracion WHERE Profesor_Usuario_idUsuario = ? AND estadoOferta IN ('Pendiente', 'Aprobada')";
         try {
-            Connection connection = DATABASE_CONNECTION.getConnection();
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, idUser);
             ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) {
+            if (resultSet.next()) {
                 int count = resultSet.getInt("total");
                 result = count > 0;
             }
-        } catch(SQLException sqlException) {
+        } catch (SQLException sqlException) {
             throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();

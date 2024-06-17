@@ -152,10 +152,10 @@ public class ConcludedCollaboration {
     @Override
     public boolean equals(Object object) {
         ConcludedCollaboration concludedCollaborationToCompare = (ConcludedCollaboration) object;
-        if(this.getIdColaboration() != concludedCollaborationToCompare.getIdColaboration()) {
+        if (this.getIdColaboration() != concludedCollaborationToCompare.getIdColaboration()) {
             return false;
         }
-        if(this.getIdUser() != concludedCollaborationToCompare.getIdUser()) {
+        if (this.getIdUser() != concludedCollaborationToCompare.getIdUser()) {
             return false;
         }
         return true;

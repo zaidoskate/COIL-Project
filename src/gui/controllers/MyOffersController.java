@@ -46,7 +46,7 @@ public class MyOffersController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setProfessorOffer();
-        if(PROFESSOR_OFFER.getIdOfferCollaboration() != 0) {
+        if (PROFESSOR_OFFER.getIdOfferCollaboration() != 0) {
             showOffersAvailable();
         } else {
             showNoOffersAvailable();
@@ -61,7 +61,7 @@ public class MyOffersController implements Initializable {
             PROFESSOR_OFFER.setOfferPeriod(offer.getPeriod());
             PROFESSOR_OFFER.setOfferLanguage(offer.getLanguage());
             PROFESSOR_OFFER.setTopicsInterest(offer.getTopicsOfInterest());
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
             LOG.error(logicException);
         }
@@ -84,7 +84,7 @@ public class MyOffersController implements Initializable {
         stage.close();
         try {
             OfferProfessorStage offerStage = new OfferProfessorStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
         }
@@ -96,7 +96,7 @@ public class MyOffersController implements Initializable {
         stage.close();
         try {
             CandidatesStage candidatesStage = new CandidatesStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
         }

@@ -69,7 +69,7 @@ public class OfferCoordinatorController implements Initializable {
     private void setUnapprovedCollaborationOffer() {
         try {
             ArrayList<CollaborationOffer> offersToDisplay = COLLABORATION_OFFER_DAO.getUnapprovedCollaborationOffer();
-            if(offersToDisplay != null){
+            if (offersToDisplay != null){
                 for (CollaborationOffer offer : offersToDisplay) {
                     User user = USER_DAO.getUserById(offer.getIdUser());
                     String professorName = user.getName() + " " + user.getLastName();
@@ -100,7 +100,7 @@ public class OfferCoordinatorController implements Initializable {
                     this.tblViewPendingOffers.setItems(displayableOffers);
                 }
             }
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
             LOG.error(logicException);
         }
@@ -121,20 +121,20 @@ public class OfferCoordinatorController implements Initializable {
     }
     
     private void checkEmptyTable() {
-        if(this.displayableOffers.isEmpty()) {
+        if (this.displayableOffers.isEmpty()) {
             this.tblViewPendingOffers.setPlaceholder(new Label ("No hay ofertas por evaluar"));
         }
     }
     
     @FXML
     private void showDetail() {
-        if(this.tblViewPendingOffers.getSelectionModel().getSelectedItem() != null) {
+        if (this.tblViewPendingOffers.getSelectionModel().getSelectedItem() != null) {
             setSelectedOffer();
             Stage stage = (Stage) this.btnEvaluate.getScene().getWindow();
             stage.close();
             try {
                 DetailOfferProfessorStage detailOfferStage = new DetailOfferProfessorStage();
-            } catch(IOException ioException) {
+            } catch (IOException ioException) {
                 Alerts.displayAlertIOException();
                 LOG.error(ioException);
             }
@@ -149,7 +149,7 @@ public class OfferCoordinatorController implements Initializable {
         stage.close();
         try {
             CoordinatorMenuStage coordinatorMenuStage = new CoordinatorMenuStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
         }

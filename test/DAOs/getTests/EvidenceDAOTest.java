@@ -12,7 +12,7 @@ import org.junit.Test;
 public class EvidenceDAOTest {
     
     @BeforeClass
-    public void setUp() throws LogicException {
+    public static void setUp() throws LogicException {
         String filePath = "../../EVIDENCIA1.pdf";
         EvidenceDAO evidenceDAO = new EvidenceDAO();
         Evidence evidence = new Evidence();

@@ -35,7 +35,7 @@ public class CoordinatorMenuController implements Initializable {
         UniversitiesStage universitiesStage = null;
         try {
             universitiesStage = new UniversitiesStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
@@ -51,7 +51,7 @@ public class CoordinatorMenuController implements Initializable {
         stage.close();
         try {
             AccountRequestMenuStage accoountRequestMenuStage = new AccountRequestMenuStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
@@ -61,7 +61,7 @@ public class CoordinatorMenuController implements Initializable {
     private void displayExternalAccountCreate() {
         try {
             ExternalAccountCreateStage externalAccountCreateStage = new ExternalAccountCreateStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
@@ -76,7 +76,7 @@ public class CoordinatorMenuController implements Initializable {
             COILVICApplication application = new COILVICApplication();
             Stage loginStage = new Stage();
             application.start(loginStage);
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
@@ -88,7 +88,7 @@ public class CoordinatorMenuController implements Initializable {
         stage.close();
         try {
             OfferCoordinatorStage offerCoordinatorStage = new OfferCoordinatorStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
@@ -100,7 +100,7 @@ public class CoordinatorMenuController implements Initializable {
         stage.close();
         try {
             StatisticsGeneratorStage generateStatisticsStage = new StatisticsGeneratorStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
@@ -112,7 +112,7 @@ public class CoordinatorMenuController implements Initializable {
         stage.close();
         try {
             CollaborationsCoordinatorMenuStage collaborationsCoordinatorMenuStage = new CollaborationsCoordinatorMenuStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }
@@ -122,7 +122,7 @@ public class CoordinatorMenuController implements Initializable {
     private void openPendingMails() {
         try {
             PendingMailsStage pendingMailsStage = new PendingMailsStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             LOG.warn(ioException);
             Alerts.displayAlertIOException();
         }

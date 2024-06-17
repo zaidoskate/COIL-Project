@@ -99,13 +99,13 @@ public class UvAccountRequest extends AccountRequest{
     @Override
     public boolean equals(Object object) {
         UvAccountRequest uvAccountRequestToCompare = (UvAccountRequest) object;
-        if(this.getIdRequest() != uvAccountRequestToCompare.getIdRequest()) {
+        if (this.getIdRequest() != uvAccountRequestToCompare.getIdRequest()) {
             return false;
         }
-        if(!this.getIdDepartment().equals(uvAccountRequestToCompare.getIdDepartment())) {
+        if (!this.getIdDepartment().equals(uvAccountRequestToCompare.getIdDepartment())) {
             return false;
         }
-        if(!this.getPersonalNumber().equals(uvAccountRequestToCompare.getPersonalNumber())) {
+        if (!this.getPersonalNumber().equals(uvAccountRequestToCompare.getPersonalNumber())) {
             return false;
         }
         return true;

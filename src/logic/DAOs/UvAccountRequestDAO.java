@@ -11,22 +11,25 @@ import java.util.ArrayList;
 import logic.LogicException;
 
 /**
- *
- * @author chuch
+ * Data Access Object (DAO) para gestionar las operaciones CRUD relacionadas con las solicitudes de cuentas UV en la base de datos.
+ * Implementa la interfaz UvAccountRequestManagerInterface.
+ * 
+ * @autor chuch
  */
-public class UvAccountRequestDAO implements UvAccountRequestManagerInterface{
-   private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
-   
-    /** Inserta una solicitud de cuenta de acceso UV en la base de datos
-     *
-     * @param uvAccountRequest una instancia de la clase UvAccountRequest que contiene todos los datos de la solicitud
-     * @return un entero con el resultado de las filas agregadas en una tabla
-     * @throws LogicException cuando no existe conexión con la base de datos
+public class UvAccountRequestDAO implements UvAccountRequestManagerInterface {
+    private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
+
+    /**
+     * Inserta una solicitud de cuenta de acceso UV en la base de datos.
+     * 
+     * @param uvAccountRequest una instancia de UvAccountRequest que contiene todos los datos de la solicitud.
+     * @return un entero con el resultado de las filas agregadas en la tabla.
+     * @throws LogicException cuando no existe conexión con la base de datos o ocurre un error de SQL.
      */
     @Override
-    public int insertUvAccountRequest(UvAccountRequest uvAccountRequest) throws LogicException{
+    public int insertUvAccountRequest(UvAccountRequest uvAccountRequest) throws LogicException {
         String query = "INSERT INTO SolicitudCuentaUv (idSolicitud, nombre, apellido, correo, numeropersonal, idFacultad) VALUES (?, ?, ?, ?, ?, ?)";
-        int result=0;
+        int result = 0;
         try {
             Connection connection = DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
@@ -45,14 +48,15 @@ public class UvAccountRequestDAO implements UvAccountRequestManagerInterface{
         return result;
     }
 
-    /** Borra una solicitud de cuenta de acceso de la base de datos
-     *
-     * @param uvAccountRequest una instancia de la clase UvAccountRequest que contiene todos los datos de la solicitud
-     * @return un entero que indica la cantidad de filas que se borraron de la base de datos
-     * @throws LogicException cuando no existe conexión con la base de datos
+    /**
+     * Borra una solicitud de cuenta de acceso de la base de datos.
+     * 
+     * @param uvAccountRequest una instancia de UvAccountRequest que contiene todos los datos de la solicitud.
+     * @return un entero que indica la cantidad de filas que se borraron de la base de datos.
+     * @throws LogicException cuando no existe conexión con la base de datos o ocurre un error de SQL.
      */
     @Override
-    public int deleteUvAccountRequest(UvAccountRequest uvAccountRequest) throws LogicException{
+    public int deleteUvAccountRequest(UvAccountRequest uvAccountRequest) throws LogicException {
         int result = 0;
         String query = "DELETE FROM SolicitudCuentaUv WHERE idSolicitud = ?";
         try {
@@ -67,24 +71,22 @@ public class UvAccountRequestDAO implements UvAccountRequestManagerInterface{
         }
         return result;
     }
-    
-    /** Obtiene todas las solicitudes de cuentas de acceso UV
-     *
-     * @return un ArrayList con todas las solicitudes de cuentas de acceso UV registradas en la base de datos
-     * @throws LogicException cuando no hay conexión con la base de datos
+
+    /**
+     * Obtiene todas las solicitudes de cuentas de acceso UV.
+     * 
+     * @return un ArrayList con todas las solicitudes de cuentas de acceso UV registradas en la base de datos.
+     * @throws LogicException cuando no hay conexión con la base de datos o ocurre un error de SQL.
      */
     @Override
     public ArrayList<UvAccountRequest> getUvAccountRequests() throws LogicException {
         String query = "SELECT * FROM solicitudcuentauv";
-        Connection connection;
-        PreparedStatement statement;
-        ResultSet result;
-        ArrayList<UvAccountRequest> uvAccountRequestsResult = new ArrayList();
-        try{
-            connection = this.DATABASE_CONNECTION.getConnection();
-            statement = connection.prepareStatement(query);
-            result = statement.executeQuery();
-            while(result.next()) {
+        ArrayList<UvAccountRequest> uvAccountRequestsResult = new ArrayList<>();
+        try {
+            Connection connection = this.DATABASE_CONNECTION.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
                 UvAccountRequest uvAccountRequest = new UvAccountRequest();
                 uvAccountRequest.setIdRequest(result.getInt("idSolicitud"));
                 uvAccountRequest.setName(result.getString("nombre"));
@@ -94,22 +96,23 @@ public class UvAccountRequestDAO implements UvAccountRequestManagerInterface{
                 uvAccountRequest.setPersonalNumber(result.getString("numeropersonal"));
                 uvAccountRequestsResult.add(uvAccountRequest);
             }
-        } catch(SQLException sqlException) {
-            throw new LogicException("No hay conexion intentelo de nuevo mas tarde", sqlException);
+        } catch (SQLException sqlException) {
+            throw new LogicException("Error al obtener las solicitudes de cuentas", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }
         return uvAccountRequestsResult;
     }
 
-    /** Verifica cuantas veces se ha registrado un correo en las solicitudes de cuentas de acceso
-     *
-     * @param email la dirección de correo que se desea buscar
-     * @return un booleano que indica si existe algún correo con la misma dirección
-     * @throws LogicException cuando no existe conexión con la base de  datos
+    /**
+     * Verifica cuántas veces se ha registrado un correo en las solicitudes de cuentas de acceso.
+     * 
+     * @param email la dirección de correo que se desea buscar.
+     * @return un booleano que indica si existe algún correo con la misma dirección.
+     * @throws LogicException cuando no existe conexión con la base de datos o ocurre un error de SQL.
      */
     @Override
-    public boolean checkEmailRegistered(String email) throws LogicException{
+    public boolean checkEmailRegistered(String email) throws LogicException {
         String query = "SELECT COUNT(*) as cuentas FROM solicitudcuentauv WHERE correo = ?";
         boolean emailExists = false;
         try {
@@ -117,46 +120,41 @@ public class UvAccountRequestDAO implements UvAccountRequestManagerInterface{
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, email);
             ResultSet accounts = statement.executeQuery();
-            if(accounts.next()) {
-                if(accounts.getInt("cuentas") >= 1) {
-                    emailExists = true;
-                }
+            if (accounts.next()) {
+                emailExists = accounts.getInt("cuentas") >= 1;
             }
-        } catch(SQLException sqlException) {
-            throw new LogicException("No hay conexión a la base de datos, inténtelo de nuevo más tarde", sqlException);
+        } catch (SQLException sqlException) {
+            throw new LogicException("Error al verificar el correo", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }
         return emailExists;
     }
 
-    /** Verifica si se ha registrado un número de personal dado en las solicitudes de cuentas uv
-     *
-     * @param personalNumber un string con el número de personal que se desea buscar
-     * @return un booleano que indica si existe o no un registro en las solicitudes de cuentas uv con el mismo número de personal
-     * @throws LogicException cuando no existe conexión con la base de datos
+    /**
+     * Verifica si se ha registrado un número de personal dado en las solicitudes de cuentas UV.
+     * 
+     * @param personalNumber un string con el número de personal que se desea buscar.
+     * @return un booleano que indica si existe o no un registro en las solicitudes de cuentas UV con el mismo número de personal.
+     * @throws LogicException cuando no existe conexión con la base de datos o ocurre un error de SQL.
      */
-    
     @Override
     public boolean checkPersonalNumberRegistered(String personalNumber) throws LogicException {
         String query = "SELECT COUNT(*) as numeros FROM solicitudcuentauv WHERE numeropersonal = ?";
-        boolean emailExists = false;
+        boolean personalNumberExists = false;
         try {
             Connection connection = this.DATABASE_CONNECTION.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, personalNumber);
             ResultSet accounts = statement.executeQuery();
-            if(accounts.next()) {
-                if(accounts.getInt("numeros") >= 1) {
-                    emailExists = true;
-                }
+            if (accounts.next()) {
+                personalNumberExists = accounts.getInt("numeros") >= 1;
             }
-        } catch(SQLException sqlException) {
-            throw new LogicException("No hay conexión a la base de datos, inténtelo de nuevo más tarde", sqlException);
+        } catch (SQLException sqlException) {
+            throw new LogicException("Error al verificar el número de personal", sqlException);
         } finally {
             DATABASE_CONNECTION.closeConnection();
         }
-        return emailExists;
+        return personalNumberExists;
     }
-    
 }

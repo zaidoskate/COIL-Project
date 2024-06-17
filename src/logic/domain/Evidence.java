@@ -94,10 +94,10 @@ public class Evidence {
     @Override
     public boolean equals(Object object) {
         Evidence evidenceToCompare = (Evidence) object;
-        if(!this.author.equals(evidenceToCompare.getAuthor())) {
+        if (!this.author.equals(evidenceToCompare.getAuthor())) {
             return false;
         }
-        if(!this.name.equals(evidenceToCompare.getName())) {
+        if (!this.name.equals(evidenceToCompare.getName())) {
             return false;
         }
         return true;

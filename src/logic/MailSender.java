@@ -18,7 +18,7 @@ public class MailSender {
             Message message = createMessage(session, emailBody, recipient);
             send(message);
             sent = true;
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             throw logicException;
         }
         return sent;
@@ -48,7 +48,7 @@ public class MailSender {
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
             message.setSubject("Alerta del sistema COIL-VIC");
             message.setText(emailBody);
-        } catch(MessagingException messagingException) {
+        } catch (MessagingException messagingException) {
             throw new LogicException("No se pudo notificar al usuario por correo", messagingException);
         }
         return message;
@@ -57,7 +57,7 @@ public class MailSender {
     private static void send(Message message) throws LogicException {
         try {
             Transport.send(message);
-        } catch(MessagingException messagingException) {
+        } catch (MessagingException messagingException) {
             throw new LogicException("Error al enviar el correo", messagingException);
         }
     }

@@ -65,9 +65,9 @@ public class CollaborationHistoryController implements Initializable {
         try {
             ArrayList<ProfessorBelongsToCollaboration> concludedProfessorBelongs = PROFESSOR_BELONGS_TO_COLLABORATION_DAO.getConcludedCollaborationsByIdUser(CURRENT_SESSION.getUserData().getIdUser());
             ArrayList<Collaboration> concludedCollaborations = COLLABORATION_DAO.getProfessorConcludedCollaborations(concludedProfessorBelongs);
-            for(ProfessorBelongsToCollaboration professorBelongsCollaboration : concludedProfessorBelongs) {
-                for(Collaboration collaboration : concludedCollaborations) {
-                    if(professorBelongsCollaboration.getIdColaboration() == collaboration.getIdColaboration()) {
+            for (ProfessorBelongsToCollaboration professorBelongsCollaboration : concludedProfessorBelongs) {
+                for (Collaboration collaboration : concludedCollaborations) {
+                    if (professorBelongsCollaboration.getIdColaboration() == collaboration.getIdColaboration()) {
                         CollaborationInformation collaborationInfo = new CollaborationInformation();
                         collaborationInfo.setCollaborationName(collaboration.getColaborationName());
                         collaborationInfo.setCloseDate(collaboration.getEndDate());
@@ -90,14 +90,14 @@ public class CollaborationHistoryController implements Initializable {
                     }
                 }
             }
-        } catch(LogicException logicException) {
+        } catch (LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
             LOG.error(logicException);
         }
     }
     
     private void checkEmptyTable() {
-        if(this.collaborationsToDisplay.isEmpty()) {
+        if (this.collaborationsToDisplay.isEmpty()) {
             this.tblViewConcludedCollaborations.setPlaceholder(new Label("Aún no has hecho una colaboración"));
         }
     }
@@ -117,13 +117,13 @@ public class CollaborationHistoryController implements Initializable {
     
     @FXML
     private void displayDetailMyCollaboration() {
-        if(this.tblViewConcludedCollaborations.getSelectionModel().getSelectedItem() != null) {
+        if (this.tblViewConcludedCollaborations.getSelectionModel().getSelectedItem() != null) {
             setSelectedCollaboration();
             Stage stage = (Stage) this.tblViewConcludedCollaborations.getScene().getWindow();
             stage.close();
             try {
                 DetailMyCollaborationStage detailCollaborationStage = new DetailMyCollaborationStage();
-            } catch(IOException ioException) {
+            } catch (IOException ioException) {
                 Alerts.displayAlertIOException();
                 LOG.error(ioException);
             }
@@ -138,7 +138,7 @@ public class CollaborationHistoryController implements Initializable {
         stage.close();
         try {
             MyCollaborationsStage myCollaborationsStage = new MyCollaborationsStage();
-        } catch(IOException ioException) {
+        } catch (IOException ioException) {
             Alerts.displayAlertIOException();
             LOG.error(ioException);
         }
