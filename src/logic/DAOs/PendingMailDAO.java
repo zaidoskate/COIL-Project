@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Data Access Object (DAO) para gestionar las operaciones relacionadas con los correos pendientes en la base de datos.
  * Implementa la interfaz PendingMailManagerInterface.
  * 
- * @autor chuch
+ * @author chuch
  */
 public class PendingMailDAO implements PendingMailManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();

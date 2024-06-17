@@ -14,7 +14,7 @@ import logic.LogicException;
  * Implementa la interfaz CredentialManagerInterface.
  * Proporciona métodos para insertar credenciales, obtener el ID de usuario por credencial y contar credenciales por usuario.
  * 
- * @autor chuch
+ * @author chuch
  */
 public class CredentialDAO implements CredentialManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();

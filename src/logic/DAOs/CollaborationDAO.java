@@ -19,7 +19,7 @@ import logic.interfaces.CollaborationManagerInterface;
  * Implementa la interfaz CollaborationManagerInterface.
  * Proporciona métodos para insertar, modificar y recuperar colaboraciones.
  * 
- * @autor zaido
+ * @author zaido
  */
 public class CollaborationDAO implements CollaborationManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();

@@ -20,7 +20,7 @@ import logic.interfaces.ConcludedCollaborationManagerInterface;
  * Implementa la interfaz ConcludedCollaborationManagerInterface.
  * Proporciona métodos para insertar, modificar y recuperar colaboraciones concluidas.
  * 
- * @autor zaido
+ * @author zaido
  */
 public class ConcludedCollaborationDAO implements ConcludedCollaborationManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();

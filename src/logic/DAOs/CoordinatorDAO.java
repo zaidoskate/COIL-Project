@@ -14,7 +14,7 @@ import logic.LogicException;
  * Implementa la interfaz CoordinatorManagerInterface.
  * Proporciona métodos para insertar coordinadores y obtener el ID de coordinador por ID de usuario.
  * 
- * @autor chuch
+ * @author chuch
  */
 public class CoordinatorDAO implements CoordinatorManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();

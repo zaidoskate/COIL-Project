@@ -14,7 +14,7 @@ import logic.LogicException;
  * Data Access Object (DAO) para gestionar las operaciones CRUD relacionadas con las universidades en la base de datos.
  * Implementa la interfaz UniversityManagerInterface.
  * 
- * @autor chuch
+ * @author chuch
  */
 public class UniversityDAO implements UniversityManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();

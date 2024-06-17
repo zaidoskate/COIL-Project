@@ -14,7 +14,7 @@ import java.sql.Statement;
  * Data Access Object (DAO) para gestionar las operaciones CRUD relacionadas con los usuarios en la base de datos.
  * Implementa la interfaz UserManagerInterface.
  * 
- * @autor chuch
+ * @author chuch
  */
 public class UserDAO implements UserManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();

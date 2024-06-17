@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * Data Access Object (DAO) para gestionar las operaciones CRUD relacionadas con los profesores en la base de datos.
  * Implementa la interfaz ProfessorManagerInterface.
  * 
- * @autor chuch
+ * @author chuch
  */
 public class ProfessorDAO implements ProfessorManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();

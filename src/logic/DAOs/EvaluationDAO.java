@@ -18,7 +18,7 @@ import logic.LogicException;
  * Implementa la interfaz EvaluationManagerInterface.
  * Proporciona métodos para insertar, eliminar y recuperar evaluaciones.
  * 
- * @autor zaido
+ * @author zaido
  */
 public class EvaluationDAO implements EvaluationManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();

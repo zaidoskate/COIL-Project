@@ -15,7 +15,7 @@ import logic.interfaces.CollaborationOfferManagerInterface;
  * Implementa la interfaz CollaborationOfferManagerInterface.
  * Proporciona métodos para insertar, eliminar, evaluar y recuperar ofertas de colaboración.
  * 
- * @autor zaido
+ * @author zaido
  */
 public class CollaborationOfferDAO implements CollaborationOfferManagerInterface {
     private static final DatabaseConnection DATABASE_CONNECTION = new DatabaseConnection();
