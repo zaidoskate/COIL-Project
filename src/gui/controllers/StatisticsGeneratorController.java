@@ -26,7 +26,7 @@ public class StatisticsGeneratorController implements Initializable {
     private Button btnDownloadStatistics;
     
     @FXML
-    private Label lblGenerated;
+    private Label generated;
     
     private int[] regionCollaborationCounts = new int[5];
     private int[] academicAreaCollaborationCounts = new int[6];
@@ -41,11 +41,11 @@ public class StatisticsGeneratorController implements Initializable {
             if (checkCollaborationsAvailable()) {
                 this.btnDownloadStatistics.setVisible(true);
             } else {
-                this.lblGenerated.setText("No se pudo generar la numeralia");
+                this.generated.setText("No se pudo generar la numeralia");
             }
         } catch (LogicException logicException) {
             this.btnDownloadStatistics.setVisible(false);
-            this.lblGenerated.setText("No se pudo generar la numeralia");
+            this.generated.setText("No se pudo generar la numeralia");
             Alerts.displayAlertLogicException(logicException);
             LOG.error(logicException);
         }
