@@ -98,32 +98,34 @@ public class CollaborationRegistrationController implements Initializable {
         this.txtFieldCollaborationName.setText(DataValidation.trimUnnecesaryBlanks(this.txtFieldCollaborationName.getText()));
         try {
             if (validateCollaborationName()) {
-                Collaboration collaboration = createCollaboration();
-                int idCollaborationInserted = COLLABORATION_DAO.addColaboration(collaboration);
-                if (idCollaborationInserted > 0) {
-                    ProfessorBelongsToCollaboration professorBelongsToCollaboration = createProfessorBelongsToCollaboration(idCollaborationInserted);
-                    int added = PROFESSOR_BELONGS_TO_COLLABORATION_DAO.addProfessorBelongsToCollaboration(professorBelongsToCollaboration);
-                    if (added == 1) {
-                        int candidatesDeleted = COLLABORATION_OFFER_CANDIDATE_DAO.deleteCollaborationOffer(PROFESSOR_OFFER.getIdOfferCollaboration());
-                        int evaluationDeleted = EVALUATION_DAO.deleteEvaluation(PROFESSOR_OFFER.getIdOfferCollaboration());
-                        if (candidatesDeleted > 0 && evaluationDeleted == 1) {
-                            int offerDeleted = COLLABORATION_OFFER_DAO.deleteCollaborationOffer(PROFESSOR_OFFER.getIdOfferCollaboration());
-                            if (offerDeleted == 1) {
-                                Alerts.showInformationAlert("Mensaje", "Has aceptado esta colaboración ponte en contacto con el profesor");
-                                Stage professorDetailStage = ((CollaborationRegistrationStage)this.btnAccept.getScene().getWindow()).getProfessorDetailStage();
-                                professorDetailStage.close();
-                                previousMenu();
-                                try {
-                                    OfferProfessorStage offerStage = new OfferProfessorStage();
-                                } catch (IOException ioException) {
-                                    Alerts.displayAlertIOException();
-                                    LOG.error(ioException);
-                                }
-                                return;
+                return;
+            }
+            Collaboration collaboration = createCollaboration();
+            int idCollaborationInserted = COLLABORATION_DAO.addColaboration(collaboration);
+            if (idCollaborationInserted > 0) {
+                ProfessorBelongsToCollaboration professorBelongsToCollaboration = createProfessorBelongsToCollaboration(idCollaborationInserted);
+                int added = PROFESSOR_BELONGS_TO_COLLABORATION_DAO.addProfessorBelongsToCollaboration(professorBelongsToCollaboration);
+                if (added == 1) {
+                    int candidatesDeleted = COLLABORATION_OFFER_CANDIDATE_DAO.deleteCollaborationOffer(PROFESSOR_OFFER.getIdOfferCollaboration());
+                    int evaluationDeleted = EVALUATION_DAO.deleteEvaluation(PROFESSOR_OFFER.getIdOfferCollaboration());
+                    if (candidatesDeleted > 0 && evaluationDeleted == 1) {
+                        int offerDeleted = COLLABORATION_OFFER_DAO.deleteCollaborationOffer(PROFESSOR_OFFER.getIdOfferCollaboration());
+                        if (offerDeleted == 1) {
+                            Alerts.showInformationAlert("Mensaje", "Has aceptado esta colaboración ponte en contacto con el profesor");
+                            Stage professorDetailStage = ((CollaborationRegistrationStage)this.btnAccept.getScene().getWindow()).getProfessorDetailStage();
+                            professorDetailStage.close();
+                            previousMenu();
+                            try {
+                                OfferProfessorStage offerStage = new OfferProfessorStage();
+                            } catch (IOException ioException) {
+                                Alerts.displayAlertIOException();
+                                LOG.error(ioException);
                             }
+                            return;
                         }
                     }
                 }
+                
                 Alerts.showWarningAlert("Ha ocurrido un problema al aceptar al candidato");
             }
         } catch (LogicException logicException) {

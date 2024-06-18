@@ -107,13 +107,16 @@ public class CollaborationConclusionController implements Initializable {
         boolean allFilesUploaded = false;
         try {
             if (FINAL_DOCUMENTATION_DAO.hasFileUploaded("feedbackProfesor", COLLABORATION_INFORMATION.getIdCollaboration())) {
-                if (FINAL_DOCUMENTATION_DAO.hasFileUploaded("feedbackEstudiantado", COLLABORATION_INFORMATION.getIdCollaboration())) {
-                    if (FINAL_DOCUMENTATION_DAO.hasFileUploaded("feedbackProfesorEspejo", COLLABORATION_INFORMATION.getIdCollaboration())) {
-                        if (FINAL_DOCUMENTATION_DAO.hasFileUploaded("feedbackEstudiantadoEspejo", COLLABORATION_INFORMATION.getIdCollaboration())) {
-                            allFilesUploaded = true;
-                        }
-                    }
-                }
+                allFilesUploaded = false;
+            }
+            if (FINAL_DOCUMENTATION_DAO.hasFileUploaded("feedbackEstudiantado", COLLABORATION_INFORMATION.getIdCollaboration())) {
+                allFilesUploaded = false;
+            }
+            if (FINAL_DOCUMENTATION_DAO.hasFileUploaded("feedbackProfesorEspejo", COLLABORATION_INFORMATION.getIdCollaboration())) {
+                allFilesUploaded = false;
+            }
+            if (FINAL_DOCUMENTATION_DAO.hasFileUploaded("feedbackEstudiantadoEspejo", COLLABORATION_INFORMATION.getIdCollaboration())) {
+                allFilesUploaded = true;
             }
         } catch (LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
