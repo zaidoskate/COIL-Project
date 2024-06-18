@@ -35,12 +35,12 @@
          <children>
             <AnchorPane layoutX="20.0" layoutY="24.0" mouseTransparent="true" prefHeight="100.0" prefWidth="270.0" styleClass="shadowed">
                <children>
-                  <Label fx:id="professorName" layoutX="-3.0" layoutY="14.0" prefHeight="25.0" prefWidth="270.0" text="Nombre" textAlignment="CENTER">
+                  <Label fx:id="lblProfessorName" layoutX="-3.0" layoutY="14.0" prefHeight="25.0" prefWidth="270.0" text="Nombre" textAlignment="CENTER">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Label fx:id="universityProfessor" layoutX="-3.0" layoutY="50.0" prefHeight="25.0" prefWidth="270.0" text="Universidad" textAlignment="CENTER">
+                  <Label fx:id="lblUniversityProfessor" layoutX="-3.0" layoutY="50.0" prefHeight="25.0" prefWidth="270.0" text="Universidad" textAlignment="CENTER">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -62,13 +62,13 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="topicsOfInterest" editable="false" focusTraversable="false" layoutX="169.0" layoutY="42.0" mouseTransparent="true" prefHeight="40.0" prefWidth="390.0" promptText="No se han dado temas de interés" styleClass="text-field-accountRequest" />
+                  <TextArea fx:id="txtAreaTopicsOfInterest" editable="false" focusTraversable="false" layoutX="169.0" layoutY="42.0" mouseTransparent="true" prefHeight="40.0" prefWidth="390.0" promptText="No se han dado temas de interés" styleClass="text-field-accountRequest" />
                   <Label layoutX="15.0" layoutY="106.0" prefHeight="25.0" prefWidth="153.0" text="Idioma">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="language" editable="false" focusTraversable="false" layoutX="169.0" layoutY="99.0" mouseTransparent="true" prefHeight="40.0" prefWidth="390.0" promptText="No se ha proporcionado una conclusión" styleClass="text-field-accountRequest" />
+                  <TextArea fx:id="txtAreaLanguage" editable="false" focusTraversable="false" layoutX="169.0" layoutY="99.0" mouseTransparent="true" prefHeight="40.0" prefWidth="390.0" promptText="No se ha proporcionado una conclusión" styleClass="text-field-accountRequest" />
                   <Label layoutX="14.0" layoutY="173.0" prefHeight="25.0" prefWidth="153.0" text="Fecha de inicio">
                      <font>
                         <Font size="16.0" />
@@ -79,18 +79,18 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="startDate" editable="false" focusTraversable="false" layoutX="169.0" layoutY="166.0" mouseTransparent="true" prefHeight="40.0" prefWidth="390.0" promptText="No existe fecha de inicio" styleClass="text-field-accountRequest" />
-                  <TextArea fx:id="collaborationStatus" editable="false" focusTraversable="false" layoutX="169.0" layoutY="245.0" mouseTransparent="true" prefHeight="40.0" prefWidth="390.0" styleClass="text-field-accountRequest" />
+                  <TextArea fx:id="txtAreaStartDate" editable="false" focusTraversable="false" layoutX="169.0" layoutY="166.0" mouseTransparent="true" prefHeight="40.0" prefWidth="390.0" promptText="No existe fecha de inicio" styleClass="text-field-accountRequest" />
+                  <TextArea fx:id="txtAreaCollaborationStatus" editable="false" focusTraversable="false" layoutX="169.0" layoutY="245.0" mouseTransparent="true" prefHeight="40.0" prefWidth="390.0" styleClass="text-field-accountRequest" />
                </children>
             </AnchorPane>
             <AnchorPane layoutX="317.0" layoutY="24.0" mouseTransparent="true" prefHeight="100.0" prefWidth="270.0" styleClass="shadowed">
                <children>
-                  <Label fx:id="mirrorProfessorName" layoutX="-3.0" layoutY="14.0" prefHeight="25.0" prefWidth="270.0" text="Nombre">
+                  <Label fx:id="lblMirrorProfessorName" layoutX="-3.0" layoutY="14.0" prefHeight="25.0" prefWidth="270.0" text="Nombre">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Label fx:id="mirrorUniversity" layoutX="-3.0" layoutY="50.0" prefHeight="25.0" prefWidth="270.0" text="Universidad">
+                  <Label fx:id="lblMirrorUniversity" layoutX="-3.0" layoutY="50.0" prefHeight="25.0" prefWidth="270.0" text="Universidad">
                      <font>
                         <Font size="16.0" />
                      </font>

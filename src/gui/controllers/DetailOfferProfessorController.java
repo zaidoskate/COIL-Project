@@ -33,37 +33,37 @@ import org.apache.log4j.Logger;
 public class DetailOfferProfessorController implements Initializable {
     
     @FXML
-    private Label professorName;
+    private Label lblProfessorName;
     
     @FXML
-    private Label professorEmail;
+    private Label lblProfessorEmail;
     
     @FXML
-    private Label universityName;
+    private Label lblUniversityName;
     
     @FXML
-    private Label universityCountry;
+    private Label lblUniversityCountry;
     
     @FXML
-    private TextArea objective;
+    private Label lblNumberStudents;
     
     @FXML
-    private TextArea topicsOfInterest;
+    private TextArea txtAreaObjective;
     
     @FXML
-    private TextField period;
+    private TextArea txtAreaTopicsOfInterest;
     
     @FXML
-    private TextArea language;
+    private TextField txtFieldPeriod;
     
     @FXML
-    private TextArea aditionalInformation;
+    private TextArea txtAreaLanguage;
     
     @FXML
-    private TextField profile;
+    private TextArea txtAreaAditionalInformation;
     
     @FXML
-    private Label numberStudents;
+    private TextField txtFieldProfile;
     
     @FXML
     private Button btnCorrespond;
@@ -91,20 +91,20 @@ public class DetailOfferProfessorController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.professorName.setText(SELECTED_OFFER.getProfessorName());
-        this.professorEmail.setText(SELECTED_OFFER.getProfessorEmail());
-        this.objective.setText(SELECTED_OFFER.getObjective());
-        this.topicsOfInterest.setText(SELECTED_OFFER.getTopicsInterest());
-        this.period.setText(SELECTED_OFFER.getOfferPeriod());
-        this.language.setText(SELECTED_OFFER.getOfferLanguage());
-        this.aditionalInformation.setText(SELECTED_OFFER.getAditionalInformation());
-        this.numberStudents.setText(String.valueOf(SELECTED_OFFER.getNumberStudents()));
-        this.profile.setText(SELECTED_OFFER.getStudentProfile());
+        this.lblProfessorName.setText(SELECTED_OFFER.getProfessorName());
+        this.lblProfessorEmail.setText(SELECTED_OFFER.getProfessorEmail());
+        this.txtAreaObjective.setText(SELECTED_OFFER.getObjective());
+        this.txtAreaTopicsOfInterest.setText(SELECTED_OFFER.getTopicsInterest());
+        this.txtFieldPeriod.setText(SELECTED_OFFER.getOfferPeriod());
+        this.txtAreaLanguage.setText(SELECTED_OFFER.getOfferLanguage());
+        this.txtAreaAditionalInformation.setText(SELECTED_OFFER.getAditionalInformation());
+        this.lblNumberStudents.setText(String.valueOf(SELECTED_OFFER.getNumberStudents()));
+        this.txtFieldProfile.setText(SELECTED_OFFER.getStudentProfile());
         try {
             checkVisibleButtons();
             ArrayList<String> universityInfo = PROFESSOR_DAO.getUniversityFromAProfessor(SELECTED_OFFER.getIdUser());
-            this.universityName.setText(universityInfo.get(0));
-            this.universityCountry.setText(universityInfo.get(1));
+            this.lblUniversityName.setText(universityInfo.get(0));
+            this.lblUniversityCountry.setText(universityInfo.get(1));
         } catch (LogicException logicException) {
             Alerts.displayAlertLogicException(logicException);
             LOG.error(logicException);
@@ -152,7 +152,7 @@ public class DetailOfferProfessorController implements Initializable {
 
     @FXML
     public void previousMenu() {
-        Stage stage = (Stage) this.objective.getScene().getWindow();
+        Stage stage = (Stage) this.txtAreaObjective.getScene().getWindow();
         stage.close();
         try {
             if (getTypeUser().equals("Coordinador")) {

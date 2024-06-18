@@ -47,12 +47,12 @@
             </Label>
             <AnchorPane layoutX="20.0" layoutY="24.0" mouseTransparent="true" prefHeight="100.0" prefWidth="270.0" styleClass="shadowed">
                <children>
-                  <Label fx:id="professorName" layoutX="-3.0" layoutY="14.0" prefHeight="25.0" prefWidth="270.0" text="Nombre" textAlignment="CENTER">
+                  <Label fx:id="lblProfessorName" layoutX="-3.0" layoutY="14.0" prefHeight="25.0" prefWidth="270.0" text="Nombre" textAlignment="CENTER">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Label fx:id="professorEmail" layoutX="-3.0" layoutY="50.0" prefHeight="25.0" prefWidth="270.0" text="Email" textAlignment="CENTER">
+                  <Label fx:id="lblProfessorEmail" layoutX="-3.0" layoutY="50.0" prefHeight="25.0" prefWidth="270.0" text="Email" textAlignment="CENTER">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -74,7 +74,7 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="objective" editable="false" focusTraversable="false" layoutX="178.0" layoutY="14.0" mouseTransparent="true" prefHeight="40.0" prefWidth="390.0" promptText="No se ha dado un objetivo" />
+                  <TextArea fx:id="txtAreaObjective" editable="false" focusTraversable="false" layoutX="178.0" layoutY="14.0" mouseTransparent="true" prefHeight="40.0" prefWidth="390.0" promptText="No se ha dado un objetivo" />
                   <Label layoutX="15.0" layoutY="75.0" prefHeight="25.0" prefWidth="153.0" text="Tema de interés">
                      <font>
                         <Font size="16.0" />
@@ -95,20 +95,20 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="topicsOfInterest" editable="false" focusTraversable="false" layoutX="178.0" layoutY="68.0" mouseTransparent="true" prefHeight="40.0" prefWidth="390.0" promptText="No se han dado temas de interés" />
+                  <TextArea fx:id="txtAreaTopicsOfInterest" editable="false" focusTraversable="false" layoutX="178.0" layoutY="68.0" mouseTransparent="true" prefHeight="40.0" prefWidth="390.0" promptText="No se han dado temas de interés" />
                   <TextField fx:id="period" editable="false" layoutX="178.0" layoutY="123.0" prefHeight="40.0" prefWidth="390.0" promptText="No se ha dado un periodo preferido" />
-                  <TextArea fx:id="language" editable="false" layoutX="178.0" layoutY="178.0" prefHeight="40.0" prefWidth="390.0" promptText="No se ha dado un idioma preferido" />
-                  <TextArea fx:id="aditionalInformation" editable="false" layoutX="178.0" layoutY="233.0" prefHeight="40.0" prefWidth="390.0" promptText="No se ha proporcionado información adicional" />
+                  <TextArea fx:id="txtAreaLanguage" editable="false" layoutX="178.0" layoutY="178.0" prefHeight="40.0" prefWidth="390.0" promptText="No se ha dado un idioma preferido" />
+                  <TextArea fx:id="txtAreaAditionalInformation" editable="false" layoutX="178.0" layoutY="233.0" prefHeight="40.0" prefWidth="390.0" promptText="No se ha proporcionado información adicional" />
                </children>
             </AnchorPane>
             <AnchorPane layoutX="317.0" layoutY="24.0" mouseTransparent="true" prefHeight="100.0" prefWidth="270.0" styleClass="shadowed">
                <children>
-                  <Label fx:id="universityName" layoutX="-3.0" layoutY="14.0" prefHeight="25.0" prefWidth="270.0" text="Nombre">
+                  <Label fx:id="lblUniversityName" layoutX="-3.0" layoutY="14.0" prefHeight="25.0" prefWidth="270.0" text="Nombre">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Label fx:id="universityCountry" layoutX="-3.0" layoutY="50.0" prefHeight="25.0" prefWidth="270.0" text="País">
+                  <Label fx:id="lblUniversityCountry" layoutX="-3.0" layoutY="50.0" prefHeight="25.0" prefWidth="270.0" text="País">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -140,7 +140,7 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Label fx:id="numberStudents" layoutX="-3.0" layoutY="39.0" prefHeight="17.0" prefWidth="570.0" text="X" />
+                  <Label fx:id="lblNumberStudents" layoutX="-3.0" layoutY="39.0" prefHeight="17.0" prefWidth="570.0" text="X" />
                   <TextField fx:id="profile" alignment="CENTER" editable="false" layoutX="50.0" layoutY="86.0" prefHeight="26.0" prefWidth="475.0" promptText="No se ha proporcionado un perfil del estudiante" />
                </children>
             </AnchorPane>
