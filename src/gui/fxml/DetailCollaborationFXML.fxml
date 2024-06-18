@@ -36,12 +36,12 @@
          <children>
             <AnchorPane layoutX="20.0" layoutY="24.0" mouseTransparent="true" prefHeight="100.0" prefWidth="270.0" styleClass="shadowed">
                <children>
-                  <Label fx:id="professorName" layoutX="-3.0" layoutY="14.0" prefHeight="25.0" prefWidth="270.0" text="Nombre" textAlignment="CENTER">
+                  <Label fx:id="lblProfessorName" layoutX="-3.0" layoutY="14.0" prefHeight="25.0" prefWidth="270.0" text="Nombre" textAlignment="CENTER">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Label fx:id="universityProfessor" layoutX="-3.0" layoutY="50.0" prefHeight="25.0" prefWidth="270.0" text="Universidad" textAlignment="CENTER">
+                  <Label fx:id="lblUniversityProfessor" layoutX="-3.0" layoutY="50.0" prefHeight="25.0" prefWidth="270.0" text="Universidad" textAlignment="CENTER">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -63,13 +63,13 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="topicsOfInterest" editable="false" focusTraversable="false" layoutX="169.0" layoutY="35.0" mouseTransparent="true" prefHeight="40.0" prefWidth="390.0" promptText="No se han dado temas de interés" />
+                  <TextArea fx:id="txtAreaTopicsOfInterest" editable="false" focusTraversable="false" layoutX="169.0" layoutY="35.0" mouseTransparent="true" prefHeight="40.0" prefWidth="390.0" promptText="No se han dado temas de interés" />
                   <Label layoutX="15.0" layoutY="119.0" prefHeight="25.0" prefWidth="153.0" text="Conclusión:">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="conclusion" editable="false" focusTraversable="false" layoutX="169.0" layoutY="112.0" mouseTransparent="true" prefHeight="40.0" prefWidth="390.0" promptText="No se ha proporcionado una conclusión" />
+                  <TextArea fx:id="txtAreaConclusion" editable="false" focusTraversable="false" layoutX="169.0" layoutY="112.0" mouseTransparent="true" prefHeight="40.0" prefWidth="390.0" promptText="No se ha proporcionado una conclusión" />
                   <Label layoutX="15.0" layoutY="206.0" prefHeight="25.0" prefWidth="153.0" text="Calificación:">
                      <font>
                         <Font size="16.0" />
@@ -80,12 +80,12 @@
             </AnchorPane>
             <AnchorPane layoutX="317.0" layoutY="24.0" mouseTransparent="true" prefHeight="100.0" prefWidth="270.0" styleClass="shadowed">
                <children>
-                  <Label fx:id="mirrorProfessorName" layoutX="-3.0" layoutY="14.0" prefHeight="25.0" prefWidth="270.0" text="Nombre">
+                  <Label fx:id="lblMirrorProfessorName" layoutX="-3.0" layoutY="14.0" prefHeight="25.0" prefWidth="270.0" text="Nombre">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Label fx:id="mirrorUniversity" layoutX="-3.0" layoutY="50.0" prefHeight="25.0" prefWidth="270.0" text="Universidad">
+                  <Label fx:id="lblMirrorUniversity" layoutX="-3.0" layoutY="50.0" prefHeight="25.0" prefWidth="270.0" text="Universidad">
                      <font>
                         <Font size="16.0" />
                      </font>

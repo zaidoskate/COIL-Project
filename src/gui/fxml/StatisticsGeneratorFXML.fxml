@@ -15,7 +15,7 @@
          <children>
             <Button fx:id="btnDownloadStatistics" layoutX="225.0" layoutY="33.0" mnemonicParsing="false" onAction="#downloadStatistics" prefHeight="30.0" prefWidth="150.0" styleClass="button-accion" text="Descargar" visible="false" />
             <Button fx:id="btnContinue" layoutX="225.0" layoutY="81.0" mnemonicParsing="false" onAction="#closeDownload" prefHeight="30.0" prefWidth="150.0" styleClass="button-accion2" text="Continuar" />
-            <Label fx:id="generated" layoutY="2.0" prefHeight="25.0" prefWidth="600.0" text="Es posible generar la numeralia">
+            <Label fx:id="lblGenerated" layoutY="2.0" prefHeight="25.0" prefWidth="600.0" text="Es posible generar la numeralia">
                <font>
                   <Font size="16.0" />
                </font>

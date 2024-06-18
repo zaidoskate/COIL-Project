@@ -31,21 +31,21 @@ public class DetailActiveCollaborationController implements Initializable{
     @FXML
     private Button btnDownloadEvidences;
     @FXML
-    private Label professorName;
+    private Label lblProfessorName;
     @FXML
-    private Label universityProfessor;
+    private Label lblUniversityProfessor;
     @FXML
-    private TextArea topicsOfInterest;
+    private Label lblMirrorProfessorName;
     @FXML
-    private TextArea language;
+    private Label lblMirrorUniversity;
     @FXML
-    private TextArea startDate;
+    private TextArea txtAreaTopicsOfInterest;
     @FXML
-    private TextArea collaborationStatus;
+    private TextArea txtAreaLanguage;
     @FXML
-    private Label mirrorProfessorName;
+    private TextArea txtAreaStartDate;
     @FXML
-    private Label mirrorUniversity;
+    private TextArea txtAreaCollaborationStatus;
 
     private static final Logger LOG = Logger.getLogger(CollaborationController.class);
     private CollaborationInformation CURRENT_COLLABORATION = CollaborationInformation.getCollaboration();
@@ -74,21 +74,21 @@ public class DetailActiveCollaborationController implements Initializable{
         ArrayList<User> professorsData = PROFESSOR_BELONGS_DAO.getProfessorsDataByCollaboration(idCollaboration);
         User professor = professorsData.get(0);
         ArrayList<String> university = PROFESSOR_DAO.getUniversityFromAProfessor(professor.getIdUser());
-        professorName.setText(professor.getName());
-        universityProfessor.setText(university.get(0));
+        lblProfessorName.setText(professor.getName());
+        lblUniversityProfessor.setText(university.get(0));
             
         professor = professorsData.get(1);
         university = PROFESSOR_DAO.getUniversityFromAProfessor(professor.getIdUser());
-        mirrorProfessorName.setText(professor.getName());
-        mirrorUniversity.setText(university.get(0));
+        lblMirrorProfessorName.setText(professor.getName());
+        lblMirrorUniversity.setText(university.get(0));
     }
     private void loadCollaborationData(int idCollaboration) throws LogicException {
         Collaboration collaboration = COLLABORATION_DAO.getColaborationById(idCollaboration);
         String statusCollaboration = PROFESSOR_BELONGS_DAO.getStatusByIdCollaboration(idCollaboration);
-        topicsOfInterest.setText(collaboration.getInterestTopic());
-        language.setText(collaboration.getLanguage());
-        startDate.setText(collaboration.getStartDate());
-        collaborationStatus.setText(statusCollaboration);
+        txtAreaTopicsOfInterest.setText(collaboration.getInterestTopic());
+        txtAreaLanguage.setText(collaboration.getLanguage());
+        txtAreaStartDate.setText(collaboration.getStartDate());
+        txtAreaCollaborationStatus.setText(statusCollaboration);
     }
     
     private void savePendingMail(String professorEmail) throws LogicException {

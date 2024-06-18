@@ -30,19 +30,19 @@ public class DetailCollaborationController {
     @FXML
     private Button btnBack;
     @FXML
-    private Label professorName;
+    private Label lblProfessorName;
     @FXML
-    private Label universityProfessor;
+    private Label lblUniversityProfessor;
     @FXML
-    private TextArea topicsOfInterest;
+    private Label lblMirrorProfessorName;
     @FXML
-    private TextArea conclusion;
+    private Label lblMirrorUniversity;
+    @FXML
+    private TextArea txtAreaTopicsOfInterest;
+    @FXML
+    private TextArea txtAreaConclusion;
     @FXML
     private HBox hBoxRating;
-    @FXML
-    private Label mirrorProfessorName;
-    @FXML
-    private Label mirrorUniversity;
     @FXML
     private ComboBox<String> cmbBoxVisibility;
     @FXML
@@ -79,20 +79,20 @@ public class DetailCollaborationController {
         ArrayList<User> professorsData = PROFESSOR_BELONGS_DAO.getProfessorsDataByCollaboration(idCollaboration);
         User professor = professorsData.get(0);
         ArrayList<String> university = PROFESSOR_DAO.getUniversityFromAProfessor(professor.getIdUser());
-        professorName.setText(professor.getName());
-        universityProfessor.setText(university.get(0));
+        lblProfessorName.setText(professor.getName());
+        lblUniversityProfessor.setText(university.get(0));
             
         professor = professorsData.get(1);
         university = PROFESSOR_DAO.getUniversityFromAProfessor(professor.getIdUser());
-        mirrorProfessorName.setText(professor.getName());
-        mirrorUniversity.setText(university.get(0));
+        lblMirrorProfessorName.setText(professor.getName());
+        lblMirrorUniversity.setText(university.get(0));
     }
     private void loadCollaborationData(int idCollaboration) throws LogicException {
         Collaboration collaboration = COLLABORATION_DAO.getColaborationById(idCollaboration);
         ConcludedCollaboration concludedCollaboration = CONCLUDED_COLLABORATION_DAO.getConcludedCollaborationById(idCollaboration);
         
-        topicsOfInterest.setText(collaboration.getInterestTopic());
-        conclusion.setText(concludedCollaboration.getConclusion());
+        txtAreaTopicsOfInterest.setText(collaboration.getInterestTopic());
+        txtAreaConclusion.setText(concludedCollaboration.getConclusion());
         
         loadStars(concludedCollaboration.getRating());
         loadComboBox(concludedCollaboration.getVisibility());
